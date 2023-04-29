@@ -13,8 +13,12 @@ struct Recipie {
     var timeCookingInMinutes: Int
     var timePreparingInMinutes: Int
     var timeWaitingInMinutes: Int
+    
     var ingredients: [Ingredient]
+    
     var instructions: String
+    
+    var imageData: Data?
     
     var tags: [Tag]
     
