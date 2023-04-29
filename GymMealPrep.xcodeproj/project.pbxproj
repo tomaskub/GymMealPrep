@@ -17,6 +17,25 @@
 		D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB229FD44330034B950 /* PresistanceContainer.swift */; };
 		D634FFB529FD46D20034B950 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB429FD46D20034B950 /* DataManager.swift */; };
 		D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB629FD52100034B950 /* Model.xcdatamodeld */; };
+		D6C3402E29FD7314003F6E06 /* TagMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402029FD7314003F6E06 /* TagMO+CoreDataClass.swift */; };
+		D6C3402F29FD7314003F6E06 /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402129FD7314003F6E06 /* TagMO+CoreDataProperties.swift */; };
+		D6C3403029FD7314003F6E06 /* MealMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402229FD7314003F6E06 /* MealMO+CoreDataClass.swift */; };
+		D6C3403129FD7314003F6E06 /* MealMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402329FD7314003F6E06 /* MealMO+CoreDataProperties.swift */; };
+		D6C3403229FD7314003F6E06 /* RecipieMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402429FD7314003F6E06 /* RecipieMO+CoreDataClass.swift */; };
+		D6C3403329FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402529FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift */; };
+		D6C3403429FD7314003F6E06 /* IngredientMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402629FD7314003F6E06 /* IngredientMO+CoreDataClass.swift */; };
+		D6C3403529FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402729FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift */; };
+		D6C3403629FD7314003F6E06 /* InstructionMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402829FD7314003F6E06 /* InstructionMO+CoreDataClass.swift */; };
+		D6C3403729FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402929FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift */; };
+		D6C3403829FD7314003F6E06 /* FoodMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402A29FD7314003F6E06 /* FoodMO+CoreDataClass.swift */; };
+		D6C3403929FD7314003F6E06 /* FoodMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402B29FD7314003F6E06 /* FoodMO+CoreDataProperties.swift */; };
+		D6C3403A29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402C29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift */; };
+		D6C3403B29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402D29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift */; };
+		D6C3403D29FD763D003F6E06 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3403C29FD763D003F6E06 /* Food.swift */; };
+		D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3403E29FD769C003F6E06 /* Ingredient.swift */; };
+		D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404029FD7735003F6E06 /* Nutrition.swift */; };
+		D6C3404329FD7D17003F6E06 /* Recipie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404229FD7D17003F6E06 /* Recipie.swift */; };
+		D6C3404529FD7E4E003F6E06 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404429FD7E4E003F6E06 /* Tag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +70,25 @@
 		D634FFB229FD44330034B950 /* PresistanceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresistanceContainer.swift; sourceTree = "<group>"; };
 		D634FFB429FD46D20034B950 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D634FFB729FD52100034B950 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D6C3402029FD7314003F6E06 /* TagMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402129FD7314003F6E06 /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402229FD7314003F6E06 /* MealMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402329FD7314003F6E06 /* MealMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402429FD7314003F6E06 /* RecipieMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipieMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402529FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipieMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402629FD7314003F6E06 /* IngredientMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IngredientMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402729FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IngredientMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402829FD7314003F6E06 /* InstructionMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstructionMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402929FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstructionMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402A29FD7314003F6E06 /* FoodMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402B29FD7314003F6E06 /* FoodMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3402C29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealPlanMO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D6C3402D29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealPlanMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D6C3403C29FD763D003F6E06 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		D6C3403E29FD769C003F6E06 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
+		D6C3404029FD7735003F6E06 /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
+		D6C3404229FD7D17003F6E06 /* Recipie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipie.swift; sourceTree = "<group>"; };
+		D6C3404429FD7E4E003F6E06 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +139,15 @@
 		D634FF8529FD42F50034B950 /* GymMealPrep */ = {
 			isa = PBXGroup;
 			children = (
-				D634FFB129FD44080034B950 /* Model */,
+				D634FFB129FD44080034B950 /* CoreDataModel */,
+				D6C3404729FD7EB6003F6E06 /* Model */,
+				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
+				D6C3404829FD7F44003F6E06 /* View */,
 				D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */,
+				D6C3404A29FD7F5A003F6E06 /* ViewModel */,
+				D634FFB429FD46D20034B950 /* DataManager.swift */,
 				D634FF8829FD42F50034B950 /* ContentView.swift */,
+				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,
 				D634FF8A29FD42F60034B950 /* Assets.xcassets */,
 				D634FF8C29FD42F60034B950 /* GymMealPrep.entitlements */,
 				D634FF8D29FD42F60034B950 /* Preview Content */,
@@ -136,15 +180,51 @@
 			path = GymMealPrepUITests;
 			sourceTree = "<group>";
 		};
-		D634FFB129FD44080034B950 /* Model */ = {
+		D634FFB129FD44080034B950 /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
-				D634FFB429FD46D20034B950 /* DataManager.swift */,
-				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,
+				D6C3402029FD7314003F6E06 /* TagMO+CoreDataClass.swift */,
+				D6C3402129FD7314003F6E06 /* TagMO+CoreDataProperties.swift */,
+				D6C3402229FD7314003F6E06 /* MealMO+CoreDataClass.swift */,
+				D6C3402329FD7314003F6E06 /* MealMO+CoreDataProperties.swift */,
+				D6C3402429FD7314003F6E06 /* RecipieMO+CoreDataClass.swift */,
+				D6C3402529FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift */,
+				D6C3402629FD7314003F6E06 /* IngredientMO+CoreDataClass.swift */,
+				D6C3402729FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift */,
+				D6C3402829FD7314003F6E06 /* InstructionMO+CoreDataClass.swift */,
+				D6C3402929FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift */,
+				D6C3402A29FD7314003F6E06 /* FoodMO+CoreDataClass.swift */,
+				D6C3402B29FD7314003F6E06 /* FoodMO+CoreDataProperties.swift */,
+				D6C3402C29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift */,
+				D6C3402D29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift */,
 			);
-			name = Model;
-			path = CoreDataModels;
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		D6C3404729FD7EB6003F6E06 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D6C3403C29FD763D003F6E06 /* Food.swift */,
+				D6C3403E29FD769C003F6E06 /* Ingredient.swift */,
+				D6C3404229FD7D17003F6E06 /* Recipie.swift */,
+				D6C3404429FD7E4E003F6E06 /* Tag.swift */,
+				D6C3404029FD7735003F6E06 /* Nutrition.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D6C3404829FD7F44003F6E06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D6C3404A29FD7F5A003F6E06 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,11 +357,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C3404529FD7E4E003F6E06 /* Tag.swift in Sources */,
+				D6C3403B29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift in Sources */,
+				D6C3403729FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift in Sources */,
+				D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */,
+				D6C3403A29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift in Sources */,
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
+				D6C3403129FD7314003F6E06 /* MealMO+CoreDataProperties.swift in Sources */,
 				D634FFB529FD46D20034B950 /* DataManager.swift in Sources */,
+				D6C3402E29FD7314003F6E06 /* TagMO+CoreDataClass.swift in Sources */,
+				D6C3403429FD7314003F6E06 /* IngredientMO+CoreDataClass.swift in Sources */,
+				D6C3402F29FD7314003F6E06 /* TagMO+CoreDataProperties.swift in Sources */,
+				D6C3403229FD7314003F6E06 /* RecipieMO+CoreDataClass.swift in Sources */,
+				D6C3403029FD7314003F6E06 /* MealMO+CoreDataClass.swift in Sources */,
 				D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */,
 				D634FF8929FD42F50034B950 /* ContentView.swift in Sources */,
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
+				D6C3403529FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift in Sources */,
+				D6C3404329FD7D17003F6E06 /* Recipie.swift in Sources */,
+				D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */,
+				D6C3403829FD7314003F6E06 /* FoodMO+CoreDataClass.swift in Sources */,
+				D6C3403629FD7314003F6E06 /* InstructionMO+CoreDataClass.swift in Sources */,
+				D6C3403D29FD763D003F6E06 /* Food.swift in Sources */,
+				D6C3403329FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift in Sources */,
+				D6C3403929FD7314003F6E06 /* FoodMO+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
