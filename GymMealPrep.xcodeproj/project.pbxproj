@@ -15,6 +15,8 @@
 		D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */; };
 		D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */; };
 		D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB229FD44330034B950 /* PresistanceContainer.swift */; };
+		D634FFB529FD46D20034B950 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB429FD46D20034B950 /* DataManager.swift */; };
+		D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB629FD52100034B950 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepUITests.swift; sourceTree = "<group>"; };
 		D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D634FFB229FD44330034B950 /* PresistanceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresistanceContainer.swift; sourceTree = "<group>"; };
+		D634FFB429FD46D20034B950 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		D634FFB729FD52100034B950 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +140,11 @@
 			isa = PBXGroup;
 			children = (
 				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
+				D634FFB429FD46D20034B950 /* DataManager.swift */,
+				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,
 			);
-			path = Model;
+			name = Model;
+			path = CoreDataModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +278,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
+				D634FFB529FD46D20034B950 /* DataManager.swift in Sources */,
+				D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */,
 				D634FF8929FD42F50034B950 /* ContentView.swift in Sources */,
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
 			);
@@ -624,6 +633,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D634FFB629FD52100034B950 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D634FFB729FD52100034B950 /* Model.xcdatamodel */,
+			);
+			currentVersion = D634FFB729FD52100034B950 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D634FF7B29FD42F50034B950 /* Project object */;
 }

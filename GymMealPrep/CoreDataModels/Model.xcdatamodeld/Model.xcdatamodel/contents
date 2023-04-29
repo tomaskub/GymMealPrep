@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FoodMO" representedClassName="FoodMO" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientMO" inverseName="food" inverseEntity="IngredientMO"/>
+    </entity>
+    <entity name="IngredientMO" representedClassName="IngredientMO" syncable="YES">
+        <attribute name="calories" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="carbs" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fat" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="protein" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="unitOfMeasure" optional="YES" attributeType="String"/>
+        <relationship name="food" maxCount="1" deletionRule="Nullify" destinationEntity="FoodMO" inverseName="ingredients" inverseEntity="FoodMO"/>
+        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="ingredients" inverseEntity="MealMO"/>
+        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="ingredients" inverseEntity="RecipieMO"/>
+    </entity>
+    <entity name="InstructionMO" representedClassName="InstructionMO" syncable="YES">
+        <attribute name="step" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="instructions" inverseEntity="RecipieMO"/>
+    </entity>
+    <entity name="MealMO" representedClassName="MealMO" syncable="YES">
+        <relationship name="ingredients" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IngredientMO" inverseName="meal" inverseEntity="IngredientMO"/>
+        <relationship name="plans" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealPlanMO" inverseName="meals" inverseEntity="MealPlanMO"/>
+        <relationship name="recipies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="meals" inverseEntity="RecipieMO"/>
+    </entity>
+    <entity name="MealPlanMO" representedClassName="MealPlanMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="meals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="plans" inverseEntity="MealMO"/>
+    </entity>
+    <entity name="RecipieMO" representedClassName="RecipieMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="servings" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timeCooking" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timePreparing" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timeWaiting" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientMO" inverseName="recipie" inverseEntity="IngredientMO"/>
+        <relationship name="instructions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InstructionMO" inverseName="recipie" inverseEntity="InstructionMO"/>
+        <relationship name="meals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="recipies" inverseEntity="MealMO"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagMO" inverseName="recipies" inverseEntity="TagMO"/>
+    </entity>
+    <entity name="TagMO" representedClassName="TagMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="recipies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="tags" inverseEntity="RecipieMO"/>
+    </entity>
+</model>
