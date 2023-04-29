@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */; };
+		D634FF8929FD42F50034B950 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8829FD42F50034B950 /* ContentView.swift */; };
+		D634FF8B29FD42F60034B950 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D634FF8A29FD42F60034B950 /* Assets.xcassets */; };
+		D634FF8F29FD42F60034B950 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D634FF8E29FD42F60034B950 /* Preview Assets.xcassets */; };
+		D634FF9929FD42F60034B950 /* GymMealPrepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */; };
+		D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */; };
+		D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D634FF9529FD42F60034B950 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D634FF7B29FD42F50034B950 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D634FF8229FD42F50034B950;
+			remoteInfo = GymMealPrep;
+		};
+		D634FF9F29FD42F60034B950 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D634FF7B29FD42F50034B950 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D634FF8229FD42F50034B950;
+			remoteInfo = GymMealPrep;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D634FF8329FD42F50034B950 /* GymMealPrep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymMealPrep.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepApp.swift; sourceTree = "<group>"; };
+		D634FF8829FD42F50034B950 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D634FF8A29FD42F60034B950 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D634FF8C29FD42F60034B950 /* GymMealPrep.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GymMealPrep.entitlements; sourceTree = "<group>"; };
+		D634FF8E29FD42F60034B950 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D634FF9429FD42F60034B950 /* GymMealPrepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymMealPrepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepTests.swift; sourceTree = "<group>"; };
+		D634FF9E29FD42F60034B950 /* GymMealPrepUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GymMealPrepUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepUITests.swift; sourceTree = "<group>"; };
+		D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D634FF8029FD42F50034B950 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9129FD42F60034B950 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9B29FD42F60034B950 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D634FF7A29FD42F50034B950 = {
+			isa = PBXGroup;
+			children = (
+				D634FF8529FD42F50034B950 /* GymMealPrep */,
+				D634FF9729FD42F60034B950 /* GymMealPrepTests */,
+				D634FFA129FD42F60034B950 /* GymMealPrepUITests */,
+				D634FF8429FD42F50034B950 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D634FF8429FD42F50034B950 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D634FF8329FD42F50034B950 /* GymMealPrep.app */,
+				D634FF9429FD42F60034B950 /* GymMealPrepTests.xctest */,
+				D634FF9E29FD42F60034B950 /* GymMealPrepUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D634FF8529FD42F50034B950 /* GymMealPrep */ = {
+			isa = PBXGroup;
+			children = (
+				D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */,
+				D634FF8829FD42F50034B950 /* ContentView.swift */,
+				D634FF8A29FD42F60034B950 /* Assets.xcassets */,
+				D634FF8C29FD42F60034B950 /* GymMealPrep.entitlements */,
+				D634FF8D29FD42F60034B950 /* Preview Content */,
+			);
+			path = GymMealPrep;
+			sourceTree = "<group>";
+		};
+		D634FF8D29FD42F60034B950 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D634FF8E29FD42F60034B950 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D634FF9729FD42F60034B950 /* GymMealPrepTests */ = {
+			isa = PBXGroup;
+			children = (
+				D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */,
+			);
+			path = GymMealPrepTests;
+			sourceTree = "<group>";
+		};
+		D634FFA129FD42F60034B950 /* GymMealPrepUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */,
+				D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */,
+			);
+			path = GymMealPrepUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D634FF8229FD42F50034B950 /* GymMealPrep */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D634FFA829FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrep" */;
+			buildPhases = (
+				D634FF7F29FD42F50034B950 /* Sources */,
+				D634FF8029FD42F50034B950 /* Frameworks */,
+				D634FF8129FD42F50034B950 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GymMealPrep;
+			productName = GymMealPrep;
+			productReference = D634FF8329FD42F50034B950 /* GymMealPrep.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D634FF9329FD42F60034B950 /* GymMealPrepTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D634FFAB29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepTests" */;
+			buildPhases = (
+				D634FF9029FD42F60034B950 /* Sources */,
+				D634FF9129FD42F60034B950 /* Frameworks */,
+				D634FF9229FD42F60034B950 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D634FF9629FD42F60034B950 /* PBXTargetDependency */,
+			);
+			name = GymMealPrepTests;
+			productName = GymMealPrepTests;
+			productReference = D634FF9429FD42F60034B950 /* GymMealPrepTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D634FF9D29FD42F60034B950 /* GymMealPrepUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D634FFAE29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepUITests" */;
+			buildPhases = (
+				D634FF9A29FD42F60034B950 /* Sources */,
+				D634FF9B29FD42F60034B950 /* Frameworks */,
+				D634FF9C29FD42F60034B950 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D634FFA029FD42F60034B950 /* PBXTargetDependency */,
+			);
+			name = GymMealPrepUITests;
+			productName = GymMealPrepUITests;
+			productReference = D634FF9E29FD42F60034B950 /* GymMealPrepUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D634FF7B29FD42F50034B950 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D634FF8229FD42F50034B950 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					D634FF9329FD42F60034B950 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = D634FF8229FD42F50034B950;
+					};
+					D634FF9D29FD42F60034B950 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = D634FF8229FD42F50034B950;
+					};
+				};
+			};
+			buildConfigurationList = D634FF7E29FD42F50034B950 /* Build configuration list for PBXProject "GymMealPrep" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D634FF7A29FD42F50034B950;
+			productRefGroup = D634FF8429FD42F50034B950 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D634FF8229FD42F50034B950 /* GymMealPrep */,
+				D634FF9329FD42F60034B950 /* GymMealPrepTests */,
+				D634FF9D29FD42F60034B950 /* GymMealPrepUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D634FF8129FD42F50034B950 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D634FF8F29FD42F60034B950 /* Preview Assets.xcassets in Resources */,
+				D634FF8B29FD42F60034B950 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9229FD42F60034B950 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9C29FD42F60034B950 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D634FF7F29FD42F50034B950 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D634FF8929FD42F50034B950 /* ContentView.swift in Sources */,
+				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9029FD42F60034B950 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D634FF9929FD42F60034B950 /* GymMealPrepTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D634FF9A29FD42F60034B950 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */,
+				D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D634FF9629FD42F60034B950 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D634FF8229FD42F50034B950 /* GymMealPrep */;
+			targetProxy = D634FF9529FD42F60034B950 /* PBXContainerItemProxy */;
+		};
+		D634FFA029FD42F60034B950 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D634FF8229FD42F50034B950 /* GymMealPrep */;
+			targetProxy = D634FF9F29FD42F60034B950 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D634FFA629FD42F60034B950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D634FFA729FD42F60034B950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		D634FFA929FD42F60034B950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GymMealPrep/GymMealPrep.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GymMealPrep/Preview Content\"";
+				DEVELOPMENT_TEAM = 73N45UT488;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrep;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D634FFAA29FD42F60034B950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GymMealPrep/GymMealPrep.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GymMealPrep/Preview Content\"";
+				DEVELOPMENT_TEAM = 73N45UT488;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrep;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D634FFAC29FD42F60034B950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73N45UT488;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrepTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GymMealPrep.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GymMealPrep";
+			};
+			name = Debug;
+		};
+		D634FFAD29FD42F60034B950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73N45UT488;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrepTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GymMealPrep.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GymMealPrep";
+			};
+			name = Release;
+		};
+		D634FFAF29FD42F60034B950 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73N45UT488;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrepUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GymMealPrep;
+			};
+			name = Debug;
+		};
+		D634FFB029FD42F60034B950 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73N45UT488;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tomaszkubiak.GymMealPrepUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GymMealPrep;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D634FF7E29FD42F50034B950 /* Build configuration list for PBXProject "GymMealPrep" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D634FFA629FD42F60034B950 /* Debug */,
+				D634FFA729FD42F60034B950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D634FFA829FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrep" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D634FFA929FD42F60034B950 /* Debug */,
+				D634FFAA29FD42F60034B950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D634FFAB29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D634FFAC29FD42F60034B950 /* Debug */,
+				D634FFAD29FD42F60034B950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D634FFAE29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D634FFAF29FD42F60034B950 /* Debug */,
+				D634FFB029FD42F60034B950 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D634FF7B29FD42F50034B950 /* Project object */;
+}
