@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Tag {
+struct Tag: Identifiable {
     var id: UUID
     var text: String
 }
