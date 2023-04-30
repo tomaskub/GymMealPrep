@@ -39,6 +39,7 @@
 		D6C3404C29FD7FB9003F6E06 /* RecipieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */; };
 		D6C3404E29FD7FDE003F6E06 /* RecipieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404D29FD7FDE003F6E06 /* RecipieViewModel.swift */; };
 		D6C3405029FD8085003F6E06 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404F29FD8085003F6E06 /* Instruction.swift */; };
+		D6C3405229FE7362003F6E06 /* RecipieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405129FE7362003F6E06 /* RecipieListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieView.swift; sourceTree = "<group>"; };
 		D6C3404D29FD7FDE003F6E06 /* RecipieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieViewModel.swift; sourceTree = "<group>"; };
 		D6C3404F29FD8085003F6E06 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
+		D6C3405129FE7362003F6E06 /* RecipieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */,
+				D6C3405129FE7362003F6E06 /* RecipieListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				D6C3403B29FD7314003F6E06 /* MealPlanMO+CoreDataProperties.swift in Sources */,
 				D6C3403729FD7314003F6E06 /* InstructionMO+CoreDataProperties.swift in Sources */,
 				D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */,
+				D6C3405229FE7362003F6E06 /* RecipieListView.swift in Sources */,
 				D6C3403A29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift in Sources */,
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
 				D6C3403129FD7314003F6E06 /* MealMO+CoreDataProperties.swift in Sources */,
