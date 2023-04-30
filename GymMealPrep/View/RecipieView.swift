@@ -18,20 +18,15 @@ struct RecipieView: View {
                 .ignoresSafeArea()
             
             //Content layer
-            VStack {
-                titleBanner
-                
-                tagScrollView
-                
-                HStack {
-                    servingSummary
-                    timeSummary
-                }
-                .frame(height: 100)
-                
-                nutritionSummary
-                
                 List {
+                    titleBanner
+                        .listRowInsets(EdgeInsets())
+                    tagScrollView
+                    HStack {
+                        servingSummary
+                        timeSummary
+                    }
+                    nutritionSummary
                     Section("Ingredients:") {
                         ForEach(viewModel.recipie.ingredients, id: \.food.name) {
                             i in
@@ -55,9 +50,9 @@ struct RecipieView: View {
                     }
                 }
                 
-                Spacer()
                 
-            }
+                
+            
             
             
         }
