@@ -19,14 +19,22 @@ struct RecipieView: View {
             
             //Content layer
                 List {
-                    titleBanner
-                        .listRowInsets(EdgeInsets())
-                    tagScrollView
-                    HStack {
-                        servingSummary
-                        timeSummary
+//                    titleBanner
+                    Section {
+                        titleBanner
+                            .listRowInsets(EdgeInsets())
+                        tagScrollView
+                            .listRowInsets(EdgeInsets())
+                        HStack {
+                            Spacer()
+                            servingSummary
+                            timeSummary
+                            Spacer()
+                        }
+                        
+                        nutritionSummary
                     }
-                    nutritionSummary
+
                     Section("Ingredients:") {
                         ForEach(viewModel.recipie.ingredients, id: \.food.name) {
                             i in
@@ -49,16 +57,9 @@ struct RecipieView: View {
                         }
                     }
                 }
-                
-                
-                
-            
-            
-            
+                .listStyle(.inset)
+                .ignoresSafeArea(edges: .top)
         }
-        
-        
-        
     }
     
     var nutritionSummary: some View {
@@ -86,18 +87,13 @@ struct RecipieView: View {
                 .fontWeight(.semibold)
             Text("\(viewModel.recipie.servings)")
         }
-        .padding()
-        .frame(maxHeight: .infinity)
-        .background(.white)
-        .cornerRadius(10)
     }
     
     var timeSummary: some View {
-        VStack(alignment: .leading) {
+        VStack {
             Text("Time:")
                 .font(.title3)
                 .fontWeight(.semibold)
-                .padding(.leading)
             HStack {
                 ForEach(viewModel.timeSummaryData, id: \.0) { data in
                     VStack {
@@ -120,32 +116,35 @@ struct RecipieView: View {
             .frame(height: 250)
             .clipped()
             .overlay {
-                ZStack {
+                ZStack(alignment: .bottomLeading) {
                     
                     LinearGradient(colors: [.black, .black.opacity(0.0)], startPoint: .bottom, endPoint: .center)
-                    
-                    Text(viewModel.recipie.name)
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.leading)
-                        .offset(y: 105)
-                    
+                    HStack {
+                        Text(viewModel.recipie.name)
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Image(systemName: "pencil.circle")
+                            .foregroundColor(.white)
+                            .font(.largeTitle)
+                            .padding(.horizontal)
+                    }
                 }
             }
-//            .ignoresSafeArea()
     }
     var tagScrollView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(viewModel.recipie.tags) { tag in
                     Text(tag.text)
+                        .foregroundColor(.white)
                         .padding(.horizontal)
                         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                         .background(
                             Capsule()
-                            .foregroundColor(.white))
+                            .foregroundColor(.blue))
                 }
             }
         }
@@ -154,6 +153,8 @@ struct RecipieView: View {
 
 struct RecipieView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipieView(viewModel: RecipieViewModel(recipie: Recipie()))
+        NavigationView {
+            RecipieView(viewModel: RecipieViewModel(recipie: Recipie()))
+        }
     }
 }
