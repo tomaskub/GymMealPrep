@@ -10,4 +10,5 @@ import Foundation
 struct Tag: Identifiable {
     var id: UUID
     var text: String
+    var color: (Double, Double, Double)
 }

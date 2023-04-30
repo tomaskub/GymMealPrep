@@ -34,6 +34,7 @@ struct RecipieView: View {
                         
                         nutritionSummary
                     }
+                    .listRowSeparator(.hidden)
 
                     Section("Ingredients:") {
                         ForEach(viewModel.recipie.ingredients, id: \.food.name) {
@@ -128,8 +129,8 @@ struct RecipieView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Image(systemName: "pencil.circle")
                             .foregroundColor(.white)
-                            .font(.largeTitle)
-                            .padding(.horizontal)
+                            .font(.title)
+                            .padding(.trailing)
                     }
                 }
             }
