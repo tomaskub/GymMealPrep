@@ -15,8 +15,9 @@ extension RecipieMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<RecipieMO> {
         return NSFetchRequest<RecipieMO>(entityName: "RecipieMO")
     }
-
-    @NSManaged public var id: UUID?
+    @NSManaged public var imageData: Data
+    @NSManaged public var id: UUID
+    @NSManaged public var name: String
     @NSManaged public var servings: Int64
     @NSManaged public var timeCooking: Int64
     @NSManaged public var timePreparing: Int64

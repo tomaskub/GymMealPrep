@@ -31,8 +31,10 @@
         <relationship name="meals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="plans" inverseEntity="MealMO"/>
     </entity>
     <entity name="RecipieMO" representedClassName="RecipieMO" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="servings" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="servings" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timeCooking" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timePreparing" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timeWaiting" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -42,8 +44,8 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagMO" inverseName="recipies" inverseEntity="TagMO"/>
     </entity>
     <entity name="TagMO" representedClassName="TagMO" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" attributeType="String"/>
         <relationship name="recipies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="tags" inverseEntity="RecipieMO"/>
     </entity>
 </model>

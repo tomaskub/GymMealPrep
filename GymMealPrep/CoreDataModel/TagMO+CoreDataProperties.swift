@@ -16,8 +16,8 @@ extension TagMO {
         return NSFetchRequest<TagMO>(entityName: "TagMO")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var text: String?
+    @NSManaged public var id: UUID
+    @NSManaged public var text: String
     @NSManaged public var recipies: NSSet?
 
 }
