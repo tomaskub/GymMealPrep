@@ -15,4 +15,20 @@ struct Ingredient {
     
     var nutritionData: Nutrition
     
+    init(food: Food, quantity: Double, unitOfMeasure: String, nutritionData: Nutrition) {
+        self.food = food
+        self.quantity = quantity
+        self.unitOfMeasure = unitOfMeasure
+        self.nutritionData = nutritionData
+    }
+    
+    init(ingredientMO: IngredientMO) {
+        guard let foodMO = ingredientMO.food else { return }
+        self.food = Food(foodMO: foodMO)
+        self.quantity = ingredientMO.quantity
+        self.unitOfMeasure = ingredientMO.unitOfMeasure
+        self.nutritionData = Nutrition(
+            calories: ingredientMO.calories,
+            carb: ingredientMO.carbs, fat: ingredientMO.fat, protein: ingredientMO.protein)
+    }
 }

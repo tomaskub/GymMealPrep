@@ -21,7 +21,7 @@ extension IngredientMO {
     @NSManaged public var fat: Float
     @NSManaged public var protein: Float
     @NSManaged public var quantity: Double
-    @NSManaged public var unitOfMeasure: String?
+    @NSManaged public var unitOfMeasure: String
     @NSManaged public var food: FoodMO?
     @NSManaged public var meal: MealMO?
     @NSManaged public var recipie: RecipieMO?
