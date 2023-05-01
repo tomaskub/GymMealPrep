@@ -160,7 +160,7 @@ struct RecipieView: View {
 struct RecipieView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipieView(viewModel: RecipieViewModel(recipie: Recipie()))
+            RecipieView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
         }
     }
 }
