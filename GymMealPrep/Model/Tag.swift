@@ -10,5 +10,16 @@ import Foundation
 struct Tag: Identifiable {
     var id: UUID
     var text: String
-    var color: (Double, Double, Double)
+    var color: (Double, Double, Double)?
+    
+    init(id: UUID, text: String, color: (Double, Double, Double)) {
+        self.id = id
+        self.text = text
+        self.color = color
+    }
+    
+    init(tagMO: TagMO) {
+        self.id = tagMO.id
+        self.text = tagMO.text
+    }
 }
