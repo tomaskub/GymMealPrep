@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipieView: View {
     
+    @Environment(\.editMode) var editMode
     @StateObject var viewModel: RecipieViewModel
     
     var body: some View {
@@ -127,10 +128,14 @@ struct RecipieView: View {
                             .foregroundColor(.white)
                             .padding(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        EditButton()
+                            .foregroundColor(.white)
+                        /*
                         Image(systemName: "pencil.circle")
                             .foregroundColor(.white)
                             .font(.title)
                             .padding(.trailing)
+                     */
                     }
                 }
             }

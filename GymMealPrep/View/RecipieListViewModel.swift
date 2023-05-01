@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 class RecipieListViewModel: ObservableObject {
     
-    var recipieArray: [Recipie] {
+    var image = Image("sampleRecipiePhoto")
+    
+    var recipieArray: [Recipie] = {
         [Recipie(),
          Recipie(),
          Recipie(),
          Recipie()]
-    }
+    }()
 }
