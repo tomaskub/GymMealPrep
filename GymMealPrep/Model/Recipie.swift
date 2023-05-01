@@ -7,23 +7,24 @@
 
 import Foundation
 
-struct Recipie {
+
+struct Recipie: Identifiable {
     var id: UUID
     var name: String
     var servings: Int
-    var timeCookingInMinutes: Int
-    var timePreparingInMinutes: Int
-    var timeWaitingInMinutes: Int
-    
-    var ingredients: [Ingredient]
-    
-    var instructions: [Instruction]
-    
+    var timeCookingInMinutes: Int?
+    var timePreparingInMinutes: Int?
+    var timeWaitingInMinutes: Int?
     var imageData: Data?
     
+    var ingredients: [Ingredient]
+    var instructions: [Instruction]
     var tags: [Tag]
     
-    var nutritionData: Nutrition
+    var nutritionData: Nutrition {
+        return ingredients.map({ $0.nutritionData }).reduce(Nutrition.zero, + ).divideBy(servings)
+        
+    }
     
     init(id: UUID, name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag], nutritionData: Nutrition) {
         self.id = id
@@ -36,30 +37,33 @@ struct Recipie {
         self.instructions = instructions
         self.imageData = imageData
         self.tags = tags
-        self.nutritionData = nutritionData
     }
     
-    init() {
-        self.init(id: UUID(),
-                  name: "Cilantro Lime Chicken",
-                  servings: 4,
-                  timeCookingInMinutes: 30,
-                  timePreparingInMinutes: 15,
-                  timeWaitingInMinutes: 5,
-                  ingredients: [
-                  Ingredient(food: Food(name: "Chicken breast"), quantity: 2, unitOfMeasure: "each", nutritionData: Nutrition()),
-                  Ingredient(food: Food(name: "Olive oil"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition()),
-                  Ingredient(food: Food(name: "Basmati rice"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition())],
-                  instructions: [
-                  Instruction(id: UUID(), step: 1, text: "Place the chicken in a ziploc bag together with the olive oil, garlic, cumin, salt, pepper, and juice of 1 lime. Allow it to marinate for 15-20 min over the counter."),
-                  
-                  Instruction(id: UUID(), step: 2, text: "Preheat a skillet over medium-high heat. Cook the chicken for 3-5 minutes per side, or until cooked through."),
-                  Instruction(id: UUID(), step: 3, text: "Set aside and allow it to sit for 10 minutes, then slice.")],
-                  tags: [Tag(id: UUID(), text: "Chicken", color: (0.5, 0.8, 0.1)),
-                         Tag(id: UUID(), text: "Rice", color: (0.5, 0.8, 0.1)),
-                         Tag(id: UUID(), text: "Cilantro", color: (0.5, 0.8, 0.1)),
-                         Tag(id: UUID(), text: "Lunch", color: (0.5, 0.8, 0.1)),
-                         Tag(id: UUID(), text: "Lime", color: (0.5, 0.8, 0.1))],
-                  nutritionData: Nutrition(calories: 800, carb: 30, fat: 18, protein: 38))
+    init(recipieMO: RecipieMO) {
+        self.id = recipieMO.id
+        self.name = recipieMO.name
+        self.servings = Int(recipieMO.servings)
+        self.timeCookingInMinutes = Int(recipieMO.timeCooking)
+        self.timePreparingInMinutes = Int(recipieMO.timePreparing)
+        self.timeWaitingInMinutes = Int(recipieMO.timeWaiting)
+        self.imageData = recipieMO.imageData
+        
+        if let tagsSet = recipieMO.tags {
+            self.tags = Array(_immutableCocoaArray: tagsSet).map({Tag(tagMO: $0)})
+        } else {
+            self.tags = []
+        }
+        
+        if let ingredientsSet = recipieMO.ingredients {
+            self.ingredients = Array(_immutableCocoaArray: ingredientsSet).map({ Ingredient(ingredientMO: $0)})
+        } else {
+            self.ingredients = []
+        }
+        
+        if let instructionsSet = recipieMO.instructions {
+            self.instructions = Array(_immutableCocoaArray: instructionsSet).map( { Instruction(instructionMO: $0) })
+        } else {
+            self.instructions = []
+        }
     }
 }
