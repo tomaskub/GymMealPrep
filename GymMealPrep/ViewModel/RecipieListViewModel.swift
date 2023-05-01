@@ -10,12 +10,10 @@ import SwiftUI
 
 class RecipieListViewModel: ObservableObject {
     
-    var image = Image("sampleRecipiePhoto")
-    
     var recipieArray: [Recipie] = {
-        [Recipie(),
-         Recipie(),
-         Recipie(),
-         Recipie()]
+        [SampleData.recipieCilantroLimeChicken,
+         SampleData.recipieCilantroLimeChicken,
+         SampleData.recipieCilantroLimeChicken,
+         SampleData.recipieCilantroLimeChicken]
     }()
 }

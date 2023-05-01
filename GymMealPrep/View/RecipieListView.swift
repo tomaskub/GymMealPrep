@@ -13,32 +13,17 @@ struct RecipieListView: View {
     
     var body: some View {
         List {
-            ForEach(viewModel.recipieArray, id: \.self.id) { recipie in
+            ForEach(viewModel.recipieArray) { recipie in
                 
-                HStack {
-                    viewModel.image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 100)
-                    VStack {
-                        Text(viewModel.recipieArray[0].name)
-                        HStack {
-                            Text(String(format: "%.0f", viewModel.recipieArray[0].nutritionData.calories))
-                            Text(String(format: "%.0f", viewModel.recipieArray[0].nutritionData.protein))
-                            Text(String(format: "%.0f", viewModel.recipieArray[0].nutritionData.fat))
-                            Text(String(format: "%.0f", viewModel.recipieArray[0].nutritionData.carb))
-                        }
-                    }
-                    
-                }
-                .listRowInsets(EdgeInsets())
-                .cornerRadius(10)
+                RecipeListRowView(viewModel: RecipeListRowViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+                
+                
             }
             .listRowSeparator(.hidden)
             .listRowBackground(
                 RoundedRectangle(cornerRadius: 5)
                     .background(.clear)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.gray.opacity(0.2))
                     .padding(EdgeInsets(top: 2, leading: 10, bottom: 2, trailing: 10))
             )
             
