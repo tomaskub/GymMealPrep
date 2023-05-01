@@ -16,6 +16,7 @@
         <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="ingredients" inverseEntity="RecipieMO"/>
     </entity>
     <entity name="InstructionMO" representedClassName="InstructionMO" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="step" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="instructions" inverseEntity="RecipieMO"/>

@@ -12,7 +12,7 @@ struct Tag: Identifiable {
     var text: String
     var color: (Double, Double, Double)?
     
-    init(id: UUID, text: String, color: (Double, Double, Double)) {
+    init(id: UUID, text: String, color: (Double, Double, Double)? = nil) {
         self.id = id
         self.text = text
         self.color = color
