@@ -7,7 +7,38 @@
 
 import Foundation
 
-struct Nutrition {
+struct Nutrition: AdditiveArithmetic {
+    
+    static func - (lhs: Nutrition, rhs: Nutrition) -> Nutrition {
+        let protein = lhs.protein - rhs.protein
+        let fat = lhs.fat - rhs.fat
+        let carbs = lhs.carb - rhs.carb
+        let cal = lhs.calories - rhs.calories
+        
+        return Nutrition(calories: cal, carb: carbs, fat: fat,protein: protein)
+    }
+    
+    static func + (lhs: Nutrition, rhs: Nutrition) -> Nutrition {
+        let protein = lhs.protein + rhs.protein
+        let fat = lhs.fat + rhs.fat
+        let carbs = lhs.carb + rhs.carb
+        let cal = lhs.carb + rhs.carb
+        return Nutrition(calories: cal, carb: carbs, fat: fat, protein: protein)
+    }
+    
+    /// Divide the nutrition object properties by given parameter
+    /// - Parameter divider: used to divide the protein, fat, carb, and calories
+    /// - Returns: Nutrition object with properties divided by parameter
+    func divideBy(_ divider: Int) -> Nutrition {
+        let protein = self.protein / Float(divider)
+        let fat = self.fat / Float(divider)
+        let carb = self.carb / Float(divider)
+        let calories = self.calories / Float(divider)
+        return Nutrition(calories: calories, carb: carb, fat: fat, protein: protein)
+    }
+    
+    static var zero: Nutrition = .init()
+    
     var calories: Float
     var carb: Float
     var fat: Float
