@@ -23,12 +23,10 @@ struct Ingredient {
     }
     
     init(ingredientMO: IngredientMO) {
-        guard let foodMO = ingredientMO.food else { return }
+        guard let foodMO = ingredientMO.food else { fatalError() }
         self.food = Food(foodMO: foodMO)
         self.quantity = ingredientMO.quantity
         self.unitOfMeasure = ingredientMO.unitOfMeasure
-        self.nutritionData = Nutrition(
-            calories: ingredientMO.calories,
-            carb: ingredientMO.carbs, fat: ingredientMO.fat, protein: ingredientMO.protein)
+        self.nutritionData = Nutrition(calories: ingredientMO.calories, carb: ingredientMO.carbs, fat: ingredientMO.fat, protein: ingredientMO.protein)
     }
 }
