@@ -17,31 +17,48 @@ struct RecipeHostView: View {
         ZStack {
             
             if isEditing != true {
-                                RecipieView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
-                
-                
+                RecipieView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
+                HStack {
+                    Spacer()
+                    VStack {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            Image(systemName: "pencil")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                                .background(
+                                    Circle()
+                                        .foregroundColor(.gray.opacity(0.8))
+                                        .frame(width: 30, height: 30))
+                        }
+                        Spacer()
+                    }
+                }
+                .padding()
             } else {
                 RecipeEditorView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
             }
-            //TODO: figure out why alignment on stacks dont work properly
-            HStack {
-                Spacer()
-                VStack {
-                    Button {
-                        isEditing.toggle()
-                    } label: {
-                        Image(systemName: "pencil")
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .background(
-                                Circle()
-                                    .foregroundColor(.gray.opacity(0.8))
-                                    .frame(width: 30, height: 30))
+            
+        }// END OF ZSTACK
+            .toolbar {
+                if isEditing {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            Image(systemName: "checkmark")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                                .background(
+                                    Circle()
+                                        .foregroundColor(.gray.opacity(0.8))
+                                        .frame(width: 30, height: 30))
+                        }
                     }
-                    Spacer()
                 }
-            }.padding()
-        }
+            }// END OF TOOLBAR
+        
     }
 }
 
