@@ -23,7 +23,9 @@ struct RecipeEditorView: View {
             
             informationSection
             Section("Tags") {
-                Text("Add new tag")
+                TextField("Add new tag", text: $viewModel.tagText) {
+                    viewModel.addTag()
+                }
                 ForEach(viewModel.recipie.tags) { tag in
                     Text(tag.text)
                         .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))

@@ -10,20 +10,22 @@ import SwiftUI
 
 class RecipieViewModel: ObservableObject {
     
-    var recipie: Recipie
+    //private
+    @Published var recipie: Recipie
     
     
+    //MARK: PUBLISHED PROPERTIES
     @Published var image: Image = Image("sampleRecipiePhoto")
-    
+    @Published var tagText = String()
     var totalTimeCookingInMinutes: Int {
-        return recipie.timeCookingInMinutes + recipie.timePreparingInMinutes + recipie.timeCookingInMinutes
+        return (recipie.timeCookingInMinutes ?? 0)  + (recipie.timePreparingInMinutes ?? 0) + (recipie.timeCookingInMinutes ?? 0)
     }
     
     var timeSummaryData: [(String, String)] {
         [
-            ("Prep", "\(recipie.timePreparingInMinutes)"),
-            ("Cook", "\(recipie.timeCookingInMinutes)"),
-            ("Wait", "\(recipie.timeWaitingInMinutes)"),
+            ("Prep", "\(recipie.timePreparingInMinutes ?? 0)"),
+            ("Cook", "\(recipie.timeCookingInMinutes ?? 0)"),
+            ("Wait", "\(recipie.timeWaitingInMinutes ?? 0)"),
             ("Total", "\(totalTimeCookingInMinutes)")
         ]
     }
@@ -38,7 +40,18 @@ class RecipieViewModel: ObservableObject {
     }
     
     
+    
     init(recipie: Recipie) {
         self.recipie = recipie
+        
+        
+        
     }
+    
+    func addTag() {
+        let tag = Tag(id: UUID(), text: tagText)
+        recipie.tags.append(tag)
+        tagText = String()
+    }
+    
 }
