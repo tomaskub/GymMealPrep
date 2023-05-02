@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */; };
 		D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */; };
 		D634FF8929FD42F50034B950 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8829FD42F50034B950 /* ContentView.swift */; };
 		D634FF8B29FD42F60034B950 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D634FF8A29FD42F60034B950 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 		D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB229FD44330034B950 /* PresistanceContainer.swift */; };
 		D634FFB529FD46D20034B950 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB429FD46D20034B950 /* DataManager.swift */; };
 		D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB629FD52100034B950 /* Model.xcdatamodeld */; };
+		D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA212A01238300574FE0 /* RecipeEditorView.swift */; };
 		D6C3402E29FD7314003F6E06 /* TagMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402029FD7314003F6E06 /* TagMO+CoreDataClass.swift */; };
 		D6C3402F29FD7314003F6E06 /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402129FD7314003F6E06 /* TagMO+CoreDataProperties.swift */; };
 		D6C3403029FD7314003F6E06 /* MealMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3402229FD7314003F6E06 /* MealMO+CoreDataClass.swift */; };
@@ -64,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHostView.swift; sourceTree = "<group>"; };
 		D634FF8329FD42F50034B950 /* GymMealPrep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymMealPrep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepApp.swift; sourceTree = "<group>"; };
 		D634FF8829FD42F50034B950 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 		D634FFB229FD44330034B950 /* PresistanceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresistanceContainer.swift; sourceTree = "<group>"; };
 		D634FFB429FD46D20034B950 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D634FFB729FD52100034B950 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D63AFA212A01238300574FE0 /* RecipeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecipeEditorView.swift; path = GymMealPrep/View/RecipeEditorView.swift; sourceTree = "<group>"; };
 		D6C3402029FD7314003F6E06 /* TagMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D6C3402129FD7314003F6E06 /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D6C3402229FD7314003F6E06 /* MealMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 		D634FF7A29FD42F50034B950 = {
 			isa = PBXGroup;
 			children = (
+				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
 				D634FF8529FD42F50034B950 /* GymMealPrep */,
 				D634FF9729FD42F60034B950 /* GymMealPrepTests */,
 				D634FFA129FD42F60034B950 /* GymMealPrepUITests */,
@@ -235,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */,
+				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
 				D6C3405129FE7362003F6E06 /* RecipieListView.swift */,
 				D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */,
 			);
@@ -388,9 +394,11 @@
 				D6C3405229FE7362003F6E06 /* RecipieListView.swift in Sources */,
 				D6C3403A29FD7314003F6E06 /* MealPlanMO+CoreDataClass.swift in Sources */,
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
+				D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */,
 				D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */,
 				D6C3403129FD7314003F6E06 /* MealMO+CoreDataProperties.swift in Sources */,
 				D6C3405429FE7458003F6E06 /* RecipieListViewModel.swift in Sources */,
+				D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */,
 				D634FFB529FD46D20034B950 /* DataManager.swift in Sources */,
 				D6C3404E29FD7FDE003F6E06 /* RecipieViewModel.swift in Sources */,
 				D6C3402E29FD7314003F6E06 /* TagMO+CoreDataClass.swift in Sources */,
