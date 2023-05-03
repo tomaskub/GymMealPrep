@@ -10,10 +10,7 @@ import SwiftUI
 struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
-    
-    @State var prepTime: String = String()
-    @State var cookTime: String = String()
-    @State var waitTime: String = String()
+    @State var isShowingSheet: Bool = true
     
     var body: some View {
         List {
@@ -26,24 +23,77 @@ struct RecipeEditorView: View {
             
             timeSection
             
-            Section("Ingredients") {
-                HStack {
-                    Spacer()
-                    Image(systemName: "plus.circle")
-                    Spacer()
-                }
-            }//END OF SECTION
+            ingredientSection
             
-            Section("Instructions") {
-                HStack {
-                    Spacer()
-                    Image(systemName: "plus.circle")
-                    Spacer()
-                }
-            }//END OF SECTION
+            instructionSection
             
         }//END OF LIST
+        .sheet(isPresented: $isShowingSheet) {
+            viewModel.addIngredient()
+        } content: {
+            Text("Ingredient editor")
+        }
     }//END OF BODY
+    
+    var instructionSection: some View {
+        Section("Instructions") {
+            ForEach($viewModel.recipe.instructions) { instruction in
+                HStack{
+                    Text("\(instruction.step.wrappedValue)")
+                        .padding(.trailing)
+                     
+                    TextField("Instructions", text: instruction.text)
+                    
+                }
+            }
+            .onDelete { indexSet in
+                viewModel.removeIngredient(at: indexSet)
+            }
+            .onMove { source, destination in
+                viewModel.moveInstruction(from: source, to: destination)
+            }
+            
+            HStack {
+                Spacer()
+                Image(systemName: "plus.circle")
+                Spacer()
+            }
+            .onTapGesture {
+                viewModel.addInstruction()
+            }
+        }//END OF SECTION
+    }
+    
+    var ingredientSection: some View {
+        Section("Ingredients") {
+            ForEach(viewModel.recipe.ingredients) { ingredient in
+                    HStack {
+                        Text(ingredient.food.name)
+                        Spacer()
+                        Text(String(format: "%.2f",ingredient.quantity))
+                        Text(ingredient.unitOfMeasure)
+                    }
+            }
+            .onDelete { indexSet in
+                viewModel.removeIngredient(at: indexSet)
+            }
+            .onMove { from, to in
+                viewModel.moveIngredient(from: from, to: to)
+            }
+            HStack {
+                Spacer()
+                Image(systemName: "plus.circle")
+                Spacer()
+            }
+            .onTapGesture {
+                //Here add code to get pop up with ingredient library navigation etc?
+//                viewModel.addIngredient()
+                isShowingSheet.toggle()
+            }
+            
+
+        }//END OF SECTION
+    }
     
     var timeSection: some View {
         Section("Cooking time") {

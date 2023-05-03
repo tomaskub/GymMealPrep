@@ -14,7 +14,7 @@ class RecipeViewModel: ObservableObject {
     //MARK: PUBLISHED PROPERTIES
     @Published var recipe: Recipe
     @Published var tagText = String()
-    
+    @Published var ingredient = Ingredient()
     
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
@@ -93,6 +93,25 @@ class RecipeViewModel: ObservableObject {
         }
     }
 }
+
+extension RecipeViewModel {
+    func deleteInstruction(at indexSet: IndexSet) {
+        recipe.instructions.remove(atOffsets: indexSet)
+    }
+    func moveInstruction(from start: IndexSet, to finish: Int) {
+        recipe.instructions.move(fromOffsets: start, toOffset: finish)
+        //update step values to match the position in the array
+        for i in 0..<recipe.instructions.count {
+            recipe.instructions[i].step = i+1
+        }
+    }
+    func addInstruction() {
+        let instruction = Instruction(id: UUID(), step: recipe.instructions.count + 1)
+        recipe.instructions.append(instruction)
+    }
+}
+
+//MARK: TAG EDIT
 extension RecipeViewModel {
     
     /// Create tag with a new UUID and tagText to the recipie referenced by view model
@@ -100,5 +119,19 @@ extension RecipeViewModel {
         let tag = Tag(id: UUID(), text: tagText)
         recipe.tags.append(tag)
         tagText = String()
-    }   
+    }
+}
+
+//MARK: INGREDIENT EDIT
+extension RecipeViewModel {
+    
+    func removeIngredient(at indexSet: IndexSet) {
+        recipe.ingredients.remove(atOffsets: indexSet)
+    }
+    func addIngredient() {
+        recipe.ingredients.append(Ingredient(food: Food(name: "Lime juice"), quantity: 3, unitOfMeasure: "whole", nutritionData: Nutrition()))
+    }
+    func moveIngredient(from: IndexSet, to: Int) {
+        recipe.ingredients.move(fromOffsets: from, toOffset: to)
+    }
 }
