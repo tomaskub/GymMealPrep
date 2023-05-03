@@ -86,9 +86,10 @@ struct RecipeEditorView: View {
     
     var tagSection: some View {
         Section("Tags") {
-            TextField("Add new tag", text: $viewModel.tagText) {
-                viewModel.addTag()
-            }
+            TextField("Add new tag", text: $viewModel.tagText)
+                .onSubmit {
+                    viewModel.addTag()
+                }
             
             ChipView(tags: $viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 80, alignment: .leading) { tag in
                 Text(tag.text)
@@ -99,6 +100,7 @@ struct RecipeEditorView: View {
             }
         }// END OF SECTION
     }
+    
     var nutritionSection: some View {
         Section("Nutrition value") {
             VStack(alignment: .leading) {
@@ -115,7 +117,9 @@ struct RecipeEditorView: View {
                 }
                 
             }
-            Stepper("Servings: \(servings)", value: $servings)
+            Stepper("Servings: \(viewModel.recipe.servings)", value: $viewModel.recipe.servings)
+                .font(.title3)
+                .padding()
         }
     }
     
