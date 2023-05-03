@@ -37,7 +37,7 @@ struct RecipeView: View {
                     .listRowSeparator(.hidden)
 
                     Section("Ingredients:") {
-                        ForEach(viewModel.recipe.ingredients, id: \.food.name) {
+                        ForEach(viewModel.recipe.ingredients) {
                             i in
                             HStack {
                                 Text(i.food.name)
@@ -53,7 +53,7 @@ struct RecipeView: View {
                             HStack{
                                 Text("\(instruction.step)")
                                     .padding(.trailing)
-                                Text(instruction.text ?? "")
+                                Text(instruction.text)
                             }
                         }
                     }

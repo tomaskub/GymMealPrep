@@ -10,9 +10,9 @@ import Foundation
 struct Instruction: Identifiable {
     var id: UUID
     var step: Int
-    var text: String?
+    var text: String
     
-    init(id: UUID, step: Int, text: String? = nil) {
+    init(id: UUID, step: Int, text: String = String()) {
         self.id = id
         self.step = step
         self.text = text
@@ -21,6 +21,10 @@ struct Instruction: Identifiable {
     init(instructionMO: InstructionMO) {
         self.id = instructionMO.id
         self.step = Int(instructionMO.step)
-        self.text = instructionMO.text
+        if let text = instructionMO.text {
+            self.text = text
+        } else {
+            self.text = String()
+        }
     }
 }

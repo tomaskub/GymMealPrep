@@ -32,7 +32,14 @@ struct Ingredient: Identifiable {
         self.nutritionData = Nutrition(calories: ingredientMO.calories, carb: ingredientMO.carbs, fat: ingredientMO.fat, protein: ingredientMO.protein)
     }
     
-    
+    /// Initializer creating an empty ingredient to be overriden 
+    init() {
+        self.id = UUID()
+        self.food = Food(name: String())
+        self.quantity = Double()
+        self.unitOfMeasure = String()
+        self.nutritionData = Nutrition.zero
+    }
     
     
 }
