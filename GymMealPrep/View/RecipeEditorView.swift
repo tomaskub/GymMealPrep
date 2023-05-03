@@ -11,9 +11,6 @@ struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
     
-    @State var recipieTitle: String = ""
-    @State var servings: Int = Int()
-    
     @State var prepTime: String = String()
     @State var cookTime: String = String()
     @State var waitTime: String = String()
@@ -27,32 +24,7 @@ struct RecipeEditorView: View {
             
             nutritionSection
             
-            Section("Time data") {
-                
-                HStack {
-                    Text("Time:")
-                        .font(.title3)
-                    Spacer()
-                    Text("Total: \(0.0)")
-                }
-                HStack {
-                    Text("Prep:")
-                    Spacer()
-                    TextField("0 minutes", text: $prepTime)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 100)
-                        .keyboardType(.numbersAndPunctuation)
-                }
-                
-                HStack {
-                    Text("Cook:")
-                    TextField("0 minutes", text: $cookTime)
-                }
-                HStack {
-                    Text("Wait:")
-                    TextField("0 minutes", text: $waitTime)
-                }
-            } // END OF SECTION
+            timeSection
             
             Section("Ingredients") {
                 HStack {
@@ -72,6 +44,45 @@ struct RecipeEditorView: View {
             
         }//END OF LIST
     }//END OF BODY
+    
+    var timeSection: some View {
+        Section("Cooking time") {
+            
+            HStack {
+                Text("Time total:")
+                Spacer()
+                Text("\(viewModel.totalTimeCookingInMinutes) min")
+            }
+               
+            HStack {
+                Text("Prep:")
+                Spacer()
+                TextField("0 minutes", text: $viewModel.timePreparingInMinutes)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 100)
+                    .keyboardType(.numbersAndPunctuation)
+            }
+            
+            HStack {
+                Text("Cook:")
+                Spacer()
+                TextField("0 minutes", text: $viewModel.timeCookingInMinutes)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 100)
+                    .keyboardType(.numbersAndPunctuation)
+            }
+            .listRowSeparator(.hidden)
+            HStack {
+                Text("Wait:")
+                Spacer()
+                TextField("0 minutes", text: $viewModel.timeWaitingInMinutes)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 100)
+                    .keyboardType(.numbersAndPunctuation)
+            }
+            .listRowSeparator(.hidden)
+        } // END OF SECTION
+    }
     
     var informationSection: some View {
         Section("Recipe information") {

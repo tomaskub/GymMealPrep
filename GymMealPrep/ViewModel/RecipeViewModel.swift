@@ -29,6 +29,33 @@ class RecipeViewModel: ObservableObject {
         ]
     }
     
+    @Published var timePreparingInMinutes: String {
+        didSet {
+            let filtered = timePreparingInMinutes.filter({ "0123456789".contains($0) })
+            if let newTime = Int(filtered) {
+                recipe.timePreparingInMinutes = newTime
+            }
+        }
+    }
+    
+    @Published var timeCookingInMinutes: String {
+        didSet {
+            let filtered = timeCookingInMinutes.filter({ "0123456789".contains($0) })
+            if let newTime = Int(filtered) {
+                recipe.timeCookingInMinutes = newTime
+            }
+        }
+    }
+    
+    @Published var timeWaitingInMinutes: String {
+        didSet {
+            let filtered = timeWaitingInMinutes.filter({ "0123456789".contains($0) })
+            if let newTime = Int(filtered) {
+                recipe.timeWaitingInMinutes = newTime
+            }
+        }
+    }
+    
     var nutritionalData: [String] {
         [
             String(format: "%.0f", recipe.nutritionData.calories) + "\n Cal",
@@ -49,15 +76,29 @@ class RecipeViewModel: ObservableObject {
     
     init(recipe: Recipe) {
         self.recipe = recipe
+        if let timePreparing = recipe.timePreparingInMinutes {
+            self.timePreparingInMinutes = "\(timePreparing)"
+        } else {
+            self.timePreparingInMinutes = String()
+            }
+        if let timeCooking = recipe.timeCookingInMinutes {
+            self.timeCookingInMinutes = "\(timeCooking)"
+        } else {
+            self.timeCookingInMinutes = String()
+        }
+        if let timeWaiting = recipe.timeWaitingInMinutes {
+            self.timeWaitingInMinutes = "\(timeWaiting)"
+        } else {
+            self.timeWaitingInMinutes = String()
+        }
     }
 }
 extension RecipeViewModel {
     
+    /// Create tag with a new UUID and tagText to the recipie referenced by view model
     func addTag() {
         let tag = Tag(id: UUID(), text: tagText)
         recipe.tags.append(tag)
         tagText = String()
-        print("New tag added")
-    }
-    
+    }   
 }
