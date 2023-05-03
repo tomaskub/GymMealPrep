@@ -12,12 +12,12 @@ struct RecipeHostView: View {
     
     @Environment(\.editMode) var editMode
     @State var isEditing: Bool = false
-    
+    @StateObject var viewModel: RecipeViewModel
     var body: some View {
         ZStack {
             
             if isEditing != true {
-                RecipeView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+                RecipeView(viewModel: viewModel)
                 HStack {
                     Spacer()
                     VStack {
@@ -37,7 +37,7 @@ struct RecipeHostView: View {
                 }
                 .padding()
             } else {
-                RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+                RecipeEditorView(viewModel: viewModel)
             }
             
         }// END OF ZSTACK
@@ -65,7 +65,7 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeHostView()
+            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
         }
     }
 }

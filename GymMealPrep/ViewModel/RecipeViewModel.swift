@@ -7,17 +7,14 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 class RecipeViewModel: ObservableObject {
     
-    //private
-    @Published var recipe: Recipe
-    
-    
     //MARK: PUBLISHED PROPERTIES
-    @Published var image: Image = Image("sampleRecipiePhoto")
+    @Published var recipe: Recipe
     @Published var tagText = String()
-    @Published var tagRows: [[Tag]] = []
+    
     
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
@@ -41,6 +38,13 @@ class RecipeViewModel: ObservableObject {
         ]
     }
     
+    var image: Image {
+        if let imageData = recipe.imageData, let uiImage = UIImage(data: imageData) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image(systemName: "takeoutbag.and.cup.and.straw")
+        }
+    }
     
     
     init(recipe: Recipe) {
@@ -53,6 +57,7 @@ extension RecipeViewModel {
         let tag = Tag(id: UUID(), text: tagText)
         recipe.tags.append(tag)
         tagText = String()
+        print("New tag added")
     }
     
 }

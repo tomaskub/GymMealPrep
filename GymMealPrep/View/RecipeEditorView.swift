@@ -22,18 +22,9 @@ struct RecipeEditorView: View {
         List {
             
             informationSection
-            Section("Tags") {
-                TextField("Add new tag", text: $viewModel.tagText) {
-                    viewModel.addTag()
-                }
-                ForEach(viewModel.recipie.tags) { tag in
-                    Text(tag.text)
-                        .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-                        .background(
-                            Capsule()
-                                .foregroundColor(.blue))
-                }
-            }// END OF SECTION
+            
+            tagSection
+            
             nutritionSection
             
             Section("Time data") {
