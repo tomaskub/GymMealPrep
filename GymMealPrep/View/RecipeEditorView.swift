@@ -93,6 +93,21 @@ struct RecipeEditorView: View {
         }
     }
     
+    var tagSection: some View {
+        Section("Tags") {
+            TextField("Add new tag", text: $viewModel.tagText) {
+                viewModel.addTag()
+            }
+            
+            ChipView(tags: $viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 80, alignment: .leading) { tag in
+                Text(tag.text)
+                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    .background(
+                        Capsule()
+                            .foregroundColor(.blue))
+            }
+        }// END OF SECTION
+    }
     var nutritionSection: some View {
         Section("Nutrition value") {
             VStack(alignment: .leading) {

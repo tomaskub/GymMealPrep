@@ -132,8 +132,9 @@ struct RecipeView: View {
             }
     }
     var tagChipView: some View {
-
-        ChipView(viewModel: ChipViewModel(tags: viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 20), alignment: .leading) { tag in
+        
+        
+        ChipView(tags: $viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 20, alignment: .leading) { tag in
                     Text(tag.text)
                         .foregroundColor(.white)
                         .padding(.horizontal)
@@ -142,6 +143,7 @@ struct RecipeView: View {
                             Capsule()
                             .foregroundColor(.blue))
                 }
+         
     }
 }
 

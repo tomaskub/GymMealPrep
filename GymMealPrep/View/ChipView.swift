@@ -9,37 +9,59 @@ import SwiftUI
 
 struct ChipView<Content: View>: View {
     
-    @StateObject var viewModel: ChipViewModel
+    @Binding var tags: [Tag]
+    @State var tagSize: [Tag : CGSize] = [:]
+    
+    let avaliableWidth: CGFloat
     let alignment: HorizontalAlignment
     let content: (Tag) -> Content
     
     
     var body: some View {
         VStack(alignment: alignment) {
-            ForEach(viewModel.rows, id: \.self) { row in
+            ForEach(sortToRows(), id: \.self) { row in
                 HStack {
                     ForEach(row) { tag in
                         content(tag)
                             .fixedSize()
                             .readSize { size in
-                                viewModel.tagsSize[tag] = size
+                                tagSize[tag] = size
                             }
                     }
                 }// END OF HSTACK
             }
         }// END OF VSTACK
     }// END OF BODY
+    
+    private func sortToRows() -> [[Tag]] {
+        var rows: [[Tag]] = [[]]
+        var currentRow = 0
+        var remainingWidth = avaliableWidth
+        
+        for tag in tags {
+            let tagSize: CGFloat = tagSize[tag, default: CGSize(width: avaliableWidth, height: 1)].width
+            if remainingWidth - tagSize >= 0 {
+                rows[currentRow].append(tag)
+            } else {
+                currentRow += 1
+                rows.append([tag])
+                remainingWidth = avaliableWidth
+            }
+            remainingWidth -= tagSize
+        }
+        return rows
+    }
+    
 }
 
 struct ChipView_Previews: PreviewProvider {
     static var previews: some View {
-        ChipView(viewModel:
-                    ChipViewModel(tags:
-                                    [Tag(text: "Rice"),
+        ChipView(tags:
+                .constant([Tag(text: "Rice"),
                                      Tag(text: "Chicken"),
                                      Tag(text: "Dinner"),
-                                     Tag(text: "Lunch")],
-                                  avaliableWidth: 200), alignment: .leading) { tag in
+                                     Tag(text: "Lunch")]),
+                                  avaliableWidth: 200, alignment: .leading) { tag in
             Text(tag.text)
                 .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
                 .background(
