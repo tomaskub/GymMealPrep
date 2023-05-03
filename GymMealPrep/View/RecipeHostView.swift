@@ -17,7 +17,7 @@ struct RecipeHostView: View {
         ZStack {
             
             if isEditing != true {
-                RecipieView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
+                RecipeView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
                 HStack {
                     Spacer()
                     VStack {
@@ -37,7 +37,7 @@ struct RecipeHostView: View {
                 }
                 .padding()
             } else {
-                RecipeEditorView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
+                RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
             }
             
         }// END OF ZSTACK

@@ -9,7 +9,7 @@ import Foundation
 
 class SampleData {
     
-    static let recipieCilantroLimeChicken = Recipie(
+    static let recipieCilantroLimeChicken = Recipe(
         id: UUID(),
         name: "Cilantro Lime Chicken",
         servings: 4,
@@ -17,7 +17,7 @@ class SampleData {
         timePreparingInMinutes: 15,
         timeWaitingInMinutes: 5,
         ingredients: [
-            Ingredient(food: Food(id: UUID(), name: "Chicken breast"), quantity: 2, unitOfMeasure: "each", nutritionData: Nutrition()),
+            Ingredient(food: Food(id: UUID(), name: "Chicken breast"), quantity: 2, unitOfMeasure: "each", nutritionData: Nutrition(calories: 600, carb: 12, fat: 10, protein: 30)),
             Ingredient(food: Food(id: UUID(), name: "Olive oil"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition()),
             Ingredient(food: Food(id: UUID(), name: "Basmati rice"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition())],
         instructions: [
@@ -28,7 +28,8 @@ class SampleData {
                Tag(id: UUID(), text: "Rice"),
                Tag(id: UUID(), text: "Cilantro"),
                Tag(id: UUID(), text: "Lunch"),
-               Tag(id: UUID(), text: "Lime")],
+               Tag(id: UUID(), text: "Lime"),
+              Tag(text: "Dinner")],
         nutritionData: Nutrition(calories: 800, carb: 30, fat: 18, protein: 38))
     
 }

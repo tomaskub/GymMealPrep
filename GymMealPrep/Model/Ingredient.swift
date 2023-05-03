@@ -29,4 +29,11 @@ struct Ingredient {
         self.unitOfMeasure = ingredientMO.unitOfMeasure
         self.nutritionData = Nutrition(calories: ingredientMO.calories, carb: ingredientMO.carbs, fat: ingredientMO.fat, protein: ingredientMO.protein)
     }
+    
+    
+    
+    
 }
+
+
+

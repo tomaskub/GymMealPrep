@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Recipie: Identifiable {
+struct Recipe: Identifiable {
     var id: UUID
     var name: String
     var servings: Int
@@ -50,6 +50,7 @@ struct Recipie: Identifiable {
         
         if let tagsSet = recipieMO.tags {
             self.tags = Array(_immutableCocoaArray: tagsSet).map({Tag(tagMO: $0)})
+            
         } else {
             self.tags = []
         }

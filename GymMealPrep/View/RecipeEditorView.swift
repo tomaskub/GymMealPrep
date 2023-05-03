@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeEditorView: View {
     
-    @ObservedObject var viewModel: RecipieViewModel
+    @ObservedObject var viewModel: RecipeViewModel
     
     @State var recipieTitle: String = ""
     @State var servings: Int = Int()
@@ -89,7 +89,7 @@ struct RecipeEditorView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(height: 250)
                 .listRowInsets(EdgeInsets())
-            TextField("Enter recipie name", text: $viewModel.recipie.name)
+            TextField("Enter recipie name", text: $viewModel.recipe.name)
         }
     }
     
@@ -112,10 +112,11 @@ struct RecipeEditorView: View {
             Stepper("Servings: \(servings)", value: $servings)
         }
     }
+    
 }
 
 struct RecipeEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeEditorView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
+        RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
     }
 }

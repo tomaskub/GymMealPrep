@@ -12,7 +12,7 @@ import UIKit
 
 class RecipeListRowViewModel: ObservableObject {
     
-    var recipe: Recipie
+    var recipe: Recipe
     
     var name: String {
         recipe.name
@@ -39,7 +39,7 @@ class RecipeListRowViewModel: ObservableObject {
         return Image(uiImage: uiImage)
     }
          
-    init(recipe: Recipie) {
+    init(recipe: Recipe) {
         self.recipe = recipe
     }
 }

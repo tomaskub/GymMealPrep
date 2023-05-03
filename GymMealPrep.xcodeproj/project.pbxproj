@@ -37,10 +37,10 @@
 		D6C3403D29FD763D003F6E06 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3403C29FD763D003F6E06 /* Food.swift */; };
 		D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3403E29FD769C003F6E06 /* Ingredient.swift */; };
 		D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404029FD7735003F6E06 /* Nutrition.swift */; };
-		D6C3404329FD7D17003F6E06 /* Recipie.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404229FD7D17003F6E06 /* Recipie.swift */; };
+		D6C3404329FD7D17003F6E06 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404229FD7D17003F6E06 /* Recipe.swift */; };
 		D6C3404529FD7E4E003F6E06 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404429FD7E4E003F6E06 /* Tag.swift */; };
-		D6C3404C29FD7FB9003F6E06 /* RecipieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */; };
-		D6C3404E29FD7FDE003F6E06 /* RecipieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404D29FD7FDE003F6E06 /* RecipieViewModel.swift */; };
+		D6C3404C29FD7FB9003F6E06 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */; };
+		D6C3404E29FD7FDE003F6E06 /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404D29FD7FDE003F6E06 /* RecipeViewModel.swift */; };
 		D6C3405029FD8085003F6E06 /* Instruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3404F29FD8085003F6E06 /* Instruction.swift */; };
 		D6C3405229FE7362003F6E06 /* RecipieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405129FE7362003F6E06 /* RecipieListView.swift */; };
 		D6C3405429FE7458003F6E06 /* RecipieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405329FE7458003F6E06 /* RecipieListViewModel.swift */; };
@@ -104,10 +104,10 @@
 		D6C3403C29FD763D003F6E06 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		D6C3403E29FD769C003F6E06 /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		D6C3404029FD7735003F6E06 /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
-		D6C3404229FD7D17003F6E06 /* Recipie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipie.swift; sourceTree = "<group>"; };
+		D6C3404229FD7D17003F6E06 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		D6C3404429FD7E4E003F6E06 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieView.swift; sourceTree = "<group>"; };
-		D6C3404D29FD7FDE003F6E06 /* RecipieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieViewModel.swift; sourceTree = "<group>"; };
+		D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
+		D6C3404D29FD7FDE003F6E06 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
 		D6C3404F29FD8085003F6E06 /* Instruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
 		D6C3405129FE7362003F6E06 /* RecipieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieListView.swift; sourceTree = "<group>"; };
 		D6C3405329FE7458003F6E06 /* RecipieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipieListViewModel.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 			children = (
 				D6C3403C29FD763D003F6E06 /* Food.swift */,
 				D6C3403E29FD769C003F6E06 /* Ingredient.swift */,
-				D6C3404229FD7D17003F6E06 /* Recipie.swift */,
+				D6C3404229FD7D17003F6E06 /* Recipe.swift */,
 				D6C3404F29FD8085003F6E06 /* Instruction.swift */,
 				D6C3404429FD7E4E003F6E06 /* Tag.swift */,
 				D6C3404029FD7735003F6E06 /* Nutrition.swift */,
@@ -249,7 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
-				D6C3404B29FD7FB9003F6E06 /* RecipieView.swift */,
+				D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */,
 				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
 				D63AFA232A019E2E00574FE0 /* ChipView.swift */,
 				D6C3405129FE7362003F6E06 /* RecipieListView.swift */,
@@ -262,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				D6EC92F32A02597E00863F2D /* ChipViewModel.swift */,
-				D6C3404D29FD7FDE003F6E06 /* RecipieViewModel.swift */,
+				D6C3404D29FD7FDE003F6E06 /* RecipeViewModel.swift */,
 				D6C3405529FFA609003F6E06 /* RecipeListRowViewModel.swift */,
 				D6C3405329FE7458003F6E06 /* RecipieListViewModel.swift */,
 			);
@@ -429,7 +429,7 @@
 				D6C3405429FE7458003F6E06 /* RecipieListViewModel.swift in Sources */,
 				D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */,
 				D634FFB529FD46D20034B950 /* DataManager.swift in Sources */,
-				D6C3404E29FD7FDE003F6E06 /* RecipieViewModel.swift in Sources */,
+				D6C3404E29FD7FDE003F6E06 /* RecipeViewModel.swift in Sources */,
 				D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */,
 				D6C3402E29FD7314003F6E06 /* TagMO+CoreDataClass.swift in Sources */,
 				D6C3403429FD7314003F6E06 /* IngredientMO+CoreDataClass.swift in Sources */,
@@ -443,13 +443,13 @@
 				D6C3405029FD8085003F6E06 /* Instruction.swift in Sources */,
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
 				D6C3403529FD7314003F6E06 /* IngredientMO+CoreDataProperties.swift in Sources */,
-				D6C3404329FD7D17003F6E06 /* Recipie.swift in Sources */,
+				D6C3404329FD7D17003F6E06 /* Recipe.swift in Sources */,
 				D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */,
 				D6C3403829FD7314003F6E06 /* FoodMO+CoreDataClass.swift in Sources */,
 				D6C3403629FD7314003F6E06 /* InstructionMO+CoreDataClass.swift in Sources */,
 				D6C3405629FFA609003F6E06 /* RecipeListRowViewModel.swift in Sources */,
 				D6C3403D29FD763D003F6E06 /* Food.swift in Sources */,
-				D6C3404C29FD7FB9003F6E06 /* RecipieView.swift in Sources */,
+				D6C3404C29FD7FB9003F6E06 /* RecipeView.swift in Sources */,
 				D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */,
 				D6C3403329FD7314003F6E06 /* RecipieMO+CoreDataProperties.swift in Sources */,
 				D6C3403929FD7314003F6E06 /* FoodMO+CoreDataProperties.swift in Sources */,

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct RecipieView: View {
+struct RecipeView: View {
     
-    @StateObject var viewModel: RecipieViewModel
+    @StateObject var viewModel: RecipeViewModel
     
     var body: some View {
         ZStack {
@@ -37,7 +37,7 @@ struct RecipieView: View {
                     .listRowSeparator(.hidden)
 
                     Section("Ingredients:") {
-                        ForEach(viewModel.recipie.ingredients, id: \.food.name) {
+                        ForEach(viewModel.recipe.ingredients, id: \.food.name) {
                             i in
                             HStack {
                                 Text(i.food.name)
@@ -49,7 +49,7 @@ struct RecipieView: View {
                         }
                     }
                     Section("Instructions") {
-                        ForEach(viewModel.recipie.instructions) { instruction in
+                        ForEach(viewModel.recipe.instructions) { instruction in
                             HStack{
                                 Text("\(instruction.step)")
                                     .padding(.trailing)
@@ -86,7 +86,7 @@ struct RecipieView: View {
             Text("Servings:")
                 .font(.title3)
                 .fontWeight(.semibold)
-            Text("\(viewModel.recipie.servings)")
+            Text("\(viewModel.recipe.servings)")
         }
     }
     
@@ -121,7 +121,7 @@ struct RecipieView: View {
                     
                     LinearGradient(colors: [.black, .black.opacity(0.0)], startPoint: .bottom, endPoint: .center)
                     HStack {
-                        Text(viewModel.recipie.name)
+                        Text(viewModel.recipe.name)
                             .font(.largeTitle)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
@@ -133,7 +133,7 @@ struct RecipieView: View {
     }
     var tagChipView: some View {
 
-        ChipView(viewModel: ChipViewModel(tags: viewModel.recipie.tags, avaliableWidth: UIScreen.main.bounds.width - 20), alignment: .leading) { tag in
+        ChipView(viewModel: ChipViewModel(tags: viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 20), alignment: .leading) { tag in
                     Text(tag.text)
                         .foregroundColor(.white)
                         .padding(.horizontal)
@@ -148,7 +148,7 @@ struct RecipieView: View {
 struct RecipieView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipieView(viewModel: RecipieViewModel(recipie: SampleData.recipieCilantroLimeChicken))
+            RecipeView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
         }
     }
 }

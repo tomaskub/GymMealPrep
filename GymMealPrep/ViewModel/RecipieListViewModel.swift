@@ -10,7 +10,7 @@ import SwiftUI
 
 class RecipieListViewModel: ObservableObject {
     
-    var recipieArray: [Recipie] = {
+    var recipieArray: [Recipe] = {
         [SampleData.recipieCilantroLimeChicken,
          SampleData.recipieCilantroLimeChicken,
          SampleData.recipieCilantroLimeChicken,
