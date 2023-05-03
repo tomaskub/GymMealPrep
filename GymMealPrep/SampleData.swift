@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
-class SampleData {
+struct SampleData {
+    
+    static let imageData = UIImage(named: "sampleRecipiePhoto")?.jpegData(compressionQuality: 1)
     
     static let recipieCilantroLimeChicken = Recipe(
         id: UUID(),
@@ -24,6 +27,7 @@ class SampleData {
             Instruction(id: UUID(), step: 1, text: "Place the chicken in a ziploc bag together with the olive oil, garlic, cumin, salt, pepper, and juice of 1 lime. Allow it to marinate for 15-20 min over the counter."),
             Instruction(id: UUID(), step: 2, text: "Preheat a skillet over medium-high heat. Cook the chicken for 3-5 minutes per side, or until cooked through."),
             Instruction(id: UUID(), step: 3, text: "Set aside and allow it to sit for 10 minutes, then slice.")],
+        imageData: imageData,
         tags: [Tag(id: UUID(), text: "Chicken"),
                Tag(id: UUID(), text: "Rice"),
                Tag(id: UUID(), text: "Cilantro"),
