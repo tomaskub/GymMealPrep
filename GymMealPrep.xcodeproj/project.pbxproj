@@ -49,6 +49,7 @@
 		D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405929FFCE03003F6E06 /* SampleData.swift */; };
 		D6EC92F72A027EA800863F2D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F62A027EA800863F2D /* ViewExtensions.swift */; };
 		D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */; };
+		D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		D6C3405929FFCE03003F6E06 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		D6EC92F62A027EA800863F2D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
+		D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
+				D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */,
 				D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */,
 				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
 				D63AFA232A019E2E00574FE0 /* ChipView.swift */,
@@ -444,6 +447,7 @@
 				D6C3403829FD7314003F6E06 /* FoodMO+CoreDataClass.swift in Sources */,
 				D6C3403629FD7314003F6E06 /* InstructionMO+CoreDataClass.swift in Sources */,
 				D6C3405629FFA609003F6E06 /* RecipeListRowViewModel.swift in Sources */,
+				D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */,
 				D6C3403D29FD763D003F6E06 /* Food.swift in Sources */,
 				D6C3404C29FD7FB9003F6E06 /* RecipeView.swift in Sources */,
 				D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */,
