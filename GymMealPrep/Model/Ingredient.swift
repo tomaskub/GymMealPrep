@@ -7,15 +7,16 @@
 
 import Foundation
 
-struct Ingredient {
-    
+struct Ingredient: Identifiable {
+    var id: UUID
     var food: Food
     var quantity: Double
     var unitOfMeasure: String
     
     var nutritionData: Nutrition
     
-    init(food: Food, quantity: Double, unitOfMeasure: String, nutritionData: Nutrition) {
+    init(id: UUID = UUID(), food: Food, quantity: Double, unitOfMeasure: String, nutritionData: Nutrition) {
+        self.id = id
         self.food = food
         self.quantity = quantity
         self.unitOfMeasure = unitOfMeasure
@@ -23,6 +24,7 @@ struct Ingredient {
     }
     
     init(ingredientMO: IngredientMO) {
+        self.id = ingredientMO.id
         guard let foodMO = ingredientMO.food else { fatalError() }
         self.food = Food(foodMO: foodMO)
         self.quantity = ingredientMO.quantity

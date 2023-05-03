@@ -15,7 +15,7 @@ extension IngredientMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<IngredientMO> {
         return NSFetchRequest<IngredientMO>(entityName: "IngredientMO")
     }
-
+    @NSManaged public var id: UUID
     @NSManaged public var calories: Float
     @NSManaged public var carbs: Float
     @NSManaged public var fat: Float
