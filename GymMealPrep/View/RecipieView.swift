@@ -23,8 +23,8 @@ struct RecipieView: View {
                     Section {
                         titleBanner
                             .listRowInsets(EdgeInsets())
-                        tagScrollView
-                            .listRowInsets(EdgeInsets())
+                        tagChipView
+                            .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                         HStack {
                             Spacer()
                             servingSummary
@@ -127,21 +127,13 @@ struct RecipieView: View {
                             .foregroundColor(.white)
                             .padding(.leading)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        /*
-                        Image(systemName: "pencil.circle")
-                            .foregroundColor(.white)
-                            .font(.title)
-                            .padding(.trailing)
-                     */
                     }
                 }
             }
     }
-    var tagScrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(viewModel.recipie.tags) { tag in
+    var tagChipView: some View {
+
+        ChipView(viewModel: ChipViewModel(tags: viewModel.recipie.tags, avaliableWidth: UIScreen.main.bounds.width - 20), alignment: .leading) { tag in
                     Text(tag.text)
                         .foregroundColor(.white)
                         .padding(.horizontal)
@@ -150,8 +142,6 @@ struct RecipieView: View {
                             Capsule()
                             .foregroundColor(.blue))
                 }
-            }
-        }
     }
 }
 

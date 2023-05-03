@@ -10,10 +10,12 @@ import SwiftUI
 struct ChipView<Content: View>: View {
     
     @StateObject var viewModel: ChipViewModel
+    let alignment: HorizontalAlignment
     let content: (Tag) -> Content
     
+    
     var body: some View {
-        VStack {
+        VStack(alignment: alignment) {
             ForEach(viewModel.rows, id: \.self) { row in
                 HStack {
                     ForEach(row) { tag in
@@ -37,7 +39,7 @@ struct ChipView_Previews: PreviewProvider {
                                      Tag(text: "Chicken"),
                                      Tag(text: "Dinner"),
                                      Tag(text: "Lunch")],
-                                  avaliableWidth: 200)) { tag in
+                                  avaliableWidth: 200), alignment: .leading) { tag in
             Text(tag.text)
                 .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
                 .background(
