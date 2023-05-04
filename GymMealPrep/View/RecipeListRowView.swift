@@ -55,9 +55,21 @@ struct RecipeListRowView: View {
 
 struct RecipeListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack{
-            RecipeListRowView(SampleData.recipieCilantroLimeChicken)
-            RecipeListRowView(SampleData.recipieNoPhoto)
+        ZStack {
+            Color.gray.ignoresSafeArea()
+            
+            VStack {
+                
+                RecipeListRowView(SampleData.recipieCilantroLimeChicken)
+                    .background(.white)
+                    .cornerRadius(10)
+                
+                RecipeListRowView(SampleData.recipieNoPhoto)
+                    .foregroundColor(.white)
+                    .background(.black)
+                    .cornerRadius(10)
+            }
+            .padding()
         }
     }
 }
