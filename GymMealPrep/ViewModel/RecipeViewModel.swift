@@ -14,7 +14,20 @@ class RecipeViewModel: ObservableObject {
     //MARK: PUBLISHED PROPERTIES
     @Published var recipe: Recipe
     @Published var tagText = String()
-    @Published var ingredient = Ingredient()
+    @Published var selectedIngredient: Ingredient?
+    
+    @Published var ingredientToSave: Ingredient? {
+        didSet {
+            if let ingredientToSave {
+                if let i = recipe.ingredients.firstIndex(where: {ingredientToSave.id == $0.id}) {
+                    recipe.ingredients[i] = ingredientToSave
+                } else {
+                    recipe.ingredients.append(ingredientToSave)
+                }
+            }
+        }
+    }
+    
     
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
@@ -128,9 +141,7 @@ extension RecipeViewModel {
     func removeIngredient(at indexSet: IndexSet) {
         recipe.ingredients.remove(atOffsets: indexSet)
     }
-    func addIngredient() {
-        recipe.ingredients.append(Ingredient(food: Food(name: "Lime juice"), quantity: 3, unitOfMeasure: "whole", nutritionData: Nutrition()))
-    }
+    
     func moveIngredient(from: IndexSet, to: Int) {
         recipe.ingredients.move(fromOffsets: from, toOffset: to)
     }

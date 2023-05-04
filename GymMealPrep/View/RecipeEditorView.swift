@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
-    @State var isShowingSheet: Bool = true
+    
     
     var body: some View {
         List {
@@ -28,10 +28,8 @@ struct RecipeEditorView: View {
             instructionSection
             
         }//END OF LIST
-        .sheet(isPresented: $isShowingSheet) {
-            viewModel.addIngredient()
-        } content: {
-            Text("Ingredient editor")
+        .sheet(item: $viewModel.selectedIngredient) { _ in
+            IngredientEditorView(editedIngredient: $viewModel.selectedIngredient, saveIngredient: $viewModel.ingredientToSave)
         }
     }//END OF BODY
     
@@ -73,6 +71,9 @@ struct RecipeEditorView: View {
                         Text(String(format: "%.2f",ingredient.quantity))
                         Text(ingredient.unitOfMeasure)
                     }
+                    .onTapGesture {
+                        viewModel.selectedIngredient = ingredient
+                    }
             }
             .onDelete { indexSet in
                 viewModel.removeIngredient(at: indexSet)
@@ -86,12 +87,8 @@ struct RecipeEditorView: View {
                 Spacer()
             }
             .onTapGesture {
-                //Here add code to get pop up with ingredient library navigation etc?
-//                viewModel.addIngredient()
-                isShowingSheet.toggle()
+                viewModel.selectedIngredient = Ingredient()
             }
-            
-
         }//END OF SECTION
     }
     

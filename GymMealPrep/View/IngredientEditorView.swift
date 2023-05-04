@@ -12,6 +12,7 @@ struct IngredientEditorView: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var editedIngredient: Ingredient?
+    @Binding var saveIngredient: Ingredient?
     @State private var draftIngredient: Ingredient = Ingredient()
     
     var body: some View {
@@ -95,7 +96,7 @@ struct IngredientEditorView: View {
                 
                 
                 Button("Save") {
-                    editedIngredient = draftIngredient
+                    saveIngredient = draftIngredient
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -115,6 +116,6 @@ struct IngredientEditorView: View {
 
 struct IngredientEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientEditorView(editedIngredient: .constant(nil))
+        IngredientEditorView(editedIngredient: .constant(nil), saveIngredient: .constant(nil))
     }
 }
