@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct RecipieListView: View {
+struct RecipeListView: View {
     
-    @StateObject private var viewModel: RecipieListViewModel = RecipieListViewModel()
+    @StateObject private var viewModel: RecipeListViewModel = RecipeListViewModel()
     
     var body: some View {
         List {
@@ -43,10 +43,10 @@ struct RecipieListView: View {
 
 
 
-struct RecipieListView_Previews: PreviewProvider {
+struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipieListView()
+            RecipeListView()
         }
     }
 }

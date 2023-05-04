@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class RecipieListViewModel: ObservableObject {
+class RecipeListViewModel: ObservableObject {
     
     var recipieArray: [Recipe] = {
         [SampleData.recipieCilantroLimeChicken,
