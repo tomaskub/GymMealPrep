@@ -11,17 +11,13 @@ struct IngredientEditorView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var name: String
-    @Binding var quantity: Double
-    @Binding var unitOfMeasure: String
-    @Binding var nutrition: Nutrition
-    
-    
+    @Binding var editedIngredient: Ingredient?
+    @State private var draftIngredient: Ingredient = Ingredient()
     
     var body: some View {
         
         VStack {
-            Text("Adding new ingredient")
+            Text(editedIngredient != nil ? "Edit ingredient" :"Adding new ingredient")
                 .font(.title)
                 .padding(.bottom)
             
@@ -35,17 +31,17 @@ struct IngredientEditorView: View {
                     
                     GridRow{
                         Text("Name")
-                        TextField("Name", text: $name)
+                        TextField("Name", text: $draftIngredient.food.name)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Quantity")
-                        TextField("quantity", value: $quantity, format: .number)
+                        TextField("quantity", value: $draftIngredient.quantity, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Measurement")
-                        TextField("Unit of measure", text: $unitOfMeasure)
+                        TextField("Unit of measure", text: $draftIngredient.unitOfMeasure)
                             .textFieldStyle(.roundedBorder)
                     }
                 } // END OF INGREDIENT GROUP
@@ -59,24 +55,24 @@ struct IngredientEditorView: View {
                     
                     GridRow{
                         Text("Calories")
-                        TextField("cal", value: $nutrition.calories, format: .number)
+                        TextField("cal", value: $draftIngredient.nutritionData.calories, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Protein")
-                        TextField("protein", value: $nutrition.protein, format: .number)
+                        TextField("protein", value: $draftIngredient.nutritionData.protein, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Fat")
-                        TextField("fat", value: $nutrition.fat, format: .number)
+                        TextField("fat", value: $draftIngredient.nutritionData.fat, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Carbs")
-                        TextField("carbs", value: $nutrition.carb, format: .number)
+                        TextField("carbs", value: $draftIngredient.nutritionData.carb, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
                     
@@ -90,7 +86,7 @@ struct IngredientEditorView: View {
             .cornerRadius(10)
             
             
-            HStack {
+            HStack(spacing: 20) {
                 
                 Button("Cancel") {
                     dismiss()
@@ -99,20 +95,26 @@ struct IngredientEditorView: View {
                 
                 
                 Button("Save") {
+                    editedIngredient = draftIngredient
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
-                
             }
             Spacer()
             
         }// END OF VSTACK
         .padding()
+        .onAppear {
+            if let ingredient = editedIngredient {
+                draftIngredient = ingredient
+            }
+        }
     }
+        
 }
 
 struct IngredientEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientEditorView(name: .constant("Chicken breast"), quantity: .constant(2), unitOfMeasure: .constant("each"), nutrition: .constant(Nutrition(calories: 600.5, carb: 8, fat: 10, protein: 30)))
+        IngredientEditorView(editedIngredient: .constant(nil))
     }
 }
