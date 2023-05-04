@@ -9,10 +9,16 @@ import SwiftUI
 
 struct RecipeHostView: View {
     
-    
     @Environment(\.editMode) var editMode
     @State var isEditing: Bool = false
-    @StateObject var viewModel: RecipeViewModel
+    @StateObject private var viewModel: RecipeViewModel
+    
+    /// Initializer for a recipie view allowing to show and edit recipe
+    /// - Parameter recipe: Recipie for the view to display and edit
+    public init(recipe: Recipe) {
+        self._viewModel = StateObject(wrappedValue: RecipeViewModel(recipe: recipe))
+    }
+    
     var body: some View {
         ZStack {
             
@@ -65,7 +71,8 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+//            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+            RecipeHostView(recipe: SampleData.recipieCilantroLimeChicken)
         }
     }
 }
