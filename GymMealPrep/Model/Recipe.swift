@@ -23,10 +23,9 @@ struct Recipe: Identifiable {
     
     var nutritionData: Nutrition {
         return ingredients.map({ $0.nutritionData }).reduce(Nutrition.zero, + ).divideBy(servings)
-        
     }
     
-    init(id: UUID, name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag], nutritionData: Nutrition) {
+    init(id: UUID, name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag]) {
         self.id = id
         self.name = name
         self.servings = servings

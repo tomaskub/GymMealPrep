@@ -33,7 +33,12 @@ struct SampleData {
                Tag(id: UUID(), text: "Cilantro"),
                Tag(id: UUID(), text: "Lunch"),
                Tag(id: UUID(), text: "Lime"),
-              Tag(text: "Dinner")],
-        nutritionData: Nutrition(calories: 800, carb: 30, fat: 18, protein: 38))
+              Tag(text: "Dinner")])
     
+    static let recipieNoPhoto = Recipe(id: UUID(),
+                                       name: "KFC chicken",
+                                       servings: 2,
+                                       timeCookingInMinutes: 0,
+                                       timePreparingInMinutes: 0,
+                                       timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: [])
 }
