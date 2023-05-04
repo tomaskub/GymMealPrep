@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RecipeHostView: View {
     
-    @Environment(\.editMode) var editMode
+    @Environment(\.dismiss) var dismiss
+    
     @State var isEditing: Bool = false
     @StateObject private var viewModel: RecipeViewModel
     
@@ -24,45 +25,41 @@ struct RecipeHostView: View {
             
             if isEditing != true {
                 RecipeView(viewModel: viewModel)
-                HStack {
-                    Spacer()
-                    VStack {
-                        Button {
-                            isEditing.toggle()
-                        } label: {
-                            Image(systemName: "pencil")
-                                .font(.title3)
-                                .foregroundColor(.white)
-                                .background(
-                                    Circle()
-                                        .foregroundColor(.gray.opacity(0.8))
-                                        .frame(width: 30, height: 30))
-                        }
-                        Spacer()
-                    }
-                }
-                .padding()
             } else {
                 RecipeEditorView(viewModel: viewModel)
             }
             
         }// END OF ZSTACK
+        // hide default toolbar background + back button
+        .toolbarBackground(.hidden, for: .automatic)
+        .navigationBarBackButtonHidden()
+        // custom toolbar
             .toolbar {
-                if isEditing {
+                
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             isEditing.toggle()
                         } label: {
-                            Image(systemName: "checkmark")
-                                .font(.title3)
-                                .foregroundColor(.white)
-                                .background(
-                                    Circle()
-                                        .foregroundColor(.gray.opacity(0.8))
-                                        .frame(width: 30, height: 30))
+                            Text(isEditing ? "Done" : "Edit")
+                                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                                .background(Material.bar)
+                                .cornerRadius(4)
                         }
                     }
-                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                            .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                            .background(Material.bar)
+                            .cornerRadius(4)
+                    }
+                } // END OF TOOLBARITEM
             }// END OF TOOLBAR
         
     }
@@ -71,7 +68,6 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-//            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
             RecipeHostView(recipe: SampleData.recipieCilantroLimeChicken)
         }
     }
