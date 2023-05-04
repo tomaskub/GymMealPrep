@@ -16,19 +16,6 @@ class RecipeViewModel: ObservableObject {
     @Published var tagText = String()
     @Published var selectedIngredient: Ingredient?
     
-    @Published var ingredientToSave: Ingredient? {
-        didSet {
-            if let ingredientToSave {
-                if let i = recipe.ingredients.firstIndex(where: {ingredientToSave.id == $0.id}) {
-                    recipe.ingredients[i] = ingredientToSave
-                } else {
-                    recipe.ingredients.append(ingredientToSave)
-                }
-            }
-        }
-    }
-    
-    
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
     }
@@ -144,5 +131,13 @@ extension RecipeViewModel {
     
     func moveIngredient(from: IndexSet, to: Int) {
         recipe.ingredients.move(fromOffsets: from, toOffset: to)
+    }
+    
+    func addIngredient(_ ingredientToSave: Ingredient) {
+        if let i = recipe.ingredients.firstIndex(where: {ingredientToSave.id == $0.id}) {
+            recipe.ingredients[i] = ingredientToSave
+        } else {
+            recipe.ingredients.append(ingredientToSave)
+        }
     }
 }

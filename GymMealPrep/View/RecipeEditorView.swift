@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
-    
+    @State var addNewIngredient: Bool = false
     
     var body: some View {
         List {
@@ -28,8 +28,15 @@ struct RecipeEditorView: View {
             instructionSection
             
         }//END OF LIST
-        .sheet(item: $viewModel.selectedIngredient) { _ in
-            IngredientEditorView(editedIngredient: $viewModel.selectedIngredient, saveIngredient: $viewModel.ingredientToSave)
+        .sheet(item: $viewModel.selectedIngredient) { ingredientToEdit in
+            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredientToSave in
+                viewModel.addIngredient(ingredientToSave)
+            }
+        }
+        .sheet(isPresented: $addNewIngredient) {
+            IngredientEditorView { ingredient in
+                viewModel.addIngredient(ingredient)
+            }
         }
     }//END OF BODY
     
@@ -87,7 +94,8 @@ struct RecipeEditorView: View {
                 Spacer()
             }
             .onTapGesture {
-                viewModel.selectedIngredient = Ingredient()
+//                viewModel.selectedIngredient = Ingredient()
+                addNewIngredient.toggle()
             }
         }//END OF SECTION
     }
