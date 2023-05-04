@@ -15,9 +15,7 @@ struct RecipeListView: View {
         List {
             ForEach(viewModel.recipieArray) { recipie in
                 
-                RecipeListRowView(viewModel: RecipeListRowViewModel(recipe: SampleData.recipieCilantroLimeChicken))
-                
-                
+                RecipeListRowView(recipie)
             }
             .listRowSeparator(.hidden)
             .listRowBackground(

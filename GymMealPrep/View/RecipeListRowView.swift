@@ -6,35 +6,58 @@
 //
 
 import SwiftUI
+import UIKit
 
+/// Row view dedicated to displaying a recipie summary, inlcuding image, name and nutrition data
 struct RecipeListRowView: View {
+
+    let recipe: Recipe
+    let recipeImage: Image
     
-    @ObservedObject var viewModel: RecipeListRowViewModel
+    /// Initializer taking a recipie as a parameter and creting a view with image, name and nutritional data. If recipe does not have an image, a system placeholder will be shown instead.
+    /// - Parameter recipe: Recipe to be displayed by the view
+    public init(_ recipe: Recipe) {
+        self.recipe = recipe
+        if let data = recipe.imageData, let uiImage = UIImage(data: data) {
+            self.recipeImage = Image(uiImage: uiImage)
+        } else {
+            self.recipeImage = Image(systemName: "takeoutbag.and.cup.and.straw")
+        }
+    }
     
     var body: some View {
         HStack {
-            viewModel.image
+            
+            recipeImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 100)
+            
             Spacer()
+            
                 VStack {
-                    Text(viewModel.name)
+                    Text(recipe.name)
                     HStack {
-                        Text(viewModel.calories)
-                        Text(viewModel.protein)
-                        Text(viewModel.fat)
-                        Text(viewModel.carb)
-                    }
-                }
+                        Text(String(format: "%.0f", recipe.nutritionData.calories))
+                        
+                        Text(String(format: "%.0f", recipe.nutritionData.protein))
+                        
+                        Text(String(format: "%.0f", recipe.nutritionData.fat))
+                        
+                        Text(String(format: "%.0f", recipe.nutritionData.carb))
+                    }// END OF HSTACK
+                } // END OF VSTACK
             Spacer()
-        }
+        }// END OF HSTACK
     }
 }
 
 
 struct RecipeListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeListRowView(viewModel: RecipeListRowViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+        VStack{
+            RecipeListRowView(SampleData.recipieCilantroLimeChicken)
+            RecipeListRowView(SampleData.recipieNoPhoto)
+        }
     }
 }
