@@ -14,7 +14,7 @@ enum DataManagerType {
 
 class DataManager: NSObject, ObservableObject {
     //MARK: PUBLISHED PROPERTIES
-    @Published var recipieArray = [Recipe]()
+    @Published var recipeArray = [Recipe]()
     
     //MARK: STATIC INSTANCES
     static let shared = DataManager(type: .normal)
@@ -51,7 +51,7 @@ class DataManager: NSObject, ObservableObject {
         //Initial fetch
         try? recipieFRC.performFetch()
         if let newRecipes = recipieFRC.fetchedObjects {
-            self.recipieArray = newRecipes.map { Recipe(recipieMO: $0) }
+            self.recipeArray = newRecipes.map { Recipe(recipieMO: $0) }
         }
     }
 }
@@ -62,7 +62,7 @@ extension DataManager: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             guard let fetchedObjects = controller.fetchedObjects else { return }
             let newRecipes = fetchedObjects.compactMap({$0 as? RecipieMO})
-            self.recipieArray = newRecipes.map({ Recipe(recipieMO: $0) })
+            self.recipeArray = newRecipes.map({ Recipe(recipieMO: $0) })
         
     }
 }

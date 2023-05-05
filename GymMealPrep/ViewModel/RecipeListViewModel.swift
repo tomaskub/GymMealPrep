@@ -6,14 +6,26 @@
 //
 
 import Foundation
-import SwiftUI
+import Combine
 
 class RecipeListViewModel: ObservableObject {
     
-    var recipieArray: [Recipe] = {
-        [SampleData.recipieCilantroLimeChicken,
-         SampleData.recipieCilantroLimeChicken,
-         SampleData.recipieCilantroLimeChicken,
-         SampleData.recipieCilantroLimeChicken]
-    }()
+    @Published private var dataManager: DataManager
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    var recipeArray: [Recipe] {
+        dataManager.recipeArray
+    }
+    
+    
+    init(dataManager: DataManager = DataManager.shared) {
+        
+        self.dataManager = dataManager
+        
+        //Publish object will change on recive of change in dataManager
+        dataManager.objectWillChange.sink { [weak self] _ in
+            self?.objectWillChange.send()
+        }.store(in: &subscriptions)
+    }
 }

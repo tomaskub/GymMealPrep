@@ -9,11 +9,15 @@ import SwiftUI
 
 struct RecipeListView: View {
     
-    @StateObject private var viewModel: RecipeListViewModel = RecipeListViewModel()
+    @StateObject private var viewModel: RecipeListViewModel
+    
+    public init(viewModel: RecipeListViewModel = RecipeListViewModel()) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         List {
-            ForEach(viewModel.recipieArray) { recipe in
+            ForEach(viewModel.recipeArray) { recipe in
                 NavigationLink {
                     RecipeHostView(recipe: recipe)
                 } label: {
@@ -50,7 +54,7 @@ struct RecipeListView: View {
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeListView()
+            RecipeListView(viewModel: RecipeListViewModel(dataManager: .preview))
         }
     }
 }
