@@ -18,7 +18,7 @@ extension MealMO {
 
     @NSManaged public var ingredients: IngredientMO?
     @NSManaged public var plans: MealPlanMO?
-    @NSManaged public var recipies: RecipieMO?
+    @NSManaged public var recipies: RecipeMO?
 
 }
 

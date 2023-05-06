@@ -24,7 +24,7 @@ extension IngredientMO {
     @NSManaged public var unitOfMeasure: String
     @NSManaged public var food: FoodMO?
     @NSManaged public var meal: MealMO?
-    @NSManaged public var recipie: RecipieMO?
+    @NSManaged public var recipie: RecipeMO?
 
 }
 

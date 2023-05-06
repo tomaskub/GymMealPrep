@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-@objc(RecipieMO)
-public class RecipieMO: NSManagedObject {
+@objc(RecipeMO)
+public class RecipeMO: NSManagedObject {
 
 }

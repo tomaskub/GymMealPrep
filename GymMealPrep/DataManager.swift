@@ -23,7 +23,7 @@ class DataManager: NSObject, ObservableObject {
     
     //MARK: PRIVATE PROPERTIES
     fileprivate var managedContext: NSManagedObjectContext
-    private let recipieFRC: NSFetchedResultsController<RecipieMO>
+    private let recipieFRC: NSFetchedResultsController<RecipeMO>
     
     //MARK: INIT
     private init(type: DataManagerType) {
@@ -43,17 +43,40 @@ class DataManager: NSObject, ObservableObject {
             
         }
         //Build FRC
-        let fetchRequest = RecipieMO.fetchRequest()
+        let fetchRequest = RecipeMO.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         self.recipieFRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         super.init()
         //Initial fetch
+        if type == .preview {
+            addPreviewData()
+        }
         try? recipieFRC.performFetch()
         if let newRecipes = recipieFRC.fetchedObjects {
-            self.recipeArray = newRecipes.map { Recipe(recipieMO: $0) }
+            self.recipeArray = newRecipes.map { Recipe(recipeMO: $0) }
         }
     }
+    
+    func addPreviewData() {
+        let recipe = RecipeMO(context: managedContext)
+        recipe.id = UUID()
+        recipe.servings = 4
+        recipe.name = "Test recipe"
+        recipe.timeCooking = 0
+        recipe.timeWaiting = 0
+        recipe.timePreparing = 0
+        try? managedContext.save()
+        
+        let tag = TagMO(context: managedContext)
+        tag.id = UUID()
+        tag.text = "Test tag"
+        try? managedContext.save()
+        
+        recipe.addToTags(tag)
+        try? managedContext.save()
+    }
+    
 }
 
 //MARK: FRC DELEGATE METHODS
@@ -61,8 +84,8 @@ extension DataManager: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             guard let fetchedObjects = controller.fetchedObjects else { return }
-            let newRecipes = fetchedObjects.compactMap({$0 as? RecipieMO})
-            self.recipeArray = newRecipes.map({ Recipe(recipieMO: $0) })
+            let newRecipes = fetchedObjects.compactMap({$0 as? RecipeMO})
+            self.recipeArray = newRecipes.map({ Recipe(recipeMO: $0) })
         
     }
 }

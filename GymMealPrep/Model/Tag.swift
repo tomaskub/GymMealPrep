@@ -23,7 +23,7 @@ struct Tag: Identifiable, Hashable {
     }
     
     init(tagMO: TagMO) {
-        self.id = tagMO.id
-        self.text = tagMO.text
+        self.id = tagMO.id ?? UUID()
+        self.text = tagMO.text ?? String()
     }
 }

@@ -10,12 +10,12 @@ import Foundation
 import CoreData
 
 
-extension RecipieMO {
+extension RecipeMO {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<RecipieMO> {
-        return NSFetchRequest<RecipieMO>(entityName: "RecipieMO")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<RecipeMO> {
+        return NSFetchRequest<RecipeMO>(entityName: "RecipeMO")
     }
-    @NSManaged public var imageData: Data
+    @NSManaged public var imageData: Data?
     @NSManaged public var id: UUID
     @NSManaged public var name: String
     @NSManaged public var servings: Int64
@@ -30,7 +30,7 @@ extension RecipieMO {
 }
 
 // MARK: Generated accessors for ingredients
-extension RecipieMO {
+extension RecipeMO {
 
     @objc(addIngredientsObject:)
     @NSManaged public func addToIngredients(_ value: IngredientMO)
@@ -47,7 +47,7 @@ extension RecipieMO {
 }
 
 // MARK: Generated accessors for instructions
-extension RecipieMO {
+extension RecipeMO {
 
     @objc(addInstructionsObject:)
     @NSManaged public func addToInstructions(_ value: InstructionMO)
@@ -64,7 +64,7 @@ extension RecipieMO {
 }
 
 // MARK: Generated accessors for tags
-extension RecipieMO {
+extension RecipeMO {
 
     @objc(addTagsObject:)
     @NSManaged public func addToTags(_ value: TagMO)
@@ -80,6 +80,6 @@ extension RecipieMO {
 
 }
 
-extension RecipieMO : Identifiable {
+extension RecipeMO : Identifiable {
 
 }

@@ -38,30 +38,32 @@ struct Recipe: Identifiable {
         self.tags = tags
     }
     
-    init(recipieMO: RecipieMO) {
-        self.id = recipieMO.id
-        self.name = recipieMO.name
-        self.servings = Int(recipieMO.servings)
-        self.timeCookingInMinutes = Int(recipieMO.timeCooking)
-        self.timePreparingInMinutes = Int(recipieMO.timePreparing)
-        self.timeWaitingInMinutes = Int(recipieMO.timeWaiting)
-        self.imageData = recipieMO.imageData
+    init(recipeMO: RecipeMO) {
+        //non optional properties
+        self.id = recipeMO.id
+        self.name = recipeMO.name
+        self.servings = Int(recipeMO.servings)
+        //optional in CD model
+        self.timeCookingInMinutes = Int(recipeMO.timeCooking)
+        self.timePreparingInMinutes = Int(recipeMO.timePreparing)
+        self.timeWaitingInMinutes = Int(recipeMO.timeWaiting)
+        //optional in Recipe, RecipeMO and CD model
+        self.imageData = recipeMO.imageData
         
-        if let tagsSet = recipieMO.tags {
-            self.tags = Array(_immutableCocoaArray: tagsSet).map({Tag(tagMO: $0)})
-            
+        if let tags = recipeMO.tags {
+            self.tags = tags.allObjects.compactMap({ $0 as? TagMO}).map({ Tag(tagMO: $0 )})
         } else {
             self.tags = []
         }
         
-        if let ingredientsSet = recipieMO.ingredients {
-            self.ingredients = Array(_immutableCocoaArray: ingredientsSet).map({ Ingredient(ingredientMO: $0)})
+        if let ingredients = recipeMO.ingredients {
+            self.ingredients = ingredients.allObjects.compactMap({ $0 as? IngredientMO}).map({Ingredient(ingredientMO: $0)})
         } else {
             self.ingredients = []
         }
         
-        if let instructionsSet = recipieMO.instructions {
-            self.instructions = Array(_immutableCocoaArray: instructionsSet).map( { Instruction(instructionMO: $0) })
+        if let instructionsSet = recipeMO.instructions {
+            self.instructions = instructionsSet.allObjects.compactMap({ $0 as? InstructionMO }).map( { Instruction(instructionMO: $0) })
         } else {
             self.instructions = []
         }

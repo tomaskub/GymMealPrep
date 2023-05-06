@@ -18,7 +18,7 @@ extension InstructionMO {
     @NSManaged public var id: UUID
     @NSManaged public var step: Int64
     @NSManaged public var text: String?
-    @NSManaged public var recipie: RecipieMO?
+    @NSManaged public var recipie: RecipeMO?
 
 }
 

@@ -15,29 +15,29 @@
         <attribute name="unitOfMeasure" attributeType="String"/>
         <relationship name="food" maxCount="1" deletionRule="Nullify" destinationEntity="FoodMO" inverseName="ingredients" inverseEntity="FoodMO"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="ingredients" inverseEntity="MealMO"/>
-        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="ingredients" inverseEntity="RecipieMO"/>
+        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="ingredients" inverseEntity="RecipeMO"/>
     </entity>
     <entity name="InstructionMO" representedClassName="InstructionMO" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="step" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="text" optional="YES" attributeType="String"/>
-        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="instructions" inverseEntity="RecipieMO"/>
+        <relationship name="recipie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="instructions" inverseEntity="RecipeMO"/>
     </entity>
     <entity name="MealMO" representedClassName="MealMO" syncable="YES">
         <relationship name="ingredients" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IngredientMO" inverseName="meal" inverseEntity="IngredientMO"/>
         <relationship name="plans" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealPlanMO" inverseName="meals" inverseEntity="MealPlanMO"/>
-        <relationship name="recipies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="meals" inverseEntity="RecipieMO"/>
+        <relationship name="recipies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="meals" inverseEntity="RecipeMO"/>
     </entity>
     <entity name="MealPlanMO" representedClassName="MealPlanMO" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="meals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="plans" inverseEntity="MealMO"/>
     </entity>
-    <entity name="RecipieMO" representedClassName="RecipieMO" syncable="YES">
+    <entity name="RecipeMO" representedClassName="RecipeMO" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageData" optional="YES" attributeType="Binary"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="servings" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="servings" attributeType="Integer 64" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="timeCooking" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timePreparing" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timeWaiting" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -49,6 +49,6 @@
     <entity name="TagMO" representedClassName="TagMO" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="text" attributeType="String"/>
-        <relationship name="recipies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipieMO" inverseName="tags" inverseEntity="RecipieMO"/>
+        <relationship name="recipies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="tags" inverseEntity="RecipeMO"/>
     </entity>
 </model>
