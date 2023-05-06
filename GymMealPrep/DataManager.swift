@@ -38,9 +38,6 @@ class DataManager: NSObject, ObservableObject {
         case .preview:
             let persistanceContainer = PersistanceContainer(inMemory: true)
             self.managedContext = persistanceContainer.viewContext
-            //here add data to the preview
-            try? self.managedContext.save()
-            
         }
         //Build FRC
         let fetchRequest = RecipeMO.fetchRequest()
@@ -48,16 +45,19 @@ class DataManager: NSObject, ObservableObject {
         self.recipieFRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         super.init()
-        //Initial fetch
+        
         if type == .preview {
             addPreviewData()
         }
+        //Initial fetch
         try? recipieFRC.performFetch()
         if let newRecipes = recipieFRC.fetchedObjects {
             self.recipeArray = newRecipes.map { Recipe(recipeMO: $0) }
         }
     }
     
+    //MARK: HELPER METHODS
+    ///Add data for previews shown in swiftui views
     func addPreviewData() {
         let recipe = RecipeMO(context: managedContext, name: "TestRecipe", servings: 4)
         let tag = TagMO(context: managedContext, text: "Test tag")
@@ -68,9 +68,50 @@ class DataManager: NSObject, ObservableObject {
         food.addToIngredients(ingredient)
         recipe.addToIngredients(ingredient)
         
-        try? managedContext.save()
+        saveContext()
+    }
+    ///Checks for changes in the managed object context and saves if uncommited changes are present
+    func saveContext() {
+        if managedContext.hasChanges {
+            do {
+                try managedContext.save()
+            } catch let error {
+                print("Error saving: \(error) - \(error.localizedDescription)")
+            }
+        }
     }
     
+    /// Fetch first object matching the predicate, if fetch fails return error
+    /// ```
+    /// // Example of use with update or create:
+    ///let result = fetchFirst(ManagedObjectClass.self, predicate)
+    /// switch result {
+    ///    case .success(let resultingObject):
+    ///         if let managedObjectClass = resultingObject {
+    ///            // update the object
+    ///         } else {
+    ///            // create a new object
+    ///         }
+    ///    case .failure(let error) {
+    ///            // handle error
+    ///         }
+    ///    }
+    /// ```
+    /// - Parameters:
+    ///   - objectType: type of object to be fetched
+    ///   - predicate: predicate to be assigned to the fetch function
+    /// - Returns: Fetched object or an error
+    func fetchFirst<T: NSManagedObject>(_ objectType: T.Type, predicate: NSPredicate?) -> Result<T?, Error> {
+        let request = objectType.fetchRequest()
+        request.predicate = predicate
+        request.fetchLimit = 1
+        do {
+            let result = try managedContext.fetch(request) as? [T]
+            return .success(result?.first)
+        } catch {
+            return .failure(error)
+        }
+    }
 }
 
 //MARK: FRC DELEGATE METHODS
