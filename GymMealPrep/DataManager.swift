@@ -59,21 +59,15 @@ class DataManager: NSObject, ObservableObject {
     }
     
     func addPreviewData() {
-        let recipe = RecipeMO(context: managedContext)
-        recipe.id = UUID()
-        recipe.servings = 4
-        recipe.name = "Test recipe"
-        recipe.timeCooking = 0
-        recipe.timeWaiting = 0
-        recipe.timePreparing = 0
-        try? managedContext.save()
-        
-        let tag = TagMO(context: managedContext)
-        tag.id = UUID()
-        tag.text = "Test tag"
-        try? managedContext.save()
+        let recipe = RecipeMO(context: managedContext, name: "TestRecipe", servings: 4)
+        let tag = TagMO(context: managedContext, text: "Test tag")
+        let food = FoodMO(context: managedContext, name: "Test Food")
+        let ingredient = IngredientMO(context: managedContext, calories: 100, carbs: 8, fat: 10, protein: 10, quantity: 2, unitOfMeasure: "cups")
         
         recipe.addToTags(tag)
+        food.addToIngredients(ingredient)
+        recipe.addToIngredients(ingredient)
+        
         try? managedContext.save()
     }
     
