@@ -22,7 +22,7 @@ extension DataManager {
                 ingredientMO(from: ingredient)
             }
         case .failure(let failure):
-            print("Could not fetch tag to update: \(failure.localizedDescription)")
+            print("Could not fetch ingredientMO to update: \(failure.localizedDescription)")
         }
         saveContext()
     }
