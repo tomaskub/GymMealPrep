@@ -22,7 +22,7 @@ class DataManager: NSObject, ObservableObject {
     static let preview = DataManager(type: .preview)
     
     //MARK: PRIVATE PROPERTIES
-    fileprivate var managedContext: NSManagedObjectContext
+    private(set) var managedContext: NSManagedObjectContext
     private let recipieFRC: NSFetchedResultsController<RecipeMO>
     
     //MARK: INIT
@@ -121,7 +121,6 @@ extension DataManager: NSFetchedResultsControllerDelegate {
             guard let fetchedObjects = controller.fetchedObjects else { return }
             let newRecipes = fetchedObjects.compactMap({$0 as? RecipeMO})
             self.recipeArray = newRecipes.map({ Recipe(recipeMO: $0) })
-        
     }
 }
 
