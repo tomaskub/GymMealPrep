@@ -35,7 +35,7 @@ final class DataManagerFoodMOTests: XCTestCase {
         }
     }
     
-    func testUpdateAndSave_whenTagExist() {
+    func testUpdateAndSave_whenFoodExist() {
         let food = Food(name: "Test food")
         sut.updateAndSave(food: food)
         
@@ -53,7 +53,7 @@ final class DataManagerFoodMOTests: XCTestCase {
         }
     }
     
-    func testDeleteTag_whenNoTagExist() {
+    func testDeleteFood_whenNoFoodExist() {
         let food = Food(name: "Test food")
 
         sut.delete(food: food)
@@ -69,7 +69,7 @@ final class DataManagerFoodMOTests: XCTestCase {
         }
     }
     
-    func testDeleteTag_whenTagExists() {
+    func testDeleteFood_whenFoodExists() {
         let food = Food(name: "Test food")
         sut.updateAndSave(food: food)
         

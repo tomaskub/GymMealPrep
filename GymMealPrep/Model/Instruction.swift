@@ -12,7 +12,7 @@ struct Instruction: Identifiable {
     var step: Int
     var text: String
     
-    init(id: UUID, step: Int, text: String = String()) {
+    init(id: UUID = UUID(), step: Int, text: String = String()) {
         self.id = id
         self.step = step
         self.text = text
