@@ -27,7 +27,23 @@ extension DataManager {
         saveContext()
     }
     
-    
+    func addToRecipe(ingredient: Ingredient, to recipeMO: RecipeMO) {
+        let predicate = NSPredicate(format: "id = %@", ingredient.id as CVarArg)
+        let result = fetchFirst(IngredientMO.self, predicate: predicate)
+        switch result {
+        case .success(let success):
+            if let ingredientMO = success {
+                // update with new relation
+                ingredientMO.recipie = recipeMO
+            } else {
+                // create and add new relation
+                let ingredientMO = ingredientMO(from: ingredient)
+                ingredientMO.recipie = recipeMO
+            }
+        case .failure(let failure):
+            print("Could not fetch ingredient to update: \(failure.localizedDescription)")
+        }
+    }
     
     ///Delete a ingredientMO object with id matching input food id
     func delete(ingredient: Ingredient){
@@ -54,10 +70,11 @@ extension DataManager {
         target.fat = source.nutritionData.fat
         target.protein = source.nutritionData.protein
     }
-    private func ingredientMO(from source: Ingredient) {
+    private func ingredientMO(from source: Ingredient) -> IngredientMO {
         //Since ingredient is identifiable use the id present in Ingredient
 
         let ingredientMO = IngredientMO(context: managedContext, id: source.id, calories: source.nutritionData.calories, carbs: source.nutritionData.carb, fat: source.nutritionData.fat, protein: source.nutritionData.protein, quantity: source.quantity, unitOfMeasure: source.unitOfMeasure)
         addToIngredients(food: source.food, to: ingredientMO)
+        return ingredientMO
     }
 }

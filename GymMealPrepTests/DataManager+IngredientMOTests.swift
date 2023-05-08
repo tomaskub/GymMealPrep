@@ -53,6 +53,7 @@ final class DataManagerIngredientMOTests: XCTestCase {
             XCTFail("Error while fetching: \(error.localizedDescription)")
         }
     }
+    
     func testDeleteIngredient_whenIngredientExists() {
         let ingredient = Ingredient(food: Food(name: "TestFood"), quantity: 1, unitOfMeasure: "Test UOM", nutritionData: Nutrition(calories: 0, carb: 0, fat: 0, protein: 0))
         sut.updateAndSave(ingredient: ingredient)
@@ -68,5 +69,48 @@ final class DataManagerIngredientMOTests: XCTestCase {
         } catch {
             XCTFail("Error while fetching: \(error.localizedDescription)")
         }
+    }
+    
+    func testAddToRecipe_WhenIngredientExists() {
+        let ingredient = Ingredient(food: Food(name: "TestFood"), quantity: 1, unitOfMeasure: "Test UOM", nutritionData: Nutrition(calories: 0, carb: 0, fat: 0, protein: 0))
+        sut.updateAndSave(ingredient: ingredient)
+        let recipeMO = RecipeMO(context: sut.managedContext, name: "Test Recipe", servings: 4)
+        
+        sut.addToRecipe(ingredient: ingredient, to: recipeMO)
+        
+        sut.saveContext()
+        let request = IngredientMO.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", ingredient.id as CVarArg)
+        request.fetchLimit = 1
+        do {
+            let result = try sut.managedContext.fetch(request)
+            let resultIngredient = try XCTUnwrap(result.first, "There should be ingredient retrieved")
+            let resultRecipe = try XCTUnwrap(resultIngredient.recipie, "There should be recipe in retrived ingredient")
+            XCTAssertTrue(resultRecipe.id == recipeMO.id, "The result recipe id should be equal to recipeMO id")
+        } catch {
+            XCTFail("Error while fetching: \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func testAddToRecipe_WhenNoIngredientExists() {
+        let ingredient = Ingredient(food: Food(name: "TestFood"), quantity: 1, unitOfMeasure: "Test UOM", nutritionData: Nutrition(calories: 0, carb: 0, fat: 0, protein: 0))
+        let recipeMO = RecipeMO(context: sut.managedContext, name: "Test Recipe", servings: 4)
+        
+        sut.addToRecipe(ingredient: ingredient, to: recipeMO)
+        
+        sut.saveContext()
+        let request = IngredientMO.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", ingredient.id as CVarArg)
+        request.fetchLimit = 1
+        do {
+            let result = try sut.managedContext.fetch(request)
+            let resultIngredient = try XCTUnwrap(result.first, "There should be ingredient retrieved")
+            let resultRecipe = try XCTUnwrap(resultIngredient.recipie, "There should be recipe in retrived ingredient")
+            XCTAssertTrue(resultRecipe.id == recipeMO.id, "The result recipe id should be equal to recipeMO id")
+        } catch {
+            XCTFail("Error while fetching: \(error.localizedDescription)")
+        }
+        
     }
 }
