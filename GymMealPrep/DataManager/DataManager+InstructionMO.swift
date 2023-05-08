@@ -38,7 +38,7 @@ extension DataManager {
         saveContext()
     }
     
-    func addToRecipe(instruction: Instruction, recipeMO: RecipeMO) {
+    func addToRecipe(instruction: Instruction, to recipeMO: RecipeMO) {
         let predicate = NSPredicate(format: "id = %@", instruction.id as CVarArg)
         let result = fetchFirst(InstructionMO.self, predicate: predicate)
         switch result {

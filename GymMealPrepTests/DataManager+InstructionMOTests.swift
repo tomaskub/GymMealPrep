@@ -77,7 +77,7 @@ final class DataManagerInstructionMOTests: XCTestCase {
         sut.updateAndSave(instruction: instruction)
         
         let recipeMO = RecipeMO(context: sut.managedContext, name: "Test Recipe", servings: 4)
-        sut.addToRecipe(instruction: instruction, recipeMO: recipeMO)
+        sut.addToRecipe(instruction: instruction, to: recipeMO)
         sut.saveContext()
         
         let request = InstructionMO.fetchRequest()
@@ -97,7 +97,7 @@ final class DataManagerInstructionMOTests: XCTestCase {
 //        sut.updateAndSave(instruction: instruction)
         
         let recipeMO = RecipeMO(context: sut.managedContext, name: "Test Recipe", servings: 4)
-        sut.addToRecipe(instruction: instruction, recipeMO: recipeMO)
+        sut.addToRecipe(instruction: instruction, to: recipeMO)
         sut.saveContext()
         
         let request = InstructionMO.fetchRequest()
