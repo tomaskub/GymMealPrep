@@ -42,13 +42,30 @@ extension DataManager {
         saveContext()
     }
     
+    func addToRecipe(tag: Tag, to recipe: RecipeMO) {
+        let predicate = NSPredicate(format: "id = %@", tag.id as CVarArg)
+        let result = fetchFirst(TagMO.self, predicate: predicate)
+        switch result {
+        case .success(let success):
+            if let tagMO = success {
+                tagMO.recipe = recipe
+            } else {
+                let tag = tagMO(from: tag)
+                tag.recipe = recipe
+            }
+        case .failure(let failure):
+            print("Could not fetch tag to update: \(failure.localizedDescription)")
+        }
+    }
+    
     private func update(tagMO target: TagMO, from source: Tag) {
         // ID is created only once so it is not overriden here
         target.text = source.text
     }
-    private func tagMO(from source: Tag) {
+    
+    private func tagMO(from source: Tag) -> TagMO {
         //Since tag is identifiable use the id present in Tag
-        let tag = TagMO(context: managedContext,id: source.id, text: source.text)
+        return TagMO(context: managedContext,id: source.id, text: source.text)
     }
 }
 
