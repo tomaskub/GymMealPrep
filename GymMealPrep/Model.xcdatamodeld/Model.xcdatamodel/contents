@@ -44,11 +44,11 @@
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientMO" inverseName="recipie" inverseEntity="IngredientMO"/>
         <relationship name="instructions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InstructionMO" inverseName="recipie" inverseEntity="InstructionMO"/>
         <relationship name="meals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealMO" inverseName="recipies" inverseEntity="MealMO"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagMO" inverseName="recipies" inverseEntity="TagMO"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagMO" inverseName="recipe" inverseEntity="TagMO"/>
     </entity>
     <entity name="TagMO" representedClassName="TagMO" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="text" attributeType="String"/>
-        <relationship name="recipies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="tags" inverseEntity="RecipeMO"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeMO" inverseName="tags" inverseEntity="RecipeMO"/>
     </entity>
 </model>
