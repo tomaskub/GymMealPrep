@@ -18,6 +18,8 @@
 		D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB229FD44330034B950 /* PresistanceContainer.swift */; };
 		D634FFB529FD46D20034B950 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB429FD46D20034B950 /* DataManager.swift */; };
 		D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB629FD52100034B950 /* Model.xcdatamodeld */; };
+		D637AD462A0949E2002283C5 /* DataManager+RecipeMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D637AD452A0949E2002283C5 /* DataManager+RecipeMO.swift */; };
+		D637AD482A0961B2002283C5 /* DataManager+RecipeMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */; };
 		D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA212A01238300574FE0 /* RecipeEditorView.swift */; };
 		D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA232A019E2E00574FE0 /* ChipView.swift */; };
 		D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */; };
@@ -92,6 +94,8 @@
 		D634FFB229FD44330034B950 /* PresistanceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresistanceContainer.swift; sourceTree = "<group>"; };
 		D634FFB429FD46D20034B950 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D634FFB729FD52100034B950 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D637AD452A0949E2002283C5 /* DataManager+RecipeMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RecipeMO.swift"; sourceTree = "<group>"; };
+		D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RecipeMOTests.swift"; sourceTree = "<group>"; };
 		D63AFA212A01238300574FE0 /* RecipeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditorView.swift; sourceTree = "<group>"; };
 		D63AFA232A019E2E00574FE0 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */,
+				D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */,
 				D6C1DDBE2A07BE000062B1C5 /* DataManager+TagMOTests.swift */,
 				D6DBF29B2A08028200CB04AA /* DataManager+InstructionMOTests.swift */,
 				D6DBF2952A07CE9400CB04AA /* DataManager+FoodMOTests.swift */,
@@ -255,6 +260,7 @@
 			children = (
 				D634FFB429FD46D20034B950 /* DataManager.swift */,
 				D6DBF2992A07F78800CB04AA /* DataManager+InstructionMO.swift */,
+				D637AD452A0949E2002283C5 /* DataManager+RecipeMO.swift */,
 				D6C1DDB72A078D120062B1C5 /* DataManager+TagMO.swift */,
 				D6C1DDBC2A07B7590062B1C5 /* DataManager+IngredientMO.swift */,
 				D6C1DDBA2A07908F0062B1C5 /* DataManager+FoodMO.swift */,
@@ -445,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6C3404529FD7E4E003F6E06 /* Tag.swift in Sources */,
+				D637AD462A0949E2002283C5 /* DataManager+RecipeMO.swift in Sources */,
 				D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */,
 				D694E4062A05824A0077E72F /* InstructionMO+CoreDataProperties.swift in Sources */,
 				D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */,
@@ -492,6 +499,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D637AD482A0961B2002283C5 /* DataManager+RecipeMOTests.swift in Sources */,
 				D634FF9929FD42F60034B950 /* GymMealPrepTests.swift in Sources */,
 				D6DBF2962A07CE9400CB04AA /* DataManager+FoodMOTests.swift in Sources */,
 				D6DBF2982A07E65400CB04AA /* DataManager+IngredientMOTests.swift in Sources */,
