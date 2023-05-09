@@ -52,18 +52,54 @@ extension DataManager {
         if let timeWaiting = source.timeWaitingInMinutes {
             target.timeWaiting = Int64(timeWaiting)
         }
-        
-        if !source.ingredients.isEmpty {
+        //manage ingredients relations
+        if let ingredients = target.ingredients?.compactMap({ $0 as? IngredientMO}) {
+            for ingredient in ingredients {
+                if !source.ingredients.contains(where: { $0.id == ingredient.id }) {
+                    target.removeFromIngredients(ingredient)
+                }
+            }
+            for ingredient in source.ingredients {
+                if !ingredients.contains(where: { $0.id == ingredient.id }) {
+                    addToRecipe(ingredient: ingredient, to: target)
+                }
+            }
+        } else {
             for ingredient in source.ingredients {
                 addToRecipe(ingredient: ingredient, to: target)
             }
         }
-        if !source.instructions.isEmpty {
+        //manage instructions relations
+        if let instructions = target.instructions?.compactMap({ $0 as? InstructionMO}) {
+            for instruction in instructions {
+                if !source.instructions.contains(where: { $0.id == instruction.id }) {
+                    target.removeFromInstructions(instruction)
+                }
+            }
+            for instruction in source.instructions {
+                if !instructions.contains(where: { $0.id == instruction.id }) {
+                    addToRecipe(instruction: instruction, to: target)
+                }
+            }
+        } else {
             for instruction in source.instructions {
                 addToRecipe(instruction: instruction, to: target)
             }
         }
-        if !source.tags.isEmpty {
+        //manage targets relations
+        if let tags = target.tags?.compactMap({ $0 as? TagMO }) {
+            for tag in tags {
+                // check if tag has been deleted
+                if !source.tags.contains(where: { $0.id == tag.id }){
+                    target.removeFromTags(tag)
+                }
+            }
+            for tag in source.tags {
+                if !tags.contains(where: { $0.id == tag.id} ) {
+                    addToRecipe(tag: tag, to: target)
+                }
+            }
+        } else {
             for tag in source.tags {
                 addToRecipe(tag: tag, to: target)
             }
