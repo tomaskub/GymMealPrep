@@ -11,10 +11,11 @@ struct ChipView<Content: View>: View {
     
     @Binding var tags: [Tag]
     @State var tagSize: [Tag : CGSize] = [:]
-    
+    @State var selectedTag: Tag? = nil
     let avaliableWidth: CGFloat
     let alignment: HorizontalAlignment
     let content: (Tag) -> Content
+    
     
     
     var body: some View {
@@ -22,17 +23,42 @@ struct ChipView<Content: View>: View {
             ForEach(sortToRows(), id: \.self) { row in
                 HStack {
                     ForEach(row) { tag in
-                        content(tag)
+                        HStack {
+                            content(tag)
+                            if tag == selectedTag {
+                                Button {
+                                    removeSelectedTag()
+                                } label: {
+                                    Image(systemName: "x.circle")
+                                }
+                            }
+                                
+                        }
                             .fixedSize()
                             .readSize { size in
                                 tagSize[tag] = size
                             }
+                            .onLongPressGesture {
+                                withAnimation(Animation.spring()) {
+                                    selectedTag = tag
+                                }
+                                
+                                    
+                            }
                     }
                 }// END OF HSTACK
             }
+            
+
+                
+            
         }// END OF VSTACK
     }// END OF BODY
-    
+    private func removeSelectedTag() {
+        if let selectedTag {
+            tags.removeAll(where: {$0.id == selectedTag.id})
+        }
+    }
     private func sortToRows() -> [[Tag]] {
         var rows: [[Tag]] = [[]]
         var currentRow = 0
