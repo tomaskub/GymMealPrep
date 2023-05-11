@@ -15,6 +15,7 @@ class RecipeViewModel: ObservableObject {
     @Published var recipe: Recipe
     @Published var tagText = String()
     @Published var selectedIngredient: Ingredient?
+    @Published private var dataManager: DataManager
     
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
@@ -74,7 +75,7 @@ class RecipeViewModel: ObservableObject {
     }
     
     
-    init(recipe: Recipe) {
+    init(recipe: Recipe, dataManager: DataManager = DataManager.shared) {
         self.recipe = recipe
         if let timePreparing = recipe.timePreparingInMinutes {
             self.timePreparingInMinutes = "\(timePreparing)"
@@ -91,6 +92,7 @@ class RecipeViewModel: ObservableObject {
         } else {
             self.timeWaitingInMinutes = String()
         }
+        self.dataManager = dataManager
     }
 }
 

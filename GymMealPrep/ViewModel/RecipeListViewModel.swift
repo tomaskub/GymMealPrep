@@ -28,4 +28,7 @@ class RecipeListViewModel: ObservableObject {
             self?.objectWillChange.send()
         }.store(in: &subscriptions)
     }
+    func createRecipeViewModel(recipe: Recipe) -> RecipeViewModel {
+        return RecipeViewModel(recipe: recipe, dataManager: dataManager)
+    }
 }

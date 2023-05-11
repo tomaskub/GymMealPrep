@@ -19,7 +19,7 @@ struct RecipeListView: View {
         List {
             ForEach(viewModel.recipeArray) { recipe in
                 NavigationLink {
-                    RecipeHostView(recipe: recipe)
+                    RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
                 } label: {
                     RecipeListRowView(recipe)
                         .cornerRadius(20)
