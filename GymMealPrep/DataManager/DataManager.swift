@@ -59,16 +59,8 @@ class DataManager: NSObject, ObservableObject {
     //MARK: HELPER METHODS
     ///Add data for previews shown in swiftui views
     func addPreviewData() {
-        let recipe = RecipeMO(context: managedContext, name: "TestRecipe", servings: 4)
-        let tag = TagMO(context: managedContext, text: "Test tag")
-        let food = FoodMO(context: managedContext, name: "Test Food")
-        let ingredient = IngredientMO(context: managedContext, calories: 100, carbs: 8, fat: 10, protein: 10, quantity: 2, unitOfMeasure: "cups")
-        
-        recipe.addToTags(tag)
-        food.addToIngredients(ingredient)
-        recipe.addToIngredients(ingredient)
-        
-        saveContext()
+        let recipe = SampleData.recipieCilantroLimeChicken
+        self.updateAndSave(recipe: recipe)
     }
     ///Checks for changes in the managed object context and saves if uncommited changes are present
     func saveContext() {
