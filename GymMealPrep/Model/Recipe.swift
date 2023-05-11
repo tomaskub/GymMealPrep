@@ -25,7 +25,7 @@ struct Recipe: Identifiable {
         return ingredients.map({ $0.nutritionData }).reduce(Nutrition.zero, + ).divideBy(servings)
     }
     
-    init(id: UUID, name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag]) {
+    init(id: UUID = UUID(), name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag]) {
         self.id = id
         self.name = name
         self.servings = servings
@@ -36,6 +36,11 @@ struct Recipe: Identifiable {
         self.instructions = instructions
         self.imageData = imageData
         self.tags = tags
+    }
+    
+    /// Convenience init creating an empty recipe object with name set to "Recipe name", 4 servings. All of other properties are zero or empty
+    init() {
+        self.init(name: "Recipe name", servings: 4, timeCookingInMinutes: 0, timePreparingInMinutes: 0, timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: [])
     }
     
     init(recipeMO: RecipeMO) {
