@@ -32,6 +32,9 @@ struct RecipeHostView: View {
                 
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
+                            if isEditing {
+                                viewModel.saveRecipe()
+                            }
                             isEditing.toggle()
                         } label: {
                             Text(isEditing ? "Done" : "Edit")

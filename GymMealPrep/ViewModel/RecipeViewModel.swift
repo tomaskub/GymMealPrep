@@ -94,6 +94,10 @@ class RecipeViewModel: ObservableObject {
         }
         self.dataManager = dataManager
     }
+    
+    func saveRecipe() {
+        dataManager.updateAndSave(recipe: recipe)
+    }
 }
 
 extension RecipeViewModel {
