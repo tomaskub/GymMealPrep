@@ -42,8 +42,13 @@ struct RecipeListView: View {
             .navigationTitle("Recipies")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "plus.circle")
-                        .font(.title3)
+                    NavigationLink {
+                        RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
+                            
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .font(.title3)
+                    }
                 }
             }
     }
