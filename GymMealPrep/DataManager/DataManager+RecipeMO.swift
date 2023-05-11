@@ -109,6 +109,8 @@ extension DataManager {
         
         let recipeMO = RecipeMO(context: managedContext, id: source.id, name: source.name, servings: source.servings, timeCooking: source.timeCookingInMinutes ?? 0, timePreparing: source.timePreparingInMinutes ?? 0, timeWaiting: source.timeWaitingInMinutes ?? 0)
         
+        recipeMO.imageData = source.imageData
+        
         if !source.ingredients.isEmpty {
             for ingredient in source.ingredients {
                 addToRecipe(ingredient: ingredient, to: recipeMO)

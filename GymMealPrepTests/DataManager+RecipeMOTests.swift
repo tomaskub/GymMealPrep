@@ -48,6 +48,29 @@ final class DataManagerRecipeMOTests: XCTestCase {
         }
     }
     
+    func testUpdateAndSave_whenNoRecipeExist_WithImageData() throws {
+        // define test ingredients
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], imageData: SampleData.imageData, tags: [tag])
+        
+        sut.updateAndSave(recipe: recipe)
+        
+        let request = RecipeMO.fetchRequest()
+        request.predicate = NSPredicate(format: "id = %@", recipe.id as CVarArg)
+        request.fetchLimit = 1
+        do {
+            let result = try sut.managedContext.fetch(request)
+            //check if results are retrieved
+            let first = try XCTUnwrap(result.first, "There should be recipe retrived")
+            //check if imageData is retrived
+            XCTAssertTrue(first.imageData == recipe.imageData, "Name in retrieved recipe should be equal to name in initial recipe")
+        } catch {
+            XCTFail("Error while fetching: \(error.localizedDescription)")
+        }
+    }
+    
     func testUpdateAndSave_whenRecipeExistis_whenTagRemoved() throws {
         let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
         let instruction = Instruction(step: 1, text: "Test instruction")
@@ -140,6 +163,8 @@ final class DataManagerRecipeMOTests: XCTestCase {
             XCTFail("Error while fetching: \(error.localizedDescription)")
         }
     }
+    
+    
     func testDelete_WhenRecipeExists() {
         let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
         let instruction = Instruction(step: 1, text: "Test instruction")
