@@ -69,8 +69,7 @@ class RecipeViewModel: ObservableObject {
     
     var nutritionalData: [String] {
         [
-//            String(format: "%3.0f",
-                   "\(recipe.nutritionData.calories)" + "\n Cal",
+            String(format: "%.0f", recipe.nutritionData.calories) + "\n Cal",
             String(format: "%.0f", recipe.nutritionData.protein) + "g\n Protein",
             String(format: "%.0f", recipe.nutritionData.fat) + "g\n Fat",
             String(format: "%.0f", recipe.nutritionData.carb) + "g\n Carb",
@@ -113,6 +112,7 @@ class RecipeViewModel: ObservableObject {
 }
 
 extension RecipeViewModel {
+    
     func deleteInstruction(at indexSet: IndexSet) {
         recipe.instructions.remove(atOffsets: indexSet)
     }
@@ -138,6 +138,8 @@ extension RecipeViewModel {
         recipe.tags.append(tag)
         tagText = String()
     }
+    
+    
 }
 
 //MARK: INGREDIENT EDIT

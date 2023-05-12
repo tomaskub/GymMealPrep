@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */; };
 		D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */; };
 		D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */; };
 		D634FF8929FD42F50034B950 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8829FD42F50034B950 /* ContentView.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModelTests.swift; sourceTree = "<group>"; };
 		D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHostView.swift; sourceTree = "<group>"; };
 		D634FF8329FD42F50034B950 /* GymMealPrep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymMealPrep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepApp.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */,
+				D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */,
 				D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */,
 				D6C1DDBE2A07BE000062B1C5 /* DataManager+TagMOTests.swift */,
 				D6DBF29B2A08028200CB04AA /* DataManager+InstructionMOTests.swift */,
@@ -505,6 +508,7 @@
 				D6DBF2982A07E65400CB04AA /* DataManager+IngredientMOTests.swift in Sources */,
 				D6DBF29C2A08028200CB04AA /* DataManager+InstructionMOTests.swift in Sources */,
 				D6C1DDBF2A07BE000062B1C5 /* DataManager+TagMOTests.swift in Sources */,
+				D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
