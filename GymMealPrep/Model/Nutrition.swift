@@ -22,7 +22,7 @@ struct Nutrition: AdditiveArithmetic {
         let protein = lhs.protein + rhs.protein
         let fat = lhs.fat + rhs.fat
         let carbs = lhs.carb + rhs.carb
-        let cal = lhs.carb + rhs.carb
+        let cal = lhs.calories + rhs.calories
         return Nutrition(calories: cal, carb: carbs, fat: fat, protein: protein)
     }
     
