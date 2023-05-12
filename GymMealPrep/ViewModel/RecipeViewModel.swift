@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import PhotosUI
 
 class RecipeViewModel: ObservableObject {
     
@@ -16,6 +17,15 @@ class RecipeViewModel: ObservableObject {
     @Published var tagText = String()
     @Published var selectedIngredient: Ingredient?
     @Published private var dataManager: DataManager
+    @Published var selectedPhoto: PhotosPickerItem? = nil {
+        didSet {
+            if let selectedPhoto {
+                Task {
+                    recipe.imageData = try await loadTransferable(from: selectedPhoto)
+                }
+            }
+        }
+    }
     
     var totalTimeCookingInMinutes: Int {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
@@ -59,7 +69,8 @@ class RecipeViewModel: ObservableObject {
     
     var nutritionalData: [String] {
         [
-            String(format: "%.0f", recipe.nutritionData.calories) + "\n Cal",
+//            String(format: "%3.0f",
+                   "\(recipe.nutritionData.calories)" + "\n Cal",
             String(format: "%.0f", recipe.nutritionData.protein) + "g\n Protein",
             String(format: "%.0f", recipe.nutritionData.fat) + "g\n Fat",
             String(format: "%.0f", recipe.nutritionData.carb) + "g\n Carb",
@@ -93,6 +104,7 @@ class RecipeViewModel: ObservableObject {
             self.timeWaitingInMinutes = String()
         }
         self.dataManager = dataManager
+        
     }
     
     func saveRecipe() {
@@ -144,6 +156,22 @@ extension RecipeViewModel {
             recipe.ingredients[i] = ingredientToSave
         } else {
             recipe.ingredients.append(ingredientToSave)
+        }
+    }
+}
+
+extension RecipeViewModel {
+    private func loadTransferable(from imageSelection: PhotosPickerItem?) async throws -> Data? {
+        do {
+            if let data = try await imageSelection?.loadTransferable(type: Data.self) {
+                if let uiImage = UIImage(data: data) {
+                    return data
+                }
+            }
+            return nil
+        } catch {
+            print("Error loading photo: \(error.localizedDescription)")
+            return nil
         }
     }
 }

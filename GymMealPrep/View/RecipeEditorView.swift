@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct RecipeEditorView: View {
     
@@ -146,6 +147,15 @@ struct RecipeEditorView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(height: 250)
                 .listRowInsets(EdgeInsets())
+                .overlay(alignment: .bottomTrailing) {
+                    PhotosPicker(selection: $viewModel.selectedPhoto) {
+                        Image(systemName: "pencil.circle.fill")
+                            .font(.title)
+                            .foregroundColor(.blue)
+                            .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+                    }
+                    
+                }
             TextField("Enter recipie name", text: $viewModel.recipe.name)
         }
     }
