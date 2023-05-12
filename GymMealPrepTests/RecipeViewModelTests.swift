@@ -20,8 +20,13 @@ final class RecipeViewModelTests: XCTestCase {
     override func tearDown() {
         sut = nil
     }
+}
+
+
+//MARK: TEST ADDING INGREDIENTS
+extension RecipeViewModelTests {
     
-    func testAddingIngredient() throws {
+    func testAddingIngredient() {
         let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 100, carb: 10, fat: 20, protein: 30))
         sut.addIngredient(ingredient)
         print(sut.recipe.nutritionData.calories)
@@ -31,7 +36,7 @@ final class RecipeViewModelTests: XCTestCase {
         XCTAssertTrue(sut.recipe.nutritionData.carb == ingredient.nutritionData.carb, "Calories should match")
     }
     
-    func testAddingMultipleIngredients() throws {
+    func testAddingMultipleIngredients() {
         let ingredientOne = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 100, carb: 10, fat: 20, protein: 30))
         let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 200, carb: 20, fat: 30, protein: 40))
         
@@ -43,4 +48,24 @@ final class RecipeViewModelTests: XCTestCase {
         XCTAssertTrue(sut.recipe.nutritionData.fat == testResult.fat, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.carb == testResult.carb, "Calories should match")
     }
+}
+
+//MARK: TEST CALCULATING TOTAL COOKING TIME
+extension RecipeViewModelTests {
+    
+    func testCalculatingTotalCookingTime_whenTimeCookingInMinutesChanges() {
+        sut.timeCookingInMinutes = String(10)
+        XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
+    }
+    
+    func testCalculatingTotalCookingTime_whenTimePreparingInMinutesChanges() {
+        sut.timePreparingInMinutes = String(10)
+        XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
+    }
+    
+    func testCalculatingTotalCookingTime_whenTimeWaitingInMinutesChanges() {
+        sut.timeWaitingInMinutes = String(10)
+        XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
+    }
+    
 }

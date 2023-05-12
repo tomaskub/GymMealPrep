@@ -28,7 +28,7 @@ class RecipeViewModel: ObservableObject {
     }
     
     var totalTimeCookingInMinutes: Int {
-        return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeCookingInMinutes ?? 0)
+        return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeWaitingInMinutes ?? 0)
     }
     
     var timeSummaryData: [(String, String)] {
