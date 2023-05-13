@@ -25,17 +25,20 @@ struct RecipeView: View {
                             .listRowInsets(EdgeInsets())
                         tagChipView
                             .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-                        HStack {
-                            Spacer()
-                            servingSummary
-                            timeSummary
-                            Spacer()
-                        }
+//                        HStack {
+//                            Spacer()
+//                            servingSummary
+//                            timeSummary
+//                            Spacer()
+//                        }
+                        RecipeSummaryView(servings: viewModel.recipe.servings, summaryData: viewModel.timeSummaryData, nutritionalData: viewModel.nutritionalData)
+                            
                         
-                        nutritionSummary
+//                        nutritionSummary
                     }
                     .listRowSeparator(.hidden)
-
+                    
+                    
                     Section("Ingredients:") {
                         ForEach(viewModel.recipe.ingredients) {
                             i in
@@ -80,7 +83,6 @@ struct RecipeView: View {
         }
     }
     
-    
     var servingSummary: some View {
         VStack {
             Text("Servings:")
@@ -109,6 +111,7 @@ struct RecipeView: View {
         .background(.white)
         .cornerRadius(10)
     }
+    
     var titleBanner: some View {
         viewModel.image
             .resizable()
@@ -131,6 +134,7 @@ struct RecipeView: View {
                 }
             }
     }
+    
     var tagChipView: some View {
         
         
