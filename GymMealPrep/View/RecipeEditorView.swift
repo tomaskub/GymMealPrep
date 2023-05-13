@@ -177,21 +177,10 @@ struct RecipeEditorView: View {
     }
     
     var nutritionSection: some View {
-        Section("Nutrition value") {
-            VStack(alignment: .leading) {
-                Text("Per serving")
-                    .font(.title3)
-                    .padding(.bottom)
-                HStack(spacing: 20) {
-                    Spacer()
-                    ForEach(viewModel.nutritionalData, id: \.self) { data in
-                        Text(data)
-                            .multilineTextAlignment(.center)
-                    }
-                    Spacer()
-                }
-                
-            }
+        Section("Nutrition") {
+            RecipeSummaryView(cal: viewModel.recipe.nutritionData.calories,
+                              proteinInGrams: viewModel.recipe.nutritionData.protein,
+                              fatInGrams: viewModel.recipe.nutritionData.fat, carbInGrams: viewModel.recipe.nutritionData.carb, format: "%.0f")
             Stepper("Servings: \(viewModel.recipe.servings)", value: $viewModel.recipe.servings)
                 .font(.title3)
                 .padding()

@@ -32,7 +32,7 @@ struct RecipeView: View {
                                               timeWaitingInMinues: viewModel.recipe.timeWaitingInMinutes ?? 0,
                                               timeTotalInMinutes: viewModel.totalTimeCookingInMinutes,
                                               cal: viewModel.recipe.nutritionData.calories,
-                                              proteInInGrams: viewModel.recipe.nutritionData.protein,
+                                              proteinInGrams: viewModel.recipe.nutritionData.protein,
                                               fatInGrams: viewModel.recipe.nutritionData.fat,
                                               carbInGrams: viewModel.recipe.nutritionData.carb,
                                               servings: viewModel.recipe.servings,
