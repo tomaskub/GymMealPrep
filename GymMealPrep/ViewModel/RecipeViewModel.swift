@@ -31,14 +31,6 @@ class RecipeViewModel: ObservableObject {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeWaitingInMinutes ?? 0)
     }
     
-    var timeSummaryData: [(String, String)] {
-        [
-            ("Prep", "\(recipe.timePreparingInMinutes ?? 0)"),
-            ("Cook", "\(recipe.timeCookingInMinutes ?? 0)"),
-            ("Wait", "\(recipe.timeWaitingInMinutes ?? 0)"),
-            ("Total", "\(totalTimeCookingInMinutes)")
-        ]
-    }
     
     @Published var timePreparingInMinutes: String {
         didSet {
@@ -65,15 +57,6 @@ class RecipeViewModel: ObservableObject {
                 recipe.timeWaitingInMinutes = newTime
             }
         }
-    }
-    
-    var nutritionalData: [String] {
-        [
-            String(format: "%.0f", recipe.nutritionData.calories) + "\n Cal",
-            String(format: "%.0f", recipe.nutritionData.protein) + "g\n Protein",
-            String(format: "%.0f", recipe.nutritionData.fat) + "g\n Fat",
-            String(format: "%.0f", recipe.nutritionData.carb) + "g\n Carb",
-        ]
     }
     
     var image: Image {

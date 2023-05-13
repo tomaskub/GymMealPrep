@@ -24,7 +24,8 @@ struct RecipeHostView: View {
             }
             
         }// END OF ZSTACK
-        // hide default toolbar background + back button
+        
+        // hide default toolbar background + back button to manage the material
         .toolbarBackground(.hidden, for: .automatic)
         .navigationBarBackButtonHidden()
         // custom toolbar

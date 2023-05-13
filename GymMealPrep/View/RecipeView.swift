@@ -19,22 +19,26 @@ struct RecipeView: View {
             
             //Content layer
                 List {
-//                    titleBanner
+
                     Section {
                         titleBanner
                             .listRowInsets(EdgeInsets())
                         tagChipView
                             .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-//                        HStack {
-//                            Spacer()
-//                            servingSummary
-//                            timeSummary
-//                            Spacer()
-//                        }
-                        RecipeSummaryView(servings: viewModel.recipe.servings, summaryData: viewModel.timeSummaryData, nutritionalData: viewModel.nutritionalData)
-                            
-                        
-//                        nutritionSummary
+                        HStack {
+                            Spacer()
+                            RecipeSummaryView(timePreparingInMinutes: viewModel.recipe.timePreparingInMinutes ?? 0,
+                                              timeCookingInMinutes: viewModel.recipe.timeCookingInMinutes ?? 0,
+                                              timeWaitingInMinues: viewModel.recipe.timeWaitingInMinutes ?? 0,
+                                              timeTotalInMinutes: viewModel.totalTimeCookingInMinutes,
+                                              cal: viewModel.recipe.nutritionData.calories,
+                                              proteInInGrams: viewModel.recipe.nutritionData.protein,
+                                              fatInGrams: viewModel.recipe.nutritionData.fat,
+                                              carbInGrams: viewModel.recipe.nutritionData.carb,
+                                              servings: viewModel.recipe.servings,
+                                              format: "%.0f")
+                            Spacer()
+                        }
                     }
                     .listRowSeparator(.hidden)
                     
@@ -64,52 +68,6 @@ struct RecipeView: View {
                 .listStyle(.inset)
                 .ignoresSafeArea(edges: .top)
         }
-    }
-    
-    var nutritionSummary: some View {
-        VStack {
-            Text("Nutrition value:")
-                .font(.title2)
-                .fontWeight(.semibold)
-            HStack {
-                ForEach(viewModel.nutritionalData, id: \.self) { data in
-                Text(data)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 80, height: 80)
-                    .background()
-                    .cornerRadius(10)
-                }
-            }
-        }
-    }
-    
-    var servingSummary: some View {
-        VStack {
-            Text("Servings:")
-                .font(.title3)
-                .fontWeight(.semibold)
-            Text("\(viewModel.recipe.servings)")
-        }
-    }
-    
-    var timeSummary: some View {
-        VStack {
-            Text("Time:")
-                .font(.title3)
-                .fontWeight(.semibold)
-            HStack {
-                ForEach(viewModel.timeSummaryData, id: \.0) { data in
-                    VStack {
-                        Text(data.0)
-                        Text(data.1)
-                    }
-                }
-            }
-        }
-        .padding()
-        .frame(maxHeight: .infinity)
-        .background(.white)
-        .cornerRadius(10)
     }
     
     var titleBanner: some View {

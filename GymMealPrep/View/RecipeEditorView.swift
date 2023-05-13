@@ -95,7 +95,6 @@ struct RecipeEditorView: View {
                 Spacer()
             }
             .onTapGesture {
-//                viewModel.selectedIngredient = Ingredient()
                 addNewIngredient.toggle()
             }
         }//END OF SECTION
