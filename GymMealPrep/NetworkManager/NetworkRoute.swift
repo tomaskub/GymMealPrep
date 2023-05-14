@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Request {
+protocol NetworkRoute {
     
     var path: String { get }
     
@@ -18,7 +18,7 @@ protocol Request {
     
     var addAuthToken: Bool { get }
     
-    var requestType: RequestType { get }
+    var requestType: NetworkRequestType { get }
     
 }
 
@@ -27,7 +27,7 @@ enum NetworkEnvironment: String {
     case edamamNutrients = "https://api.edamam.com/api/food-database/v2/nutrients"
 }
 
-enum RequestType: String {
+enum NetworkRequestType: String {
     case get
     case post
     case put
@@ -35,7 +35,7 @@ enum RequestType: String {
     case delete
 }
 
-extension Request {
+extension NetworkRoute {
     var headers: [String : String]? {
         return nil
     }

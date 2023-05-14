@@ -52,4 +52,25 @@ extension Resource {
             return .success(t(value))   
         }
     }
+    
+    func isLoading<Content: View>(@ViewBuilder content: @escaping () -> Content) -> Content? {
+        if loading {
+            return content()
+        }
+        return nil
+    }
+    
+    func hasResource<Content: View>(@ViewBuilder content: @escaping (T) -> Content) -> Content? {
+        if let value = value {
+            return content(value)
+        }
+        return nil
+    }
+    
+    func hasError<Content: View>(@ViewBuilder content: @escaping (Error) -> Content) -> Content? {
+        if let error = error {
+            return content(error)
+        }
+        return nil
+    }
 }
