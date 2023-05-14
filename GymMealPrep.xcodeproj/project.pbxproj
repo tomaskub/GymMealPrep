@@ -25,6 +25,8 @@
 		D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA232A019E2E00574FE0 /* ChipView.swift */; };
 		D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */; };
 		D64D95002A0FB0E80080CD70 /* RecipeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */; };
+		D64D95042A10D6DB0080CD70 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D95032A10D6DB0080CD70 /* RequestProtocol.swift */; };
+		D64D95062A10E12E0080CD70 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D95052A10E12E0080CD70 /* Resource.swift */; };
 		D694E3F52A057D370077E72F /* FoodMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E3F32A057D370077E72F /* FoodMO+CoreDataClass.swift */; };
 		D694E3F62A057D370077E72F /* FoodMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E3F42A057D370077E72F /* FoodMO+CoreDataProperties.swift */; };
 		D694E4032A05824A0077E72F /* RecipeMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E3F72A05824A0077E72F /* RecipeMO+CoreDataClass.swift */; };
@@ -103,6 +105,8 @@
 		D63AFA232A019E2E00574FE0 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecipeSummaryView.swift; path = GymMealPrep/View/RecipeSummaryView.swift; sourceTree = SOURCE_ROOT; };
+		D64D95032A10D6DB0080CD70 /* RequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
+		D64D95052A10E12E0080CD70 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		D694E3F32A057D370077E72F /* FoodMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D694E3F42A057D370077E72F /* FoodMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D694E3F72A05824A0077E72F /* RecipeMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 				D6C3405929FFCE03003F6E06 /* SampleData.swift */,
 				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
 				D634FF8829FD42F50034B950 /* ContentView.swift */,
+				D64D95022A10D6C50080CD70 /* NetworkManager */,
 				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,
 				D634FF8A29FD42F60034B950 /* Assets.xcassets */,
 				D634FF8C29FD42F60034B950 /* GymMealPrep.entitlements */,
@@ -258,6 +263,15 @@
 				D694E3F42A057D370077E72F /* FoodMO+CoreDataProperties.swift */,
 			);
 			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
+		D64D95022A10D6C50080CD70 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				D64D95032A10D6DB0080CD70 /* RequestProtocol.swift */,
+				D64D95052A10E12E0080CD70 /* Resource.swift */,
+			);
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 		D6C1DDB92A0790450062B1C5 /* DataManager */ = {
@@ -474,6 +488,7 @@
 				D694E4072A05824A0077E72F /* IngredientMO+CoreDataClass.swift in Sources */,
 				D6C3405429FE7458003F6E06 /* RecipeListViewModel.swift in Sources */,
 				D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */,
+				D64D95062A10E12E0080CD70 /* Resource.swift in Sources */,
 				D6C1DDB82A078D120062B1C5 /* DataManager+TagMO.swift in Sources */,
 				D634FFB529FD46D20034B950 /* DataManager.swift in Sources */,
 				D6C3404E29FD7FDE003F6E06 /* RecipeViewModel.swift in Sources */,
@@ -495,6 +510,7 @@
 				D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */,
 				D6C3403D29FD763D003F6E06 /* Food.swift in Sources */,
 				D6C3404C29FD7FB9003F6E06 /* RecipeView.swift in Sources */,
+				D64D95042A10D6DB0080CD70 /* RequestProtocol.swift in Sources */,
 				D694E4052A05824A0077E72F /* InstructionMO+CoreDataClass.swift in Sources */,
 				D694E4082A05824A0077E72F /* IngredientMO+CoreDataProperties.swift in Sources */,
 				D6C1DDBD2A07B7590062B1C5 /* DataManager+IngredientMO.swift in Sources */,
