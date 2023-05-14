@@ -39,7 +39,7 @@ struct ChipView<Content: View>: View {
                                 tagSize[tag] = size
                             }
                             .onLongPressGesture {
-                                withAnimation(Animation.spring()) {
+                                withAnimation(.linear) {
                                     selectedTag = tag
                                 }
                                 

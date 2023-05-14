@@ -9,10 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView {
-        RecipeListView()
-        }
-    }
+        TabView {
+            
+                RecipeListView()
+                .tabItem {
+                    Image(systemName: "square.grid.2x2")
+                        .font(.largeTitle)
+                }
+            
+        } // END OF TABVIEW
+    } // END OF BODY
 }
 
 struct ContentView_Previews: PreviewProvider {

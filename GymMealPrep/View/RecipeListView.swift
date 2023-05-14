@@ -16,50 +16,42 @@ struct RecipeListView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(viewModel.recipeArray) { recipe in
-                NavigationLink {
-                    RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
-                } label: {
-                    RecipeListRowView(recipe)
-                        .cornerRadius(20)
-                }
-
+        NavigationView {
+            List {
                 
-            }
-            .listRowSeparator(.hidden)
-//            .listRowBackground(
-//                RoundedRectangle(cornerRadius: 5)
-//                    .background(.clear)
-//                    .foregroundColor(.gray.opacity(0.2))
-//                    .padding(EdgeInsets(top: 2, leading: 10, bottom: 2, trailing: 10))
-//            )
+                ForEach(viewModel.recipeArray) { recipe in
+                    NavigationLink {
+                        RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
+                    } label: {
+                        RecipeListRowView(recipe)
+                            .cornerRadius(20)
+                    }
+                } // END OF LIST ROWS
+                .listRowSeparator(.hidden)
+                
+            } // END OF LIST
+            .listStyle(.plain)
             
-        }
-        .listStyle(.plain)
-        
-        
             .navigationTitle("Recipies")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
-                            
+                        
                     } label: {
                         Image(systemName: "plus.circle")
                             .font(.title3)
                     }
                 }
-            }
-    }
+            } // END OF TOOLBAR
+        } // END OF NAVIGATIONVIEW
+    } // END OF BODY
 }
 
 
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
             RecipeListView(viewModel: RecipeListViewModel(dataManager: .preview))
-        }
     }
 }
