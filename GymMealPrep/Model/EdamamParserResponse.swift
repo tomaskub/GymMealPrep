@@ -8,54 +8,51 @@
 
 import Foundation
 
-// MARK: - EdamamParserResponse
+// MARK: - EdamamParser
 struct EdamamParserResponse: Codable {
     let text: String
-    let parsed: [ParsedFood]
+    let parsed: [Parsed]
     let hints: [Hint]
     let links: Links
 
     enum CodingKeys: String, CodingKey {
         case text, parsed, hints
-        case links
+        case links = "_links"
     }
 }
 
 // MARK: - Hint
 struct Hint: Codable {
-    let food: ParsedFood
+    let food: EdamamFood
     let measures: [Measure]
 }
 
 // MARK: - Food
-struct ParsedFood: Codable {
-    let foodID, label, knownAs: String
+struct EdamamFood: Codable {
+    let foodId, label, knownAs: String
     let nutrients: Nutrients
     let category: String
     let categoryLabel: String
     let image: String?
-}
 
-enum Category: String, Codable {
-    case genericFoods = "Generic foods"
-}
-
-enum CategoryLabel: String, Codable {
-    case food = "food"
+    enum CodingKeys: String, CodingKey {
+        case foodId
+        case label, knownAs, nutrients, category, categoryLabel, image
+    }
 }
 
 // MARK: - Nutrients
 struct Nutrients: Codable {
-    let enercKcal: Int
+    let enercKcal: Double
     let procnt, fat, chocdf: Double
-    let fibtg: Int
+    let fibtg: Double
 
     enum CodingKeys: String, CodingKey {
-        case enercKcal
-        case procnt
-        case fat
-        case chocdf
-        case fibtg
+        case enercKcal = "ENERC_KCAL"
+        case procnt = "PROCNT"
+        case fat = "FAT"
+        case chocdf = "CHOCDF"
+        case fibtg = "FIBTG"
     }
 }
 
@@ -76,16 +73,9 @@ struct Qualified: Codable {
 // MARK: - Qualifier
 struct Qualifier: Codable {
     let uri: String
-    let label: Label
+    let label: String
 }
 
-enum Label: String, Codable {
-    case boneless = "boneless"
-    case bonelessAndSkinless = "boneless and skinless"
-    case skinless = "skinless"
-    case small = "small"
-    case whole = "whole"
-}
 
 // MARK: - Links
 struct Links: Codable {
@@ -98,3 +88,7 @@ struct Next: Codable {
     let href: String
 }
 
+// MARK: - Parsed
+struct Parsed: Codable {
+    let food: EdamamFood
+}

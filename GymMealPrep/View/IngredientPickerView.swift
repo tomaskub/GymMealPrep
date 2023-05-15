@@ -67,12 +67,12 @@ class IngredientPickerViewModel: ObservableObject {
                 return data
             }
             // decode data into post models
-            .decode(type: [PostModel].self , decoder: JSONDecoder())
+            .decode(type: EdamamParserResponse.self , decoder: JSONDecoder())
         // use the item
             .sink { (completion) in
                 print("Completion: \(completion)")
-            } receiveValue: { [weak self] (returnedPosts) in
-                self?.posts = returnedPosts
+            } receiveValue: { [weak self] (response) in
+                print(response)
             }
             .store(in: &subscriptions)
 
