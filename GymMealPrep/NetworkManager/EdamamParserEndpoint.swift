@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Endpoint: EndpointProtocol {
+struct EdamamParserEndpoint: EndpointProtocol {
     var path : String // path to the correct api like nutrients or parser
     var queryItems: [URLQueryItem] = []
     
@@ -33,7 +33,7 @@ struct Endpoint: EndpointProtocol {
     }
     
     static func ingredient(searchFor: String) -> Self {
-        return Endpoint(path: "parser", queryItems: [
+        return EdamamParserEndpoint(path: "parser", queryItems: [
             URLQueryItem(name: "app_id", value: EdamamAPIAuth.apiID),
             URLQueryItem(name: "app_key", value: EdamamAPIAuth.apiKey),
             URLQueryItem(name: "ingr", value: searchFor),
