@@ -28,4 +28,34 @@ final class EdamamLogicController: EdamamLogicControllerProtocol {
         print(endpoint.url.description)
         return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
     }
+    
+    func getIngredients(for ingredient: String) -> AnyPublisher<[Ingredient], Error> {
+        let endpoint = EdamamParserEndpoint.ingredient(searchFor: ingredient)
+        return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
+            .map { response in
+                var mapResult = [Ingredient]()
+                for hint in response.hints {
+                    let food = Food(name: hint.food.label)
+                    let nutrients = Nutrition(fromEdamam: hint.food.nutrients)
+                    
+                    let ingredient = Ingredient(
+                        food: food,
+                        quantity: 1,
+                        unitOfMeasure: hint.measures.first?.label ?? "Unknown",
+                        nutritionData: nutrients
+                    )
+                    mapResult.append(ingredient)
+                }
+                return mapResult
+            }
+            .eraseToAnyPublisher()
+        
+    }
+    
+}
+
+fileprivate extension Nutrition {
+    init(fromEdamam nutrient: EdamamParserResponse.Nutrients) {
+        self.init(calories: Float(nutrient.enercKcal), carb: Float(nutrient.chocdf), fat: Float(nutrient.fat), protein: Float(nutrient.procnt))
+    }
 }

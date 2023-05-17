@@ -27,9 +27,24 @@ struct IngredientPickerView: View {
             
             List {
                 ForEach(viewModel.ingredients) { ingredient in
-                    Text(ingredient.label)
+                    VStack {
+                        HStack {
+                            Text(ingredient.food.name)
+                            Text(String(format: "%.2d" , ingredient.quantity))
+                            Text(ingredient.unitOfMeasure)
+                        }
+                        HStack {
+                            RecipeSummaryView(
+                                cal: ingredient.nutritionData.calories,
+                                proteinInGrams: ingredient.nutritionData.protein,
+                                fatInGrams: ingredient.nutritionData.fat,
+                                carbInGrams: ingredient.nutritionData.carb, format: "%.0f")
+                        }
+                        
+                    }
                 }
             }
+            .listStyle(.inset)
         }
         .padding()
     }
