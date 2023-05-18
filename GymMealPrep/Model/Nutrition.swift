@@ -37,6 +37,17 @@ struct Nutrition: AdditiveArithmetic {
         return Nutrition(calories: calories, carb: carb, fat: fat, protein: protein)
     }
     
+    /// Multiply the nutrition object properties by given parameter
+    /// - Parameter factor: used to multiply the protein, fat, carb and calories
+    /// - Returns: Nutrition object with properties multiplied by the parameter
+    func multiplyBy(_ factor: Double) -> Nutrition {
+        let protein = self.protein * Float(factor)
+        let fat = self.fat * Float(factor)
+        let carb = self.carb * Float(factor)
+        let calories = self.calories * Float(factor)
+        return Nutrition(calories: calories, carb: carb, fat: fat, protein: protein)
+    }
+    
     static var zero: Nutrition = .init()
     
     var calories: Float
