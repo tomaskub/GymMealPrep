@@ -14,12 +14,21 @@ class IngredientPickerViewModel: ObservableObject {
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
     @Published var ingredients: [Ingredient] = []
+    @Published var ingredientsRow: [[Ingredient]] = [[]] {
+        didSet {
+            for row in ingredientsRow {
+                print(row.description)
+            }
+        }
+    }
+    
     @Published var ingredientAsEdamamFood: [EdamamParserResponse.EdamamFood] = []
     
     @Published var searchTerm: String = String()
     
     func searchForIngredient() {
-        
+        // Old response publisher without parsing the return into objects translated into user interface layer
+        /*
         if false {//!searchTerm.isEmpty {
             edamamLogicController.getIngredients(for: searchTerm)
                 .receive(on: DispatchQueue.main)
@@ -29,7 +38,7 @@ class IngredientPickerViewModel: ObservableObject {
                     //assign values to a holder that can be used by the view
                     guard let self else { return }
                     self.ingredients = []
-                    if let parsedFood = response.parsed.first?.food {
+                    if let parsedFood = response.parsed?.first?.food {
                         self.ingredientAsEdamamFood.append(parsedFood)
                     }
                     for hint in response.hints {
@@ -38,6 +47,7 @@ class IngredientPickerViewModel: ObservableObject {
                 }
                 .store(in: &subscriptions)
         }
+        */
         
         if !searchTerm.isEmpty {
             edamamLogicController.getIngredients(for: searchTerm)
@@ -45,7 +55,7 @@ class IngredientPickerViewModel: ObservableObject {
                 .sink { completion in
                     print(completion)
                 } receiveValue: { [weak self] result in
-                    self?.ingredients = result
+                    self?.ingredientsRow = result
                 }
                 .store(in: &subscriptions)
 
