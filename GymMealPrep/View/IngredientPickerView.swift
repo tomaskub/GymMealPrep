@@ -26,11 +26,14 @@ struct IngredientPickerView: View {
             }
             
             List {
+                // Former implementation
+                
                 if !viewModel.ingredientsRow.isEmpty {
-                    ForEach(viewModel.ingredientsRow, id: \.first?.id) { ingredients in
-                        if let _ = ingredients.first {
-                            IngredientPickerRowView(ingredients: ingredients)
-                        }
+                    ForEach($viewModel.ingredientsRow, id: \.0.first?.id) { $tuple in
+                        IngredientPickerRowView(ingredients: tuple.0, selectedIngredient: $tuple.1)
+                            .onTapGesture {
+                                print(tuple.1.unitOfMeasure)
+                            }
                     }
                 }
             }

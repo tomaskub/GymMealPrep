@@ -9,13 +9,7 @@ import SwiftUI
 
 struct IngredientPickerRowView: View {
     var ingredients: [Ingredient]
-    @State var selectedIngredient: Ingredient
-    
-    public init(ingredients: [Ingredient]) {
-        self.ingredients = ingredients
-        self._selectedIngredient = State(initialValue: ingredients.first!)
-    }
-    
+    @Binding var selectedIngredient: Ingredient
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -44,6 +38,6 @@ struct IngredientPickerRowView: View {
 
 struct IngredientPickerRowView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientPickerRowView(ingredients: SampleData.sampleParsedIngredientRowData)
+        IngredientPickerRowView(ingredients: SampleData.sampleParsedIngredientRowData, selectedIngredient: .constant(SampleData.sampleParsedIngredientRowData[0]))
     }
 }

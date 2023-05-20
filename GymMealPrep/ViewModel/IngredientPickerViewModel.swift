@@ -13,7 +13,22 @@ class IngredientPickerViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
-    @Published var ingredientsRow: [[Ingredient]] = [[]]
+    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+    
+    @Published var ingredientsRaw: [[Ingredient]] = [] {
+        didSet {
+            var temp = [([Ingredient], Ingredient)]()
+            if !ingredientsRaw.isEmpty {
+                for row in ingredientsRaw {
+                    if let first = row.first {
+                        let tempRow = (row, first)
+                        temp.append(tempRow)
+                    }
+                }
+            }
+            ingredientsRow = temp
+        }
+    }
     @Published var searchTerm: String = String()
     
     func searchForIngredient() {
@@ -24,7 +39,8 @@ class IngredientPickerViewModel: ObservableObject {
                 .sink { completion in
                     print(completion)
                 } receiveValue: { [weak self] result in
-                    self?.ingredientsRow = result
+                    guard let self else { return }
+                    self.ingredientsRaw = result
                 }
                 .store(in: &subscriptions)
 
