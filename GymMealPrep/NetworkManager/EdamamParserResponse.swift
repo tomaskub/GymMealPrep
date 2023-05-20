@@ -10,7 +10,7 @@ import Foundation
 // MARK: - EdamamParser
 struct EdamamParserResponse: Codable {
     let text: String?
-    let parsed: [Parsed]
+    let parsed: [Parsed]?
     let hints: [Hint]
     let links: Links
 
@@ -40,15 +40,15 @@ struct EdamamParserResponse: Codable {
 
     // MARK: - Nutrients
     struct Nutrients: Codable {
-        let enercKcal: Double
-        let procnt, fat, chocdf: Double
+        let enercKcal: Double?
+        let protein, fat, carbs: Double?
         let fibtg: Double?
 
         enum CodingKeys: String, CodingKey {
             case enercKcal = "ENERC_KCAL"
-            case procnt = "PROCNT"
+            case protein = "PROCNT"
             case fat = "FAT"
-            case chocdf = "CHOCDF"
+            case carbs = "CHOCDF"
             case fibtg = "FIBTG"
         }
     }
@@ -64,7 +64,7 @@ struct EdamamParserResponse: Codable {
     // MARK: - Qualified
     struct Qualified: Codable {
         let qualifiers: [Qualifier]
-        let weight: Int
+        let weight: Double
     }
 
     // MARK: - Qualifier

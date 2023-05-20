@@ -7,13 +7,16 @@
 
 import Foundation
 
-struct Food {
+struct Food: Hashable {
+    
     var id: UUID
     var name: String
+    
     init(id: UUID = UUID(), name: String) {
         self.id = id
         self.name = name
     }
+    
     init(foodMO: FoodMO) {
         self.id = foodMO.id
         self.name = foodMO.name
