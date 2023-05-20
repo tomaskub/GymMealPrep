@@ -9,34 +9,34 @@ import SwiftUI
 
 struct IngredientPickerRowView: View {
     var ingredients: [Ingredient]
-    @State var selectedIngredient: Int = 0
-    let range: Range<Int>
+    @State var selectedIngredient: Ingredient
+    
     public init(ingredients: [Ingredient]) {
         self.ingredients = ingredients
-        self.range = 0..<ingredients.count
+        self._selectedIngredient = State(initialValue: ingredients.first!)
     }
+    
     
     var body: some View {
         VStack(alignment: .leading) {
             
             HStack {
-                Text(ingredients[selectedIngredient].food.name)
+                Text(ingredients[0].food.name)
                     .font(.largeTitle)
                 Spacer()
-                Picker(selection: $selectedIngredient, label: Text("UOM picker")) {
-                    
-                    ForEach(range) { i in
-                        Text(ingredients[i].unitOfMeasure).tag(i)
-                        
+                Picker(String(), selection: $selectedIngredient) {
+                    ForEach(ingredients) { ingredient in
+                        Text(ingredient.unitOfMeasure).tag(ingredient)
                     }
                 }
                 .pickerStyle(.menu)
+                
             }
 
-            RecipeSummaryView(cal: ingredients[selectedIngredient].nutritionData.calories,
-                                  proteinInGrams: ingredients[selectedIngredient].nutritionData.protein,
-                                  fatInGrams: ingredients[selectedIngredient].nutritionData.fat,
-                                  carbInGrams: ingredients[selectedIngredient].nutritionData.carb,
+            RecipeSummaryView(cal: selectedIngredient.nutritionData.calories,
+                                  proteinInGrams: selectedIngredient.nutritionData.protein,
+                                  fatInGrams: selectedIngredient.nutritionData.fat,
+                                  carbInGrams: selectedIngredient.nutritionData.carb,
                                   format: "%.1f")
         }
     }

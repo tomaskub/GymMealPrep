@@ -223,7 +223,6 @@
 				D6C3404A29FD7F5A003F6E06 /* ViewModel */,
 				D6C1DDB92A0790450062B1C5 /* DataManager */,
 				D64D95022A10D6C50080CD70 /* NetworkManager */,
-				D680C3332A13DDA1002070DF /* EdamamParser */,
 				D6C3405929FFCE03003F6E06 /* SampleData.swift */,
 				D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */,
 				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
@@ -301,13 +300,6 @@
 				D64D95052A10E12E0080CD70 /* Resource.swift */,
 			);
 			path = NetworkManager;
-			sourceTree = "<group>";
-		};
-		D680C3332A13DDA1002070DF /* EdamamParser */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = EdamamParser;
 			sourceTree = "<group>";
 		};
 		D6C1DDB92A0790450062B1C5 /* DataManager */ = {
