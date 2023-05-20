@@ -41,4 +41,15 @@ struct SampleData {
                                        timeCookingInMinutes: 0,
                                        timePreparingInMinutes: 0,
                                        timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: [])
+    
+    static var sampleParsedIngredientRowData: [Ingredient] {
+        
+        let food = Food(name: "Chicken")
+        let baseNutri = Nutrition(calories: 215, carb: 0, fat: 15.1, protein: 18.6)
+        return [
+        Ingredient(food: food , quantity: 1, unitOfMeasure: "Whole", nutritionData: baseNutri.multiplyBy(12)),
+        Ingredient(food: food, quantity: 1, unitOfMeasure: "Whole (small)", nutritionData: baseNutri.multiplyBy(10)),
+        Ingredient(food: food, quantity: 1, unitOfMeasure: "Whole (boneless)", nutritionData: baseNutri.multiplyBy(9.2))
+        ]
+    }
 }

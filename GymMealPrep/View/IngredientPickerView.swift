@@ -26,33 +26,23 @@ struct IngredientPickerView: View {
             }
             
             List {
-                ForEach(viewModel.ingredients) { ingredient in
-                    VStack {
-                        HStack {
-                            Text(ingredient.food.name)
-                            Text(String(format: "%.2d" , ingredient.quantity))
-                            Text(ingredient.unitOfMeasure)
+                if !viewModel.ingredientsRow.isEmpty {
+                    ForEach(viewModel.ingredientsRow, id: \.first?.id) { ingredients in
+                        if let _ = ingredients.first {
+                            IngredientPickerRowView(ingredients: ingredients)
                         }
-                        HStack {
-                            RecipeSummaryView(
-                                cal: ingredient.nutritionData.calories,
-                                proteinInGrams: ingredient.nutritionData.protein,
-                                fatInGrams: ingredient.nutritionData.fat,
-                                carbInGrams: ingredient.nutritionData.carb, format: "%.0f")
-                        }
-                        
                     }
                 }
             }
             .listStyle(.inset)
+            .padding()
         }
-        .padding()
     }
 }
 
 struct IngredientPickerView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientPickerView()
+        IngredientPickerView().padding()
     }
 }
 
