@@ -21,7 +21,7 @@ class IngredientPickerViewModel: ObservableObject {
             if !ingredientsRaw.isEmpty {
                 for row in ingredientsRaw {
                     if let first = row.first {
-                        let tempRow = (row, first)
+                        let tempRow: ([Ingredient], Ingredient) = (row, first)
                         temp.append(tempRow)
                     }
                 }

@@ -17,6 +17,9 @@ struct IngredientPickerView: View {
             HStack {
                 TextField("Type in ingredient name", text: $viewModel.searchTerm)
                     .textFieldStyle(.roundedBorder)
+                    .onSubmit {
+                        viewModel.searchForIngredient()
+                    }
                 Button {
                     viewModel.searchForIngredient()
                 } label: {
@@ -26,21 +29,18 @@ struct IngredientPickerView: View {
             }
             
             List {
-                // Former implementation
-                
                 if !viewModel.ingredientsRow.isEmpty {
                     ForEach($viewModel.ingredientsRow, id: \.0.first?.id) { $tuple in
-                        IngredientPickerRowView(ingredients: tuple.0, selectedIngredient: $tuple.1)
-                            .onTapGesture {
-                                print(tuple.1.unitOfMeasure)
-                            }
-                    }
+                        IngredientPickerRowView(ingredients: tuple.0, selectedIngredient: $tuple.1) { ingredient in
+                            print("Added ingredient: \(ingredient.food.name) - \(ingredient.quantity) \(ingredient.unitOfMeasure)")
+                        } // END OF ROW
+                    } // END OF FOREACH
                 }
-            }
+            }// END OF LIST
             .listStyle(.inset)
             .padding()
-        }
-    }
+        }// END OF VSTACK
+    } // END OF BODY
 }
 
 struct IngredientPickerView_Previews: PreviewProvider {
