@@ -13,15 +13,7 @@ struct ContentView: View {
             
                 RecipeListView()
                 .tabItem {
-                    Image(systemName: "square.grid.2x2")
-                        .font(.largeTitle)
-                }
-            IngredientPickerView() {
-                ingredient in
-                print(ingredient.id)
-            }
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
+                    Image(systemName: "square.fill.text.grid.1x2")
                         .font(.largeTitle)
                 }
         } // END OF TABVIEW

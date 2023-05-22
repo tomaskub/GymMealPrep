@@ -7,7 +7,17 @@
 
 import Foundation
 
-extension DataManager {
+protocol IngredientDataManagerProtocol {
+    
+    func updateAndSave(ingredient: Ingredient)
+    
+    func addToRecipe(ingredient: Ingredient, to: RecipeMO)
+    
+    func delete(ingredient: Ingredient)
+    
+}
+
+extension DataManager: IngredientDataManagerProtocol {
     
     /// Update an ingredient managed object with data from ingredient, or if the ingredientMO with correct id is not found create a new ingredientMO
     /// - Parameter ingredient: object to update with
@@ -19,7 +29,7 @@ extension DataManager {
             if let ingredientMO = success {
                 update(ingredientMO: ingredientMO, from: ingredient)
             } else {
-                ingredientMO(from: ingredient)
+                _ = ingredientMO(from: ingredient)
             }
         case .failure(let failure):
             print("Could not fetch ingredientMO to update: \(failure.localizedDescription)")
@@ -46,7 +56,7 @@ extension DataManager {
     }
     
     ///Delete a ingredientMO object with id matching input food id
-    func delete(ingredient: Ingredient){
+    func delete(ingredient: Ingredient) {
         let predicate = NSPredicate(format: "id = %@", ingredient.id as CVarArg)
         let result = fetchFirst(IngredientMO.self, predicate: predicate)
         switch result {
@@ -72,7 +82,6 @@ extension DataManager {
     }
     private func ingredientMO(from source: Ingredient) -> IngredientMO {
         //Since ingredient is identifiable use the id present in Ingredient
-
         let ingredientMO = IngredientMO(context: managedContext, id: source.id, calories: source.nutritionData.calories, carbs: source.nutritionData.carb, fat: source.nutritionData.fat, protein: source.nutritionData.protein, quantity: source.quantity, unitOfMeasure: source.unitOfMeasure)
         addToIngredients(food: source.food, to: ingredientMO)
         return ingredientMO
