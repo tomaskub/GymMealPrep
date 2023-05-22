@@ -21,6 +21,7 @@
 		D634FFB829FD52100034B950 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D634FFB629FD52100034B950 /* Model.xcdatamodeld */; };
 		D637AD462A0949E2002283C5 /* DataManager+RecipeMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D637AD452A0949E2002283C5 /* DataManager+RecipeMO.swift */; };
 		D637AD482A0961B2002283C5 /* DataManager+RecipeMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */; };
+		D638926E2A1BE109008CC0D6 /* IgredientHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D638926D2A1BE109008CC0D6 /* IgredientHostView.swift */; };
 		D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA212A01238300574FE0 /* RecipeEditorView.swift */; };
 		D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63AFA232A019E2E00574FE0 /* ChipView.swift */; };
 		D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */; };
@@ -112,6 +113,7 @@
 		D634FFB729FD52100034B950 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		D637AD452A0949E2002283C5 /* DataManager+RecipeMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RecipeMO.swift"; sourceTree = "<group>"; };
 		D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+RecipeMOTests.swift"; sourceTree = "<group>"; };
+		D638926D2A1BE109008CC0D6 /* IgredientHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgredientHostView.swift; sourceTree = "<group>"; };
 		D63AFA212A01238300574FE0 /* RecipeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditorView.swift; sourceTree = "<group>"; };
 		D63AFA232A019E2E00574FE0 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 			children = (
 				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
 				D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */,
+				D638926D2A1BE109008CC0D6 /* IgredientHostView.swift */,
 				D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */,
 				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
 				D63AFA232A019E2E00574FE0 /* ChipView.swift */,
@@ -544,6 +547,7 @@
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
 				D694E3F62A057D370077E72F /* FoodMO+CoreDataProperties.swift in Sources */,
 				D6C3404329FD7D17003F6E06 /* Recipe.swift in Sources */,
+				D638926E2A1BE109008CC0D6 /* IgredientHostView.swift in Sources */,
 				D6DBF29A2A07F78800CB04AA /* DataManager+InstructionMO.swift in Sources */,
 				D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */,
 				D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */,
