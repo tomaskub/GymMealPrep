@@ -31,42 +31,55 @@ struct RecipeSummaryView: View {
     let servings: Int?
     /// Format for nutrition values
     let format: String?
+    let gridSpacing: CGFloat
+    
+    let showNutritionLabel: Bool
+    let showTimeLabel: Bool
     
     let typeOfComponents: SummaryComponent
     
-    init(timePreparingInMinutes: Int, timeCookingInMinutes: Int, timeWaitingInMinues: Int, timeTotalInMinutes: Int, cal: Float, proteinInGrams: Float, fatInGrams: Float, carbInGrams: Float, servings: Int, format: String) {
+    init(timePreparingInMinutes: Int, timeCookingInMinutes: Int, timeWaitingInMinues: Int, timeTotalInMinutes: Int, cal: Float, proteinInGrams: Float, fatInGrams: Float, carbInGrams: Float, servings: Int, format: String, showNutritionLabel: Bool = true, showTimeLabel: Bool = true, gridSpacing: CGFloat = 50) {
         self.timePreparingInMinutes = timePreparingInMinutes
         self.timeCookingInMinutes = timeCookingInMinutes
         self.timeWaitingInMinues = timeWaitingInMinues
         self.timeTotalInMinutes = timeTotalInMinutes
+        self.showTimeLabel = showTimeLabel
         self.cal = cal
         self.proteinInGrams = proteinInGrams
         self.fatInGrams = fatInGrams
         self.carbInGrams = carbInGrams
         self.servings = servings
         self.format = format
+        self.showNutritionLabel = showNutritionLabel
         self.typeOfComponents = .all
+        self.gridSpacing = gridSpacing
     }
     
-    init(timePreparingInMinutes: Int, timeCookingInMinutes: Int, timeWaitingInMinutes: Int, timeTotalInMinutes: Int) {
+    init(timePreparingInMinutes: Int, timeCookingInMinutes: Int, timeWaitingInMinutes: Int, timeTotalInMinutes: Int, showLabel: Bool = true, gridSpacing: CGFloat = 50) {
+        
         self.typeOfComponents = .time
         self.timePreparingInMinutes = timePreparingInMinutes
         self.timeCookingInMinutes = timeCookingInMinutes
         self.timeWaitingInMinues = timeWaitingInMinutes
         self.timeTotalInMinutes = timeTotalInMinutes
+        self.showTimeLabel = showLabel
+        self.gridSpacing = gridSpacing
         self.cal = nil
         self.proteinInGrams = nil
         self.fatInGrams = nil
         self.carbInGrams = nil
         self.servings = nil
         self.format = nil
+        self.showNutritionLabel = false
     }
     
-    init(cal: Float, proteinInGrams: Float, fatInGrams: Float, carbInGrams: Float, format: String) {
+    init(cal: Float, proteinInGrams: Float, fatInGrams: Float, carbInGrams: Float, format: String, showLabel: Bool = true, gridSpacing: CGFloat = 50) {
         self.timePreparingInMinutes = nil
         self.timeCookingInMinutes = nil
         self.timeWaitingInMinues = nil
         self.timeTotalInMinutes = nil
+        self.showTimeLabel = false
+        
         self.cal = cal
         self.proteinInGrams = proteinInGrams
         self.fatInGrams = fatInGrams
@@ -74,23 +87,27 @@ struct RecipeSummaryView: View {
         self.servings = nil
         self.format = format
         self.typeOfComponents = .nutrition
+        self.showNutritionLabel = showLabel
+        
+        self.gridSpacing = gridSpacing
     }
     
     
     
     var body: some View {
         
-            Grid(horizontalSpacing: 50) {
+            Grid(horizontalSpacing: gridSpacing) {
                 
                 if typeOfComponents != .time {
-                    GridRow {
-                        Text("Nutrition value:")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                    if showNutritionLabel {
+                        GridRow {
+                            Text("Nutrition value:")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                        }
+                        .gridCellColumns(4)
+                        .padding(.vertical)
                     }
-                    
-                    .gridCellColumns(4)
-                    .padding(.vertical)
                     
                     GridRow {
                         ForEach(generateNutritionData(), id: \.0) { data in
@@ -104,13 +121,16 @@ struct RecipeSummaryView: View {
                 }
                 
                 if typeOfComponents != .nutrition{
-                    GridRow {
-                        Text("Time:")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .gridCellColumns(4)
+                    
+                    if showTimeLabel {
+                        GridRow {
+                            Text("Time:")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .gridCellColumns(4)
+                        }
+                        .padding(.bottom)
                     }
-                    .padding(.bottom)
                     
                     GridRow {
                         ForEach(generateTimeData(), id: \.0) { data in
@@ -134,9 +154,6 @@ struct RecipeSummaryView: View {
                     .padding(.bottom)
                 }
             } // END OF GRID
-            
-            .background()
-            .cornerRadius(10)
     } // END OF BODY
     func generateTimeData() -> [(String, String)] {
         return [(timeLabels[0], "\(timePreparingInMinutes ?? 0)"),
@@ -158,6 +175,8 @@ struct RecipeSummaryView_Previews: PreviewProvider {
             Color.gray
             
             RecipeSummaryView(timePreparingInMinutes: 10, timeCookingInMinutes: 30, timeWaitingInMinues: 20, timeTotalInMinutes: 60, cal: 500, proteinInGrams: 35, fatInGrams: 12, carbInGrams: 25, servings: 4, format: "%.0f")
+                        .background()
+                        .cornerRadius(10)
             
         }
     }

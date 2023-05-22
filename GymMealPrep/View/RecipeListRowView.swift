@@ -36,21 +36,23 @@ struct RecipeListRowView: View {
             Spacer()
             
                 VStack {
+                    
                     Text(recipe.name)
-                    HStack {
-                        Text(String(format: "%.0f", recipe.nutritionData.calories))
-                        
-                        Text(String(format: "%.0f", recipe.nutritionData.protein))
-                        
-                        Text(String(format: "%.0f", recipe.nutritionData.fat))
-                        
-                        Text(String(format: "%.0f", recipe.nutritionData.carb))
-                    }// END OF HSTACK
+                        .fontWeight(.semibold)
+                        .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
+                    
+                    RecipeSummaryView(cal: recipe.nutritionData.calories,
+                                      proteinInGrams: recipe.nutritionData.protein,
+                                      fatInGrams: recipe.nutritionData.fat,
+                                      carbInGrams: recipe.nutritionData.carb,
+                                      format: "%.0f",
+                                      showLabel: false,
+                                      gridSpacing: 20)
                 } // END OF VSTACK
             Spacer()
-        }// END OF HSTACK
-    }
-}
+        } // END OF HSTACK
+    } // END OF BODY
+} // END OF STRUCT
 
 
 struct RecipeListRowView_Previews: PreviewProvider {
