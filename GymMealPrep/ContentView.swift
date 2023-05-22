@@ -16,7 +16,10 @@ struct ContentView: View {
                     Image(systemName: "square.grid.2x2")
                         .font(.largeTitle)
                 }
-                IngredientPickerView()
+            IngredientPickerView() {
+                ingredient in
+                print(ingredient.id)
+            }
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                         .font(.largeTitle)

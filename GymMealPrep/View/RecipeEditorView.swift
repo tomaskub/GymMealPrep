@@ -11,7 +11,6 @@ import PhotosUI
 struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
-    @State var addNewIngredient: Bool = false
     
     var body: some View {
         List {
@@ -32,11 +31,6 @@ struct RecipeEditorView: View {
         .sheet(item: $viewModel.selectedIngredient) { ingredientToEdit in
             IngredientEditorView(editedIngredient: ingredientToEdit) { ingredientToSave in
                 viewModel.addIngredient(ingredientToSave)
-            }
-        }
-        .sheet(isPresented: $addNewIngredient) {
-            IngredientEditorView { ingredient in
-                viewModel.addIngredient(ingredient)
             }
         }
     }//END OF BODY
@@ -89,14 +83,17 @@ struct RecipeEditorView: View {
             .onMove { from, to in
                 viewModel.moveIngredient(from: from, to: to)
             }
-            HStack {
-                Spacer()
-                Image(systemName: "plus.circle")
-                Spacer()
+            
+            NavigationLink {
+                IgredientHostView(viewModel: viewModel)
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("Add new ingredient")
+                    Spacer()
+                }
             }
-            .onTapGesture {
-                addNewIngredient.toggle()
-            }
+
         }//END OF SECTION
     }
     
@@ -191,6 +188,8 @@ struct RecipeEditorView: View {
 
 struct RecipeEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+        NavigationView {
+            RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+        }
     }
 }

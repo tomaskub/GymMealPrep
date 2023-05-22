@@ -9,7 +9,11 @@ import SwiftUI
 import Combine
 
 struct IngredientPickerView: View {
+    
+    let closure: (Ingredient) -> Void
+    
     @StateObject var viewModel = IngredientPickerViewModel()
+    
     
     var body: some View {
         VStack {
@@ -32,7 +36,7 @@ struct IngredientPickerView: View {
                 if !viewModel.ingredientsRow.isEmpty {
                     ForEach($viewModel.ingredientsRow, id: \.0.first?.id) { $tuple in
                         IngredientPickerRowView(ingredients: tuple.0, selectedIngredient: $tuple.1) { ingredient in
-                            print("Added ingredient: \(ingredient.food.name) - \(ingredient.quantity) \(ingredient.unitOfMeasure)")
+                            closure(ingredient)
                         } // END OF ROW
                     } // END OF FOREACH
                 }
@@ -45,7 +49,11 @@ struct IngredientPickerView: View {
 
 struct IngredientPickerView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientPickerView().padding()
+        IngredientPickerView(closure: { ingredient in
+            print(ingredient.id)
+        })
+        
+            .padding()
     }
 }
 

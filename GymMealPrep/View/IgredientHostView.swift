@@ -8,13 +8,49 @@
 import SwiftUI
 
 struct IgredientHostView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewModel: RecipeViewModel
+    
+    @State var addNewIngredient: Bool = false
+     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            IngredientPickerView()
+            { ingredient in
+                viewModel.selectedIngredient = ingredient
+            }
+            Spacer()
+            Button("Add manually") {
+                addNewIngredient.toggle()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .sheet(isPresented: $addNewIngredient) {
+            IngredientEditorView { ingredientToSave in
+                viewModel.addIngredient(ingredientToSave)
+                DispatchQueue.main.async {
+                    self.dismiss()
+                }
+            }
+        }
+        .sheet(item: $viewModel.selectedIngredient, content: { ingredientToEdit in
+            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredient in viewModel.addIngredient(ingredient)
+                DispatchQueue.main.async {
+                    self.dismiss()
+                }
+            }
+            
+        })
+        .padding()
+        .navigationTitle("Add new ingredient")
     }
 }
 
 struct IgredientHostView_Previews: PreviewProvider {
     static var previews: some View {
-        IgredientHostView()
+        NavigationView {
+            IgredientHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+        }
     }
 }
