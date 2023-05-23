@@ -7,7 +7,17 @@
 
 import Foundation
 
-struct Ingredient: Identifiable, Hashable {
+protocol IngredientProtocol: Identifiable, Hashable {
+    
+    var id: UUID { get }
+    var food: Food { get }
+    var quantity: Double { get }
+    var unitOfMeasure: String { get }
+    var nutritionData: Nutrition { get }
+    
+}
+
+struct Ingredient: IngredientProtocol {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
