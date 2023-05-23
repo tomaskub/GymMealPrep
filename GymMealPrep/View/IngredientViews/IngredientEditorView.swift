@@ -10,6 +10,7 @@ import SwiftUI
 struct IngredientEditorView: View {
     
     @Environment(\.dismiss) var dismiss
+    @State var lockNutritionValues: Bool = false
     @State private var draftIngredient: Ingredient = Ingredient()
     
     var editedIngredient: Ingredient?
@@ -76,9 +77,14 @@ struct IngredientEditorView: View {
                         TextField("carbs", value: $draftIngredient.nutritionData.carb, format: .number)
                             .textFieldStyle(.roundedBorder)
                     }
-                    
-                    
                 } // END OF NUTRITION GROUP
+                .disabled(lockNutritionValues)
+                
+                        Toggle("Lock nutrition values", isOn: $lockNutritionValues)
+                        .tint(.blue)
+                    .gridCellColumns(2)
+                    
+                
             }// END OF GRID
         
             .padding()
@@ -104,17 +110,12 @@ struct IngredientEditorView: View {
             
         }// END OF VSTACK
         .padding()
-        .onAppear {
-            if let ingredient = editedIngredient {
-                draftIngredient = ingredient
-            }
-        }
     }
         
 }
 
 struct IngredientEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientEditorView(editedIngredient: nil, saveAction: { _ in }) 
+        IngredientEditorView(editedIngredient: nil, saveAction: { _ in })
     }
 }
