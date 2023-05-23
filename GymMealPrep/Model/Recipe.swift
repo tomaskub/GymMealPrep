@@ -22,7 +22,8 @@ struct Recipe: Identifiable {
     var tags: [Tag]
     
     var nutritionData: Nutrition {
-        return ingredients.map({ $0.nutritionData }).reduce(Nutrition.zero, + ).divideBy(servings)
+        //TODO: CHECK IF THIS IMPLEMENTATION IS SAFE OR WHETER THAT SHOULD NOT BE PROPAGATED DOWN THE STREAM
+        return ingredients.map({ $0.nutritionData as! Nutrition }).reduce(Nutrition.zero, + ).divideBy(servings)
     }
     
     init(id: UUID = UUID(), name: String,servings: Int, timeCookingInMinutes: Int, timePreparingInMinutes: Int, timeWaitingInMinutes: Int, ingredients: [Ingredient], instructions: [Instruction], imageData: Data? = nil, tags: [Tag]) {

@@ -14,7 +14,7 @@ class IngredientEditorViewModel: ObservableObject {
     @Published var isEditingIngredient: Bool
     
     //MARK: DRAFT INGREDIENT PROPERTY
-    @Published var draftIngredient: Ingredient
+    @Published var draftIngredient: any IngredientProtocol
     
     //MARK: VIEW TEXTFIELDS PROPERTIES
     //Initialized here so they can be overriden in init using draftIngredient values
@@ -57,14 +57,14 @@ class IngredientEditorViewModel: ObservableObject {
         }
     }
     
-    init(ingredientToEdit: Ingredient?) {
+    init(ingredientToEdit: (any IngredientProtocol)?) {
         //unwrap and configure view state based on wheter the ingredient was passed in
         if let ingredient = ingredientToEdit {
             self.draftIngredient = ingredient
             self.lockNutritionValues = true
             self.isEditingIngredient = true
         } else {
-            self.draftIngredient = Ingredient()
+            self.draftIngredient = Ingredient() // TODO: this is concrete so i have to check how to set it to the same type - should it be generic protocol?
             self.lockNutritionValues = false
             self.isEditingIngredient = false
         }

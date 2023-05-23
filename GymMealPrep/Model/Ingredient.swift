@@ -9,15 +9,23 @@ import Foundation
 
 protocol IngredientProtocol: Identifiable, Hashable {
     
-    var id: UUID { get }
-    var food: Food { get }
-    var quantity: Double { get }
-    var unitOfMeasure: String { get }
-    var nutritionData: Nutrition { get }
+    var id: UUID { get set }
+    var food: Food { get set }
+    var quantity: Double { get set }
+    var unitOfMeasure: String { get set }
+    var nutritionData: any NutritionProtocol { get set }
     
 }
 
 struct Ingredient: IngredientProtocol {
+    static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.food.id == rhs.food.id &&
+        lhs.quantity == rhs.quantity &&
+        lhs.unitOfMeasure == rhs.unitOfMeasure
+        
+    }
+    
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -28,7 +36,7 @@ struct Ingredient: IngredientProtocol {
     var quantity: Double
     var unitOfMeasure: String
     
-    var nutritionData: Nutrition
+    var nutritionData: any NutritionProtocol
     
     init(id: UUID = UUID(), food: Food, quantity: Double, unitOfMeasure: String, nutritionData: Nutrition) {
         self.id = id

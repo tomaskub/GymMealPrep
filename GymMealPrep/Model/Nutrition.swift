@@ -7,7 +7,14 @@
 
 import Foundation
 
-struct Nutrition: AdditiveArithmetic {
+protocol NutritionProtocol: AdditiveArithmetic {
+    var calories: Float { get set }
+    var carb: Float { get set }
+    var fat: Float { get set }
+    var protein: Float { get set }
+}
+
+struct Nutrition: NutritionProtocol {
     
     static func - (lhs: Nutrition, rhs: Nutrition) -> Nutrition {
         let protein = lhs.protein - rhs.protein
