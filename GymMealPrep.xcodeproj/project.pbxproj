@@ -312,6 +312,36 @@
 			path = NetworkManager;
 			sourceTree = "<group>";
 		};
+		D668B81A2A1D320100242E51 /* IngredientViews */ = {
+			isa = PBXGroup;
+			children = (
+				D638926D2A1BE109008CC0D6 /* IgredientHostView.swift */,
+				D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */,
+				D64D950D2A116EE80080CD70 /* IngredientPickerView.swift */,
+				D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */,
+			);
+			path = IngredientViews;
+			sourceTree = "<group>";
+		};
+		D668B81B2A1D322300242E51 /* RecipeViews */ = {
+			isa = PBXGroup;
+			children = (
+				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
+				D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */,
+				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
+			);
+			path = RecipeViews;
+			sourceTree = "<group>";
+		};
+		D668B81C2A1D322D00242E51 /* RecipeListViews */ = {
+			isa = PBXGroup;
+			children = (
+				D6C3405129FE7362003F6E06 /* RecipeListView.swift */,
+				D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */,
+			);
+			path = RecipeListViews;
+			sourceTree = "<group>";
+		};
 		D6C1DDB92A0790450062B1C5 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,15 +372,9 @@
 			isa = PBXGroup;
 			children = (
 				D638926F2A1C0785008CC0D6 /* SubViews */,
-				D638926D2A1BE109008CC0D6 /* IgredientHostView.swift */,
-				D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */,
-				D64D950D2A116EE80080CD70 /* IngredientPickerView.swift */,
-				D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */,
-				D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */,
-				D6C3404B29FD7FB9003F6E06 /* RecipeView.swift */,
-				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
-				D6C3405129FE7362003F6E06 /* RecipeListView.swift */,
-				D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */,
+				D668B81A2A1D320100242E51 /* IngredientViews */,
+				D668B81B2A1D322300242E51 /* RecipeViews */,
+				D668B81C2A1D322D00242E51 /* RecipeListViews */,
 			);
 			path = View;
 			sourceTree = "<group>";

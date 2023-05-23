@@ -29,6 +29,7 @@ class RecipeListViewModel: ObservableObject {
         }.store(in: &subscriptions)
     }
     func createRecipeViewModel(recipe: Recipe) -> RecipeViewModel {
-        return RecipeViewModel(recipe: recipe, dataManager: dataManager)
+        let recipeDataManager = dataManager as RecipeDataManagerProtocol
+        return RecipeViewModel(recipe: recipe, dataManager: recipeDataManager)
     }
 }

@@ -7,7 +7,15 @@
 
 import Foundation
 
-extension DataManager {
+protocol RecipeDataManagerProtocol {
+    
+    func updateAndSave(recipe: Recipe)
+    
+    func delete(recipe: Recipe)
+    
+}
+
+extension DataManager: RecipeDataManagerProtocol {
     
     func updateAndSave(recipe: Recipe) {
         let predicate = NSPredicate(format: "id = %@", recipe.id as CVarArg)
@@ -105,6 +113,7 @@ extension DataManager {
             }
         }
     }
+    
     private func recipeMO(from source: Recipe) {
         
         let recipeMO = RecipeMO(context: managedContext, id: source.id, name: source.name, servings: source.servings, timeCooking: source.timeCookingInMinutes ?? 0, timePreparing: source.timePreparingInMinutes ?? 0, timeWaiting: source.timeWaitingInMinutes ?? 0)

@@ -16,7 +16,7 @@ class RecipeViewModel: ObservableObject {
     @Published var recipe: Recipe
     @Published var tagText = String()
     @Published var selectedIngredient: Ingredient?
-    @Published private var dataManager: DataManager
+    @Published private var recipeDataManager: RecipeDataManagerProtocol
     @Published var selectedPhoto: PhotosPickerItem? = nil {
         didSet {
             if let selectedPhoto {
@@ -68,7 +68,7 @@ class RecipeViewModel: ObservableObject {
     }
     
     
-    init(recipe: Recipe, dataManager: DataManager = DataManager.shared) {
+    init(recipe: Recipe, dataManager: RecipeDataManagerProtocol = DataManager.shared) {
         self.recipe = recipe
         if let timePreparing = recipe.timePreparingInMinutes {
             self.timePreparingInMinutes = "\(timePreparing)"
@@ -85,12 +85,12 @@ class RecipeViewModel: ObservableObject {
         } else {
             self.timeWaitingInMinutes = String()
         }
-        self.dataManager = dataManager
+        self.recipeDataManager = dataManager
         
     }
     
     func saveRecipe() {
-        dataManager.updateAndSave(recipe: recipe)
+        recipeDataManager.updateAndSave(recipe: recipe)
     }
 }
 
@@ -149,7 +149,7 @@ extension RecipeViewModel {
     private func loadTransferable(from imageSelection: PhotosPickerItem?) async throws -> Data? {
         do {
             if let data = try await imageSelection?.loadTransferable(type: Data.self) {
-                if let uiImage = UIImage(data: data) {
+                if let _ = UIImage(data: data) {
                     return data
                 }
             }
