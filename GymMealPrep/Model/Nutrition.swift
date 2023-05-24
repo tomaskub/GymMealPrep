@@ -12,6 +12,7 @@ protocol NutritionProtocol: AdditiveArithmetic {
     var carb: Float { get set }
     var fat: Float { get set }
     var protein: Float { get set }
+    func multiplyBy(_ factor: Double) -> Nutrition
 }
 
 struct Nutrition: NutritionProtocol {

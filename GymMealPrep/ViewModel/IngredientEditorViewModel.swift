@@ -24,6 +24,10 @@ class IngredientEditorViewModel: ObservableObject {
     @Published var ingredientQuantity = String() {
         didSet {
             if let newValue = filterStringToDouble(text: ingredientQuantity) {
+                let oldQuantity = draftIngredient.quantity
+                if lockNutritionValues {
+                    draftIngredient.nutritionData = updateNutritionValues(newQty: newValue, oldQty: oldQuantity)
+                }
                 draftIngredient.quantity = newValue
             }
         }
@@ -79,6 +83,15 @@ class IngredientEditorViewModel: ObservableObject {
     }
 }
 
+//MARK: UPDATING INGREDIENT FUNCTIONS
+extension IngredientEditorViewModel {
+    func updateNutritionValues(newQty: Double, oldQty: Double) -> Nutrition {
+        let factor: Double = newQty / oldQty
+        let nutrition = draftIngredient.nutritionData.multiplyBy(factor)
+        return nutrition
+    }
+}
+
 //MARK: Helper function to translate String input to numeric values
 extension IngredientEditorViewModel {
     
@@ -94,5 +107,4 @@ extension IngredientEditorViewModel {
                             .filter({ "0123456789.".contains($0) })
             return Float(filtered)
     }
-   
 }
