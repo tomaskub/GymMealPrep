@@ -10,16 +10,19 @@ import SwiftUI
 struct IngredientEditorView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State var lockNutritionValues: Bool = false
-    @State private var draftIngredient: Ingredient = Ingredient()
-    
-    var editedIngredient: Ingredient?
+
+    @StateObject private var viewModel: IngredientEditorViewModel
     let saveAction: (Ingredient) -> Void
+    
+    init(editedIngredient: (any IngredientProtocol)? = nil, saveAction: @escaping (Ingredient) -> Void) {
+        self._viewModel = StateObject(wrappedValue:  IngredientEditorViewModel(ingredientToEdit: editedIngredient))
+        self.saveAction = saveAction
+    }
     
     var body: some View {
         
         VStack {
-            Text(editedIngredient != nil ? "Edit ingredient" :"Adding new ingredient")
+            Text(titileText)
                 .font(.title)
                 .padding(.bottom)
             
@@ -33,17 +36,17 @@ struct IngredientEditorView: View {
                     
                     GridRow{
                         Text("Name")
-                        TextField("Name", text: $draftIngredient.food.name)
+                        TextField("Name", text: $viewModel.ingredientName)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Quantity")
-                        TextField("quantity", value: $draftIngredient.quantity, format: .number)
+                        TextField("quantity", text: $viewModel.ingredientQuantity)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Measurement")
-                        TextField("Unit of measure", text: $draftIngredient.unitOfMeasure)
+                        TextField("Unit of measure", text: $viewModel.ingredientUnitOfMeasure)
                             .textFieldStyle(.roundedBorder)
                     }
                 } // END OF INGREDIENT GROUP
@@ -57,30 +60,31 @@ struct IngredientEditorView: View {
                     
                     GridRow{
                         Text("Calories")
-                        TextField("cal", value: $draftIngredient.nutritionData.calories, format: .number)
+                        TextField("kcal", text: $viewModel.ingredientCalories)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Protein")
-                        TextField("protein", value: $draftIngredient.nutritionData.protein, format: .number)
+                        TextField("grams", text: $viewModel.ingredientProtein)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Fat")
-                        TextField("fat", value: $draftIngredient.nutritionData.fat, format: .number)
+                        TextField("grams", text: $viewModel.ingredientFat)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
                         Text("Carbs")
-                        TextField("carbs", value: $draftIngredient.nutritionData.carb, format: .number)
+                        TextField("grams", text: $viewModel.ingredientCarbs)
                             .textFieldStyle(.roundedBorder)
+                            
                     }
                 } // END OF NUTRITION GROUP
-                .disabled(lockNutritionValues)
+                .disabled(viewModel.lockNutritionValues)
                 
-                        Toggle("Lock nutrition values", isOn: $lockNutritionValues)
+                Toggle("Lock nutrition values", isOn: $viewModel.lockNutritionValues)
                         .tint(.blue)
                     .gridCellColumns(2)
                     
@@ -101,7 +105,7 @@ struct IngredientEditorView: View {
                 .buttonStyle(.borderedProminent)
                 
                 Button("Save") {
-                    saveAction(draftIngredient)
+                    saveAction(viewModel.draftIngredient as! Ingredient)
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
@@ -111,11 +115,15 @@ struct IngredientEditorView: View {
         }// END OF VSTACK
         .padding()
     }
-        
+    var titileText: String {
+        viewModel.isEditingIngredient ? "Edit ingredient" : "Adding new ingredient"
+    }
 }
 
 struct IngredientEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientEditorView(editedIngredient: nil, saveAction: { _ in })
+        IngredientEditorView(editedIngredient: nil, saveAction: { ingredient in
+            print(ingredient)
+        })
     }
 }
