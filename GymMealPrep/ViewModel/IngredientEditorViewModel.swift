@@ -20,46 +20,13 @@ class IngredientEditorViewModel: ObservableObject {
     //Initialized here so they can be overriden in init using draftIngredient values
     @Published var ingredientName = String()
     @Published var ingredientUnitOfMeasure = String()
+    
     //Strings representing numeric values
-    @Published var ingredientQuantity = String() {
-        didSet {
-            if let newValue = filterStringToDouble(text: ingredientQuantity) {
-                let oldQuantity = draftIngredient.quantity
-                if lockNutritionValues {
-                    draftIngredient.nutritionData = updateNutritionValues(newQty: newValue, oldQty: oldQuantity)
-                }
-                draftIngredient.quantity = newValue
-            }
-        }
-    }
-    @Published var ingredientCalories = String() {
-        didSet {
-            if let newValue = filterStringToFloat(text: ingredientCalories) {
-                draftIngredient.nutritionData.calories = newValue
-            }
-        }
-    }
-    @Published var ingredientProtein = String() {
-        didSet {
-            if let newValue = filterStringToFloat(text: ingredientProtein) {
-                draftIngredient.nutritionData.protein = newValue
-            }
-        }
-    }
-    @Published var ingredientFat = String() {
-        didSet {
-            if let newValue = filterStringToFloat(text: ingredientFat) {
-                draftIngredient.nutritionData.fat = newValue
-            }
-        }
-    }
-    @Published var ingredientCarbs = String() {
-        didSet {
-            if let newValue = filterStringToFloat(text: ingredientCarbs) {
-                draftIngredient.nutritionData.carb = newValue
-            }
-        }
-    }
+    @Published var ingredientQuantity = String()
+    @Published var ingredientCalories = String()
+    @Published var ingredientProtein = String()
+    @Published var ingredientFat = String()
+    @Published var ingredientCarbs = String()
     
     init(ingredientToEdit: (any IngredientProtocol)?) {
         //unwrap and configure view state based on wheter the ingredient was passed in
@@ -73,38 +40,50 @@ class IngredientEditorViewModel: ObservableObject {
             self.isEditingIngredient = false
         }
         // override field texts properties
-        self.ingredientName = draftIngredient.food.name
-        self.ingredientQuantity = String(draftIngredient.quantity)
-        self.ingredientUnitOfMeasure = draftIngredient.unitOfMeasure
-        self.ingredientCalories = String(draftIngredient.nutritionData.calories)
-        self.ingredientProtein = String(draftIngredient.nutritionData.protein)
-        self.ingredientFat = String(draftIngredient.nutritionData.fat)
-        self.ingredientCarbs = String(draftIngredient.nutritionData.carb)
+        if self.isEditingIngredient {
+            updatePublishedValues()
+        }
     }
+    
 }
+
 
 //MARK: UPDATING INGREDIENT FUNCTIONS
 extension IngredientEditorViewModel {
-    func updateNutritionValues(newQty: Double, oldQty: Double) -> Nutrition {
+    
+    func updateIngredient() {
+        draftIngredient.food.name = ingredientName
+        draftIngredient.unitOfMeasure = ingredientUnitOfMeasure
+        
+        if lockNutritionValues {
+            let oldQty = draftIngredient.quantity
+            let newQty = Double(ingredientQuantity) ?? 0
+            draftIngredient.nutritionData = updateNutritionValues(newQty: newQty, oldQty: oldQty)
+            draftIngredient.quantity = newQty
+        } else {
+            draftIngredient.quantity = Double(ingredientQuantity) ?? 0
+            draftIngredient.nutritionData.protein = Float(ingredientProtein) ?? 0
+            draftIngredient.nutritionData.calories = Float(ingredientCalories) ?? 0
+            draftIngredient.nutritionData.fat = Float(ingredientFat) ?? 0
+            draftIngredient.nutritionData.carb = Float(ingredientCarbs) ?? 0
+        }
+        updatePublishedValues()
+    }
+    
+    func updatePublishedValues() {
+        ingredientName = draftIngredient.food.name
+        ingredientQuantity = draftIngredient.quantity == 0 ? String() : String(draftIngredient.quantity)
+        ingredientUnitOfMeasure = draftIngredient.unitOfMeasure
+        ingredientCalories = draftIngredient.nutritionData.calories == 0 ? String(): String(draftIngredient.nutritionData.calories)
+        ingredientProtein = draftIngredient.nutritionData.protein == 0 ? String() : String(draftIngredient.nutritionData.protein)
+        ingredientFat = draftIngredient.nutritionData.fat == 0 ? String() : String(draftIngredient.nutritionData.fat)
+        ingredientCarbs = draftIngredient.nutritionData.carb == 0 ? String() : String(draftIngredient.nutritionData.carb)
+    }
+    
+    func updateNutritionValues(newQty: Double, oldQty: Double) -> any NutritionProtocol {
+        guard oldQty != 0 else { return draftIngredient.nutritionData }
         let factor: Double = newQty / oldQty
         let nutrition = draftIngredient.nutritionData.multiplyBy(factor)
         return nutrition
-    }
-}
-
-//MARK: Helper function to translate String input to numeric values
-extension IngredientEditorViewModel {
-    
-    func filterStringToDouble(text: String) -> Double? {
-            let filtered = text
-                            .replacingOccurrences(of: ",", with: ".")
-                            .filter({ "0123456789.".contains($0) })
-            return Double(filtered)
-    }
-    func filterStringToFloat(text: String) -> Float? {
-            let filtered = text
-                            .replacingOccurrences(of: ",", with: ".")
-                            .filter({ "0123456789.".contains($0) })
-            return Float(filtered)
     }
 }
