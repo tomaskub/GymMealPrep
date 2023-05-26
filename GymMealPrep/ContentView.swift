@@ -11,10 +11,17 @@ struct ContentView: View {
     var body: some View {
         TabView {
             
-                RecipeListView()
+            RecipeListView()
                 .tabItem {
                     Image(systemName: "square.fill.text.grid.1x2")
                         .font(.largeTitle)
+                    Text("Recipe list")
+                }
+            
+            Text("Settings placeholder")
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
                 }
         } // END OF TABVIEW
     } // END OF BODY
