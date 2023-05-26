@@ -42,6 +42,7 @@ struct IngredientEditorView: View {
                     GridRow {
                         Text("Quantity")
                         TextField("quantity", text: $viewModel.ingredientQuantity)
+                            .numericalInputOnly($viewModel.ingredientQuantity, includeDecimal: true)
                             .textFieldStyle(.roundedBorder)
                     }
                     GridRow {
@@ -61,23 +62,28 @@ struct IngredientEditorView: View {
                     GridRow{
                         Text("Calories")
                         TextField("kcal", text: $viewModel.ingredientCalories)
+                            .numericalInputOnly($viewModel.ingredientCalories, includeDecimal: true)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Protein")
                         TextField("grams", text: $viewModel.ingredientProtein)
+                            .numericalInputOnly($viewModel.ingredientProtein, includeDecimal: true)
                             .textFieldStyle(.roundedBorder)
                     }
                     
                     GridRow {
                         Text("Fat")
                         TextField("grams", text: $viewModel.ingredientFat)
+                            .numericalInputOnly($viewModel.ingredientFat, includeDecimal: true)
                             .textFieldStyle(.roundedBorder)
                     }
+                    
                     GridRow {
                         Text("Carbs")
                         TextField("grams", text: $viewModel.ingredientCarbs)
+                            .numericalInputOnly($viewModel.ingredientCarbs, includeDecimal: true)
                             .textFieldStyle(.roundedBorder)
                             
                     }
@@ -90,7 +96,10 @@ struct IngredientEditorView: View {
                     
                 
             }// END OF GRID
-        
+            .onSubmit {
+                viewModel.updateIngredient()
+            }
+            
             .padding()
             .background(
                 Color.gray.opacity(0.2))
@@ -105,6 +114,7 @@ struct IngredientEditorView: View {
                 .buttonStyle(.borderedProminent)
                 
                 Button("Save") {
+                    viewModel.updateIngredient()
                     saveAction(viewModel.draftIngredient as! Ingredient)
                     dismiss()
                 }
@@ -115,6 +125,7 @@ struct IngredientEditorView: View {
         }// END OF VSTACK
         .padding()
     }
+    
     var titileText: String {
         viewModel.isEditingIngredient ? "Edit ingredient" : "Adding new ingredient"
     }
