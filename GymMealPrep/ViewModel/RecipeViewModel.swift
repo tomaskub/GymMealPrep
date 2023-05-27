@@ -32,31 +32,14 @@ class RecipeViewModel: ObservableObject {
     }
     
     
-    @Published var timePreparingInMinutes: String {
-        didSet {
-            let filtered = timePreparingInMinutes.filter({ "0123456789".contains($0) })
-            if let newTime = Int(filtered) {
-                recipe.timePreparingInMinutes = newTime
-            }
-        }
-    }
+    @Published var timePreparingInMinutes: String
+    @Published var timeCookingInMinutes: String
+    @Published var timeWaitingInMinutes: String
     
-    @Published var timeCookingInMinutes: String {
-        didSet {
-            let filtered = timeCookingInMinutes.filter({ "0123456789".contains($0) })
-            if let newTime = Int(filtered) {
-                recipe.timeCookingInMinutes = newTime
-            }
-        }
-    }
-    
-    @Published var timeWaitingInMinutes: String {
-        didSet {
-            let filtered = timeWaitingInMinutes.filter({ "0123456789".contains($0) })
-            if let newTime = Int(filtered) {
-                recipe.timeWaitingInMinutes = newTime
-            }
-        }
+    func updateTimeData() {
+        recipe.timeCookingInMinutes = Int(timeCookingInMinutes) ?? 0
+        recipe.timeWaitingInMinutes = Int(timeWaitingInMinutes) ?? 0
+        recipe.timePreparingInMinutes = Int(timePreparingInMinutes) ?? 0
     }
     
     var image: Image {
