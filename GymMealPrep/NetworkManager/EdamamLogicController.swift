@@ -11,8 +11,11 @@ import Combine
 protocol EdamamLogicControllerProtocol: AnyObject {
     var networkController: Network { get }
     
-    /// get ingredients for a given string
+    /// get ingredients for a given string in form of EdamamParserResponse
     func getIngredients(for: String) -> AnyPublisher<EdamamParserResponse, Error>
+    
+    /// get ingredients for a given string in form of Array of ingredients objects
+    func getIngredients(for ingredient: String) -> AnyPublisher<[[Ingredient]], Error>
     
 }
 
