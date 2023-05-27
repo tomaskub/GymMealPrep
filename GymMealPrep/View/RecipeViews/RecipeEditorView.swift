@@ -105,35 +105,41 @@ struct RecipeEditorView: View {
                 Spacer()
                 Text("\(viewModel.totalTimeCookingInMinutes) min")
             }
+            .listRowSeparator(.visible)
                
             HStack {
                 Text("Prep:")
                 Spacer()
                 TextField("0 minutes", text: $viewModel.timePreparingInMinutes)
+                    .numericalInputOnly($viewModel.timePreparingInMinutes)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 100)
-                    .keyboardType(.numbersAndPunctuation)
             }
             
             HStack {
                 Text("Cook:")
                 Spacer()
                 TextField("0 minutes", text: $viewModel.timeCookingInMinutes)
+                    .numericalInputOnly($viewModel.timeCookingInMinutes)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 100)
-                    .keyboardType(.numbersAndPunctuation)
             }
-            .listRowSeparator(.hidden)
+            
             HStack {
                 Text("Wait:")
                 Spacer()
                 TextField("0 minutes", text: $viewModel.timeWaitingInMinutes)
+                    .numericalInputOnly($viewModel.timeWaitingInMinutes)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 100)
-                    .keyboardType(.numbersAndPunctuation)
+                    
             }
-            .listRowSeparator(.hidden)
+            
         } // END OF SECTION
+        .listRowSeparator(.hidden)
+        .onSubmit {
+            viewModel.updateTimeData()
+        }
     }
     
     var informationSection: some View {
