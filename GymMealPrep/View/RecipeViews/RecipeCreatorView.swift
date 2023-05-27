@@ -9,8 +9,7 @@ import SwiftUI
 
 struct RecipeCreatorView: View {
     
-    @State private var ingredients = String()
-    @State private var instructions = String()
+    @StateObject private var viewModel = RecipeCreatorViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -19,7 +18,7 @@ struct RecipeCreatorView: View {
                 .fontWeight(.semibold)
                 .font(.title3)
             
-            TextEditor(text: $ingredients)
+            TextEditor(text: $viewModel.ingredientsEntry)
                 .scrollContentBackground(.hidden)
                 .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .background(.gray.opacity(0.1))
@@ -29,7 +28,7 @@ struct RecipeCreatorView: View {
                 .fontWeight(.semibold)
                 .font(.title3)
             
-            TextEditor(text: $instructions)
+            TextEditor(text: $viewModel.instructionsEntry)
                 .scrollContentBackground(.hidden)
                 .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .background(.gray.opacity(0.1))
@@ -42,17 +41,40 @@ struct RecipeCreatorView: View {
                     print(ingredients)
                     print(instructions)
                 } label: {
-                    Text("Creating recipe")
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
+                    Text("Create recipe")
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                        .background(.blue)
+                        .cornerRadius(8)
+                } // END OF NAV LINK
+            } // END OF HSTACK
+        } // END OF VSTACK
         .padding()
         .navigationTitle("Create recipe from text")
-        
+    } // END OF BODY
+} // END OF STRUCT
+
+struct RecipeCreatorParserView: View {
+    
+    @ObservedObject var viewModel: RecipeCreatorViewModel
+    
+    var body: some View {
+        VStack {
+            
+            Text("Ingredients:")
+                .font(.title)
+            
+            ForEach(viewModel.parsed, id: \.self.text) { response in
+                Text(response.parsed?.first?.food.label ?? "Unknown")
+            }
+        }
+        .onAppear {
+            print("Processing input at on appear call")
+            viewModel.processInput()
+        }
     }
 }
-
 struct RecipeCreatorView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
