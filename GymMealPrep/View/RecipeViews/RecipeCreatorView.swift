@@ -21,6 +21,7 @@ struct RecipeCreatorView: View {
             
             TextEditor(text: $ingredients)
                 .scrollContentBackground(.hidden)
+                .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .background(.gray.opacity(0.1))
                 .cornerRadius(20)
             
@@ -30,6 +31,7 @@ struct RecipeCreatorView: View {
             
             TextEditor(text: $instructions)
                 .scrollContentBackground(.hidden)
+                .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
                 .background(.gray.opacity(0.1))
                 .cornerRadius(20)
             
