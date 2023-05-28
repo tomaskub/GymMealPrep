@@ -39,13 +39,14 @@ struct RecipeCreatorView: View {
                 NavigationLink {
                     RecipeCreatorParserView(viewModel: viewModel)
                 } label: {
-                    Text("Create recipe")
+                    Text("Match ingredients")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                         .background(.blue)
                         .cornerRadius(8)
                 } // END OF NAV LINK
+                Spacer()
             } // END OF HSTACK
         } // END OF VSTACK
         .padding()
