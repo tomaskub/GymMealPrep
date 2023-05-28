@@ -29,7 +29,13 @@ class IngredientPickerViewModel: ObservableObject {
             ingredientsRow = temp
         }
     }
+    
     @Published var searchTerm: String = String()
+    
+    init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
+        self.ingredientsRaw = ingredients
+        self.searchTerm = searchTerm
+    }
     
     func searchForIngredient() {
         

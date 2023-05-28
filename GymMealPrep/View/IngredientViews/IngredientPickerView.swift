@@ -10,9 +10,10 @@ import Combine
 
 struct IngredientPickerView: View {
     
-    let closure: (Ingredient) -> Void
     
-    @StateObject var viewModel = IngredientPickerViewModel()
+    
+    @ObservedObject var viewModel: IngredientPickerViewModel
+    let closure: (Ingredient) -> Void
     
     
     var body: some View {
@@ -49,9 +50,9 @@ struct IngredientPickerView: View {
 
 struct IngredientPickerView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientPickerView(closure: { ingredient in
+        IngredientPickerView(viewModel: IngredientPickerViewModel()) { ingredient in
             print(ingredient.id)
-        })
+        }
         
             .padding()
     }

@@ -16,8 +16,9 @@ struct IgredientHostView: View {
      
     var body: some View {
         VStack {
-            IngredientPickerView()
+            IngredientPickerView(viewModel: IngredientPickerViewModel())
             { ingredient in
+                // assign ingredient to some value - can be a function
                 viewModel.selectedIngredient = ingredient
             }
             Spacer()
@@ -28,14 +29,18 @@ struct IgredientHostView: View {
         }
         .sheet(isPresented: $addNewIngredient) {
             IngredientEditorView { ingredientToSave in
+                // assign ingredient to some value - this is a function already
                 viewModel.addIngredient(ingredientToSave)
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
             }
         }
+        // a binding in sheet item can be a problem - should be able to extract to view?
         .sheet(item: $viewModel.selectedIngredient, content: { ingredientToEdit in
-            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredient in viewModel.addIngredient(ingredient)
+            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredient in
+                // assign ingredient to some value - this is a function already
+                viewModel.addIngredient(ingredient)
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
