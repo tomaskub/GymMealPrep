@@ -8,13 +8,13 @@
 import Foundation
 import Combine
 
-/// This class is a protocol definition for view model of RecipeCreatorViews 
+/// This class is a protocol definition for view model of RecipeCreatorViews
 class RecipeCreatorViewModelProtocol: ObservableObject {
     // input properties
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
     // output properties
-    @Published var parsedIngredients = [(String, [Ingredient])]()
+    @Published var parsedIngredients = [(String, [[Ingredient]])]()
     @Published var parsedInstructions: [Instruction] = []
     
     func processInput() {
@@ -40,24 +40,33 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     }
     
     override func processInput() {
-        // create natural language array of ingredients to use with edamam parser
+        // check if there is ingredient input, otherwise return
         guard !ingredientsEntry.isEmpty else { return }
+        
+        // remove data from previous calls
+        ingredientsNLArray = [String]()
+        parsedIngredients = [(String, [[Ingredient]])]()
+        parsedInstructions = [Instruction]()
+        
+        
         ingredientsNLArray = ingredientsEntry.components(separatedBy: .newlines)
-        // former implementation based on parsed response
-        /*
+        
         for searchTerm in ingredientsNLArray {
-            edamamLogicController.getIngredients(for: searchTerm)
+           edamamLogicController.getIngredients(for: searchTerm)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
-                    print(completion)
-                } receiveValue: { [weak self] response in
+                    switch completion {
+                    case .finished:
+                        print("Completed edamam API request with success for \(searchTerm)")
+                    case .failure(let error):
+                        print("Error requesting response for \(searchTerm). Error: \(error) - \(error.localizedDescription)")
+                    }
+                } receiveValue: { [weak self] data in
                     guard let self else { return }
-                    self.parsed.append(response)
+                    let parsedIngredient = (searchTerm, data)
+                    self.parsedIngredients.append(parsedIngredient)
                 }
                 .store(in: &subscriptions)
         }
-         */
-        
-        
     }
 }
