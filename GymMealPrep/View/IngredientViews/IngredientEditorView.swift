@@ -11,7 +11,7 @@ struct IngredientEditorView: View {
     
     @Environment(\.dismiss) var dismiss
 
-    @ObservedObject var viewModel: IngredientEditorViewModel
+    @ObservedObject var viewModel: IngredientEditorViewModelProtocol
     let saveAction: (Ingredient) -> Void
     
     var body: some View {

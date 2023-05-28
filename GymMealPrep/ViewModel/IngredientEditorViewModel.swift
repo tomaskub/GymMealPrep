@@ -7,8 +7,7 @@
 
 import Foundation
 
-class IngredientEditorViewModel: ObservableObject {
-    
+class IngredientEditorViewModelProtocol: ObservableObject {
     //MARK: VIEW STATE PROPERITES
     @Published var lockNutritionValues: Bool
     @Published var isEditingIngredient: Bool
@@ -39,19 +38,26 @@ class IngredientEditorViewModel: ObservableObject {
             self.lockNutritionValues = false
             self.isEditingIngredient = false
         }
+    }
+    
+    func updateIngredient() {
+        assertionFailure("Function updateIngredient has to be overriden")
+    }
+}
+
+class IngredientEditorViewModel: IngredientEditorViewModelProtocol {
+    
+    
+    override init(ingredientToEdit: (any IngredientProtocol)? = nil) {
+        
+        super.init(ingredientToEdit: ingredientToEdit)
         // override field texts properties
         if self.isEditingIngredient {
             updatePublishedValues()
         }
     }
     
-}
-
-
-//MARK: UPDATING INGREDIENT FUNCTIONS
-extension IngredientEditorViewModel {
-    
-    func updateIngredient() {
+    override func updateIngredient() {
         draftIngredient.food.name = ingredientName
         draftIngredient.unitOfMeasure = ingredientUnitOfMeasure
         
@@ -69,6 +75,11 @@ extension IngredientEditorViewModel {
         }
         updatePublishedValues()
     }
+}
+
+
+//MARK: UPDATING INGREDIENT FUNCTIONS
+extension IngredientEditorViewModel {
     
     func updatePublishedValues() {
         ingredientName = draftIngredient.food.name
