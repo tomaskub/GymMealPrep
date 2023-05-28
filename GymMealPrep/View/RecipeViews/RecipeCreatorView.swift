@@ -49,7 +49,7 @@ struct RecipeCreatorView: View {
             } // END OF HSTACK
         } // END OF VSTACK
         .padding()
-        .navigationTitle("Create recipe from text")
+        .navigationTitle("Create recipe")
     } // END OF BODY
 } // END OF STRUCT
 
