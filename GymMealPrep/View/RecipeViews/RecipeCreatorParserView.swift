@@ -12,19 +12,50 @@ struct RecipeCreatorParserView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
     
     var body: some View {
-        VStack {
-            
-            Text("Ingredients:")
-                .font(.title)
-            
-            ForEach(viewModel.parsedIngredients, id: \.self.0) { response in
-                // TODO: IMPLEMENT UI
-                Text(response.1.first?.food.name ?? "Error")
-            } // END OF FOR EACH
-        } // END OF VSTACK
+        List {
+            Section {
+                ForEach(viewModel.parsedIngredients, id: \.self.0) { response in
+                    // TODO: IMPLEMENT UI
+                    VStack(alignment: .leading) {
+                        Text(response.0.lowercased())
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .padding(.top)
+                        HStack {
+                            Text(String(format: "%.2f", response.1.first?.quantity ?? 0))
+                            Text(response.1.first?.unitOfMeasure ?? "UOM")
+                            Text(response.1.first?.food.name ?? "Error")
+                        }
+                        HStack {
+                            Text("Calories")
+                                .foregroundColor(.gray)
+                            Text(String(response.1.first?.nutritionData.calories ?? 0))
+                            Text("Fat")
+                                .foregroundColor(.gray)
+                            Text(String(response.1.first?.nutritionData.fat ?? 0))
+                            Text("Carbs")
+                                .foregroundColor(.gray)
+                            Text(String(response.1.first?.nutritionData.carb ?? 0))
+                            Text("Protein")
+                                .foregroundColor(.gray)
+                            Text(String(response.1.first?.nutritionData.calories ?? 0))
+                        }
+                        .font(.caption)
+                        
+                    }
+                    
+                } // END OF FOR EACH
+            } header: {
+                Text("\(viewModel.parsedIngredients.count) Ingredients:")
+                    .font(.title2)
+                    .foregroundColor(.blue)
+            }
+        } // END OF LIST
+        .listStyle(.inset)
         .onAppear {
             viewModel.processInput()
         } // END OF ON APPEAR
+        .navigationTitle("Create recipe")
     } // END OF BODY
 } // END OF STRUCT
 
@@ -46,6 +77,8 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         }
     } // END OF CLASS
     static var previews: some View {
-        RecipeCreatorParserView(viewModel: PreviewViewModel())
+        NavigationView {
+            RecipeCreatorParserView(viewModel: PreviewViewModel())
+        }
     }
 }
