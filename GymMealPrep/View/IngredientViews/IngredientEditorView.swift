@@ -11,13 +11,8 @@ struct IngredientEditorView: View {
     
     @Environment(\.dismiss) var dismiss
 
-    @StateObject private var viewModel: IngredientEditorViewModel
+    @ObservedObject var viewModel: IngredientEditorViewModel
     let saveAction: (Ingredient) -> Void
-    
-    init(editedIngredient: (any IngredientProtocol)? = nil, saveAction: @escaping (Ingredient) -> Void) {
-        self._viewModel = StateObject(wrappedValue:  IngredientEditorViewModel(ingredientToEdit: editedIngredient))
-        self.saveAction = saveAction
-    }
     
     var body: some View {
         
@@ -133,8 +128,8 @@ struct IngredientEditorView: View {
 
 struct IngredientEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        IngredientEditorView(editedIngredient: nil, saveAction: { ingredient in
-            print(ingredient)
-        })
+        IngredientEditorView(viewModel: IngredientEditorViewModel(ingredientToEdit: nil)) { ingredient in
+            print(ingredient.food.name)
+        }
     }
 }
