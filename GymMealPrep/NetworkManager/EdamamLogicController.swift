@@ -12,7 +12,7 @@ protocol EdamamLogicControllerProtocol: AnyObject {
     var networkController: Network { get }
     
     /// get ingredients for a given string in form of EdamamParserResponse
-    func getIngredients(for: String) -> AnyPublisher<EdamamParserResponse, Error>
+    func getParserResponse(for: String) -> AnyPublisher<EdamamParserResponse, Error>
     
     /// get ingredients for a given string in form of Array of ingredients objects
     func getIngredients(for ingredient: String) -> AnyPublisher<[[Ingredient]], Error>
@@ -26,7 +26,7 @@ final class EdamamLogicController: EdamamLogicControllerProtocol {
         self.networkController = networkController
     }
     
-    func getIngredients(for ingredient: String) -> AnyPublisher<EdamamParserResponse, Error> {
+    func getParserResponse(for ingredient: String) -> AnyPublisher<EdamamParserResponse, Error> {
         let endpoint = EdamamParserEndpoint.ingredient(searchFor: ingredient)
         print(endpoint.url.description)
         return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
