@@ -10,12 +10,18 @@ import Combine
 
 /// This class is a protocol definition for view model of RecipeCreatorViews
 class RecipeCreatorViewModelProtocol: ObservableObject {
+    
     // input properties
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
+    
+    // input processed properties
+    @Published var ingredientsNLArray: [String] = []
+    
     // output properties
-    @Published var parsedIngredients = [(String, [[Ingredient]])]()
+    @Published var parsedIngredients = [String : [[Ingredient]]]()
     @Published var parsedInstructions: [Instruction] = []
+    
     
     func processInput() {
         assertionFailure("Missing override: Please override this method in the subclass")
@@ -25,14 +31,14 @@ class RecipeCreatorViewModelProtocol: ObservableObject {
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
-    @Published var ingredientsNLArray: [String]
+    
     
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     
     override init() {
-        self.ingredientsNLArray = [String]()
         super.init()
+        self.ingredientsNLArray = [String]()
         self.ingredientsEntry = String()
         self.instructionsEntry = String()
         
@@ -45,12 +51,13 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         
         // remove data from previous calls
         ingredientsNLArray = [String]()
-        parsedIngredients = [(String, [[Ingredient]])]()
+        parsedIngredients = [String : [[Ingredient]]]()
         parsedInstructions = [Instruction]()
         
-        
+        // process ingredients entry into array of natural language ingredients for use with edamam parser
         ingredientsNLArray = ingredientsEntry.components(separatedBy: .newlines)
         
+        // send request for matching ingredients to EdamamAPI
         for searchTerm in ingredientsNLArray {
            edamamLogicController.getIngredients(for: searchTerm)
                 .receive(on: DispatchQueue.main)
@@ -63,8 +70,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     }
                 } receiveValue: { [weak self] data in
                     guard let self else { return }
-                    let parsedIngredient = (searchTerm, data)
-                    self.parsedIngredients.append(parsedIngredient)
+                    self.parsedIngredients.updateValue(data, forKey: searchTerm)
                 }
                 .store(in: &subscriptions)
         }
