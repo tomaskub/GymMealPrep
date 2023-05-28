@@ -10,8 +10,9 @@ import SwiftUI
 struct IgredientHostView: View {
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: RecipeViewModel
+    let title: String = "Add new ingredient"
     
+    @ObservedObject var viewModel: RecipeViewModel
     @State var addNewIngredient: Bool = false
      
     var body: some View {
@@ -48,7 +49,7 @@ struct IgredientHostView: View {
             
         })
         .padding()
-        .navigationTitle("Add new ingredient")
+        .navigationTitle(title)
     }
 }
 
