@@ -32,18 +32,19 @@ final class EdamamLogicController: EdamamLogicControllerProtocol {
         return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
     }
     
+    
+    /// Publisher getting ingredients from Edamam API
+    /// - Parameter ingredient: input text for Edamam parser
+    /// - Returns: A publisher with an array of Ingredients arrays, grouped by food type of the ingredient
     func getIngredients(for ingredient: String) -> AnyPublisher<[[Ingredient]], Error> {
         let endpoint = EdamamParserEndpoint.ingredient(searchFor: ingredient)
         return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
-            //TODO: EXTRACT MAP TO SEPERATE FUNCTION
             .map { [weak self] response in
-                
                 guard let self else { return [[]] }
                 let result  = self.transformParserResponse(response.hints)
                 return result
             }
             .eraseToAnyPublisher()
-        
     }
     
     /// Transform hints from edamam parser response hints to an array of array of ingredients
