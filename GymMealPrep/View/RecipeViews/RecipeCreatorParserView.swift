@@ -12,50 +12,64 @@ struct RecipeCreatorParserView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
     
     var body: some View {
-        List {
-            Section {
+        VStack {
+            
+            List {
                 
-                ForEach(viewModel.ingredientsNLArray, id: \.self) { input in
-                    NavigationLink {
-                        
-                        Text(input.lowercased())
-                            .font(.largeTitle)
-                        
-                    } label: {
-                        
-                        VStack(alignment: .leading) {
+                Section {
+                    ForEach(viewModel.ingredientsNLArray, id: \.self) { input in
+                        NavigationLink {
+                            
                             Text(input.lowercased())
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .padding(.top)
-                            if let parsedIngredient = viewModel.parsedIngredients[input]?.first?.first {
-                                HStack {
-                                    Text(String(format: "%.2f", parsedIngredient.quantity))
-                                    Text(parsedIngredient.unitOfMeasure)
-                                    Text(parsedIngredient.food.name)
-                                }
-                                NutritionStripe(nutrition: parsedIngredient.nutritionData)
-                            } else {
-                                Text("We failed to find the ingredient, tap to search for ingredient manually")
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(.blue)
-                            } // END OF IF-ELSE
-                        } // END OF VSTACK
-                    } // END OF NAV LINK
-                } // END OF FOR EACH
-            } header: {
-                Text("\(viewModel.parsedIngredients.count) Ingredients:")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            } // END OF SECTION
-        } // END OF LIST
+                                .font(.largeTitle)
+                            
+                        } label: {
+                            
+                            VStack(alignment: .leading) {
+                                Text(input.lowercased())
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .padding(.top)
+                                if let parsedIngredient = viewModel.parsedIngredients[input]?.first?.first {
+                                    HStack {
+                                        Text(String(format: "%.2f", parsedIngredient.quantity))
+                                        Text(parsedIngredient.unitOfMeasure)
+                                        Text(parsedIngredient.food.name)
+                                    }
+                                    NutritionStripe(nutrition: parsedIngredient.nutritionData)
+                                } else {
+                                    Text("We failed to find the ingredient, tap to search for ingredient manually")
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(.blue)
+                                } // END OF IF-ELSE
+                            } // END OF VSTACK
+                        } // END OF NAV LINK
+                    } // END OF FOR EACH
+                } header: {
+                    Text("\(viewModel.parsedIngredients.count) Ingredients:")
+                        .font(.title2)
+                        .foregroundColor(.blue)
+                } // END OF SECTION
+            } // END OF LIST
+            
+            NavigationLink {
+                Text("Instruction parser")
+            } label: {
+                Text("Confirm and edit instructions")
+                    .font(.title3)
+                    .foregroundColor(.white)
+                    .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                    .background(.blue)
+                    .cornerRadius(8)
+            } // END OF NAV LINK
+        } // END OF VSTACK
         
         .listStyle(.inset)
         .onAppear {
             viewModel.processInput()
         } // END OF ON APPEAR
         
-        .navigationTitle("Create recipe")
+        .navigationTitle("Match ingredients")
         
     } // END OF BODY
     
@@ -89,7 +103,7 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         
         override init() {
             super.init()
-            self.ingredientsNLArray = ["1 cup of rice", "1 chicken breast", "2 cups of broccoli florets", "Failed test"]
+            self.ingredientsNLArray = ["1 cup of rice", "1 chicken breast", "2 cups of broccoli florets", "This ingredient failed to parse"]
             self.parsedIngredients = [
                 "1 cup of rice" : [[Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]],
                 "1 chicken breast" : [[Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero)]],
