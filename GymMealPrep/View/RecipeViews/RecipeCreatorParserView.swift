@@ -23,7 +23,7 @@ struct RecipeCreatorParserView: View {
                             .foregroundColor(.gray)
                             .padding(.top)
                         
-                        if let parsedIngredient = response.1.first {
+                        if let parsedIngredient = response.1.first?.first {
                             HStack {
                                 Text(String(format: "%.2f", parsedIngredient.quantity))
                                 Text(parsedIngredient.unitOfMeasure)
@@ -47,6 +47,7 @@ struct RecipeCreatorParserView: View {
             viewModel.processInput()
         } // END OF ON APPEAR
         .navigationTitle("Create recipe")
+        
     } // END OF BODY
     
     private struct NutritionStripe: View {
@@ -80,9 +81,9 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         override init() {
             super.init()
             self.parsedIngredients = [
-                ("1 cup of rice", [Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]),
-            ("1 chicken breast", [Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero)]),
-                ("2 cups of broccoli florets", [Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)])
+                ("1 cup of rice", [[Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]]),
+            ("1 chicken breast", [[Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero)]]),
+                ("2 cups of broccoli florets", [[Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]])
             ]
         } // END OF INIT
         
