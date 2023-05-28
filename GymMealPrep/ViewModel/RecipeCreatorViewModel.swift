@@ -8,26 +8,43 @@
 import Foundation
 import Combine
 
-class RecipeCreatorViewModel: ObservableObject {
+/// This class is a protocol definition for view model of RecipeCreatorViews 
+class RecipeCreatorViewModelProtocol: ObservableObject {
+    // input properties
+    @Published var ingredientsEntry: String = String()
+    @Published var instructionsEntry: String = String()
+    // output properties
+    @Published var parsedIngredients = [(String, [Ingredient])]()
+    @Published var parsedInstructions: [Instruction] = []
     
-    @Published var ingredientsEntry: String
-    @Published var instructionsEntry: String
-    @Published var parsed: [EdamamParserResponse]
+    func processInput() {
+        assertionFailure("Missing override: Please override this method in the subclass")
+    }
+    
+}
+
+class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
+    
     @Published var ingredientsNLArray: [String]
     
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     
-    init() {
+    override init() {
+        self.ingredientsNLArray = [String]()
+        super.init()
         self.ingredientsEntry = String()
         self.instructionsEntry = String()
-        self.ingredientsNLArray = [String]()
-        self.parsed = [EdamamParserResponse]()
+        
+        
     }
     
-    func processInput() {
+    override func processInput() {
         // create natural language array of ingredients to use with edamam parser
+        guard !ingredientsEntry.isEmpty else { return }
         ingredientsNLArray = ingredientsEntry.components(separatedBy: .newlines)
+        // former implementation based on parsed response
+        /*
         for searchTerm in ingredientsNLArray {
             edamamLogicController.getIngredients(for: searchTerm)
                 .receive(on: DispatchQueue.main)
@@ -39,5 +56,8 @@ class RecipeCreatorViewModel: ObservableObject {
                 }
                 .store(in: &subscriptions)
         }
+         */
+        
+        
     }
 }
