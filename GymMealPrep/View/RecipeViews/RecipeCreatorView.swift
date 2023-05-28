@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeCreatorView: View {
     
-    @StateObject private var viewModel = RecipeCreatorViewModel()
+    @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,10 +36,8 @@ struct RecipeCreatorView: View {
             
             HStack {
                 Spacer()
-                Button {
-                    print("Create button pressed")
-                    print(ingredients)
-                    print(instructions)
+                NavigationLink {
+//                    RecipeCreatorParserView(viewModel: viewModel)
                 } label: {
                     Text("Create recipe")
                         .font(.title3)
@@ -55,26 +53,7 @@ struct RecipeCreatorView: View {
     } // END OF BODY
 } // END OF STRUCT
 
-struct RecipeCreatorParserView: View {
-    
-    @ObservedObject var viewModel: RecipeCreatorViewModel
-    
-    var body: some View {
-        VStack {
-            
-            Text("Ingredients:")
-                .font(.title)
-            
-            ForEach(viewModel.parsed, id: \.self.text) { response in
-                Text(response.parsed?.first?.food.label ?? "Unknown")
-            }
-        }
-        .onAppear {
-            print("Processing input at on appear call")
-            viewModel.processInput()
-        }
-    }
-}
+
 struct RecipeCreatorView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
