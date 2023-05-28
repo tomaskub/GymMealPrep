@@ -8,12 +8,21 @@
 import Foundation
 import Combine
 
-class IngredientPickerViewModel: ObservableObject {
+class IngredientPickerViewModelProtocol: ObservableObject {
+    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+    @Published var searchTerm: String = String()
+    
+    func searchForIngredient() {
+        assertionFailure("Function searchForIngredient has to be overriden")
+    }
+}
+
+class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
-    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+    
     
     @Published var ingredientsRaw: [[Ingredient]] = [] {
         didSet {
@@ -30,14 +39,15 @@ class IngredientPickerViewModel: ObservableObject {
         }
     }
     
-    @Published var searchTerm: String = String()
+    
     
     init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
+        super.init()
         self.ingredientsRaw = ingredients
         self.searchTerm = searchTerm
     }
     
-    func searchForIngredient() {
+    override func searchForIngredient() {
         
         if !searchTerm.isEmpty {
             edamamLogicController.getIngredients(for: searchTerm)

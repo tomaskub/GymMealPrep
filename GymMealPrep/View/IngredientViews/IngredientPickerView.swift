@@ -12,7 +12,7 @@ struct IngredientPickerView: View {
     
     
     
-    @ObservedObject var viewModel: IngredientPickerViewModel
+    @ObservedObject var viewModel: IngredientPickerViewModelProtocol
     let closure: (Ingredient) -> Void
     
     
