@@ -29,7 +29,8 @@ struct RecipeEditorView: View {
             
         }//END OF LIST
         .sheet(item: $viewModel.selectedIngredient) { ingredientToEdit in
-            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredientToSave in
+            IngredientEditorView(
+                viewModel: IngredientEditorViewModel(ingredientToEdit: ingredientToEdit)) { ingredientToSave in
                 viewModel.addIngredient(ingredientToSave)
             }
         }

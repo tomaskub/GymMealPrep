@@ -28,7 +28,7 @@ class IngredientEditorViewModel: ObservableObject {
     @Published var ingredientFat = String()
     @Published var ingredientCarbs = String()
     
-    init(ingredientToEdit: (any IngredientProtocol)?) {
+    init(ingredientToEdit: (any IngredientProtocol)? = nil) {
         //unwrap and configure view state based on wheter the ingredient was passed in
         if let ingredient = ingredientToEdit {
             self.draftIngredient = ingredient

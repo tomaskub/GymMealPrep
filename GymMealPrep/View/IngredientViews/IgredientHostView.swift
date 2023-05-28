@@ -28,7 +28,7 @@ struct IgredientHostView: View {
             .buttonStyle(.borderedProminent)
         }
         .sheet(isPresented: $addNewIngredient) {
-            IngredientEditorView { ingredientToSave in
+            IngredientEditorView(viewModel: IngredientEditorViewModel()) { ingredientToSave in
                 // assign ingredient to some value - this is a function already
                 viewModel.addIngredient(ingredientToSave)
                 DispatchQueue.main.async {
@@ -38,7 +38,7 @@ struct IgredientHostView: View {
         }
         // a binding in sheet item can be a problem - should be able to extract to view?
         .sheet(item: $viewModel.selectedIngredient, content: { ingredientToEdit in
-            IngredientEditorView(editedIngredient: ingredientToEdit) { ingredient in
+            IngredientEditorView(viewModel: IngredientEditorViewModel(ingredientToEdit: ingredientToEdit)) { ingredient in
                 // assign ingredient to some value - this is a function already
                 viewModel.addIngredient(ingredient)
                 DispatchQueue.main.async {
