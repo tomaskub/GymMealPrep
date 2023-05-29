@@ -8,16 +8,32 @@
 import Foundation
 import Combine
 
-class IngredientPickerViewModelProtocol: ObservableObject {
-    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
-    @Published var searchTerm: String = String()
+//class IngredientPickerViewModelProtocol: ObservableObject {
+//    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+//    @Published var searchTerm: String = String()
+//
+//    func searchForIngredient() {
+//        assertionFailure("Function searchForIngredient has to be overriden")
+//    }
+//}
+
+protocol IngredientPickerViewModelProtocol: ObservableObject {
     
-    func searchForIngredient() {
-        assertionFailure("Function searchForIngredient has to be overriden")
-    }
+    var ingredientsRowPublisher: Published<[([Ingredient], Ingredient)]>.Publisher { get }
+    var searchTermPublisher: Published<String>.Publisher { get }
+    
+    func searchForIngredient() -> Void
 }
 
 class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
+    
+    //Ingredient picker view model protocol properties
+    var ingredientsRowPublisher: Published<[([Ingredient], Ingredient)]>.Publisher { $ingredientsRow }
+    var searchTermPublisher: Published<String>.Publisher { $searchTerm }
+    
+    
+    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+    @Published var searchTerm: String = String()
     
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
@@ -42,12 +58,13 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     
     
     init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
-        super.init()
+//        super.init()
         self.ingredientsRaw = ingredients
         self.searchTerm = searchTerm
     }
     
-    override func searchForIngredient() {
+//    override
+    func searchForIngredient() {
         
         if !searchTerm.isEmpty {
             edamamLogicController.getIngredients(for: searchTerm)
