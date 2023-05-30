@@ -8,19 +8,18 @@
 import Foundation
 import Combine
 
-//class IngredientPickerViewModelProtocol: ObservableObject {
-//    @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
-//    @Published var searchTerm: String = String()
-//
-//    func searchForIngredient() {
-//        assertionFailure("Function searchForIngredient has to be overriden")
-//    }
-//}
-
+/// Protocol describing requirements for IngredientPickerView view model. All of the properties have to be declared as published, unless otherwise stated.
+///
+/// *Required properties*
+///  - ingredientsRow - an array of tuples containing an array of ingredients and a ingredient to display. All of the ingredients have to be the same food, as the view will only update
+///  - searchTerm - used by the search field of the view
+///
+/// Required functions:
+///  - searchForIngrediens - triggered on search field submit or press of search button
 protocol IngredientPickerViewModelProtocol: ObservableObject {
     
-    var ingredientsRowPublisher: Published<[([Ingredient], Ingredient)]>.Publisher { get }
-    var searchTermPublisher: Published<String>.Publisher { get }
+    var ingredientsRow: [([Ingredient], Ingredient)] { get set }
+    var searchTerm: String { get set }
     
     func searchForIngredient() -> Void
 }
@@ -28,19 +27,14 @@ protocol IngredientPickerViewModelProtocol: ObservableObject {
 class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     
     //Ingredient picker view model protocol properties
-    var ingredientsRowPublisher: Published<[([Ingredient], Ingredient)]>.Publisher { $ingredientsRow }
-    var searchTermPublisher: Published<String>.Publisher { $searchTerm }
-    
-    
     @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
     @Published var searchTerm: String = String()
     
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
-    
-    
-    @Published var ingredientsRaw: [[Ingredient]] = [] {
+    //TODO: MOVE THIS INTO COMBINE 
+    var ingredientsRaw: [[Ingredient]] = [] {
         didSet {
             var temp = [([Ingredient], Ingredient)]()
             if !ingredientsRaw.isEmpty {
@@ -58,12 +52,10 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     
     
     init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
-//        super.init()
         self.ingredientsRaw = ingredients
         self.searchTerm = searchTerm
     }
     
-//    override
     func searchForIngredient() {
         
         if !searchTerm.isEmpty {
