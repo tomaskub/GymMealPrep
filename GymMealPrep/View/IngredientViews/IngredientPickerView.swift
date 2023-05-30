@@ -51,7 +51,12 @@ struct IngredientPickerView_Previews: PreviewProvider {
         @Published var searchTerm: String = "Sample search text"
         
         func searchForIngredient() {
-            
+            let food = Food(name: "Sample food name")
+            let nutritionForGram = Nutrition(calories: 10, carb: 1, fat: 1, protein: 1)
+            let ingredient = Ingredient(food: food, quantity: 1, unitOfMeasure: "gram", nutritionData: nutritionForGram)
+            let ingredient2 = Ingredient(food: food, quantity: 1, unitOfMeasure: "serving", nutritionData: nutritionForGram.multiplyBy(100))
+            let ingredient3 = Ingredient(food: food, quantity: 1, unitOfMeasure: "kg", nutritionData: nutritionForGram.multiplyBy(1000))
+            ingredientsRow = [([ingredient, ingredient2, ingredient3], ingredient)]
         }
     }
     static var previews: some View {
