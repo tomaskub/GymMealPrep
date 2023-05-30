@@ -8,13 +8,10 @@
 import SwiftUI
 import Combine
 
-struct IngredientPickerView: View {
+struct IngredientPickerView<T: IngredientPickerViewModelProtocol>: View {
     
-    
-    
-    @ObservedObject var viewModel: IngredientPickerViewModelProtocol
+    @ObservedObject var viewModel: T
     let closure: (Ingredient) -> Void
-    
     
     var body: some View {
         VStack {
@@ -49,8 +46,16 @@ struct IngredientPickerView: View {
 }
 
 struct IngredientPickerView_Previews: PreviewProvider {
+    class PreviewViewModel: IngredientPickerViewModelProtocol {
+        @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
+        @Published var searchTerm: String = "Sample search text"
+        
+        func searchForIngredient() {
+            
+        }
+    }
     static var previews: some View {
-        IngredientPickerView(viewModel: IngredientPickerViewModel()) { ingredient in
+        IngredientPickerView(viewModel: PreviewViewModel()) { ingredient in
             print(ingredient.id)
         }
         
