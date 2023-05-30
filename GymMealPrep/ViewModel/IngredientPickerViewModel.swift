@@ -33,27 +33,9 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
-    //TODO: MOVE THIS INTO COMBINE 
-    var ingredientsRaw: [[Ingredient]] = [] {
-        didSet {
-            var temp = [([Ingredient], Ingredient)]()
-            if !ingredientsRaw.isEmpty {
-                for row in ingredientsRaw {
-                    if let first = row.first {
-                        let tempRow: ([Ingredient], Ingredient) = (row, first)
-                        temp.append(tempRow)
-                    }
-                }
-            }
-            ingredientsRow = temp
-        }
-    }
-    
-    
-    
     init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
-        self.ingredientsRaw = ingredients
         self.searchTerm = searchTerm
+        self.ingredientsRow = tranformToRow(data: ingredients)
     }
     
     func searchForIngredient() {
@@ -65,10 +47,21 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
                     print(completion)
                 } receiveValue: { [weak self] result in
                     guard let self else { return }
-                    self.ingredientsRaw = result
+                    self.ingredientsRow = self.tranformToRow(data: result)
                 }
                 .store(in: &subscriptions)
 
         }
     }
+    
+    private func tranformToRow(data: [[Ingredient]]) -> [([Ingredient], Ingredient)] {
+            var temp = [([Ingredient], Ingredient)]()
+                for row in data {
+                    if let first = row.first {
+                        let tempRow: ([Ingredient], Ingredient) = (row, first)
+                        temp.append(tempRow)
+                    }
+                }
+            return temp
+        }
 }
