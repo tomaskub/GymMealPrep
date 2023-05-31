@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IgredientHostView: View {
+struct IngredientHostView: View {
     
     @Environment(\.dismiss) var dismiss
     let title: String = "Add new ingredient"
@@ -53,10 +53,10 @@ struct IgredientHostView: View {
     }
 }
 
-struct IgredientHostView_Previews: PreviewProvider {
+struct IngredientHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            IgredientHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+            IngredientHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
         }
     }
 }
