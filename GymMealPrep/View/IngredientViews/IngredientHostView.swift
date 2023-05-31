@@ -28,7 +28,6 @@ struct IngredientHostView: View {
         VStack {
             IngredientPickerView(viewModel: pickerViewModel)
             { ingredient in
-                // assign ingredient to some value - can be a function
                 selectedIngredient = ingredient
             }
             Spacer()

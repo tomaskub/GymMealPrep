@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipeCreatorParserView: View {
     
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
+    var saveHandler: IngredientSaveHandler
     
     var body: some View {
         VStack {
@@ -19,10 +20,11 @@ struct RecipeCreatorParserView: View {
                 Section {
                     ForEach(viewModel.ingredientsNLArray, id: \.self) { input in
                         NavigationLink {
-                            
-                            Text(input.lowercased())
-                                .font(.largeTitle)
-                            
+                            if let parsedIngredients = viewModel.parsedIngredients[input]{
+                                IngredientHostView(title: "Change match", buttonTitle: "Change manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel(ingredients: parsedIngredients, searchTerm: input))
+                            } else {
+                            IngredientHostView(title: "Correct match", buttonTitle: "Add manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel(ingredients: [[]], searchTerm: input))
+                            }
                         } label: {
                             
                             VStack(alignment: .leading) {
@@ -105,7 +107,7 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
             super.init()
             self.ingredientsNLArray = ["1 cup of rice", "1 chicken breast", "2 cups of broccoli florets", "This ingredient failed to parse"]
             self.parsedIngredients = [
-                "1 cup of rice" : [[Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]],
+                "1 cup of rice" : [[Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero),Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "kg", nutritionData: Nutrition.zero)]],
                 "1 chicken breast" : [[Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero)]],
                 "2 cups of broccoli florets" : [[Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]]
             ]
@@ -115,9 +117,17 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
             print("Processing input called")
         }
     } // END OF CLASS
+    
+    class PreviewSaveHandler: IngredientSaveHandler {
+        func addIngredient(_: Ingredient) {
+            // do nothing
+        }
+        
+        
+    }
     static var previews: some View {
         NavigationView {
-            RecipeCreatorParserView(viewModel: PreviewViewModel())
+            RecipeCreatorParserView(viewModel: PreviewViewModel(), saveHandler: PreviewSaveHandler())
         }
     }
 }

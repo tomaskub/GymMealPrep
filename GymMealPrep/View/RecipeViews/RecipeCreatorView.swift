@@ -37,7 +37,7 @@ struct RecipeCreatorView: View {
             HStack {
                 Spacer()
                 NavigationLink {
-                    RecipeCreatorParserView(viewModel: viewModel)
+                    RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
                 } label: {
                     Text("Match ingredients")
                         .font(.title3)
