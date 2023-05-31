@@ -14,7 +14,9 @@ protocol IngredientSaveHandler {
 struct IngredientHostView: View {
     
     @Environment(\.dismiss) var dismiss
-    let title: String = "Add new ingredient"
+    
+    let title: String
+    let buttonTitle: String
     
     var saveHandler: IngredientSaveHandler
     @StateObject var pickerViewModel: IngredientPickerViewModel
@@ -61,7 +63,7 @@ struct IngredientHostView: View {
 struct IngredientHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            IngredientHostView(saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken), pickerViewModel: IngredientPickerViewModel())
+            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken), pickerViewModel: IngredientPickerViewModel())
         }
     }
 }
