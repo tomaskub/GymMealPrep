@@ -18,6 +18,16 @@ struct ContentView: View {
                     Text("Recipe list")
                 }
             
+            //Easy access for testing 
+            NavigationView {
+                RecipeCreatorView()
+            }
+            .tabItem {
+                Image(systemName: "rectangle.grid.1x2.fill")
+                    .font(.largeTitle)
+                Text("Recipe Creator Test")
+            }
+            
             Text("Settings placeholder")
                 .tabItem {
                     Image(systemName: "gear")
