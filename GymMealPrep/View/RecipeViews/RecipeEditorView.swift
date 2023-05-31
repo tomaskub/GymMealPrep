@@ -86,7 +86,7 @@ struct RecipeEditorView: View {
             }
             
             NavigationLink {
-                IngredientHostView(viewModel: viewModel)
+                IngredientHostView(saveHandler: viewModel, pickerViewModel: IngredientPickerViewModel())
             } label: {
                 HStack {
                     Spacer()

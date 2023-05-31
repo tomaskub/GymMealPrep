@@ -109,7 +109,7 @@ extension RecipeViewModel {
 }
 
 //MARK: INGREDIENT EDIT
-extension RecipeViewModel {
+extension RecipeViewModel: IngredientSaveHandler {
     
     func removeIngredient(at indexSet: IndexSet) {
         recipe.ingredients.remove(atOffsets: indexSet)
