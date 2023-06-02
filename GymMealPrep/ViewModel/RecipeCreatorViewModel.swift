@@ -17,6 +17,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject {
     
     // input processed properties
     @Published var ingredientsNLArray: [String] = []
+    var instructionsArray: [String] = []
     
     // output properties
     @Published var parsedIngredients = [String : [[Ingredient]]]()
@@ -73,6 +74,26 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     self.parsedIngredients.updateValue(data, forKey: searchTerm)
                 }
                 .store(in: &subscriptions)
+        }
+        
+        //addd a function to figure out the beging of the instruction (number, dash etc)
+        
+        instructionsArray = ingredientsEntry.components(separatedBy: .newlines)
+        
+        for (index, instructionText) in instructionsArray.enumerated() {
+            if let character = instructionText.first {
+                if character.isNumber {
+                    let instructionToAppend = Instruction(step: index + 1, text: instructionText)
+                    parsedInstructions.append(instructionToAppend)
+                } else {
+                    if index - 1 >= 0 {
+                        parsedInstructions[index-1].text.append(instructionText)
+                    } else {
+                        let instructionToAppend = Instruction(step: index + 1, text: instructionText)
+                    }
+                    
+                }
+            }
         }
     }
 }
