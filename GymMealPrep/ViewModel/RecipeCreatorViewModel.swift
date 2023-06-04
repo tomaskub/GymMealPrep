@@ -98,7 +98,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     }
 }
 extension RecipeCreatorViewModelProtocol: IngredientSaveHandler {
-    func addIngredient(_ ingredientToSave: Ingredient) {
+    func addIngredient(_ ingredientToSave: Ingredient,_ key: String?) {
         
     }
 }

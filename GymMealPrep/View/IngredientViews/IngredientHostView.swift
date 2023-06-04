@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol IngredientSaveHandler {
-    func addIngredient(_:Ingredient)
+    func addIngredient(_: Ingredient, _: String? = nil)
 }
 
 struct IngredientHostView: View {
