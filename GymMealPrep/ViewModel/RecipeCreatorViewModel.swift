@@ -21,6 +21,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject {
     
     // output properties
     @Published var parsedIngredients = [String : [[Ingredient]]]()
+    @Published var matchedIngredients = [String : Ingredient]()
     @Published var parsedInstructions: [Instruction] = []
     
     
@@ -53,6 +54,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         // remove data from previous calls
         ingredientsNLArray = [String]()
         parsedIngredients = [String : [[Ingredient]]]()
+        matchedIngredients = [String : Ingredient]()
         parsedInstructions = [Instruction]()
         
         // process ingredients entry into array of natural language ingredients for use with edamam parser
@@ -72,6 +74,9 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                 } receiveValue: { [weak self] data in
                     guard let self else { return }
                     self.parsedIngredients.updateValue(data, forKey: searchTerm)
+                    if let bestMatch = data.first?.first {
+                        self.matchedIngredients.updateValue(bestMatch, forKey: searchTerm)
+                    }
                 }
                 .store(in: &subscriptions)
         }
@@ -97,8 +102,9 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         }
     }
 }
+
 extension RecipeCreatorViewModelProtocol: IngredientSaveHandler {
-    func addIngredient(_ ingredientToSave: Ingredient,_ key: String?) {
+    func addIngredient(_ ingredientToSave: Ingredient) {
         
     }
 }

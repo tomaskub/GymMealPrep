@@ -20,10 +20,28 @@ struct RecipeCreatorParserView: View {
                 Section {
                     ForEach(viewModel.ingredientsNLArray, id: \.self) { input in
                         NavigationLink {
-                            if let parsedIngredients = viewModel.parsedIngredients[input]{
-                                IngredientHostView(title: "Change match", buttonTitle: "Change manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel(ingredients: parsedIngredients, searchTerm: input))
+                            if let parsedIngredients = viewModel.parsedIngredients[input] {
+                                
+                                IngredientHostView(
+                                    title: "Change match",
+                                    buttonTitle: "Change manually",
+                                    originalSearchTerm: input,
+                                    saveHandler: saveHandler,
+                                    pickerViewModel:
+                                        IngredientPickerViewModel(
+                                            ingredients: parsedIngredients,
+                                            searchTerm: input))
+                                
                             } else {
-                            IngredientHostView(title: "Correct match", buttonTitle: "Add manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel(ingredients: [[]], searchTerm: input))
+                            
+                                IngredientHostView(
+                                    title: "Correct match",
+                                    buttonTitle: "Add manually",
+                                    saveHandler: saveHandler,
+                                    pickerViewModel:
+                                        IngredientPickerViewModel(
+                                            ingredients: [[]],
+                                            searchTerm: input))
                             }
                         } label: {
                             
@@ -32,7 +50,8 @@ struct RecipeCreatorParserView: View {
                                     .font(.caption)
                                     .foregroundColor(.gray)
                                     .padding(.top)
-                                if let parsedIngredient = viewModel.parsedIngredients[input]?.first?.first {
+                                if let parsedIngredient = viewModel.matchedIngredients[input] {
+//                                    viewModel.parsedIngredients[input]?.first?.first {
                                     HStack {
                                         Text(String(format: "%.2f", parsedIngredient.quantity))
                                         Text(parsedIngredient.unitOfMeasure)
@@ -109,8 +128,13 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
             self.parsedIngredients = [
                 "1 cup of rice" : [[Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero),Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "kg", nutritionData: Nutrition.zero)]],
                 "1 chicken breast" : [[Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero)]],
-                "2 cups of broccoli florets" : [[Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]]
-            ]
+                "2 cups of broccoli florets" : [[Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)]]]
+                self.matchedIngredients = [
+                    "1 cup of rice" : Ingredient(food: Food(name: "Rice"), quantity: 1, unitOfMeasure: "Cup", nutritionData: Nutrition.zero),
+                    "1 chicken breast" : Ingredient(food: Food(name: "Chicken breast"), quantity: 1, unitOfMeasure: "Piece", nutritionData: Nutrition.zero),
+                    "2 cups of broccoli florets" : Ingredient(food: Food(name: "Broccoli"), quantity: 2, unitOfMeasure: "Cup", nutritionData: Nutrition.zero)
+                                          ]
+            
         } // END OF INIT
         
         override func processInput() {
