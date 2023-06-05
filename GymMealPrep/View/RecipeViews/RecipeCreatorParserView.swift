@@ -25,7 +25,6 @@ struct RecipeCreatorParserView: View {
                                 IngredientHostView(
                                     title: "Change match",
                                     buttonTitle: "Change manually",
-                                    originalSearchTerm: input,
                                     saveHandler: saveHandler,
                                     pickerViewModel:
                                         IngredientPickerViewModel(

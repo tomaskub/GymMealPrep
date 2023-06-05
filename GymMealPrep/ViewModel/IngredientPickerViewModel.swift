@@ -30,11 +30,18 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     @Published var ingredientsRow: [([Ingredient], Ingredient)] = []
     @Published var searchTerm: String = String()
     
+    let originalSearchTerm: String?
+    
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
     
     init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
         self.searchTerm = searchTerm
+        if !searchTerm.isEmpty {
+            self.originalSearchTerm = searchTerm
+        } else {
+            self.originalSearchTerm = nil
+        }
         self.ingredientsRow = tranformToRow(data: ingredients)
     }
     
