@@ -12,17 +12,17 @@ protocol IngredientSaveHandler {
 }
 
 struct IngredientHostView: View {
-    
+
     @Environment(\.dismiss) var dismiss
     
     let title: String
     let buttonTitle: String
     
     var saveHandler: IngredientSaveHandler
-    @StateObject var pickerViewModel: IngredientPickerViewModel
     
-    @State var addNewIngredient: Bool = false
-    @State var selectedIngredient: Ingredient? = nil
+    @StateObject private var pickerViewModel: IngredientPickerViewModel
+    @State private var addNewIngredient: Bool = false
+    @State private var selectedIngredient: Ingredient? = nil
     
     var body: some View {
         VStack {
@@ -31,7 +31,7 @@ struct IngredientHostView: View {
                 selectedIngredient = ingredient
             }
             Spacer()
-            Button("Add manually") {
+            Button(buttonTitle) {
                 addNewIngredient.toggle()
             }
             .buttonStyle(.borderedProminent)
@@ -62,7 +62,9 @@ struct IngredientHostView: View {
 struct IngredientHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken), pickerViewModel: IngredientPickerViewModel())
+            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
+                saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken),
+                pickerViewModel: IngredientPickerViewModel())
         }
     }
 }
