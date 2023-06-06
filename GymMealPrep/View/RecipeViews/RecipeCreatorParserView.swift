@@ -72,7 +72,7 @@ struct RecipeCreatorParserView: View {
             } // END OF LIST
             
             NavigationLink {
-                Text("Instruction parser")
+                RecipeCreatorInstructionsView(viewModel: viewModel)
             } label: {
                 Text("Confirm and edit instructions")
                     .font(.title3)

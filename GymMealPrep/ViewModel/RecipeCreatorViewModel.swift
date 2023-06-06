@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 /// This class is a protocol definition for view model of RecipeCreatorViews
-class RecipeCreatorViewModelProtocol: ObservableObject {
+class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     
     // input properties
     @Published var ingredientsEntry: String = String()
@@ -29,6 +29,9 @@ class RecipeCreatorViewModelProtocol: ObservableObject {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
     
+    func addIngredient(_: Ingredient, _: String?) {
+            assertionFailure("Missing override: Please override this method in the subclass")
+    }
 }
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
@@ -111,12 +114,11 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             }
         }
     }
-}
-
-extension RecipeCreatorViewModelProtocol: IngredientSaveHandler {
-    func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
+    override func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
         if let key {
             matchedIngredients.updateValue(ingredientToSave, forKey: key)
         }
     }
+    
 }
+
