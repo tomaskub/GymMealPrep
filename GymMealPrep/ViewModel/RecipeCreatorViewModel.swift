@@ -104,7 +104,9 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
 }
 
 extension RecipeCreatorViewModelProtocol: IngredientSaveHandler {
-    func addIngredient(_ ingredientToSave: Ingredient) {
-        
+    func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
+        if let key {
+            matchedIngredients.updateValue(ingredientToSave, forKey: key)
+        }
     }
 }
