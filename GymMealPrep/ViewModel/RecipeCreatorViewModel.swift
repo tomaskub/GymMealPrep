@@ -17,7 +17,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject {
     
     // input processed properties
     @Published var ingredientsNLArray: [String] = []
-    var instructionsArray: [String] = []
+    var instructionsNLArray: [String] = []
     
     // output properties
     @Published var parsedIngredients = [String : [[Ingredient]]]()
@@ -50,15 +50,19 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     override func processInput() {
         // check if there is ingredient input, otherwise return
         guard !ingredientsEntry.isEmpty else { return }
-        
+        parseIngredients(input: ingredientsEntry)
+        parseInstructions(input: instructionsEntry)
+    }
+    
+    func parseIngredients(input: String) {
         // remove data from previous calls
         ingredientsNLArray = [String]()
         parsedIngredients = [String : [[Ingredient]]]()
         matchedIngredients = [String : Ingredient]()
-        parsedInstructions = [Instruction]()
+        
         
         // process ingredients entry into array of natural language ingredients for use with edamam parser
-        ingredientsNLArray = ingredientsEntry.components(separatedBy: .newlines)
+        ingredientsNLArray = input.components(separatedBy: .newlines)
         
         // send request for matching ingredients to EdamamAPI
         for searchTerm in ingredientsNLArray {
@@ -80,12 +84,18 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                 }
                 .store(in: &subscriptions)
         }
+    }
+    //add a function to figure out the beging of the instruction (number, dash etc)
+    func parseInstructions(input: String) {
+        //Reset any remeaing data from previous parsing
+        instructionsNLArray = [String]()
+        parsedInstructions = [Instruction]()
         
-        //addd a function to figure out the beging of the instruction (number, dash etc)
+        // seperate entry string into components
+        instructionsNLArray = input.components(separatedBy: .newlines)
         
-        instructionsArray = ingredientsEntry.components(separatedBy: .newlines)
         
-        for (index, instructionText) in instructionsArray.enumerated() {
+        for (index, instructionText) in instructionsNLArray.enumerated() {
             if let character = instructionText.first {
                 if character.isNumber {
                     let instructionToAppend = Instruction(step: index + 1, text: instructionText)
