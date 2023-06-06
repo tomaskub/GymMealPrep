@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeCreatorView: View {
     
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    
+    @State private var shouldTransition: Bool = false
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -36,15 +36,17 @@ struct RecipeCreatorView: View {
             
             HStack {
                 Spacer()
-                NavigationLink {
-                    RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
-                } label: {
+                NavigationLink(destination: RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel), isActive: $shouldTransition) {
                     Text("Match ingredients")
                         .font(.title3)
                         .foregroundColor(.white)
                         .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                         .background(.blue)
                         .cornerRadius(8)
+                        .onTapGesture {
+                            viewModel.processInput()
+                            shouldTransition = true
+                        }
                 } // END OF NAV LINK
                 Spacer()
             } // END OF HSTACK

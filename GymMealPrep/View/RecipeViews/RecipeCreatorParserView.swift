@@ -84,10 +84,6 @@ struct RecipeCreatorParserView: View {
         } // END OF VSTACK
         
         .listStyle(.inset)
-        .onAppear {
-            viewModel.processInput()
-        } // END OF ON APPEAR
-        
         .navigationTitle("Match ingredients")
         
     } // END OF BODY
