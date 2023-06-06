@@ -31,7 +31,7 @@ struct RecipeEditorView: View {
         .sheet(item: $viewModel.selectedIngredient) { ingredientToEdit in
             IngredientEditorView(
                 viewModel: IngredientEditorViewModel(ingredientToEdit: ingredientToEdit)) { ingredientToSave in
-                viewModel.addIngredient(ingredientToSave)
+                viewModel.addIngredient(ingredientToSave, nil)
             }
         }
     }//END OF BODY

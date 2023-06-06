@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol IngredientSaveHandler {
-    func addIngredient(_: Ingredient, _: String? = nil)
+    func addIngredient(_: Ingredient, _: String?)
 }
 
 struct IngredientHostView: View {
@@ -20,7 +20,7 @@ struct IngredientHostView: View {
     
     var saveHandler: IngredientSaveHandler
     
-    @StateObject private var pickerViewModel: IngredientPickerViewModel
+    @StateObject var pickerViewModel: IngredientPickerViewModel
     @State private var addNewIngredient: Bool = false
     @State private var selectedIngredient: Ingredient? = nil
     
@@ -39,7 +39,7 @@ struct IngredientHostView: View {
         .sheet(isPresented: $addNewIngredient) {
             IngredientEditorView(viewModel: IngredientEditorViewModel()) { ingredientToSave in
                 // assign ingredient to some value - this is a function already
-                saveHandler.addIngredient(ingredientToSave)
+                saveHandler.addIngredient(ingredientToSave, pickerViewModel.originalSearchTerm)
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
@@ -47,7 +47,7 @@ struct IngredientHostView: View {
         }
         .sheet(item: $selectedIngredient, content: { ingredientToEdit in
             IngredientEditorView(viewModel: IngredientEditorViewModel(ingredientToEdit: ingredientToEdit)) { ingredientToSave in
-                saveHandler.addIngredient(ingredientToSave)
+                saveHandler.addIngredient(ingredientToSave, pickerViewModel.originalSearchTerm)
                 DispatchQueue.main.async {
                     self.dismiss()
                 }

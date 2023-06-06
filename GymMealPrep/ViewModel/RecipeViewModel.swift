@@ -119,7 +119,7 @@ extension RecipeViewModel: IngredientSaveHandler {
         recipe.ingredients.move(fromOffsets: from, toOffset: to)
     }
     
-    func addIngredient(_ ingredientToSave: Ingredient) {
+    func addIngredient(_ ingredientToSave: Ingredient, _: String?) {
         if let i = recipe.ingredients.firstIndex(where: {ingredientToSave.id == $0.id}) {
             recipe.ingredients[i] = ingredientToSave
         } else {

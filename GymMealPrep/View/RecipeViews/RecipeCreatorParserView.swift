@@ -50,7 +50,6 @@ struct RecipeCreatorParserView: View {
                                     .foregroundColor(.gray)
                                     .padding(.top)
                                 if let parsedIngredient = viewModel.matchedIngredients[input] {
-//                                    viewModel.parsedIngredients[input]?.first?.first {
                                     HStack {
                                         Text(String(format: "%.2f", parsedIngredient.quantity))
                                         Text(parsedIngredient.unitOfMeasure)
@@ -142,7 +141,9 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
     } // END OF CLASS
     
     class PreviewSaveHandler: IngredientSaveHandler {
-        func addIngredient(_: Ingredient) {
+        
+        
+        func addIngredient(_: Ingredient, _: String?) {
             // do nothing
         }
         
