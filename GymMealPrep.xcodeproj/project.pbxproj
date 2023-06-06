@@ -53,6 +53,7 @@
 		D694E40C2A05824A0077E72F /* MealPlanMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E4002A05824A0077E72F /* MealPlanMO+CoreDataProperties.swift */; };
 		D694E40D2A05824A0077E72F /* TagMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E4012A05824A0077E72F /* TagMO+CoreDataClass.swift */; };
 		D69B9DC32A2F593E00A4FB08 /* RecipeCreatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69B9DC22A2F593E00A4FB08 /* RecipeCreatorViewModelTests.swift */; };
+		D69B9DC52A2FB44300A4FB08 /* RecipeCreatorInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69B9DC42A2FB44300A4FB08 /* RecipeCreatorInstructionsView.swift */; };
 		D69E224A2A1FEA3E00F5EF93 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */; };
 		D6C1DDB82A078D120062B1C5 /* DataManager+TagMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C1DDB72A078D120062B1C5 /* DataManager+TagMO.swift */; };
 		D6C1DDBB2A07908F0062B1C5 /* DataManager+FoodMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C1DDBA2A07908F0062B1C5 /* DataManager+FoodMO.swift */; };
@@ -150,6 +151,7 @@
 		D694E4002A05824A0077E72F /* MealPlanMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealPlanMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D694E4012A05824A0077E72F /* TagMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D69B9DC22A2F593E00A4FB08 /* RecipeCreatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorViewModelTests.swift; sourceTree = "<group>"; };
+		D69B9DC42A2FB44300A4FB08 /* RecipeCreatorInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorInstructionsView.swift; sourceTree = "<group>"; };
 		D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 		D6C1DDB72A078D120062B1C5 /* DataManager+TagMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+TagMO.swift"; sourceTree = "<group>"; };
 		D6C1DDBA2A07908F0062B1C5 /* DataManager+FoodMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+FoodMO.swift"; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				D63AFA212A01238300574FE0 /* RecipeEditorView.swift */,
 				D6D77A6C2A2269DA006D63B5 /* RecipeCreatorView.swift */,
 				D6D77A702A2339B7006D63B5 /* RecipeCreatorParserView.swift */,
+				D69B9DC42A2FB44300A4FB08 /* RecipeCreatorInstructionsView.swift */,
 			);
 			path = RecipeViews;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				D6C3403F29FD769C003F6E06 /* Ingredient.swift in Sources */,
 				D666049D2A13804B000AF1B7 /* IngredientPickerViewModel.swift in Sources */,
 				D694E4062A05824A0077E72F /* InstructionMO+CoreDataProperties.swift in Sources */,
+				D69B9DC52A2FB44300A4FB08 /* RecipeCreatorInstructionsView.swift in Sources */,
 				D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */,
 				D694E40C2A05824A0077E72F /* MealPlanMO+CoreDataProperties.swift in Sources */,
 				D6C3405229FE7362003F6E06 /* RecipeListView.swift in Sources */,
