@@ -28,26 +28,27 @@ extension RecipeViewModelTests {
     
     func testAddingIngredient() {
         let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 100, carb: 10, fat: 20, protein: 30))
-        sut.addIngredient(ingredient)
+        sut.addIngredient(ingredient, nil)
         print(sut.recipe.nutritionData.calories)
         XCTAssertTrue(sut.recipe.nutritionData.calories == ingredient.nutritionData.calories, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.protein == ingredient.nutritionData.protein, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.fat == ingredient.nutritionData.fat, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.carb == ingredient.nutritionData.carb, "Calories should match")
     }
+   
     
     func testAddingMultipleIngredients() {
         let ingredientOne = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 100, carb: 10, fat: 20, protein: 30))
         let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 1, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 200, carb: 20, fat: 30, protein: 40))
-        
-        let testResult = ingredientOne.nutritionData + ingredientTwo.nutritionData
-        sut.addIngredient(ingredientOne)
-        sut.addIngredient(ingredientTwo)
+        let testResult = Nutrition(calories: 300, carb: 30, fat: 50, protein: 70)
+        sut.addIngredient(ingredientOne, nil)
+        sut.addIngredient(ingredientTwo, nil)
         XCTAssertTrue(sut.recipe.nutritionData.calories == testResult.calories, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.protein == testResult.protein, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.fat == testResult.fat, "Calories should match")
         XCTAssertTrue(sut.recipe.nutritionData.carb == testResult.carb, "Calories should match")
     }
+
 }
 
 //MARK: TEST CALCULATING TOTAL COOKING TIME
