@@ -15,16 +15,7 @@ struct RecipeCreatorInstructionsView: View {
         VStack {
             List {
                 ForEach($viewModel.parsedInstructions) { instruction in
-                    // TODO: MOVE THE HSTACK TO ITS OWN COMPONENT VIEW 
-                    HStack(alignment: .top) {
-                        
-                        Text("\(instruction.step.wrappedValue)")
-                            .font(.body)
-                            .fontWeight(.semibold)
-                            .padding(.top, 8)
-                        
-                        TextEditor(text: instruction.text)
-                    } // END OF HSTACK
+                    InstructionRowView(instructionText: instruction.text, step: instruction.step.wrappedValue, editable: true)
                 } // END OF FOR EACH
                 .onDelete { indexSet in
                     // remove instruction
