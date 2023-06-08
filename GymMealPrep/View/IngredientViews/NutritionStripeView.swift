@@ -9,13 +9,29 @@ import SwiftUI
 
 struct NutritionStripeView: View {
     
+    let nutrition: any NutritionProtocol
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text("Calories")
+                .foregroundColor(.gray)
+            Text(String(nutrition.calories))
+            Text("Fat")
+                .foregroundColor(.gray)
+            Text(String(nutrition.fat))
+            Text("Carbs")
+                .foregroundColor(.gray)
+            Text(String(nutrition.carb))
+            Text("Protein")
+                .foregroundColor(.gray)
+            Text(String(nutrition.protein))
+        }
+        .font(.caption)
     }
 }
 
 struct NutritionStripeView_Previews: PreviewProvider {
     static var previews: some View {
-        NutritionStripeView()
+        NutritionStripeView(nutrition: Nutrition(calories: 1000, carb: 45.3, fat: 20, protein: 34.99))
     }
 }

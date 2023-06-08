@@ -55,7 +55,7 @@ struct RecipeCreatorParserView: View {
                                         Text(parsedIngredient.unitOfMeasure)
                                         Text(parsedIngredient.food.name)
                                     }
-                                    NutritionStripe(nutrition: parsedIngredient.nutritionData)
+                                    NutritionStripeView(nutrition: parsedIngredient.nutritionData)
                                 } else {
                                     Text("We failed to find the ingredient, tap to search for ingredient manually")
                                         .multilineTextAlignment(.center)
@@ -87,29 +87,6 @@ struct RecipeCreatorParserView: View {
         .navigationTitle("Match ingredients")
         
     } // END OF BODY
-    
-    private struct NutritionStripe: View {
-        
-        let nutrition: any NutritionProtocol
-        
-        var body: some View {
-            HStack {
-                Text("Calories")
-                    .foregroundColor(.gray)
-                Text(String(nutrition.calories))
-                Text("Fat")
-                    .foregroundColor(.gray)
-                Text(String(nutrition.fat))
-                Text("Carbs")
-                    .foregroundColor(.gray)
-                Text(String(nutrition.carb))
-                Text("Protein")
-                    .foregroundColor(.gray)
-                Text(String(nutrition.calories))
-            }
-            .font(.caption)
-        }
-    } //END OF NUTRITION STRIPE VIEW
 } // END OF STRUCT
 
 struct RecipeCreatorParserView_Previews: PreviewProvider {
