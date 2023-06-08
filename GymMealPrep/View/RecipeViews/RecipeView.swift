@@ -56,12 +56,8 @@ struct RecipeView: View {
                         }
                     }
                     Section("Instructions") {
-                        ForEach(viewModel.recipe.instructions) { instruction in
-                            HStack{
-                                Text("\(instruction.step)")
-                                    .padding(.trailing)
-                                Text(instruction.text)
-                            }
+                        ForEach($viewModel.recipe.instructions) { instruction in
+                            InstructionRowView(instructionText: instruction.text, step: instruction.step.wrappedValue, editable: false)
                         }
                     }
                 }

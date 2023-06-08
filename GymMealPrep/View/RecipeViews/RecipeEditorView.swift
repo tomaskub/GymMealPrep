@@ -39,13 +39,7 @@ struct RecipeEditorView: View {
     var instructionSection: some View {
         Section("Instructions") {
             ForEach($viewModel.recipe.instructions) { instruction in
-                HStack{
-                    Text("\(instruction.step.wrappedValue)")
-                        .padding(.trailing)
-                     
-                    TextField("Instructions", text: instruction.text)
-                    
-                }
+                InstructionRowView(instructionText: instruction.text, step: instruction.step.wrappedValue, editable: true)
             }
             .onDelete { indexSet in
                 viewModel.removeIngredient(at: indexSet)
