@@ -29,6 +29,7 @@ struct IngredientPickerView<T: IngredientPickerViewModelProtocol>: View {
                         .font(.title)
                 }
             }
+            .padding(.horizontal)
             
             List {
                 if !viewModel.ingredientsRow.isEmpty {
@@ -40,7 +41,6 @@ struct IngredientPickerView<T: IngredientPickerViewModelProtocol>: View {
                 }
             }// END OF LIST
             .listStyle(.inset)
-            .padding()
         }// END OF VSTACK
     } // END OF BODY
 }
@@ -62,9 +62,7 @@ struct IngredientPickerView_Previews: PreviewProvider {
     static var previews: some View {
         IngredientPickerView(viewModel: PreviewViewModel()) { ingredient in
             print(ingredient.id)
-        }
-        
-            .padding()
+        }       
     }
 }
 

@@ -54,7 +54,6 @@ struct IngredientHostView: View {
             }
             
         })
-        .padding()
         .navigationTitle(title)
     }
 }
