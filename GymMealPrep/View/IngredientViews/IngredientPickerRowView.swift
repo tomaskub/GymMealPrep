@@ -12,76 +12,69 @@ struct IngredientPickerRowView: View {
     //MARK: INITIALIZED PROPERTIES
     var ingredients: [Ingredient]
     @Binding var selectedIngredient: Ingredient
-    let buttonAction: (Ingredient) -> Void
+    let rowTapAction: (Ingredient) -> Void
     
     //MARK: OWNED PROPERTIES
-    @State var selectedIngredientID: Ingredient.ID
-    let format: String = "%.1f"
+    @State private var selectedIngredientID: Ingredient.ID
+    @State private var pickerWidth = CGFloat.zero
     
-    public init(ingredients: [Ingredient], selectedIngredient: Binding<Ingredient>, buttonAction: @escaping (Ingredient) -> Void) {
+    public init(ingredients: [Ingredient], selectedIngredient: Binding<Ingredient>, rowTapAction: @escaping (Ingredient) -> Void) {
         self.ingredients = ingredients
         self._selectedIngredient = selectedIngredient
-        self.buttonAction = buttonAction
+        self.rowTapAction = rowTapAction
         self._selectedIngredientID = State(initialValue: ingredients.first?.id ?? UUID())
     }
     
     var body: some View {
-        HStack {
-            Grid {
-                
-                GridRow {
-                    Text(ingredients[0].food.name)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .gridCellColumns(4)
-                }// END OF GRID ROW
-                
-                GridRow {
-                    ForEach(buildNutrientsLabel(), id: \.0) { data in
-                        VStack {
-                            Text(data.0)
-                            Text(data.1)
-                                .lineLimit(1)
-                                .allowsTightening(true)
-                        }
-                    } // END OF FOREACH
-                } // END OF GRID ROW
-            }// END OF GRID
+        ZStack(alignment: .topTrailing) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        
+                        Text(ingredients[0].food.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .padding(.vertical, 4)
+                        
+                        Spacer(minLength:0)
+                        
+                        //reserve space for picker in next layer
+                        Color.clear
+                            .frame(width: pickerWidth, height: 1)
+                            .border(.blue)
+                        
+                    }// END OF HSTACK
+                    
+                    NutritionStripeView(nutrition: selectedIngredient.nutritionData)
+                    
+                } // END OF VSTACK
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    rowTapAction(selectedIngredient)
+                }
             
-            Spacer(minLength: 0)
-                
-            VStack {
-                
-                Picker("Did", selection: $selectedIngredientID) {
-                    ForEach(ingredients) { ingredient in
-                        Text(ingredient.unitOfMeasure).tag(ingredient.id)
-                    }
+            Picker("Did", selection: $selectedIngredientID) {
+                ForEach(ingredients) { ingredient in
+                    Text(ingredient.unitOfMeasure).tag(ingredient.id)
                 }
-                .labelsHidden()
-                .pickerStyle(.menu)
-                .onChange(of: $selectedIngredientID.wrappedValue, perform: setIngredient)
-                
-                Button {
-                    buttonAction(selectedIngredient)
-                } label: {
-                    Text("Add")
-                }
-                .buttonStyle(.borderedProminent)
-            }// END OF VSTAKC
-        } // END OF HSTACK
+            } // END OF PICKER
+            .background(
+                // read frame width size of picker
+                GeometryReader {
+                    Color.clear.preference(key: ViewWidthKey.self, value: $0.frame(in: .local).size.width)
+                })
+            .labelsHidden()
+            .pickerStyle(.menu)
+            .onChange(of: $selectedIngredientID.wrappedValue, perform: setIngredient)
+        } // END OF ZSTACK
+        .onPreferenceChange(ViewWidthKey.self) { value in
+            self.pickerWidth = value
+        }
     } // END OF BODY
     
     private func setIngredient(id: Ingredient.ID) {
         if let ingredient = ingredients.first(where: { $0.id == selectedIngredientID }) {
             selectedIngredient = ingredient
         }
-    }
-    
-    private func buildNutrientsLabel() -> [(String, String)] {
-        return [("Cal", String(format: format, selectedIngredient.nutritionData.calories)),
-                ("Pro", String(format: format, selectedIngredient.nutritionData.protein)),
-                ("Fat", String(format: format, selectedIngredient.nutritionData.fat)),
-                ("Car", String(format: format, selectedIngredient.nutritionData.carb)),]
     }
 }
 
