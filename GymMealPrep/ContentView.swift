@@ -10,13 +10,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            
-            RecipeListView()
-                .tabItem {
-                    Image(systemName: "square.fill.text.grid.1x2")
-                        .font(.largeTitle)
-                    Text("Recipe list")
-                }
+            NavigationView {
+                RecipeListView()
+            }
+                    .tabItem {
+                        Image(systemName: "square.fill.text.grid.1x2")
+                            .font(.largeTitle)
+                        Text("Recipe list")
+                    }
             
             //Easy access for testing 
             NavigationView {

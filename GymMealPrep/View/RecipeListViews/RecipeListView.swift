@@ -16,7 +16,6 @@ struct RecipeListView: View {
     }
     
     var body: some View {
-        NavigationView {
             List {
                 
                 ForEach(viewModel.recipeArray) { recipe in
@@ -37,14 +36,12 @@ struct RecipeListView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
-                        
                     } label: {
                         Image(systemName: "plus.circle")
                             .font(.title3)
                     }
                 }
             } // END OF TOOLBAR
-        } // END OF NAVIGATIONVIEW
     } // END OF BODY
 }
 
@@ -52,6 +49,8 @@ struct RecipeListView: View {
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
+        NavigationView {
             RecipeListView(viewModel: RecipeListViewModel(dataManager: .preview))
+        }
     }
 }
