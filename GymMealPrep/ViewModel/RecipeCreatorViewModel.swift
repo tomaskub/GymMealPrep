@@ -31,7 +31,12 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     }
     
     func addIngredient(_: Ingredient, _: String?) {
-            assertionFailure("Missing override: Please override this method in the subclass")
+        assertionFailure("Missing override: Please override this method in the subclass")
+    }
+    
+    func createRecipeViewModel() -> RecipeViewModel {
+        assertionFailure("Missing override: Please override this method in the subclass")
+        return RecipeViewModel(recipe: Recipe())
     }
 }
 
@@ -110,6 +115,13 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             }
         }
     }
+    
+    override func createRecipeViewModel() -> RecipeViewModel {
+        return RecipeViewModel(recipe:
+        Recipe(name: recipeTitle, servings: 1, timeCookingInMinutes: 0, timePreparingInMinutes: 0, timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: []))
+    }
+    
+    
     override func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
         if let key {
             matchedIngredients.updateValue(ingredientToSave, forKey: key)

@@ -34,7 +34,7 @@ struct RecipeCreatorInstructionsView: View {
             } // END OF LIST
             .scrollContentBackground(.hidden)
             NavigationLink {
-                Text("Instruction parser")
+                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel())
             } label: {
                 Text("Confirm instructions")
                     .font(.title3)
@@ -65,6 +65,12 @@ struct RecipeCreatorInstructionsView_Previews: PreviewProvider {
         
         override func processInput() {
             print("Processing input called")
+        }
+        override func createRecipeViewModel() -> RecipeViewModel {
+            var recipe = Recipe()
+            recipe.instructions = parsedInstructions
+            return RecipeViewModel(recipe: recipe, dataManager: DataManager.preview)
+            
         }
     }
     
