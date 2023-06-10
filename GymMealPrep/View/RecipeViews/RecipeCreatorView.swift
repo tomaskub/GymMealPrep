@@ -14,6 +14,13 @@ struct RecipeCreatorView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
+            TextField("Recipe titile", text: $viewModel.recipeTitle)
+                .font(.title3)
+                .fontWeight(.semibold)
+                .padding()
+                .background(.gray.opacity(0.1))
+                .cornerRadius(20)
+            
             Text("Ingredients:")
                 .fontWeight(.semibold)
                 .font(.title3)

@@ -12,6 +12,7 @@ import Combine
 class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     
     // input properties
+    @Published var recipeTitle: String = String()
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
     
@@ -36,8 +37,6 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
-    
-    
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     
@@ -46,8 +45,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         self.ingredientsNLArray = [String]()
         self.ingredientsEntry = String()
         self.instructionsEntry = String()
-        
-        
     }
     
     override func processInput() {
@@ -109,7 +106,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     } else {
                         let instructionToAppend = Instruction(step: index + 1, text: instructionText)
                     }
-                    
                 }
             }
         }
