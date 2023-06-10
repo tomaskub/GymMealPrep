@@ -84,6 +84,7 @@
 		D6EC92F72A027EA800863F2D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F62A027EA800863F2D /* ViewExtensions.swift */; };
 		D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */; };
 		D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */; };
+		D6EF30D02A351925004CAAE7 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF30CF2A351925004CAAE7 /* ExpandableButtonPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		D6EC92F62A027EA800863F2D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorView.swift; sourceTree = "<group>"; };
+		D6EF30CF2A351925004CAAE7 /* ExpandableButtonPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +318,7 @@
 				D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */,
 				D63AFA232A019E2E00574FE0 /* ChipView.swift */,
 				D69BAB202A2FE45900E2D05D /* InstructionRowView.swift */,
+				D6EF30CF2A351925004CAAE7 /* ExpandableButtonPanel.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				D69E224A2A1FEA3E00F5EF93 /* TextFieldModifier.swift in Sources */,
 				D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */,
 				D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */,
+				D6EF30D02A351925004CAAE7 /* ExpandableButtonPanel.swift in Sources */,
 				D694E4072A05824A0077E72F /* IngredientMO+CoreDataClass.swift in Sources */,
 				D6C3405429FE7458003F6E06 /* RecipeListViewModel.swift in Sources */,
 				D69BAB252A31BBCE00E2D05D /* NutritionStripeView.swift in Sources */,
