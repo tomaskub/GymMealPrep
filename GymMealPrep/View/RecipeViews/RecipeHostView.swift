@@ -47,7 +47,7 @@ struct RecipeHostView: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        dismiss()
+                        NavigationUtility.popToRootView(animated: true)
                     } label: {
                         HStack {
                             Image(systemName: "chevron.left")

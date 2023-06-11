@@ -33,19 +33,26 @@ struct RecipeListView: View {
             
             .navigationTitle("Recipies")
             .toolbar {
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
-                    } label: {
-                        Image(systemName: "plus.circle")
-                            .font(.title3)
-                    }
-                }
+                        NavigationLink {
+                            RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
+                        } label: {
+                            Image(systemName: "plus.circle")
+                                .font(.title3)
+                        }
+                } // END OF TOOLBAR ITEM
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            RecipeCreatorView()
+                        } label: {
+                            Image(systemName: "text.badge.plus")
+                        }
+                } // END OF TOOLBAR ITEM
             } // END OF TOOLBAR
     } // END OF BODY
-}
-
-
+} // END OF STRUCT
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
