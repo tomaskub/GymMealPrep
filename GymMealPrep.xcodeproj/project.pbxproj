@@ -85,6 +85,7 @@
 		D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */; };
 		D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */; };
 		D6EF30D02A351925004CAAE7 /* ExpandableButtonPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF30CF2A351925004CAAE7 /* ExpandableButtonPanel.swift */; };
+		D6EF30D22A35C6F2004CAAE7 /* NavigationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +188,7 @@
 		D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorView.swift; sourceTree = "<group>"; };
 		D6EF30CF2A351925004CAAE7 /* ExpandableButtonPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonPanel.swift; sourceTree = "<group>"; };
+		D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,6 +436,7 @@
 				D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */,
 				D69BAB262A3315B800E2D05D /* ViewWidthKey.swift */,
 				D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */,
+				D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
 				D694E4042A05824A0077E72F /* RecipeMO+CoreDataProperties.swift in Sources */,
 				D6EC92F72A027EA800863F2D /* ViewExtensions.swift in Sources */,
+				D6EF30D22A35C6F2004CAAE7 /* NavigationUtility.swift in Sources */,
 				D680C3352A13DDD8002070DF /* NetworkController.swift in Sources */,
 				D694E40D2A05824A0077E72F /* TagMO+CoreDataClass.swift in Sources */,
 				D694E3F52A057D370077E72F /* FoodMO+CoreDataClass.swift in Sources */,
