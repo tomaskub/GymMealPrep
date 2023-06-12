@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D60598702A37B2D000186F7F /* RecipeListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605986F2A37B2D000186F7F /* RecipeListTabView.swift */; };
 		D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */; };
 		D614A0422A1D4FA700C55D34 /* IngredientEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */; };
 		D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */; };
@@ -105,6 +106,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D605986F2A37B2D000186F7F /* RecipeListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListTabView.swift; sourceTree = "<group>"; };
 		D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModelTests.swift; sourceTree = "<group>"; };
 		D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorViewModel.swift; sourceTree = "<group>"; };
 		D6169D942A12C95400CD9C60 /* Edamam-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Edamam-Info.plist"; sourceTree = "<group>"; };
@@ -214,6 +216,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D605986E2A37B2BA00186F7F /* TabViews */ = {
+			isa = PBXGroup;
+			children = (
+				D605986F2A37B2D000186F7F /* RecipeListTabView.swift */,
+			);
+			path = TabViews;
+			sourceTree = "<group>";
+		};
 		D634FF7A29FD42F50034B950 = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +409,7 @@
 		D6C3404829FD7F44003F6E06 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D605986E2A37B2BA00186F7F /* TabViews */,
 				D638926F2A1C0785008CC0D6 /* SubViews */,
 				D668B81A2A1D320100242E51 /* IngredientViews */,
 				D668B81B2A1D322300242E51 /* RecipeViews */,
@@ -612,6 +623,7 @@
 				D69BAB272A3315B800E2D05D /* ViewWidthKey.swift in Sources */,
 				D694E4092A05824A0077E72F /* MealMO+CoreDataClass.swift in Sources */,
 				D6C1DDBB2A07908F0062B1C5 /* DataManager+FoodMO.swift in Sources */,
+				D60598702A37B2D000186F7F /* RecipeListTabView.swift in Sources */,
 				D6D77A6D2A2269DA006D63B5 /* RecipeCreatorView.swift in Sources */,
 				D680C3372A13E75D002070DF /* EdamamLogicController.swift in Sources */,
 				D694E40B2A05824A0077E72F /* MealPlanMO+CoreDataClass.swift in Sources */,
