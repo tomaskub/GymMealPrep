@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NutritionProtocol: AdditiveArithmetic {
+protocol NutritionProtocol: AdditiveArithmetic, Hashable {
     var calories: Float { get set }
     var carb: Float { get set }
     var fat: Float { get set }

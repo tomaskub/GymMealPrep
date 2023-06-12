@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Instruction: Identifiable {
+struct Instruction: Identifiable, Hashable {
     var id: UUID
     var step: Int
     var text: String

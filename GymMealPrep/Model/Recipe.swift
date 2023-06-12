@@ -8,7 +8,8 @@
 import Foundation
 
 
-struct Recipe: Identifiable {
+struct Recipe: Identifiable, Hashable {
+    
     var id: UUID
     var name: String
     var servings: Int
