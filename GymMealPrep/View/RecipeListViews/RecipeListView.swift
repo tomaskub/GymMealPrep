@@ -63,6 +63,7 @@ struct RecipeListView: View {
                                 .font(.title3)
                         }
                     }
+                    
                 } // END OF TOOLBAR ITEM
             } // END OF TOOLBAR
     } // END OF BODY
