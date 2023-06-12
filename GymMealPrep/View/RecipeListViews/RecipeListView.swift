@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipeListView: View {
     
     @StateObject private var viewModel: RecipeListViewModel
+    @State private var isExpanded: Bool = false
     
     public init(viewModel: RecipeListViewModel = RecipeListViewModel()) {
         self._viewModel = StateObject(wrappedValue: viewModel)
@@ -35,20 +36,33 @@ struct RecipeListView: View {
             .toolbar {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.blue)
+                            .rotationEffect(Angle(degrees: isExpanded ? 180 : 0), anchor: UnitPoint(x: 0.5, y: 0.5))
+                            .onTapGesture {
+                                isExpanded.toggle()
+                            }
+                            .animation(.easeInOut(duration: 0.5), value: isExpanded)
+                        if isExpanded {
+                            NavigationLink {
+                                RecipeCreatorView()
+                            } label: {
+                                Text("Add from text")
+                            }
+                            //TODO: Figure out why transition have unexpected behaviour
+                            .transition(.asymmetric(
+                                insertion: .opacity.animation(.linear(duration: 0.5)),
+                                removal: .opacity.animation(.linear(duration: 0.1)))
+                                )
+                        }
                         NavigationLink {
                             RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
                         } label: {
                             Image(systemName: "plus.circle")
                                 .font(.title3)
                         }
-                } // END OF TOOLBAR ITEM
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            RecipeCreatorView()
-                        } label: {
-                            Image(systemName: "text.badge.plus")
-                        }
+                    }
                 } // END OF TOOLBAR ITEM
             } // END OF TOOLBAR
     } // END OF BODY

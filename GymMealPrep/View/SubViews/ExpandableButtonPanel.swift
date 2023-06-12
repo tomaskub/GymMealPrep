@@ -6,57 +6,95 @@
 //
 
 import SwiftUI
-
+//TODO: Animations and transitions do not work as expected
 struct ExpandableButtonPanel: View {
     
-    let primaryButton: ExpandableButtonItem
-    let secondaryButtons: [ExpandableButtonItem]
-    
-    private let size: CGFloat = 70
     @State private var isExpanded: Bool = false
     
+    let nonExpandable: ExpandableButtonPanelItem
+    let expandable: [ExpandableButtonPanelItem]
+    
     var body: some View {
-        HStack {
-            Button("<") {
-                withAnimation {
-                    self.isExpanded.toggle()
-                }
-            }
-            ForEach(secondaryButtons) { button in
-                Text(button.label)
+        
+            HStack {
+                
+                Image(systemName: "chevron.left")
+                    .rotationEffect(Angle(degrees: isExpanded ? 180 : 0))
                     .onTapGesture {
-                        if let action = button.action {
-                            action()
+                            isExpanded.toggle()
+                    }
+                    .animation(.easeInOut(duration: 0.5), value: isExpanded)
+                
+                if isExpanded {
+                    ForEach(expandable) { item in
+                        if let systemName = item.systemName {
+                            Image(systemName: systemName)
+                                .onTapGesture {
+                                    if let action = item.action {
+                                        action()
+                                    }
+                                }
+                        } else {
+                            Text(item.label)
+                                .onTapGesture {
+                                    if let action = item.action {
+                                        action()
+                                    }
+                                }
                         }
                     }
-                    .frame(
-                        width: self.isExpanded ? self.size : 0,
-                        height: self.isExpanded ? self.size : 0
-                    )
-            }
-            Button(primaryButton.label) {
-                if let action = primaryButton.action {
-                    action()
+                }
+                if let sysName = nonExpandable.systemName {
+                    Image(systemName: sysName)
+                        .onTapGesture {
+                            if let action = nonExpandable.action {
+                                action()
+                            }
+                        }
+                } else {
+                    Text(nonExpandable.label)
+                        .onTapGesture {
+                            if let action = nonExpandable.action {
+                                action()
+                            }
+                        }
                 }
             }
-        }
     }
+    
+
 }
 
-struct ExpandableButtonItem: Identifiable {
+struct ExpandableButtonPanelItem: Identifiable {
     let id = UUID()
     let label: String
-    private(set) var action: (()-> Void)? = nil
+    let systemName: String?
+    private(set) var action: (()-> Void)?
+    
+    init(label: String, systemName: String? = nil, action: ( () -> Void)? = nil){
+        self.label = label
+        self.systemName = systemName
+        self.action = action
+    }
 }
 
 struct ExpandableButtonPanel_Previews: PreviewProvider {
     static var previews: some View {
-        ExpandableButtonPanel(
-            primaryButton: ExpandableButtonItem(label: "P"),
-            secondaryButtons: [
-                ExpandableButtonItem(label: "S"),
-            ExpandableButtonItem(label: "T")
-            ]
-        )
+        NavigationView {
+            Text("This is a sample view")
+                .navigationTitle("Navigation title")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ExpandableButtonPanel(
+                            nonExpandable: ExpandableButtonPanelItem(
+                                label: "Sample",
+                                systemName: "plus.circle",
+                                action: {}),
+                            expandable: [
+                            ExpandableButtonPanelItem(label: "expanded"),
+                            ExpandableButtonPanelItem(label: "expanded2")])
+                    }
+                }
+        }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -19,7 +20,7 @@ struct ContentView: View {
                         Text("Recipe list")
                     }
             
-            //Easy access for testing 
+            //Easy access for testing
             NavigationView {
                 RecipeCreatorView()
             }
