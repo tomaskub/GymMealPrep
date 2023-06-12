@@ -11,13 +11,18 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            NavigationView {
-                RecipeListView()
-            }
+            
+            Text("Dashboard view placeholder")
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+            
+                RecipeListTabView()
                     .tabItem {
                         Image(systemName: "square.fill.text.grid.1x2")
                             .font(.largeTitle)
-                        Text("Recipe list")
+                        Text("Recipes")
                     }
             
             //Easy access for testing
