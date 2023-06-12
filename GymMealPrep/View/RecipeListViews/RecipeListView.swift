@@ -9,18 +9,16 @@ import SwiftUI
 
 struct RecipeListView: View {
     
-    @StateObject private var viewModel: RecipeListViewModel
+    @ObservedObject var viewModel: RecipeListViewModel
     
     @State private var isExpanded: Bool = false
-    @State private var isAddingNewRecipe: Bool = false
-    @State private var isAddingNewRecipeViaText: Bool = false
+    @Binding var isAddingNewRecipe: Bool
+    @Binding var isAddingNewRecipeViaText: Bool
     
-    public init(viewModel: RecipeListViewModel = RecipeListViewModel()) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
-    }
+    
     
     var body: some View {
-        NavigationStack {
+        
             List {
                 ForEach(viewModel.recipeArray) { recipe in
                     
@@ -68,26 +66,17 @@ struct RecipeListView: View {
                     
                 } // END OF TOOLBAR ITEM
             } // END OF TOOLBAR
-            //MARK: NAVIGATION DESTINATIONS
-            .navigationDestination(for: Recipe.self) { recipe in
-                RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
-            }
-            .navigationDestination(isPresented: $isAddingNewRecipe) {
-                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
-            }
-            .navigationDestination(isPresented: $isAddingNewRecipeViaText) {
-                RecipeCreatorView()
-            }
-            
-            
-        } // END OF NAVIGATION STACK
     } // END OF BODY
 } // END OF STRUCT
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            RecipeListView(viewModel: RecipeListViewModel(dataManager: .preview))
+        NavigationStack {
+            RecipeListView(
+                viewModel: RecipeListViewModel(dataManager: .preview),
+                isAddingNewRecipe: .constant(false),
+                isAddingNewRecipeViaText: .constant(false)
+            )
         }
     }
 }
