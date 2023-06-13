@@ -16,16 +16,14 @@ struct RecipeListTabView: View {
     }
     
     @StateObject private var viewModel: RecipeListViewModel
-    
-    @State private var isAddingNewRecipe: Bool = false
-    @State private var isAddingNewRecipeViaText: Bool = false
+    @State private var path = NavigationPath()
     
     public init(viewModel: RecipeListViewModel = RecipeListViewModel()) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             
             RecipeListView(viewModel: viewModel)
             
@@ -33,11 +31,11 @@ struct RecipeListTabView: View {
             .navigationDestination(for: NavigationState.self) { state in
                 switch state {
                 case .addingNewRecipeManually(let recipe):
-                    RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: recipe))
+                    RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: recipe), path: $path)
                 case .addingNewRecipeText:
                     RecipeCreatorView()
                 case .showingRecipeDetail(let recipe):
-                    RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
+                    RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe), path: $path)
                 }
             }
         }

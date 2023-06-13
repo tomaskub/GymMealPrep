@@ -34,7 +34,7 @@ struct RecipeCreatorInstructionsView: View {
             } // END OF LIST
             .scrollContentBackground(.hidden)
             NavigationLink {
-                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel())
+                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(), path: .constant(NavigationPath()))
             } label: {
                 Text("Confirm instructions")
                     .font(.title3)

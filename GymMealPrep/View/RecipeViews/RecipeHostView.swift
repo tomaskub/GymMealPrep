@@ -13,7 +13,7 @@ struct RecipeHostView: View {
     
     @State var isEditing: Bool = false
     @ObservedObject var viewModel: RecipeViewModel
-    
+    @Binding var path: NavigationPath
     var body: some View {
         ZStack {
             
@@ -47,7 +47,7 @@ struct RecipeHostView: View {
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        NavigationUtility.popToRootView(animated: true)
+                        path.removeLast()
                     } label: {
                         HStack {
                             Image(systemName: "chevron.left")
@@ -66,7 +66,7 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview))
+            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview), path: .constant(NavigationPath()))
         }
     }
 }
