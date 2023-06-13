@@ -9,6 +9,12 @@ import SwiftUI
 
 struct RecipeListTabView: View {
     
+    enum NavigationState: Hashable {
+        case addingNewRecipeManually(Recipe)
+        case addingNewRecipeText
+        case showingRecipeDetail(Recipe)
+    }
+    
     @StateObject private var viewModel: RecipeListViewModel
     
     @State private var isAddingNewRecipe: Bool = false
@@ -21,19 +27,18 @@ struct RecipeListTabView: View {
     var body: some View {
         NavigationStack {
             
-            RecipeListView(viewModel: viewModel,
-                           isAddingNewRecipe: $isAddingNewRecipe,
-                           isAddingNewRecipeViaText: $isAddingNewRecipeViaText)
+            RecipeListView(viewModel: viewModel)
             
             //MARK: NAVIGATION DESTINATIONS
-            .navigationDestination(for: Recipe.self) { recipe in
-                RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
-            }
-            .navigationDestination(isPresented: $isAddingNewRecipe) {
-                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: Recipe()))
-            }
-            .navigationDestination(isPresented: $isAddingNewRecipeViaText) {
-                RecipeCreatorView()
+            .navigationDestination(for: NavigationState.self) { state in
+                switch state {
+                case .addingNewRecipeManually(let recipe):
+                    RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: recipe))
+                case .addingNewRecipeText:
+                    RecipeCreatorView()
+                case .showingRecipeDetail(let recipe):
+                    RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe))
+                }
             }
         }
     }
