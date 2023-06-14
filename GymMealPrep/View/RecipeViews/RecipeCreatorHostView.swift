@@ -48,6 +48,9 @@ struct RecipeCreatorHostView: View {
                         switch stage {
                         case 0:
                             viewModel.processInput()
+                            withAnimation {
+                                stage += 1
+                            }
                         case 3:
                             path = NavigationPath()
                         default:
