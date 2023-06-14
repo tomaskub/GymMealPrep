@@ -31,12 +31,13 @@ struct RecipeCreatorHostView: View {
                 RecipeCreatorInstructionsView(viewModel: viewModel)
                     .transition(stageTransition)
             case 3:
-                RecipeCreatorConfirmationView()
+                RecipeCreatorConfirmationView(viewModel: viewModel)
                     .transition(stageTransition)
             default:
                 Text("This is default case for switch statement")
             }
             HStack {
+                Spacer()
                 Text(buttonText)
                     .font(.title3)
                     .foregroundColor(.white)
@@ -47,18 +48,39 @@ struct RecipeCreatorHostView: View {
                         switch stage {
                         case 0:
                             viewModel.processInput()
+                        case 3:
+                            path = NavigationPath()
                         default:
-                            print("finished!")
-                        }
-                        if stage != 3 {
                             withAnimation {
                                 stage += 1
                             }
-                        } else {
-                            path = NavigationPath()
                         }
                     } // END OF ON TAP GESTURE
+                Spacer()
             } // END OF HSTACK
+            .overlay(alignment: .leading) {
+                HStack {
+                    if stage != 0 {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .padding(.all, 10)
+                            .background(.blue)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                withAnimation {
+                                    stage -= 1
+                                }
+                            }
+                            .transition(.opacity)
+                    }
+                    Spacer()
+                    if stage == 3 {
+                        Text("Save and edit")
+                    }
+                }
+                .padding(.horizontal, 10)
+            }
         } // END OF VSTACK
     } // END OF BODY
     
@@ -73,7 +95,7 @@ struct RecipeCreatorHostView: View {
         case 3:
             return "Save recipe!"
         default:
-            return "Default"
+            return String()
         }
     }
 } // END OF STRUCT
