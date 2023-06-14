@@ -16,6 +16,11 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
     
+    @Published var timePreparingInMinutes: String = String()
+    @Published var timeCookingInMinutes: String = String()
+    @Published var timeWaitingInMinutes: String = String()
+    @Published var tagText: String = String()
+    @Published var servings: Int = 1
     // input processed properties
     @Published var ingredientsNLArray: [String] = []
     var instructionsNLArray: [String] = []
@@ -24,7 +29,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var parsedIngredients = [String : [[Ingredient]]]()
     @Published var matchedIngredients = [String : Ingredient]()
     @Published var parsedInstructions: [Instruction] = []
-    
+    @Published var tags: [Tag] = []
     
     func processInput() {
         assertionFailure("Missing override: Please override this method in the subclass")
@@ -37,6 +42,9 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func createRecipeViewModel() -> RecipeViewModel {
         assertionFailure("Missing override: Please override this method in the subclass")
         return RecipeViewModel(recipe: Recipe())
+    }
+    func addTag() {
+        assertionFailure("Missing override: Please orverride this method in the subclass")
     }
 }
 
@@ -121,6 +129,10 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         Recipe(name: recipeTitle, servings: 1, timeCookingInMinutes: 0, timePreparingInMinutes: 0, timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: []))
     }
     
+    override func addTag() {
+        tags.append(Tag(text: tagText))
+        tagText = String()
+    }
     
     override func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
         if let key {
