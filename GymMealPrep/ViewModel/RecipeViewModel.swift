@@ -79,7 +79,7 @@ class RecipeViewModel: ObservableObject {
 
 extension RecipeViewModel {
     
-    func deleteInstruction(at indexSet: IndexSet) {
+    func removeInstruction(at indexSet: IndexSet) {
         recipe.instructions.remove(atOffsets: indexSet)
     }
     func moveInstruction(from start: IndexSet, to finish: Int) {

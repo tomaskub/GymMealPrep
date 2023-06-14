@@ -42,7 +42,7 @@ struct RecipeEditorView: View {
                 InstructionRowView(instructionText: instruction.text, step: instruction.step.wrappedValue, editable: true)
             }
             .onDelete { indexSet in
-                viewModel.removeIngredient(at: indexSet)
+                viewModel.removeInstruction(at: indexSet)
             }
             .onMove { source, destination in
                 viewModel.moveInstruction(from: source, to: destination)
