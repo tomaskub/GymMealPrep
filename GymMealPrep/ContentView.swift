@@ -27,7 +27,7 @@ struct ContentView: View {
             
             //Easy access for testing
             NavigationView {
-                RecipeCreatorView()
+                Text("Testing placeholder")
             }
             .tabItem {
                 Image(systemName: "rectangle.grid.1x2.fill")
