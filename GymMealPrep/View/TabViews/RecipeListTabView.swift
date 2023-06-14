@@ -33,7 +33,7 @@ struct RecipeListTabView: View {
                 case .addingNewRecipeManually(let recipe):
                     RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: recipe), path: $path)
                 case .addingNewRecipeText:
-                    RecipeCreatorView()
+                    RecipeCreatorHostView(path: $path)
                 case .showingRecipeDetail(let recipe):
                     RecipeHostView(viewModel: viewModel.createRecipeViewModel(recipe: recipe), path: $path)
                 }

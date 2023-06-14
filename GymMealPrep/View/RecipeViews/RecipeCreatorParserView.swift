@@ -70,17 +70,6 @@ struct RecipeCreatorParserView: View {
                         .foregroundColor(.blue)
                 } // END OF SECTION
             } // END OF LIST
-            
-            NavigationLink {
-                RecipeCreatorInstructionsView(viewModel: viewModel)
-            } label: {
-                Text("Confirm and edit instructions")
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-                    .background(.blue)
-                    .cornerRadius(8)
-            } // END OF NAV LINK
         } // END OF VSTACK
         
         .listStyle(.inset)

@@ -33,16 +33,6 @@ struct RecipeCreatorInstructionsView: View {
                 }
             } // END OF LIST
             .scrollContentBackground(.hidden)
-            NavigationLink {
-                RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(), path: .constant(NavigationPath()))
-            } label: {
-                Text("Confirm instructions")
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-                    .background(.blue)
-                    .cornerRadius(8)
-            }
         } // END OF VSTACK
         .navigationTitle("Instructions")
     }
