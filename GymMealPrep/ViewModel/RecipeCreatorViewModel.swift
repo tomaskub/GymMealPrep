@@ -46,6 +46,17 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func addTag() {
         assertionFailure("Missing override: Please orverride this method in the subclass")
     }
+    
+    func deleteInstruction(at offset: IndexSet) {
+        assertionFailure("Missing override: Please orverride this method in the subclass")
+    }
+    func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
+        assertionFailure("Missing override: Please orverride this method in the subclass")
+    }
+    func addInstruction() {
+        assertionFailure("Missing override: Please orverride this method in the subclass")
+    }
+    
 }
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
@@ -139,6 +150,14 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             matchedIngredients.updateValue(ingredientToSave, forKey: key)
         }
     }
-    
+    override func deleteInstruction(at offset: IndexSet) {
+        parsedInstructions.remove(atOffsets: offset)
+    }
+    override func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
+        parsedInstructions.move(fromOffsets: source, toOffset: destination)
+    }
+    override func addInstruction() {
+        parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
+    }
 }
 

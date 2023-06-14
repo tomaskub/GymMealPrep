@@ -19,9 +19,11 @@ struct RecipeCreatorInstructionsView: View {
                 } // END OF FOR EACH
                 .onDelete { indexSet in
                     // remove instruction
+                    viewModel.deleteInstruction(at: indexSet)
                 }
                 .onMove { source, destination in
                     // move instruction
+                    viewModel.moveInstruction(fromOffset: source, toOffset: destination)
                 }
                 HStack {
                     Spacer()
@@ -30,6 +32,7 @@ struct RecipeCreatorInstructionsView: View {
                 }
                 .onTapGesture {
                     // add new instruction
+                    viewModel.addInstruction()
                 }
             } // END OF LIST
             .scrollContentBackground(.hidden)
@@ -62,6 +65,15 @@ struct RecipeCreatorInstructionsView_Previews: PreviewProvider {
             recipe.instructions = parsedInstructions
             return RecipeViewModel(recipe: recipe, dataManager: DataManager.preview)
             
+        }
+        override func deleteInstruction(at offset: IndexSet) {
+            parsedInstructions.remove(atOffsets: offset)
+        }
+        override func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
+            parsedInstructions.move(fromOffsets: source, toOffset: destination)
+        }
+        override func addInstruction() {
+            parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
         }
     }
     
