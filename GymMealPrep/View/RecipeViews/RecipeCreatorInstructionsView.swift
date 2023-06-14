@@ -35,6 +35,7 @@ struct RecipeCreatorInstructionsView: View {
             .scrollContentBackground(.hidden)
         } // END OF VSTACK
         .navigationTitle("Instructions")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

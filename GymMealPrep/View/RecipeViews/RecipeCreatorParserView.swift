@@ -74,6 +74,7 @@ struct RecipeCreatorParserView: View {
         
         .listStyle(.inset)
         .navigationTitle("Match ingredients")
+        .navigationBarTitleDisplayMode(.inline)
         
     } // END OF BODY
 } // END OF STRUCT
@@ -112,7 +113,7 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         
     }
     static var previews: some View {
-        NavigationView {
+        NavigationStack {
             RecipeCreatorParserView(viewModel: PreviewViewModel(), saveHandler: PreviewSaveHandler())
         }
     }
