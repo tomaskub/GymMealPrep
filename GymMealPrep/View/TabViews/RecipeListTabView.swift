@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeListTabView: View {
     
     enum NavigationState: Hashable {
-        case addingNewRecipeManually(Recipe)
+        case showingRecipeDetailEdit(Recipe)
         case addingNewRecipeText
         case showingRecipeDetail(Recipe)
     }
@@ -30,7 +30,7 @@ struct RecipeListTabView: View {
             //MARK: NAVIGATION DESTINATIONS
             .navigationDestination(for: NavigationState.self) { state in
                 switch state {
-                case .addingNewRecipeManually(let recipe):
+                case .showingRecipeDetailEdit(let recipe):
                     RecipeHostView(isEditing: true, viewModel: viewModel.createRecipeViewModel(recipe: recipe), path: $path)
                 case .addingNewRecipeText:
                     RecipeCreatorHostView(path: $path)

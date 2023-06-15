@@ -59,7 +59,7 @@ struct RecipeListView: View {
                             )
                         }
                         
-                        NavigationLink(value: RecipeListTabView.NavigationState.addingNewRecipeManually(Recipe())) {
+                        NavigationLink(value: RecipeListTabView.NavigationState.showingRecipeDetailEdit(Recipe())) {
                             Image(systemName: "plus.circle")
                                 .font(.title3)
                         }

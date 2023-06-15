@@ -38,7 +38,10 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func addIngredient(_: Ingredient, _: String?) {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
-    
+    func saveRecipe() -> Recipe {
+        assertionFailure("Missing override: Please override this method in the subclass")
+        return Recipe()
+    }
     func createRecipeViewModel() -> RecipeViewModel {
         assertionFailure("Missing override: Please override this method in the subclass")
         return RecipeViewModel(recipe: Recipe())
@@ -60,11 +63,12 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
 }
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
-    
+    private var dataManager: DataManager
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     
-    override init() {
+    init(dataManager: DataManager = .shared) {
+        self.dataManager = dataManager
         super.init()
         self.ingredientsNLArray = [String]()
         self.ingredientsEntry = String()
@@ -133,6 +137,22 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                 }
             }
         }
+    }
+    
+    override func saveRecipe() -> Recipe {
+        
+        var recipe = Recipe(
+            name: recipeTitle,
+            servings: servings,
+            timeCookingInMinutes: Int(timeCookingInMinutes) ?? 0,
+            timePreparingInMinutes: Int(timePreparingInMinutes) ?? 0,
+            timeWaitingInMinutes: Int(timeWaitingInMinutes) ?? 0,
+            ingredients: Array(matchedIngredients.values),
+            instructions: parsedInstructions,
+            tags: tags)
+        
+        dataManager.updateAndSave(recipe: recipe)
+        return recipe
     }
     
     override func createRecipeViewModel() -> RecipeViewModel {
