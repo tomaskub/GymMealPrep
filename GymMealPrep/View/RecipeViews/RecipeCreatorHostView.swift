@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeCreatorHostView: View {
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    @State private var stage: Int = 0
+    @State private var stage: Int = 3
     @Binding var path: NavigationPath
     
     let stageTransition: AnyTransition = {
@@ -52,6 +52,7 @@ struct RecipeCreatorHostView: View {
                                 stage += 1
                             }
                         case 3:
+                            _ = viewModel.saveRecipe()
                             path = NavigationPath()
                         default:
                             withAnimation {
@@ -59,6 +60,21 @@ struct RecipeCreatorHostView: View {
                             }
                         }
                     } // END OF ON TAP GESTURE
+                if stage == 3 {
+                    Text("Save and open")
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                        .background(.blue)
+                        .cornerRadius(8)
+                        .transition(.opacity)
+                        .onTapGesture {
+                            let recipe = viewModel.saveRecipe()
+                            var newPath = NavigationPath()
+                            newPath.append(RecipeListTabView.NavigationState.showingRecipeDetailEdit(recipe))
+                            path = newPath
+                        }
+                }
                 Spacer()
             } // END OF HSTACK
             .overlay(alignment: .leading) {
@@ -78,9 +94,7 @@ struct RecipeCreatorHostView: View {
                             .transition(.opacity)
                     }
                     Spacer()
-                    if stage == 3 {
-                        Text("Save and edit")
-                    }
+                    
                 }
                 .padding(.horizontal, 10)
             }
@@ -96,7 +110,7 @@ struct RecipeCreatorHostView: View {
         case 2:
             return "Confirm Instructions"
         case 3:
-            return "Save recipe!"
+            return "Save and exit"
         default:
             return String()
         }
