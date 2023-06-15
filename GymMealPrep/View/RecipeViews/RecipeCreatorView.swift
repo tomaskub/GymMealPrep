@@ -21,9 +21,14 @@ struct RecipeCreatorView: View {
                 .background(.gray.opacity(0.1))
                 .cornerRadius(20)
             
-            Text("Ingredients:")
-                .fontWeight(.semibold)
-                .font(.title3)
+            HStack {
+                Text("Ingredients:")
+                    .fontWeight(.semibold)
+                    .font(.title3)
+                Spacer()
+                Stepper("\(viewModel.servings) \(stepperLabel)", value: $viewModel.servings)
+                    .fixedSize()
+            }
             
             TextEditor(text: $viewModel.ingredientsEntry)
                 .scrollContentBackground(.hidden)
@@ -44,6 +49,9 @@ struct RecipeCreatorView: View {
         .padding()
         .navigationTitle("Create recipe")
     } // END OF BODY
+    var stepperLabel: String {
+        viewModel.servings > 1 ? "servings" : "serving"
+    }
 } // END OF STRUCT
 
 
