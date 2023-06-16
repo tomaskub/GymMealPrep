@@ -9,75 +9,83 @@ import SwiftUI
 
 struct RecipeCreatorConfirmationView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
-
+    
     var body: some View {
-        VStack(alignment: .center) {
-            Grid(alignment: .leading) {
-                    Text("Time")
-                    .font(.title3)
+        
+        List {
+            
+            Section("Photo") {
+                Button {
+                    print("Adding photo")
+                } label: {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.horizontal, 50)
+                }
+                
+            }
+            
+            Section("Time cooking") {
+                Grid(alignment: .leading) {
                     
-                GridRow {
-                    Text("Cooking time:")
-                        .border(.green)
-                    TextField("enter cooking time", text: $viewModel.timeCookingInMinutes)
-                        .numericalInputOnly($viewModel.timeCookingInMinutes)
-                        .border(.green)
-                }
-                GridRow {
-                    Text("Preparing time:")
-                        .border(.green)
-                    TextField("Preparing time", text: $viewModel.timePreparingInMinutes)
-                        .numericalInputOnly($viewModel.timePreparingInMinutes)
-                        .border(.green)
-                }
-                GridRow {
-                    Text("Time waiting:")
-                        .border(.green)
-                    TextField("Waiting time", text: $viewModel.timeWaitingInMinutes)
-                        .numericalInputOnly($viewModel.timeWaitingInMinutes)
-                        .border(.green)
-                }
-            }
+                    GridRow {
+                        Text("Cooking time:")
+                        
+                        TextField("minutes", text: $viewModel.timeCookingInMinutes)
+                            .numericalInputOnly($viewModel.timeCookingInMinutes)
+                            .textFieldStyle(.roundedBorder)
+                    } // END OF GRID ROW
+                    
+                    GridRow {
+                        Text("Preparing time:")
+                        
+                        TextField("minutes", text: $viewModel.timePreparingInMinutes)
+                            .numericalInputOnly($viewModel.timePreparingInMinutes)
+                            .textFieldStyle(.roundedBorder)
+                    } // END OF GRID ROW
+                    
+                    GridRow {
+                        Text("Time waiting:")
+                        
+                        TextField("minutes", text: $viewModel.timeWaitingInMinutes)
+                            .numericalInputOnly($viewModel.timeWaitingInMinutes)
+                            .textFieldStyle(.roundedBorder)
+                        
+                    } // END OF GRID ROW
+                } // END OF GRID
+            } // END OF SECTION
             
-            Divider()
             
-            Stepper("Servings:  \(viewModel.servings)", value: $viewModel.servings)
-                .fixedSize()
-                .border(.red)
+            Section("Tags") {
+                
+                ChipView(tags: $viewModel.tags, avaliableWidth: UIScreen.main.bounds.width - 50, alignment: .center) { tag in
+                    Text(tag.text)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(Capsule().foregroundColor(.blue))
+                } // END OF CHIPVIEW
+                
+                HStack {
+                    
+                    TextField("Add new tag", text: $viewModel.tagText)
+                        .onSubmit {
+                            viewModel.addTag()
+                        }
+                    
+                    Button("Add") {
+                        viewModel.addTag()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                } // END OF HSTACK
+            } // END OF SECTION
             
-            Divider()
-            
-            HStack {
-                Text("Tags")
-                    .font(.title3)
-                Spacer()
-            }
-                .border(.black)
-            ChipView(tags: $viewModel.tags, avaliableWidth: UIScreen.main.bounds.width - 50, alignment: .center) { tag in
-                Text(tag.text)
-                    .foregroundColor(.white)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 8)
-                    .background(Capsule().foregroundColor(.blue))
-            }
-            
-            .border(.blue)
-            TextField("Add new tag", text: $viewModel.tagText)
-                .onSubmit {
-                    viewModel.addTag()
-                }
-                .border(.red)
-            Button("Add photo") {
-                print("Adding photo")
-            }
-            .buttonStyle(.borderedProminent)
-
-            Spacer()
-        }
-        .padding(.horizontal)
-            .navigationTitle("Add details")
-            .navigationBarTitleDisplayMode(.inline)
-    }
+        } // END OF LIST
+        .navigationTitle("Add details")
+        .navigationBarTitleDisplayMode(.inline)
+    } // END OF BODY
 }
 
 struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
@@ -105,6 +113,7 @@ struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
             return RecipeViewModel(recipe: Recipe())
         }
     }
+    
     static var previews: some View {
         NavigationStack {
             RecipeCreatorConfirmationView(viewModel: PreviewViewModel())
