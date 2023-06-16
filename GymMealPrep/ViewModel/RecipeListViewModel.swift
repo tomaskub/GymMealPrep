@@ -28,8 +28,19 @@ class RecipeListViewModel: ObservableObject {
             self?.objectWillChange.send()
         }.store(in: &subscriptions)
     }
+    
     func createRecipeViewModel(recipe: Recipe) -> RecipeViewModel {
         let recipeDataManager = dataManager as RecipeDataManagerProtocol
         return RecipeViewModel(recipe: recipe, dataManager: recipeDataManager)
+    }
+    
+    func deleteRecipe(atOffsets offsets: IndexSet) {
+        var recipiesToDelete = [Recipe]()
+        offsets.forEach { i in
+            recipiesToDelete.append(recipeArray[i])
+        }
+        for recipe in recipiesToDelete {
+            dataManager.delete(recipe: recipe)
+        }
     }
 }

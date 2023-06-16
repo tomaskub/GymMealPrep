@@ -23,12 +23,15 @@ struct RecipeListView: View {
                             .cornerRadius(20)
                     }
                 } // END OF LIST ROWS
+                .onDelete(perform: { indexSet in
+                    viewModel.deleteRecipe(atOffsets: indexSet)
+                })
                 .listRowSeparator(.hidden)
                 
             } // END OF LIST
             .listStyle(.plain)
-            
             .navigationTitle("Recipies")
+            
             .toolbar {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -46,10 +49,15 @@ struct RecipeListView: View {
                         if isExpanded {
                             NavigationLink(value: RecipeListTabView.NavigationState.addingNewRecipeText) {
                                 Text("Add from text")
-                                    .padding(.all, 3)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 3)
+                                    .padding(.horizontal)
                                     .background(
                                     Capsule()
-                                        .foregroundColor(.gray.opacity(0.3))
+                                        .foregroundColor(
+//                                            .gray.opacity(0.3)
+                                            .blue
+                                        )
                                     )
                             }
                             //TODO: Figure out why transition have unexpected behaviour
@@ -62,6 +70,7 @@ struct RecipeListView: View {
                         NavigationLink(value: RecipeListTabView.NavigationState.showingRecipeDetailEdit(Recipe())) {
                             Image(systemName: "plus.circle")
                                 .font(.title3)
+                                
                         }
                     } // END OF HSTACK
                 } // END OF TOOLBAR ITEM
