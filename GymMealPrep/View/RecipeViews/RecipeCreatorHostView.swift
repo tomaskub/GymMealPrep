@@ -9,7 +9,9 @@ import SwiftUI
 
 struct RecipeCreatorHostView: View {
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    @State private var stage: Int = 0
+    @State private var displayedStage: Int = 0
+    @State private var processStage: Int = 0
+    
     @Binding var path: NavigationPath
     
     let stageTransition: AnyTransition = {
@@ -18,9 +20,10 @@ struct RecipeCreatorHostView: View {
             removal: .move(edge: .leading))
     }()
     
+    //MARK: BODY
     var body: some View {
         VStack {
-            switch stage {
+            switch displayedStage {
             case 0:
                 RecipeCreatorView(viewModel: viewModel)
                     .transition(stageTransition)
@@ -34,82 +37,80 @@ struct RecipeCreatorHostView: View {
                 RecipeCreatorConfirmationView(viewModel: viewModel)
                     .transition(stageTransition)
             default:
-                Text("This is default case for switch statement")
+                Text(String())
             }
-            HStack {
-                Spacer()
-                Text(buttonText)
+            stageControls
+            
+        } // END OF VSTACK
+        .toolbar(.hidden, for: .tabBar)
+    } // END OF BODY
+    
+    var stageControls: some View {
+        HStack {
+            Spacer()
+            Text(buttonText)
+                .font(.title3)
+                .foregroundColor(.white)
+                .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                .background(.blue)
+                .cornerRadius(8)
+                .onTapGesture {
+                    advanceStage()
+                } // END OF ON TAP GESTURE
+            if displayedStage == 3 {
+                Text("Save and open")
                     .font(.title3)
                     .foregroundColor(.white)
                     .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                     .background(.blue)
                     .cornerRadius(8)
+                    .transition(.opacity)
                     .onTapGesture {
-                        switch stage {
-                        case 0:
-                            viewModel.processInput()
-                            withAnimation {
-                                stage += 1
-                            }
-                        case 3:
-                            _ = viewModel.saveRecipe()
-                            path = NavigationPath()
-                        default:
-                            withAnimation {
-                                stage += 1
-                            }
-                        }
-                    } // END OF ON TAP GESTURE
-                if stage == 3 {
-                    Text("Save and open")
-                        .font(.title3)
+                        saveAndOpen()
+                    }
+            }
+            Spacer()
+        } // END OF HSTACK
+        .overlay(alignment: .leading) {
+            HStack {
+                if displayedStage != 0 {
+                    Image(systemName: "chevron.left")
                         .foregroundColor(.white)
-                        .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                        .font(.title3)
+                        .padding(.all, 10)
                         .background(.blue)
                         .cornerRadius(8)
-                        .transition(.opacity)
                         .onTapGesture {
-                            let recipe = viewModel.saveRecipe()
-                            var newPath = NavigationPath()
-                            newPath.append(RecipeListTabView.NavigationState.showingRecipeDetailEdit(recipe))
-                            path = newPath
+                            regressDisplayedStage()
                         }
+                        .transition(.opacity)
                 }
                 Spacer()
-            } // END OF HSTACK
-            .overlay(alignment: .leading) {
-                HStack {
-                    if stage != 0 {
-                        Image(systemName: "chevron.left")
+                if displayedStage < processStage && displayedStage != 3 {
+                        Image(systemName: "chevron.right")
                             .foregroundColor(.white)
                             .font(.title3)
                             .padding(.all, 10)
                             .background(.blue)
                             .cornerRadius(8)
                             .onTapGesture {
-                                withAnimation {
-                                    stage -= 1
-                                }
+                                advanceDisplayedStage()
                             }
                             .transition(.opacity)
                     }
-                    Spacer()
-                    
-                }
-                .padding(.horizontal, 10)
             }
-        } // END OF VSTACK
-        .toolbar(.hidden, for: .tabBar)
-    } // END OF BODY
+            .padding(.horizontal, 10)
+        }
+    }
     
     var buttonText: String {
-        switch stage {
+        switch displayedStage {
         case 0:
             return "Match ingredients"
         case 1:
-            return "Confirm and edit instructions"
+            return "Confirm ingredients"
         case 2:
-            return "Confirm Instructions"
+            return "Confirm instructions"
         case 3:
             return "Save and exit"
         default:
@@ -117,6 +118,53 @@ struct RecipeCreatorHostView: View {
         }
     }
 } // END OF STRUCT
+
+// MARK: STAGE NAV FUNCTIONS
+extension RecipeCreatorHostView {
+    
+    func advanceStage() {
+       
+        if processStage != displayedStage {
+            processStage = displayedStage
+        }
+        
+        switch processStage {
+        case 0:
+            viewModel.processInput()
+            withAnimation {
+                displayedStage += 1
+            }
+            processStage += 1
+        case 3:
+            _ = viewModel.saveRecipe()
+            path = NavigationPath()
+        default:
+            withAnimation {
+                displayedStage += 1
+            }
+            processStage += 1
+        }
+    }
+    
+    func regressDisplayedStage() {
+        withAnimation {
+            displayedStage -= 1
+        }
+    }
+    
+    func advanceDisplayedStage() {
+        withAnimation {
+            displayedStage += 1
+        }
+    }
+    
+    func saveAndOpen() {
+        let recipe = viewModel.saveRecipe()
+        var newPath = NavigationPath()
+        newPath.append(RecipeListTabView.NavigationState.showingRecipeDetailEdit(recipe))
+        path = newPath
+    }
+}
 
 struct RecipeCreatorHostView_Previews: PreviewProvider {
     static var previews: some View {
