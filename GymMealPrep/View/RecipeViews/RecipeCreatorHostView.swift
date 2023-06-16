@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeCreatorHostView: View {
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    @State private var stage: Int = 3
+    @State private var stage: Int = 0
     @Binding var path: NavigationPath
     
     let stageTransition: AnyTransition = {
@@ -99,6 +99,7 @@ struct RecipeCreatorHostView: View {
                 .padding(.horizontal, 10)
             }
         } // END OF VSTACK
+        .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
     
     var buttonText: String {
