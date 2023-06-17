@@ -17,6 +17,8 @@ protocol EdamamLogicControllerProtocol: AnyObject {
     /// get ingredients for a given string in form of Array of ingredients objects
     func getIngredients(for ingredient: String) -> AnyPublisher<[[Ingredient]], Error>
     
+    func getIngredientsWithParsed(for ingredient: String) -> AnyPublisher<([[Ingredient]], Ingredient?),Error> 
+    
 }
 
 final class EdamamLogicController: EdamamLogicControllerProtocol {
@@ -47,6 +49,26 @@ final class EdamamLogicController: EdamamLogicControllerProtocol {
             .eraseToAnyPublisher()
     }
     
+    func getIngredientsWithParsed(for ingredient: String) -> AnyPublisher<([[Ingredient]], Ingredient?),Error> {
+        let endpoint = EdamamParserEndpoint.ingredient(searchFor: ingredient)
+        return networkController.get(type: EdamamParserResponse.self, url: endpoint.url, headers: [:])
+            .map { [weak self] response in
+                guard let self else { return ([[Ingredient]](), nil) }
+                let result  = self.transformParserResponse(response.hints)
+                var parsed: Ingredient?
+                if let parsedResponse = response.parsed?.first {
+                    let food = Food(name: parsedResponse.food.label)
+                    let quantity = parsedResponse.quantity
+                    let factor = (quantity ?? 100) * (parsedResponse.measure?.weight ?? 1) / 100
+                    let nutrients = Nutrition(fromEdamam: parsedResponse.food.nutrients).multiplyBy(factor)
+                    let uom = parsedResponse.measure?.label ?? "gram"
+                    parsed = Ingredient(food: food, quantity: quantity ?? 1, unitOfMeasure: uom, nutritionData: nutrients)
+                }
+                return (result, parsed)
+            }
+            .eraseToAnyPublisher()
+    }
+
     /// Transform hints from edamam parser response hints to an array of array of ingredients
     /// - Parameter responseHints: Hint array retrived from Edamam Parser response
     /// - Returns: An array of array of ingredients

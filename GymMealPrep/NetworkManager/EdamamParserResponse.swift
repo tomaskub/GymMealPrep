@@ -88,6 +88,8 @@ struct EdamamParserResponse: Codable {
     // MARK: - Parsed
     struct Parsed: Codable {
         let food: EdamamFood
+        let quantity: Double?
+        let measure: Measure?
     }
 }
 
