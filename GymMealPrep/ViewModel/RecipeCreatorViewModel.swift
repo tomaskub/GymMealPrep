@@ -47,17 +47,17 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
         return RecipeViewModel(recipe: Recipe())
     }
     func addTag() {
-        assertionFailure("Missing override: Please orverride this method in the subclass")
+        assertionFailure("Missing override: Please override this method in the subclass")
     }
     
     func deleteInstruction(at offset: IndexSet) {
-        assertionFailure("Missing override: Please orverride this method in the subclass")
+        assertionFailure("Missing override: Please override this method in the subclass")
     }
     func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
-        assertionFailure("Missing override: Please orverride this method in the subclass")
+        assertionFailure("Missing override: Please override this method in the subclass")
     }
     func addInstruction() {
-        assertionFailure("Missing override: Please orverride this method in the subclass")
+        assertionFailure("Missing override: Please override this method in the subclass")
     }
     
 }
@@ -94,7 +94,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         
         // send request for matching ingredients to EdamamAPI
         for searchTerm in ingredientsNLArray {
-           edamamLogicController.getIngredients(for: searchTerm)
+           edamamLogicController.getIngredientsWithParsed(for: searchTerm)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
@@ -103,10 +103,10 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     case .failure(let error):
                         print("Error requesting response for \(searchTerm). Error: \(error) - \(error.localizedDescription)")
                     }
-                } receiveValue: { [weak self] data in
+                } receiveValue: { [weak self] (data, parsed) in
                     guard let self else { return }
                     self.parsedIngredients.updateValue(data, forKey: searchTerm)
-                    if let bestMatch = data.first?.first {
+                    if let bestMatch = parsed {
                         self.matchedIngredients.updateValue(bestMatch, forKey: searchTerm)
                     }
                 }
