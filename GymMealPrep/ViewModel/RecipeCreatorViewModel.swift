@@ -124,9 +124,14 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         
         
         for (index, instructionText) in instructionsNLArray.enumerated() {
+            
             if let character = instructionText.first {
-                if character.isNumber {
-                    let instructionToAppend = Instruction(step: index + 1, text: instructionText)
+                if character.isNumber || character.isSymbol || parsedInstructions.isEmpty {
+                    var text = instructionText
+                    while (text.first?.isNumber ?? false || text.first?.isSymbol ?? false || text.first?.isPunctuation ?? false || text.first?.isWhitespace ?? false) {
+                        text = String(text.dropFirst())
+                    }
+                    let instructionToAppend = Instruction(step: index + 1, text: text)
                     parsedInstructions.append(instructionToAppend)
                 } else {
                     if index - 1 >= 0 {
