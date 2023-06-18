@@ -134,8 +134,8 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     let instructionToAppend = Instruction(step: index + 1, text: text)
                     parsedInstructions.append(instructionToAppend)
                 } else {
-                    if index - 1 >= 0 {
-                        parsedInstructions[index-1].text.append(instructionText)
+                    if index - 2 >= 0 {
+                        parsedInstructions[index-2].text.append(instructionText)
                     } else {
                         let instructionToAppend = Instruction(step: index + 1, text: instructionText)
                     }
