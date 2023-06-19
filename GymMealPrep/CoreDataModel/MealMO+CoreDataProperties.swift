@@ -15,10 +15,45 @@ extension MealMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MealMO> {
         return NSFetchRequest<MealMO>(entityName: "MealMO")
     }
+    
+    @NSManaged public var id: UUID
+    @NSManaged public var ingredients: NSSet?
+    @NSManaged public var plan: MealPlanMO
+    @NSManaged public var recipies: NSSet?
 
-    @NSManaged public var ingredients: IngredientMO?
-    @NSManaged public var plans: MealPlanMO?
-    @NSManaged public var recipies: RecipeMO?
+}
+
+// MARK: Generated accessors for ingredients
+extension MealMO {
+
+    @objc(addIngredientsObject:)
+    @NSManaged public func addToIngredients(_ value: IngredientMO)
+
+    @objc(removeIngredientsObject:)
+    @NSManaged public func removeFromIngredients(_ value: IngredientMO)
+
+    @objc(addIngredients:)
+    @NSManaged public func addToIngredients(_ values: NSSet)
+
+    @objc(removeIngredients:)
+    @NSManaged public func removeFromIngredients(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for recipies
+extension MealMO {
+
+    @objc(addRecipiesObject:)
+    @NSManaged public func addToRecipies(_ value: RecipeMO)
+
+    @objc(removeRecipiesObject:)
+    @NSManaged public func removeFromRecipies(_ value: RecipeMO)
+
+    @objc(addRecipies:)
+    @NSManaged public func addToRecipies(_ values: NSSet)
+
+    @objc(removeRecipies:)
+    @NSManaged public func removeFromRecipies(_ values: NSSet)
 
 }
 
