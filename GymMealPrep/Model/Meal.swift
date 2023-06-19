@@ -20,8 +20,20 @@ struct Meal: Identifiable, Hashable {
     
     init(mealMO: MealMO) {
         self.id = mealMO.id
-        self.ingredients = [Ingredient(ingredientMO: mealMO.ingredients)]
-        self.recipes = Recipe(recipeMO: mealMO.recipies)
+        if let ingredientsMO = mealMO.ingredients {
+            self.ingredients = ingredientsMO
+                .allObjects
+                .compactMap({ $0 as? IngredientMO})
+                .map({ Ingredient(ingredientMO: $0) })
+        }
+        
+        if let recipesMO = mealMO.recipes {
+            self.recipes = recipesMO
+                .allObjects
+                .compactMap({ $0 as? RecipeMO })
+                .map({ Recipe(recipeMO: $0) })
+        }
+        
     }
     
     

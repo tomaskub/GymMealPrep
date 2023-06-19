@@ -19,7 +19,7 @@ extension MealMO {
     @NSManaged public var id: UUID
     @NSManaged public var ingredients: NSSet?
     @NSManaged public var plan: MealPlanMO
-    @NSManaged public var recipies: NSSet?
+    @NSManaged public var recipes: NSSet?
 
 }
 
