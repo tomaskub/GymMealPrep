@@ -25,6 +25,8 @@ struct Meal: Identifiable, Hashable {
                 .allObjects
                 .compactMap({ $0 as? IngredientMO})
                 .map({ Ingredient(ingredientMO: $0) })
+        } else {
+            self.ingredients = []
         }
         
         if let recipesMO = mealMO.recipes {
@@ -32,8 +34,9 @@ struct Meal: Identifiable, Hashable {
                 .allObjects
                 .compactMap({ $0 as? RecipeMO })
                 .map({ Recipe(recipeMO: $0) })
+        } else {
+            self.recipes = []
         }
-        
     }
     
     
