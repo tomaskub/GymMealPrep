@@ -18,7 +18,24 @@ extension MealPlanMO {
 
     @NSManaged public var id: UUID?
     @NSManaged public var name: String?
-    @NSManaged public var meals: MealMO?
+    @NSManaged public var meals: NSSet?
+
+}
+
+// MARK: Generated accessors for meals
+extension MealPlanMO {
+
+    @objc(addMealsObject:)
+    @NSManaged public func addToMeals(_ value: MealMO)
+
+    @objc(removeMealsObject:)
+    @NSManaged public func removeFromMeals(_ value: MealMO)
+
+    @objc(addMeals:)
+    @NSManaged public func addToMeals(_ values: NSSet)
+
+    @objc(removeMeals:)
+    @NSManaged public func removeFromMeals(_ values: NSSet)
 
 }
 
