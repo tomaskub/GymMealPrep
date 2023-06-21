@@ -8,13 +8,34 @@
 import SwiftUI
 
 struct MealPlanCardView: View {
+    let mealPlan: MealPlan
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Text(mealPlan.name ?? "Meal plan")
+                .font(.title3)
+                .padding(.bottom, 4)
+            ForEach(Array(mealPlan.meals.enumerated()), id: \.element) { index, meal  in
+                Text("Meal #\(index)")
+                    .padding(.top, 4)
+                ForEach(meal.recipes) { recipe in
+                    Text(recipe.name)
+                }
+            }
+        }
+        .padding()
+        .background(.gray.opacity(0.2))
+        .cornerRadius(25)
     }
 }
 
 struct MealPlanCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MealPlanCardView()
+        MealPlanCardView(mealPlan: MealPlan(name: "My bulking plan", meals: [
+            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
+            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
+            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
+            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
+            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
+        ]))
     }
 }
