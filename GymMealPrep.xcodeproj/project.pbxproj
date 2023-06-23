@@ -236,7 +236,6 @@
 				D605986F2A37B2D000186F7F /* RecipeListTabView.swift */,
 				D6E35C3E2A39D13700CB9E19 /* HomeTabView.swift */,
 				D65E4C972A40DF4A008C7A2F /* MealPlanTabView.swift */,
-				D6CD5DC02A43843C004660EE /* MealPlanCardView.swift */,
 			);
 			path = TabViews;
 			sourceTree = "<group>";
@@ -342,6 +341,7 @@
 		D638926F2A1C0785008CC0D6 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				D6CD5DC02A43843C004660EE /* MealPlanCardView.swift */,
 				D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */,
 				D63AFA232A019E2E00574FE0 /* ChipView.swift */,
 				D69BAB202A2FE45900E2D05D /* InstructionRowView.swift */,

@@ -62,6 +62,36 @@ struct SampleData {
         imageData: nil,
         tags: [Tag(text: "Breakfast"), Tag(text: "Eggs"), Tag(text: "High protein")])
     
+    static let recipeSlowCookerChickenTikkaMasala = Recipe(
+        name: "Slow cooker chicken tikka masala",
+        servings: 7,
+        timeCookingInMinutes: 240,
+        timePreparingInMinutes: 30,
+        timeWaitingInMinutes: 0,
+        ingredients: [
+            Ingredient(food: Food(name: "Boneless, skinless chicken breast"), quantity: 2, unitOfMeasure: "lbs", nutritionData: Nutrition(calories: 960, carb: 0, fat: 8, protein: 208)),
+            Ingredient(food: Food(name: "Lemon juice"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition(calories: 3, carb: 1, fat: 0, protein: 0)),
+            Ingredient(food: Food(name: "Yoghurt"), quantity: 3, unitOfMeasure: "tablespoons", nutritionData: Nutrition(calories: 6, carb: 1, fat: 0, protein: 0))),
+            Ingredient(food: Food(name: "Chili powder"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition.zero),
+            Ingredient(food: Food(name: "Turmeric, grounds"), quantity: 0.5, unitOfMeasure: "teaspoon", nutritionData: Nutrition.zero),
+            Ingredient(food: Food(name: "Garam Masala"), quantity: 1.5, unitOfMeasure: "teaspoon", nutritionData: Nutrition.zero),
+            Ingredient(food: Food(name: "Ginger"), quantity: 1, unitOfMeasure: "tablesoon", nutritionData: Nutrition(calories: 69, carb: 15, fat: 1, protein: 2)),
+            Ingredient(food: Food(name: "Garlic"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition(calories: 13, carb: 3, fat: 0, protein: 1)),
+            Ingredient(food: Food(name: "Vegetable oil"), quantity: 2, unitOfMeasure: "tablespoons", nutritionData: Nutrition(calories: 240, carb: 0, fat: 28, protein: 0)),
+            Ingredient(food: Food(name: "Yellow onion"), quantity: 2, unitOfMeasure: "whole - medium", nutritionData: Nutrition(calories: 90, carb: 22, fat: 0, protein: 2)),
+            Ingredient(food: Food(name: "Tomato puree"), quantity: 1.5, unitOfMeasure: "cups", nutritionData: Nutrition(calories: 306, carb: 0, fat: 0, protein: 0)),
+            Ingredient(food: Food(name: "Heavy cream"), quantity: 0.75, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 612, carb: 5, fat: 65, protein: 5))
+        ],
+        instructions: [
+            Instruction(step: 1, text "Cut the chicken breasts into 2 to 3-inch cubes. Add 2 teaspoon salt and lemon juice and mix well. Add yogurt, red chili powder, turmeric, garam masala, ginger, and garlic. Mix well and allow to marinate while you prep the remaining ingredients."),
+            Instruction(step: 2, text: "Heat oil in a medium pan. Add onions and ½ teaspoon of salt. Cook over medium heat for 5 minutes stirring frequently until the onions start to soften and turn translucent. Note: If you are using Instant Pot as a slow cooker, you can saute in the instant pot itself."),
+            Instruction(step: 3, text: "Add the cooked onions to the crockpot / slow cooker and spread it evenly. Evenly layer tomato puree over the onions. Line the marinated chicken over the tomato puree. Place the crockpot lid and set the cooking time to Slow Cook (Hi) and adjust the cooking time to 4 hours."),
+            Instruction(step: 4, text: "After 4 hours, your kitchen will be filled with the beautiful aromas of the curry. Add heavy cream, crush the fenugreek leaves on the palm of your hands and add to the curry. Mix well, taste, and add tomato paste. Mix well and more cream if needed. Note: Optionally you can add 1 teaspoon of sugar to balance all the flavors. Garnish with cilantro and enjoy with basmati rice and naan.")],
+        imageData: nil,
+        tags: [
+        Tag(text: "Chicken"), Tag(text: "Indian"), Tag(text: "Slow cooker")])
+    
+    
     static let recipieNoPhoto = Recipe(id: UUID(),
                                        name: "KFC chicken",
                                        servings: 2,
@@ -78,5 +108,10 @@ struct SampleData {
         Ingredient(food: food, quantity: 1, unitOfMeasure: "Whole (small)", nutritionData: baseNutri.multiplyBy(10)),
         Ingredient(food: food, quantity: 1, unitOfMeasure: "Whole (boneless)", nutritionData: baseNutri.multiplyBy(9.2))
         ]
+    }
+    
+    static var sampleMealPlan: MealPlan {
+        let mealOne = Meal(ingredients: [Ingredient(food: Food(name: "Rice"), quantity: 50, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 65, carb: 14, fat: 0.2, protein: 1.4)], recipies: recipeSlowCookerChickenTikkaMasala)
+        let sample = MealPlan(name: "Sample Test Plan", meals: [mealOne])
     }
 }

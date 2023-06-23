@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealPlanTabView: View {
+    @State var mealPlans: [MealPlan]
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
@@ -15,6 +16,6 @@ struct MealPlanTabView: View {
 
 struct MealPlanTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MealPlanTabView()
+        MealPlanTabView(mealPlans: [])
     }
 }

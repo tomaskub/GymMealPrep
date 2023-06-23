@@ -12,6 +12,12 @@ struct Meal: Identifiable, Hashable {
     var ingredients: [Ingredient]
     var recipes: [Recipe]
     
+    var nutrition: Nutrition {
+        let recipesNutrition = recipes.map({ $0.nutritionData }).reduce(Nutrition.zero, +)
+        let ingredientsNutrition = ingredients.compactMap({ $0.nutritionData as? Nutrition}).reduce(Nutrition.zero, +)
+        return recipesNutrition + ingredientsNutrition
+    }
+    
     init(id: UUID = UUID(), ingredients: [Ingredient] = [], recipies: [Recipe] = []) {
         self.id = id
         self.ingredients = ingredients
