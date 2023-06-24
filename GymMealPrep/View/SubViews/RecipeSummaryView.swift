@@ -14,7 +14,7 @@ struct RecipeSummaryView: View {
     }
     // labels
     let timeLabels: [String] =  ["Prep", "Cook", "Wait", "Total"]
-    let nutritionLabels: [String] = ["Cal", "Protein", "Fat", "Carb"]
+    let nutritionLabels: [String] = ["Calories", "Proteins", "Fats", "Carbs"]
     
     // time values in minutes
     let timePreparingInMinutes: Int?
@@ -140,7 +140,6 @@ struct RecipeSummaryView: View {
                             }
                         }
                     }
-                    .padding(.bottom)
                 }
                 
                 if typeOfComponents == .all {
@@ -151,7 +150,7 @@ struct RecipeSummaryView: View {
                             .gridCellColumns(2)
                         Text("\(servings ?? 1)")
                     }
-                    .padding(.bottom)
+                    .padding(.vertical)
                 }
             } // END OF GRID
     } // END OF BODY
@@ -174,7 +173,7 @@ struct RecipeSummaryView_Previews: PreviewProvider {
         ZStack {
             Color.gray
             
-            RecipeSummaryView(timePreparingInMinutes: 10, timeCookingInMinutes: 30, timeWaitingInMinues: 20, timeTotalInMinutes: 60, cal: 500, proteinInGrams: 35, fatInGrams: 12, carbInGrams: 25, servings: 4, format: "%.0f")
+            RecipeSummaryView(timePreparingInMinutes: 10, timeCookingInMinutes: 30, timeWaitingInMinues: 20, timeTotalInMinutes: 60, cal: 500, proteinInGrams: 35, fatInGrams: 12, carbInGrams: 25, servings: 4, format: "%.0f", gridSpacing: 20)
                         .background()
                         .cornerRadius(10)
             
