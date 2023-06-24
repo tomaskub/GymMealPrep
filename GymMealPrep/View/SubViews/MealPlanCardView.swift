@@ -47,13 +47,6 @@ struct MealPlanCardView: View {
 
 struct MealPlanCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MealPlanCardView(color: Color.gray.opacity(0.2), mealPlan: MealPlan(name: "My bulking plan", meals: [
-            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
-            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
-            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
-            Meal(recipies: [SampleData.recipieCilantroLimeChicken]),
-            Meal(ingredients: [Ingredient(food: Food(name: "Potatoes"), quantity: 250, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 50, carb: 10, fat: 20, protein: 15))],
-                 recipies: [SampleData.recipieCilantroLimeChicken]),
-        ]))
+        MealPlanCardView(color: Color.gray.opacity(0.2), mealPlan: SampleData.sampleMealPlan)
     }
 }

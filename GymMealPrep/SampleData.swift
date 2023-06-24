@@ -71,7 +71,7 @@ struct SampleData {
         ingredients: [
             Ingredient(food: Food(name: "Boneless, skinless chicken breast"), quantity: 2, unitOfMeasure: "lbs", nutritionData: Nutrition(calories: 960, carb: 0, fat: 8, protein: 208)),
             Ingredient(food: Food(name: "Lemon juice"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition(calories: 3, carb: 1, fat: 0, protein: 0)),
-            Ingredient(food: Food(name: "Yoghurt"), quantity: 3, unitOfMeasure: "tablespoons", nutritionData: Nutrition(calories: 6, carb: 1, fat: 0, protein: 0))),
+            Ingredient(food: Food(name: "Yoghurt"), quantity: 3, unitOfMeasure: "tablespoons", nutritionData: Nutrition(calories: 6, carb: 1, fat: 0, protein: 0)),
             Ingredient(food: Food(name: "Chili powder"), quantity: 1, unitOfMeasure: "tablespoon", nutritionData: Nutrition.zero),
             Ingredient(food: Food(name: "Turmeric, grounds"), quantity: 0.5, unitOfMeasure: "teaspoon", nutritionData: Nutrition.zero),
             Ingredient(food: Food(name: "Garam Masala"), quantity: 1.5, unitOfMeasure: "teaspoon", nutritionData: Nutrition.zero),
@@ -83,7 +83,7 @@ struct SampleData {
             Ingredient(food: Food(name: "Heavy cream"), quantity: 0.75, unitOfMeasure: "cup", nutritionData: Nutrition(calories: 612, carb: 5, fat: 65, protein: 5))
         ],
         instructions: [
-            Instruction(step: 1, text "Cut the chicken breasts into 2 to 3-inch cubes. Add 2 teaspoon salt and lemon juice and mix well. Add yogurt, red chili powder, turmeric, garam masala, ginger, and garlic. Mix well and allow to marinate while you prep the remaining ingredients."),
+            Instruction(step: 1, text: "Cut the chicken breasts into 2 to 3-inch cubes. Add 2 teaspoon salt and lemon juice and mix well. Add yogurt, red chili powder, turmeric, garam masala, ginger, and garlic. Mix well and allow to marinate while you prep the remaining ingredients."),
             Instruction(step: 2, text: "Heat oil in a medium pan. Add onions and ½ teaspoon of salt. Cook over medium heat for 5 minutes stirring frequently until the onions start to soften and turn translucent. Note: If you are using Instant Pot as a slow cooker, you can saute in the instant pot itself."),
             Instruction(step: 3, text: "Add the cooked onions to the crockpot / slow cooker and spread it evenly. Evenly layer tomato puree over the onions. Line the marinated chicken over the tomato puree. Place the crockpot lid and set the cooking time to Slow Cook (Hi) and adjust the cooking time to 4 hours."),
             Instruction(step: 4, text: "After 4 hours, your kitchen will be filled with the beautiful aromas of the curry. Add heavy cream, crush the fenugreek leaves on the palm of your hands and add to the curry. Mix well, taste, and add tomato paste. Mix well and more cream if needed. Note: Optionally you can add 1 teaspoon of sugar to balance all the flavors. Garnish with cilantro and enjoy with basmati rice and naan.")],
@@ -111,7 +111,13 @@ struct SampleData {
     }
     
     static var sampleMealPlan: MealPlan {
-        let mealOne = Meal(ingredients: [Ingredient(food: Food(name: "Rice"), quantity: 50, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 65, carb: 14, fat: 0.2, protein: 1.4)], recipies: recipeSlowCookerChickenTikkaMasala)
-        let sample = MealPlan(name: "Sample Test Plan", meals: [mealOne])
+        let breakfast = Meal(recipies: [recipeBreakfastPotatoHash])
+        let lunch = Meal(ingredients: [Ingredient(food: Food(name: "Rice"), quantity: 50, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 65, carb: 14, fat: 0.2, protein: 1.4))], recipies: [recipeSlowCookerChickenTikkaMasala])
+        let dinner = Meal(ingredients: [
+            Ingredient(food: Food(name: "Pork shoulder"), quantity: 200, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 514, carb: 0, fat: 43, protein: 32)),
+            Ingredient(food: Food(name: "Potatoes"), quantity: 250, unitOfMeasure: "gram", nutritionData: Nutrition(calories: 192, carb: 44, fat: 0, protein: 5)),
+            Ingredient(food: Food(name: "Coleslaw"), quantity: 100, unitOfMeasure: "grams", nutritionData: Nutrition(calories: 98, carb: 11, fat: 6, protein: 1))
+        ])
+        return MealPlan(name: "Sample Test Plan", meals: [breakfast, lunch, dinner])
     }
 }
