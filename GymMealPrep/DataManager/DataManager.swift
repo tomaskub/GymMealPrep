@@ -15,6 +15,7 @@ enum DataManagerType {
 class DataManager: NSObject, ObservableObject {
     //MARK: PUBLISHED PROPERTIES
     @Published var recipeArray = [Recipe]()
+    @Published var mealPlanArray = [MealPlan]()
     
     //MARK: STATIC INSTANCES
     static let shared = DataManager(type: .normal)
@@ -24,6 +25,7 @@ class DataManager: NSObject, ObservableObject {
     //MARK: PRIVATE PROPERTIES
     private(set) var managedContext: NSManagedObjectContext
     private let recipieFRC: NSFetchedResultsController<RecipeMO>
+    private let mealPlanFRC: NSFetchedResultsController<MealPlanMO>
     
     //MARK: INIT
     private init(type: DataManagerType) {
@@ -39,20 +41,28 @@ class DataManager: NSObject, ObservableObject {
             let persistanceContainer = PersistanceContainer(inMemory: true)
             self.managedContext = persistanceContainer.viewContext
         }
-        //Build FRC
+        //Build FRCs
         let fetchRequest = RecipeMO.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         self.recipieFRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        let mealPlanFetchRequest = MealPlanMO.fetchRequest()
+        mealPlanFetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        self.mealPlanFRC = NSFetchedResultsController(fetchRequest: mealPlanFetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         super.init()
         
         if type == .preview {
             addPreviewData()
         }
-        //Initial fetch
+        //Initial fetches
         try? recipieFRC.performFetch()
         if let newRecipes = recipieFRC.fetchedObjects {
             self.recipeArray = newRecipes.map { Recipe(recipeMO: $0) }
+        }
+        try? mealPlanFRC.performFetch()
+        if let newMealPlans = mealPlanFRC.fetchedObjects {
+            self.mealPlanArray = newMealPlans.map({ MealPlan(mealPlanMO: $0) })
         }
     }
     
@@ -110,9 +120,11 @@ class DataManager: NSObject, ObservableObject {
 extension DataManager: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-            guard let fetchedObjects = controller.fetchedObjects else { return }
-            let newRecipes = fetchedObjects.compactMap({$0 as? RecipeMO})
-            self.recipeArray = newRecipes.map({ Recipe(recipeMO: $0) })
+        guard let fetchedObjects = controller.fetchedObjects else { return }
+        let newRecipes = fetchedObjects.compactMap({ $0 as? RecipeMO })
+        self.recipeArray = newRecipes.map({ Recipe(recipeMO: $0) })
+        let newMealPlans = fetchedObjects.compactMap({ $0 as? MealPlanMO })
+        self.mealPlanArray = newMealPlans.map({ MealPlan(mealPlanMO: $0) })
     }
 }
 
