@@ -22,6 +22,7 @@ struct MealPlanRowView: View {
                 .padding(.bottom, 4)
             
             RecipeSummaryView(cal: mealPlan.nutrition.calories, proteinInGrams: mealPlan.nutrition.protein, fatInGrams: mealPlan.nutrition.fat, carbInGrams: mealPlan.nutrition.carb, format: "%.0f", showLabel: false)
+                .font(.caption)
         }// END OF VSTACK
     } // END OF BODY
 } // END OF STRUCT
