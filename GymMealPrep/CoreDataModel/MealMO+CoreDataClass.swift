@@ -12,11 +12,10 @@ import CoreData
 @objc(MealMO)
 public class MealMO: NSManagedObject {
 
-    public init(context: NSManagedObjectContext, id: UUID = UUID(), mealPlanMO: MealPlanMO) {
+    public init(context: NSManagedObjectContext, id: UUID = UUID()) {
         let entityDescription = NSEntityDescription.entity(forEntityName: "MealMO", in: context)!
         super.init(entity: entityDescription, insertInto: context)
         self.id = id
-        self.plan = mealPlanMO
     }
     
     @objc override private init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
