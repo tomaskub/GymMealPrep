@@ -33,6 +33,24 @@ extension DataManager: RecipeDataManagerProtocol {
         saveContext()
     }
     
+    /// Add reference to mealMO to RecipeMO corresponding to given Recipe. If corresponding data does not exist, create it 
+    func addToMeal(recipe: Recipe, to mealMO: MealMO) {
+        let predicate = NSPredicate(format: "id = %@", recipe.id as CVarArg)
+        let result = fetchFirst(RecipeMO.self, predicate: predicate)
+        switch result {
+        case .success(let success):
+            if let recipeMO = success {
+                recipeMO.meals = mealMO
+            } else {
+                let recipeMO = recipeMO(from: recipe)
+                recipeMO.meals = mealMO
+            }
+        case .failure(let failure):
+            print("Could not fetch RecipeMO to update: \(failure.localizedDescription)")
+        }
+        saveContext()
+    }
+    
     func delete(recipe: Recipe) {
         let predicate = NSPredicate(format: "id = %@", recipe.id as CVarArg)
         let result = fetchFirst(RecipeMO.self, predicate: predicate)
@@ -114,7 +132,7 @@ extension DataManager: RecipeDataManagerProtocol {
         }
     }
     
-    private func recipeMO(from source: Recipe) {
+    private func recipeMO(from source: Recipe) -> RecipeMO {
         
         let recipeMO = RecipeMO(context: managedContext, id: source.id, name: source.name, servings: source.servings, timeCooking: source.timeCookingInMinutes ?? 0, timePreparing: source.timePreparingInMinutes ?? 0, timeWaiting: source.timeWaitingInMinutes ?? 0)
         
@@ -135,6 +153,7 @@ extension DataManager: RecipeDataManagerProtocol {
             addToRecipe(tag: tag, to: recipeMO)
             }
         }
+        return recipeMO
     }
 }
 
