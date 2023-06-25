@@ -46,8 +46,19 @@ extension DataManager: MealDataManagerProtocol {
         saveContext()
     }
     
-    private func mealMO(from meal: Meal) {
-        //TODO: IMPLEMENT MEAL MO CREATION
+    private func mealMO(from source: Meal) -> MealMO {
+        let mealMO = MealMO(context: managedContext, id: source.id)
+        if !source.ingredients.isEmpty {
+            for ingredient in source.ingredients {
+                addToMeal(ingredient: ingredient, to: mealMO)
+            }
+        }
+        if !source.recipes.isEmpty {
+            for recipe in source.recipes {
+                addToMeal(recipe: recipe, to: mealMO)
+            }
+        }
+        return mealMO
     }
     
     private func update(mealMO target: MealMO, from source: Meal) {
