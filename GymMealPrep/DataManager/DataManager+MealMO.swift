@@ -62,6 +62,41 @@ extension DataManager: MealDataManagerProtocol {
     }
     
     private func update(mealMO target: MealMO, from source: Meal) {
-        // TODO: IMPLEMENT UPDATE MEAL FUNCTION
+        target.id = source.id
+        
+        // manage ingredients relations
+        if let ingredients = target.ingredients?.compactMap({ $0 as? IngredientMO }) {
+            for ingredient in ingredients {
+                if !source.ingredients.contains(where: { $0.id == ingredient.id }) {
+                    target.removeFromIngredients(ingredient)
+                }
+            }
+            for ingredient in source.ingredients {
+                if !ingredients.contains(where: { $0.id == ingredient.id }) {
+                    addToMeal(ingredient: ingredient, to: target)
+                }
+            }
+        } else {
+            for ingredient in source.ingredients {
+                addToMeal(ingredient: ingredient, to: target)
+            }
+        }
+        // manage recipes relations
+        if let recipies = target.recipes?.compactMap({ $0 as? RecipeMO }) {
+            for recipe in recipies {
+                if !source.recipes.contains(where: { $0.id == recipe.id }) {
+                    target.removeFromRecipies(recipe)
+                }
+            }
+            for recipe in source.recipes {
+                if !recipies.contains(where: { $0.id = recipe.id }) {
+                    addToMeal(recipe: recipe, to: target)
+                }
+            }
+        } else {
+            for recipe in source.recipes {
+                    addToMeal(recipe: recipe, to: target)
+            }
+        }
     }
 }

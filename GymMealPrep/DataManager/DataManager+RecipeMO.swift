@@ -25,7 +25,7 @@ extension DataManager: RecipeDataManagerProtocol {
             if let recipeMO = success {
                 update(recipeMO: recipeMO, from: recipe)
             } else {
-                recipeMO(from: recipe)
+                _ = recipeMO(from: recipe)
             }
         case .failure(let failure):
             print("Could not fetch RecipeMO to update: \(failure.localizedDescription)")
