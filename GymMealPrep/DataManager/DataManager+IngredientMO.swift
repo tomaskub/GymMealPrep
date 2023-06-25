@@ -54,6 +54,24 @@ extension DataManager: IngredientDataManagerProtocol {
             print("Could not fetch ingredient to update: \(failure.localizedDescription)")
         }
     }
+    /// Add reference to mealMO to ingredientMO corresponding to given Ingredient. If IngredientMO does not exist, create it. 
+    func addToMeal(ingredient: Ingredient, to mealMO: MealMO) {
+        let predicate = NSPredicate(format: "id = %@", ingredient.id as CVarArg)
+        let result = fetchFirst(IngredientMO.self, predicate: predicate)
+        switch result {
+        case .success(let success):
+            if let ingredientMO = success {
+                // update with new relation
+                ingredientMO.meal = mealMO
+            } else {
+                // create and add new relation
+                let ingredientMO = ingredientMO(from: ingredient)
+                ingredientMO.meal = mealMO
+            }
+        case .failure(let failure):
+            print("Could not fetch ingredient to update: \(failure.localizedDescription)")
+        }
+    }
     
     ///Delete a ingredientMO object with id matching input food id
     func delete(ingredient: Ingredient) {
