@@ -6,3 +6,20 @@
 //
 
 import Foundation
+
+protocol MealPlanDataManagerProtocol {
+    func updateAndSave(mealPlan: MealPlan)
+    
+    func delete(mealPlan: MealPlan)
+}
+
+extension DataManager: MealPlanDataManagerProtocol {
+    
+    func updateAndSave(mealPlan: MealPlan) {
+        
+    }
+    
+    func delete(mealPlan: MealPlan) {
+        
+    }
+}
