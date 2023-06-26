@@ -45,6 +45,25 @@ extension DataManager: MealPlanDataManagerProtocol {
     
     private func update(mealPlanMO target: MealPlanMO, from source: MealPlan) {
             // assing values from source to target
+        if let name = source.name {
+            target.name = name
+        }
+        if let meals = target.meals?.compactMap({ $0 as? MealMO }) {
+            for meal in meals {
+                if !source.meals.contains(where: { $0.id == meal.id}) {
+                    target.removeFromMeals(meal)
+                }
+            }
+            for meal in source.meals {
+                if !meals.contains(where: { $0.id == meal.id }) {
+                    addToMealPlan(meal: meal, to: target)
+                }
+            }
+        } else {
+            for meal in source.meals {
+                addToMealPlan(meal: meal, to: target)
+            }
+        }
     }
     
     private func mealPlanMO(from source: MealPlan) -> MealPlanMO {
