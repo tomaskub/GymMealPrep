@@ -304,13 +304,9 @@
 		D634FF9729FD42F60034B950 /* GymMealPrepTests */ = {
 			isa = PBXGroup;
 			children = (
+				D6A313EC2A4A069D00D5DCC2 /* DataManagerTests */,
 				D634FF9829FD42F60034B950 /* GymMealPrepTests.swift */,
 				D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */,
-				D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */,
-				D6C1DDBE2A07BE000062B1C5 /* DataManager+TagMOTests.swift */,
-				D6DBF29B2A08028200CB04AA /* DataManager+InstructionMOTests.swift */,
-				D6DBF2952A07CE9400CB04AA /* DataManager+FoodMOTests.swift */,
-				D6DBF2972A07E65300CB04AA /* DataManager+IngredientMOTests.swift */,
 				D69B9DC22A2F593E00A4FB08 /* RecipeCreatorViewModelTests.swift */,
 			);
 			path = GymMealPrepTests;
@@ -407,6 +403,18 @@
 				D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */,
 			);
 			path = RecipeListViews;
+			sourceTree = "<group>";
+		};
+		D6A313EC2A4A069D00D5DCC2 /* DataManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */,
+				D6C1DDBE2A07BE000062B1C5 /* DataManager+TagMOTests.swift */,
+				D6DBF29B2A08028200CB04AA /* DataManager+InstructionMOTests.swift */,
+				D6DBF2952A07CE9400CB04AA /* DataManager+FoodMOTests.swift */,
+				D6DBF2972A07E65300CB04AA /* DataManager+IngredientMOTests.swift */,
+			);
+			path = DataManagerTests;
 			sourceTree = "<group>";
 		};
 		D6C1DDB92A0790450062B1C5 /* DataManager */ = {
