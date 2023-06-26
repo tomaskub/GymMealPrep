@@ -46,6 +46,22 @@ extension DataManager: MealDataManagerProtocol {
         saveContext()
     }
     
+    func addToMealPlan(meal: Meal, to mealPlanMO: MealPlanMO) {
+        let predicate = NSPredicate(format: "id = %@", meal.id as CVarArg)
+        let result = fetchFirst(MealMO.self, predicate: predicate)
+        switch result {
+        case .success(let success):
+            if let mealMO = success {
+                mealMO.plan = mealPlanMO
+            } else {
+                let mealMO = mealMO(from: meal)
+                mealMO.plan = mealPlanMO
+            }
+        case .failure(let failure):
+            print("Could not fetch mealMO to update: \(failure.localizedDescription)")
+        }
+    }
+    
     private func mealMO(from source: Meal) -> MealMO {
         let mealMO = MealMO(context: managedContext, id: source.id)
         if !source.ingredients.isEmpty {
