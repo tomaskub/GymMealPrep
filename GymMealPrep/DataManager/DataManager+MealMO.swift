@@ -105,7 +105,7 @@ extension DataManager: MealDataManagerProtocol {
                 }
             }
             for recipe in source.recipes {
-                if !recipies.contains(where: { $0.id = recipe.id }) {
+                if !recipies.contains(where: { $0.id == recipe.id }) {
                     addToMeal(recipe: recipe, to: target)
                 }
             }

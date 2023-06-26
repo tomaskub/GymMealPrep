@@ -16,7 +16,7 @@ protocol MealPlanDataManagerProtocol {
 extension DataManager: MealPlanDataManagerProtocol {
     
     func updateAndSave(mealPlan: MealPlan) {
-        let result = fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = @%", mealPlan.id))
+        let result = fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = @%", mealPlan.id as CVarArg))
         switch result {
         case .success(let success):
             if let mealPlanMO = success {
@@ -31,7 +31,7 @@ extension DataManager: MealPlanDataManagerProtocol {
     }
     
     func delete(mealPlan: MealPlan) {
-        let result = fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = @%", mealPlan.id))
+        let result = fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = @%", mealPlan.id as CVarArg))
         switch result {
         case .success(let success):
             if let mealPlanMO = success {
@@ -75,5 +75,6 @@ extension DataManager: MealPlanDataManagerProtocol {
         for meal in source.meals {
             addToMealPlan(meal: meal, to: mealPlanMO)
         }
+        return mealPlanMO
     }
 }
