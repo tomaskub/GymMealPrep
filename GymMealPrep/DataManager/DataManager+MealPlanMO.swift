@@ -31,7 +31,16 @@ extension DataManager: MealPlanDataManagerProtocol {
     }
     
     func delete(mealPlan: MealPlan) {
-        
+        let result = fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = @%", mealPlan.id))
+        switch result {
+        case .success(let success):
+            if let mealPlanMO = success {
+                managedContext.delete(mealPlanMO)
+            }
+        case .failure(let failure):
+            print("Could not fetch mealPlanMO to delete: \(failure.localizedDescription)")
+        }
+        saveContext()
     }
     
     private func update(mealPlanMO target: MealPlanMO, from source: MealPlan) {
