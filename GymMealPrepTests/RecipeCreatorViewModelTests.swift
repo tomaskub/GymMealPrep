@@ -70,8 +70,12 @@ final class RecipeCreatorViewModelTests: XCTestCase {
         sut.parseInstructions(input: instructionEntryStringWithStep)
         print(sut.parsedInstructions)
         XCTAssert(sut.parsedInstructions.count == 5, " There should be 5 ingredients parsed")
-        let first = try XCTUnwrap(sut.parsedInstructions.first)
-        XCTAssert(first.text == "Instruction step 1.", "first parsed instruction should be equal to 'Instruction step 1.'")
+        do {
+            let first = try XCTUnwrap(sut.parsedInstructions.first)
+            XCTAssert(first.text == "Instruction step 1.", "first parsed instruction should be equal to 'Instruction step 1.'")
+        } catch {
+            XCTFail("Failed to unwrap first parsed instruction")
+        }
     }
     
     

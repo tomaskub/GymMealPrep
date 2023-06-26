@@ -6,30 +6,58 @@
 //
 
 import XCTest
+@testable import GymMealPrep
 
 final class DataManager_MealMOTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    var sut: DataManager!
+    
+    override func setUp() {
+        sut = DataManager.testing
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
+        sut = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testUpdateAndSave_whenNoMealExists() {
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], tags: [tag])
+        let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let meal = Meal(ingredients: [ingredientTwo] , recipies: [recipe])
+        
+        sut.updateAndSave(meal: meal)
+        
+        let result = sut.fetchFirst(MealMO.self, predicate: NSPredicate(format: "id = %@", meal.id as CVarArg))
+        switch result {
+        case .success(let success):
+            if let mealMO = success {
+                
+                // test for recipe in retrieved meal
+                do {
+                    let recipeSet = try XCTUnwrap(mealMO.recipes, "Retrieved meal should have not nil recipe set")
+                    let retrievedRecipes = recipeSet.compactMap({ $0 as? RecipeMO })
+                    let retrievedRecipe = try XCTUnwrap(retrievedRecipes.first, "There should be first retrieved recipe")
+                    XCTAssert(retrievedRecipe.id == recipe.id, "The first retrieved recipe id should match the saved recipe id")
+                } catch {
+                    XCTFail("Failed while testing for recipe in meal: \(error.localizedDescription)")
+                }
+                
+                // test for ingredient
+                do {
+                    let ingredientSet = try XCTUnwrap(mealMO.ingredients, "Retrieved meal should have not nil ingredient set")
+                    let retrievedIngredients = ingredientSet.compactMap({ $0 as? IngredientMO })
+                    let retrievedIngredient = try XCTUnwrap(retrievedIngredients.first, "There should be first retrieved ingredient")
+                    XCTAssert(retrievedIngredient.id == ingredient.id, "The first retrieved ingredient id should match the saved ingredient id")
+                } catch {
+                    XCTFail("Failed while testing for ingredient in meal: \(error.localizedDescription)")
+                }
+            }
+        case .failure(let failure):
+            XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
         }
+        
     }
-
 }
