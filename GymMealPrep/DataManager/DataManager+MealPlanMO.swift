@@ -48,6 +48,13 @@ extension DataManager: MealPlanDataManagerProtocol {
     }
     
     private func mealPlanMO(from source: MealPlan) -> MealPlanMO {
+        let mealPlanMO = MealPlanMO(context: managedContext, id: source.id)
         
+        if let name = source.name {
+            mealPlanMO.name = name
+        }
+        for meal in source.meals {
+            addToMealPlan(meal: meal, to: mealPlanMO)
+        }
     }
 }
