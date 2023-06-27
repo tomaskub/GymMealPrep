@@ -60,4 +60,41 @@ final class DataManager_MealMOTests: XCTestCase {
         }
         
     }
+    
+    func testUpdateAndSave_whenMealExists() {
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], tags: [tag])
+        let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        var meal = Meal(ingredients: [ingredientTwo] , recipies: [recipe])
+        
+        sut.updateAndSave(meal: meal)
+        // meal not exists
+        
+        meal.ingredients.append(ingredient)
+        
+        sut.updateAndSave(meal: meal)
+        
+        let result = sut.fetchFirst(MealMO.self, predicate: NSPredicate(format: "id = %@", meal.id as CVarArg))
+        switch result {
+        case .success(let success):
+            if let mealMO = success {
+                // test for ingredient changed
+                do {
+                    let ingredientSet = try XCTUnwrap(mealMO.ingredients, "Retrieved meal should have not nil ingredient set")
+                    let retrievedIngredients = ingredientSet.compactMap({ $0 as? IngredientMO })
+                    XCTAssert(retrievedIngredients.count == 2, " There should be two ingredients")
+                    
+                    XCTAssert(retrievedIngredients.contains(where: {$0.id == ingredient.id}), "The retrieved ingredients should have element that matches the added ingredient id")
+                    XCTAssert(retrievedIngredients.contains(where: {$0.id == ingredientTwo.id}), "The retrieved ingredients should have element that matches the saved ingredient id")
+                } catch {
+                    XCTFail("Failed while testing for ingredient in meal: \(error.localizedDescription)")
+                }
+            }
+        case .failure(let failure):
+            XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
+        }
+        
+    }
 }
