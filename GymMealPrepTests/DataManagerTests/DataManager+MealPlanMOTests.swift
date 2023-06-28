@@ -66,4 +66,34 @@ final class DataManager_MealPlanMOTests: XCTestCase {
             XCTFail()
         }
     }
+    
+    func testDelete_whenMealPlanExists() {
+        let mealPlan = MealPlan(name: "Test meal plan", meals: [])
+        sut.updateAndSave(mealPlan: mealPlan)
+        
+        sut.delete(mealPlan: mealPlan)
+        
+        let result = sut.fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = %@", mealPlan.id as CVarArg))
+        
+        switch result {
+        case .success(let success):
+            XCTAssertNil(success, "Returned result should be nil")
+        case .failure(let failure):
+            XCTFail("Failure while fetching the meal plan mo: \(failure.localizedDescription)")
+        }
+    }
+    
+    func testDelete_whenMealPlanNotExists() {
+        let mealPlan = MealPlan(name: "test meal plan", meals: [])
+        sut.delete(mealPlan: mealPlan)
+        
+        let result = sut.fetchFirst(MealPlanMO.self, predicate: NSPredicate(format: "id = %@", mealPlan.id as CVarArg))
+        
+        switch result {
+        case .success(let success):
+            XCTAssertNil(success, "Returned result should be nil")
+        case .failure(let failure):
+            XCTFail("Failure while fetching the non existing meal plan mo: \(failure.localizedDescription)")
+        }
+    }
 }
