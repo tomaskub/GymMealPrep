@@ -7,4 +7,11 @@
 
 import Foundation
 
-
+protocol MealPlanTabViewModelProtocol: ObservableObject {
+    
+    var mealPlanArray: [MealPlan] { get }
+    
+    func deleteMealPlan(atOffsets: IndexSet)
+    
+    func createMealPlanViewModel(for: MealPlan) -> any ObservableObject
+}
