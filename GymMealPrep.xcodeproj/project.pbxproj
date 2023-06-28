@@ -45,6 +45,7 @@
 		D680C3352A13DDD8002070DF /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3342A13DDD8002070DF /* NetworkController.swift */; };
 		D680C3372A13E75D002070DF /* EdamamLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3362A13E75D002070DF /* EdamamLogicController.swift */; };
 		D680C3392A140A2F002070DF /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3382A140A2F002070DF /* EndpointProtocol.swift */; };
+		D68D5B652A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D5B642A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift */; };
 		D692EEE72A12879400680CCC /* EdamamParserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692EEE62A12879400680CCC /* EdamamParserResponse.swift */; };
 		D692EEE92A129A6D00680CCC /* SampleParserJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D692EEE82A129A6D00680CCC /* SampleParserJson.json */; };
 		D694E3F52A057D370077E72F /* FoodMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694E3F32A057D370077E72F /* FoodMO+CoreDataClass.swift */; };
@@ -160,6 +161,7 @@
 		D680C3342A13DDD8002070DF /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		D680C3362A13E75D002070DF /* EdamamLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamLogicController.swift; sourceTree = "<group>"; };
 		D680C3382A140A2F002070DF /* EndpointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
+		D68D5B642A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+MealPlanMOTests.swift"; sourceTree = "<group>"; };
 		D692EEE62A12879400680CCC /* EdamamParserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamParserResponse.swift; sourceTree = "<group>"; };
 		D692EEE82A129A6D00680CCC /* SampleParserJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleParserJson.json; sourceTree = "<group>"; };
 		D694E3F32A057D370077E72F /* FoodMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				D637AD472A0961B2002283C5 /* DataManager+RecipeMOTests.swift */,
 				D6A313ED2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift */,
 				D6C1DDBE2A07BE000062B1C5 /* DataManager+TagMOTests.swift */,
+				D68D5B642A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift */,
 				D6DBF29B2A08028200CB04AA /* DataManager+InstructionMOTests.swift */,
 				D6DBF2952A07CE9400CB04AA /* DataManager+FoodMOTests.swift */,
 				D6DBF2972A07E65300CB04AA /* DataManager+IngredientMOTests.swift */,
@@ -711,6 +714,7 @@
 				D637AD482A0961B2002283C5 /* DataManager+RecipeMOTests.swift in Sources */,
 				D69B9DC32A2F593E00A4FB08 /* RecipeCreatorViewModelTests.swift in Sources */,
 				D634FF9929FD42F60034B950 /* GymMealPrepTests.swift in Sources */,
+				D68D5B652A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift in Sources */,
 				D6DBF2962A07CE9400CB04AA /* DataManager+FoodMOTests.swift in Sources */,
 				D6DBF2982A07E65400CB04AA /* DataManager+IngredientMOTests.swift in Sources */,
 				D6DBF29C2A08028200CB04AA /* DataManager+InstructionMOTests.swift in Sources */,
