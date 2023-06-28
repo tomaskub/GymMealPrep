@@ -56,16 +56,19 @@ extension RecipeViewModelTests {
     
     func testCalculatingTotalCookingTime_whenTimeCookingInMinutesChanges() {
         sut.timeCookingInMinutes = String(10)
+        sut.updateTimeData()
         XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
     }
     
     func testCalculatingTotalCookingTime_whenTimePreparingInMinutesChanges() {
         sut.timePreparingInMinutes = String(10)
+        sut.updateTimeData()
         XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
     }
     
     func testCalculatingTotalCookingTime_whenTimeWaitingInMinutesChanges() {
         sut.timeWaitingInMinutes = String(10)
+        sut.updateTimeData()
         XCTAssertTrue(sut.totalTimeCookingInMinutes == 10, "Total cooking time should be equal to 10, but is equal to \(sut.totalTimeCookingInMinutes)")
     }
     
