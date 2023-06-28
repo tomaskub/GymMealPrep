@@ -50,7 +50,7 @@ final class DataManager_MealMOTests: XCTestCase {
                     let ingredientSet = try XCTUnwrap(mealMO.ingredients, "Retrieved meal should have not nil ingredient set")
                     let retrievedIngredients = ingredientSet.compactMap({ $0 as? IngredientMO })
                     let retrievedIngredient = try XCTUnwrap(retrievedIngredients.first, "There should be first retrieved ingredient")
-                    XCTAssert(retrievedIngredient.id == ingredient.id, "The first retrieved ingredient id should match the saved ingredient id")
+                    XCTAssert(retrievedIngredient.id == ingredientTwo.id, "The first retrieved ingredient id should match the saved ingredient id")
                 } catch {
                     XCTFail("Failed while testing for ingredient in meal: \(error.localizedDescription)")
                 }
@@ -124,6 +124,47 @@ final class DataManager_MealMOTests: XCTestCase {
                     XCTFail("Failed while testing for ingredient in meal: \(error.localizedDescription)")
                 }
             }
+        case .failure(let failure):
+            XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
+        }
+    }
+    
+    func testDelete_whenMealExists() {
+        //setup
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], tags: [tag])
+        let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let meal = Meal(ingredients: [ingredientTwo] , recipies: [recipe])
+        sut.updateAndSave(meal: meal)
+        // Delete action
+        sut.delete(meal: meal)
+        
+        let result = sut.fetchFirst(MealMO.self, predicate: NSPredicate(format: "id = %@", meal.id as CVarArg))
+        switch result {
+        case .success(let success):
+            XCTAssertNil(success, "Result of fetch should be nil")
+        case .failure(let failure):
+            XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
+        }
+    }
+    
+    func testDelete_whenMealDoesNotExist() {
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], tags: [tag])
+        let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let meal = Meal(ingredients: [ingredientTwo] , recipies: [recipe])
+        
+        // Delete action
+        sut.delete(meal: meal)
+        
+        let result = sut.fetchFirst(MealMO.self, predicate: NSPredicate(format: "id = %@", meal.id as CVarArg))
+        switch result {
+        case .success(let success):
+            XCTAssertNil(success, "Result of fetch should be nil")
         case .failure(let failure):
             XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
         }
