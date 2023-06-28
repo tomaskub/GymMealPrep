@@ -95,6 +95,37 @@ final class DataManager_MealMOTests: XCTestCase {
         case .failure(let failure):
             XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
         }
+    }
+ 
+    func testUpdateAndSave_whenMealExists_whenIngredientRemoved() {
+        let ingredient = Ingredient(food: Food(name: "Test food"), quantity: 1, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        let instruction = Instruction(step: 1, text: "Test instruction")
+        let tag = Tag(text: "Test tag")
+        let recipe = Recipe(id: UUID(), name: "Test Recipe", servings: 4, timeCookingInMinutes: 30, timePreparingInMinutes: 15, timeWaitingInMinutes: 0, ingredients: [ingredient], instructions: [instruction], tags: [tag])
+        let ingredientTwo = Ingredient(food: Food(name: "Test food2"), quantity: 2, unitOfMeasure: "cups", nutritionData: Nutrition.zero)
+        var meal = Meal(ingredients: [ingredientTwo] , recipies: [recipe])
         
+        sut.updateAndSave(meal: meal)
+        meal.ingredients = []
+        sut.updateAndSave(meal: meal)
+        
+        let result = sut.fetchFirst(MealMO.self, predicate: NSPredicate(format: "id = %@", meal.id as CVarArg))
+        switch result {
+        case .success(let success):
+            if let mealMO = success {
+                // test for ingredient changed, set should not be nil, just empty
+                do {
+                    let ingredientSet = try XCTUnwrap(mealMO.ingredients, "Retrieved meal should have not nil ingredient set")
+                    let retrievedIngredients = ingredientSet.compactMap({ $0 as? IngredientMO })
+                    
+                    XCTAssertEqual(retrievedIngredients.count, 0, " There should be 0 ingredients")
+                    
+                } catch {
+                    XCTFail("Failed while testing for ingredient in meal: \(error.localizedDescription)")
+                }
+            }
+        case .failure(let failure):
+            XCTFail("Failure in retrieving saved result: \(failure.localizedDescription)")
+        }
     }
 }
