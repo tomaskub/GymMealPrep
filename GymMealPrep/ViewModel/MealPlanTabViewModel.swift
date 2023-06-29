@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol MealPlanTabViewModelProtocol: ObservableObject {
     
@@ -13,5 +14,36 @@ protocol MealPlanTabViewModelProtocol: ObservableObject {
     
     func deleteMealPlan(atOffsets: IndexSet)
     
-    func createMealPlanViewModel(for: MealPlan) -> any ObservableObject
+    func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol
+    
 }
+
+class MealPlanTabViewModel: MealPlanTabViewModelProtocol {
+    
+    private var subscriptions = Set<AnyCancellable>()
+    
+    @Published private var dataManager: DataManager
+    
+    var mealPlanArray: [MealPlan] {
+        dataManager.mealPlanArray
+    }
+    
+    init(dataManager: DataManager = .shared) {
+        self.dataManager = dataManager
+        
+        dataManager.objectWillChange.sink { [weak self] _ in
+            self?.objectWillChange.send()
+        }
+        .store(in: &subscriptions)
+    }
+    
+    func deleteMealPlan(atOffsets: IndexSet) {
+        //TODO: IMPLEMENT DELETE FUNCTION
+    }
+    
+    func createMealPlanViewModel(for mealPlan: MealPlan) -> any MealPlanViewModelProtocol {
+        return MealPlanViewModel(mealPlan: mealPlan, dataManager: dataManager as MealPlanDataManagerProtocol)
+    }
+}
+
+
