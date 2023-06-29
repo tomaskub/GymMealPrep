@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MealPlanTabView: View {
+struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     
     enum ViewType: String, CaseIterable {
         case list = "list"
@@ -15,9 +15,15 @@ struct MealPlanTabView: View {
         case tile = "tile"
     }
     
-    @State var mealPlans: [MealPlan]
+    @StateObject var viewModel: T
+
     @State var displayType: ViewType = .list
     @State var showTitleInline: Bool = true
+    
+    public init(viewModel: T = MealPlanTabViewModel()) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         
         NavigationStack {
@@ -68,7 +74,7 @@ struct MealPlanTabView: View {
         switch displayType {
         case .list:
             List {
-                ForEach(mealPlans) { plan in
+                ForEach(viewModel.mealPlanArray) { plan in
                     NavigationLink(value: plan) {
                         MealPlanRowView(mealPlan: plan)
                     }
@@ -85,7 +91,25 @@ struct MealPlanTabView: View {
 }
 
 struct MealPlanTabView_Previews: PreviewProvider {
+    
+    class PreviewViewModel: MealPlanTabViewModelProtocol {
+        var mealPlanArray: [MealPlan]
+        
+        func deleteMealPlan(atOffsets: IndexSet) {
+            //
+        }
+        
+        func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol {
+            MealPlanViewModel(mealPlan: mealPlanArray[0],
+                                dataManager: DataManager.preview as MealPlanDataManagerProtocol)
+        }
+        init() {
+            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 1)
+        }
+        
+    }
+    
     static var previews: some View {
-        MealPlanTabView(mealPlans: Array(repeating: SampleData.sampleMealPlan, count: 1))
+        MealPlanTabView(viewModel: PreviewViewModel())
     }
 }
