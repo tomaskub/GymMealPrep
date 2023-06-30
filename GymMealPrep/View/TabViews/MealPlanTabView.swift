@@ -7,17 +7,33 @@
 
 import SwiftUI
 
+enum MealPlanTabNavigationState: Hashable {
+    case showingMealPlanDetailView(MealPlan)
+    case showingMealPlanEditingView(MealPlan)
+}
+
 struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     
     enum ViewType: String, CaseIterable {
-        case list = "list"
-        case card = "card"
-        case tile = "tile"
+        case list = "List"
+        case card = "Cards"
+        case tile = "Tiles"
+        
+        func getIcon() -> String {
+            switch self {
+            case .list:
+                return "text.justify"
+            case .card:
+                return "rectangle.portrait.on.rectangle.portrait.angled"
+            case .tile:
+                return "square.grid.2x2"
+            }
+        }
     }
     
     @StateObject var viewModel: T
 
-    @State var displayType: ViewType = .list
+    @State var displayType: ViewType = .tile
     @State var showTitleInline: Bool = true
     
     public init(viewModel: T = MealPlanTabViewModel()) {
@@ -47,25 +63,25 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                                 Button {
                                     displayType = type
                                 } label: {
-                                    Text(type.rawValue)
+                                    Label(type.rawValue, systemImage: type.getIcon())
                                 }
                             }
                             Divider()
-                            Text("Sort by date")
-                            Text("Sort by total calories")
-                            Text("Sort by date")
-                            Text("Sort by date")
+                            Text("Sorting")
                         } label: {
                             Image(systemName: "ellipsis.circle")
                         }
 
                     }
-                    
                 }
-                    
-                        
-                .navigationDestination(for: MealPlan.self) { plan in
-                    MealPlanEditorView(draftMealPlan: plan)
+            
+                .navigationDestination(for: MealPlanTabNavigationState.self) { state in
+                    switch state {
+                    case .showingMealPlanDetailView(let plan):
+                        MealPlanCardView(color: .white, mealPlan: plan)
+                    case .showingMealPlanEditingView(let plan):
+                        MealPlanEditorView(draftMealPlan: plan)
+                    }
                 }
         } // END OF NAV STACK
     } // END OF BODY
@@ -75,9 +91,27 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
         case .list:
             MealPlanListView(viewModel: viewModel)
         case .card:
-            Text("this is card view")
+            TabView{
+                
+                    ForEach(viewModel.mealPlanArray) { plan in
+                        MealPlanCardView(color: .gray.opacity(0.2), mealPlan: plan)
+                            .padding(.horizontal)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+            
         case .tile:
-            Text("this is tile view")
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                    ForEach(viewModel.mealPlanArray) { plan in
+                        Text(plan.name ?? "No name")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                    }
+                }
+            }
         } // END OF SWITCH
     } // END OF CONTENT
     
@@ -99,7 +133,7 @@ struct MealPlanTabView_Previews: PreviewProvider {
                                 dataManager: DataManager.preview as MealPlanDataManagerProtocol)
         }
         init() {
-            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 1)
+            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 3)
         }
         
     }
