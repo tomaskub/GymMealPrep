@@ -102,16 +102,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
             
             
         case .tile:
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                    ForEach(viewModel.mealPlanArray) { plan in
-                        Text(plan.name ?? "No name")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                    }
-                }
-            }
+            MealPlanGridView(viewModel: viewModel)
         } // END OF SWITCH
     } // END OF CONTENT
     
