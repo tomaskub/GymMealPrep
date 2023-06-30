@@ -73,32 +73,13 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     var content: some View {
         switch displayType {
         case .list:
-            List {
-                ForEach(viewModel.mealPlanArray) { plan in
-                    NavigationLink(value: plan) {
-                        MealPlanRowView(mealPlan: plan)
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        
-                        Button(role: .destructive) {
-                            viewModel.deleteMealPlan(plan)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        
-                        NavigationLink(value: plan) {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                    }// END OF SWIPE ACTIONS
-                } // END OF FOR EACH
-            } // END OF LIST
-            .listStyle(.inset)
+            MealPlanListView(viewModel: viewModel)
         case .card:
             Text("this is card view")
         case .tile:
             Text("this is tile view")
         } // END OF SWITCH
-    } // END OF CONTENT 
+    } // END OF CONTENT
     
 }
 

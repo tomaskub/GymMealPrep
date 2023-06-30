@@ -7,14 +7,57 @@
 
 import SwiftUI
 
-struct MealPlanListView: View {
+struct MealPlanListView<T: MealPlanTabViewModelProtocol>: View {
+    @ObservedObject var viewModel: T
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            ForEach(viewModel.mealPlanArray) { plan in
+                NavigationLink(value: plan) {
+                    MealPlanRowView(mealPlan: plan)
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    
+                    Button(role: .destructive) {
+                        viewModel.deleteMealPlan(plan)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                    
+                    NavigationLink(value: plan) {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                }// END OF SWIPE ACTIONS
+            } // END OF FOR EACH
+        } // END OF LIST
+        .listStyle(.inset)
     }
 }
 
 struct MealPlanListView_Previews: PreviewProvider {
+    
+    class PreviewViewModel: MealPlanTabViewModelProtocol {
+        var mealPlanArray: [MealPlan]
+        
+        func deleteMealPlan(_ mealPlan: MealPlan) {
+            mealPlanArray.removeAll(where: {
+                $0.id == mealPlan.id
+            })
+        }
+        
+        func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol {
+            MealPlanViewModel(mealPlan: mealPlanArray[0],
+                                dataManager: DataManager.preview as MealPlanDataManagerProtocol)
+        }
+        init() {
+            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 1)
+        }
+        
+    }
+    
     static var previews: some View {
-        MealPlanListView()
+        NavigationStack {
+            MealPlanListView(viewModel: PreviewViewModel())
+        }
     }
 }
