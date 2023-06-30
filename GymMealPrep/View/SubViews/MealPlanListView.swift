@@ -13,7 +13,7 @@ struct MealPlanListView<T: MealPlanTabViewModelProtocol>: View {
     var body: some View {
         List {
             ForEach(viewModel.mealPlanArray) { plan in
-                NavigationLink(value: plan) {
+                NavigationLink(value: MealPlanTabNavigationState.showingMealPlanDetailView(plan)) {
                     MealPlanRowView(mealPlan: plan)
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -24,7 +24,7 @@ struct MealPlanListView<T: MealPlanTabViewModelProtocol>: View {
                         Label("Delete", systemImage: "trash")
                     }
                     
-                    NavigationLink(value: plan) {
+                    NavigationLink(value: MealPlanTabNavigationState.showingMealPlanEditingView(plan)) {
                         Label("Edit", systemImage: "pencil")
                     }
                 }// END OF SWIPE ACTIONS
