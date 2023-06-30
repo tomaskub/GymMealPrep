@@ -78,6 +78,18 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                     NavigationLink(value: plan) {
                         MealPlanRowView(mealPlan: plan)
                     }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        
+                        Button(role: .destructive) {
+                            viewModel.deleteMealPlan(plan)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        
+                        NavigationLink(value: plan) {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                    }// END OF SWIPE ACTIONS
                 } // END OF FOR EACH
             } // END OF LIST
             .listStyle(.inset)
@@ -86,7 +98,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
         case .tile:
             Text("this is tile view")
         } // END OF SWITCH
-    }
+    } // END OF CONTENT 
     
 }
 
@@ -95,8 +107,10 @@ struct MealPlanTabView_Previews: PreviewProvider {
     class PreviewViewModel: MealPlanTabViewModelProtocol {
         var mealPlanArray: [MealPlan]
         
-        func deleteMealPlan(atOffsets: IndexSet) {
-            //
+        func deleteMealPlan(_ mealPlan: MealPlan) {
+            mealPlanArray.removeAll(where: {
+                $0.id == mealPlan.id
+            })
         }
         
         func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol {

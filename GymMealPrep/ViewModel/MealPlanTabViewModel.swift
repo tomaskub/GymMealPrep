@@ -12,7 +12,7 @@ protocol MealPlanTabViewModelProtocol: ObservableObject {
     
     var mealPlanArray: [MealPlan] { get }
     
-    func deleteMealPlan(atOffsets: IndexSet)
+    func deleteMealPlan(_: MealPlan)
     
     func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol
     
@@ -37,7 +37,7 @@ class MealPlanTabViewModel: MealPlanTabViewModelProtocol {
         .store(in: &subscriptions)
     }
     
-    func deleteMealPlan(atOffsets: IndexSet) {
+    func deleteMealPlan(_ mealPlan: MealPlan) {
         //TODO: IMPLEMENT DELETE FUNCTION
     }
     
