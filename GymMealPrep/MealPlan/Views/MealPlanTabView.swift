@@ -80,7 +80,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                     case .showingMealPlanDetailView(let plan):
                         MealPlanCardView(color: .white, mealPlan: plan)
                     case .showingMealPlanEditingView(let plan):
-                        MealPlanEditorView(draftMealPlan: plan)
+                        MealPlanEditorView(viewModel: viewModel.createMealPlanViewModel(for: plan))
                     }
                 }
         } // END OF NAV STACK
@@ -110,7 +110,7 @@ struct MealPlanTabView_Previews: PreviewProvider {
             })
         }
         
-        func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol {
+        func createMealPlanViewModel(for: MealPlan) -> some MealPlanViewModelProtocol {
             MealPlanViewModel(mealPlan: mealPlanArray[0],
                                 dataManager: DataManager.preview as MealPlanDataManagerProtocol)
         }

@@ -14,7 +14,8 @@ protocol MealPlanTabViewModelProtocol: ObservableObject {
     
     func deleteMealPlan(_: MealPlan)
     
-    func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol
+    associatedtype T: MealPlanViewModelProtocol
+    func createMealPlanViewModel(for: MealPlan) -> T
     
 }
 
@@ -39,7 +40,7 @@ class MealPlanTabViewModel: MealPlanTabViewModelProtocol {
         //TODO: IMPLEMENT DELETE FUNCTION
     }
     
-    func createMealPlanViewModel(for mealPlan: MealPlan) -> any MealPlanViewModelProtocol {
+    func createMealPlanViewModel(for mealPlan: MealPlan) -> some MealPlanViewModelProtocol {
         return MealPlanViewModel(mealPlan: mealPlan, dataManager: dataManager as MealPlanDataManagerProtocol)
     }
 }

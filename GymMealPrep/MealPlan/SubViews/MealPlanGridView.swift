@@ -37,7 +37,7 @@ struct MealPlanGridView_Previews: PreviewProvider {
             })
         }
         
-        func createMealPlanViewModel(for: MealPlan) -> any MealPlanViewModelProtocol {
+        func createMealPlanViewModel(for: MealPlan) -> some MealPlanViewModelProtocol {
             MealPlanViewModel(mealPlan: mealPlanArray[0],
                                 dataManager: DataManager.preview as MealPlanDataManagerProtocol)
         }
