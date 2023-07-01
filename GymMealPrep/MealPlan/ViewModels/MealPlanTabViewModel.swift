@@ -20,15 +20,13 @@ protocol MealPlanTabViewModelProtocol: ObservableObject {
 
 class MealPlanTabViewModel: MealPlanTabViewModelProtocol {
     
-    private var subscriptions = Set<AnyCancellable>()
-    
     @Published private var dataManager: DataManager
-    
+    private var subscriptions = Set<AnyCancellable>()
     var mealPlanArray: [MealPlan] {
         dataManager.mealPlanArray
     }
     
-    init(dataManager: DataManager = .shared) {
+    init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
         
         dataManager.objectWillChange.sink { [weak self] _ in

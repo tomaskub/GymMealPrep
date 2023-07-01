@@ -15,12 +15,11 @@ struct MealPlanGridView<T: MealPlanTabViewModelProtocol>: View {
     var body: some View {
         ScrollView(.vertical) {
             LazyVGrid(columns: columns, spacing: 8) {
-                ForEach(1..<10) { _ in
-                    MealPlanTileView(mealPlan: viewModel.mealPlanArray[0])
+                ForEach(viewModel.mealPlanArray) { mealPlan in
+                    MealPlanTileView(mealPlan: mealPlan)
                         .padding()
                         .background(Color.gray.opacity(0.1))
                         .cornerRadius(10)
-                        
                 }
             }
         }
@@ -43,7 +42,10 @@ struct MealPlanGridView_Previews: PreviewProvider {
                                 dataManager: DataManager.preview as MealPlanDataManagerProtocol)
         }
         init() {
-            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 3)
+            self.mealPlanArray = [SampleData.sampleMealPlan]
+            for i in 0..<6 {
+                mealPlanArray.append(MealPlan(name: "Sample test plan \(i)", meals: SampleData.sampleMealPlan.meals))
+            }
         }
         
     }

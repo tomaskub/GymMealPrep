@@ -33,7 +33,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     
     @StateObject var viewModel: T
 
-    @State var displayType: ViewType = .tile
+    @State var displayType: ViewType = .list
     @State var showTitleInline: Bool = true
     
     public init(viewModel: T = MealPlanTabViewModel()) {
