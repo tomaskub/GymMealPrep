@@ -91,16 +91,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
         case .list:
             MealPlanListView(viewModel: viewModel)
         case .card:
-            TabView{
-                
-                    ForEach(viewModel.mealPlanArray) { plan in
-                        MealPlanCardView(color: .gray.opacity(0.2), mealPlan: plan)
-                            .padding(.horizontal)
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            
-            
+            MealPlanPageView(viewModel: viewModel)
         case .tile:
             MealPlanGridView(viewModel: viewModel)
         } // END OF SWITCH
@@ -126,7 +117,6 @@ struct MealPlanTabView_Previews: PreviewProvider {
         init() {
             self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 3)
         }
-        
     }
     
     static var previews: some View {
