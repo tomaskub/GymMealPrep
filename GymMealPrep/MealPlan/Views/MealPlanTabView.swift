@@ -115,7 +115,10 @@ struct MealPlanTabView_Previews: PreviewProvider {
                                 dataManager: DataManager.preview as MealPlanDataManagerProtocol)
         }
         init() {
-            self.mealPlanArray = Array(repeating: SampleData.sampleMealPlan, count: 3)
+            self.mealPlanArray = []
+            for i in 0..<10 {
+                mealPlanArray.append(MealPlan(name: "Sample Test Plan \(i)", meals: SampleData.sampleMealPlan.meals))
+            }
         }
     }
     
