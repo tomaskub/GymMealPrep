@@ -25,7 +25,7 @@ struct ContentView: View {
                         Text("Recipes")
                     }
             
-            MealPlanTabView()
+            MealPlanTabView(viewModel: MealPlanTabViewModel())
             .tabItem {
                 Image(systemName: "rectangle.grid.1x2.fill")
                     .font(.largeTitle)
