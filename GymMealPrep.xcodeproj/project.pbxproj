@@ -48,6 +48,7 @@
 		D674FB1E2A5094B50066F667 /* MealPlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D674FB1D2A5094B50066F667 /* MealPlanDetailView.swift */; };
 		D674FB202A5095890066F667 /* MealPlanHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D674FB1F2A5095890066F667 /* MealPlanHostView.swift */; };
 		D674FB222A518F140066F667 /* MealPlanEditorSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D674FB212A518F140066F667 /* MealPlanEditorSheetView.swift */; };
+		D674FB242A5194D60066F667 /* RecipePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D674FB232A5194D60066F667 /* RecipePickerView.swift */; };
 		D680C3322A13D998002070DF /* EdamamParserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3312A13D998002070DF /* EdamamParserEndpoint.swift */; };
 		D680C3352A13DDD8002070DF /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3342A13DDD8002070DF /* NetworkController.swift */; };
 		D680C3372A13E75D002070DF /* EdamamLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3362A13E75D002070DF /* EdamamLogicController.swift */; };
@@ -173,6 +174,7 @@
 		D674FB1D2A5094B50066F667 /* MealPlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanDetailView.swift; sourceTree = "<group>"; };
 		D674FB1F2A5095890066F667 /* MealPlanHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanHostView.swift; sourceTree = "<group>"; };
 		D674FB212A518F140066F667 /* MealPlanEditorSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanEditorSheetView.swift; sourceTree = "<group>"; };
+		D674FB232A5194D60066F667 /* RecipePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePickerView.swift; sourceTree = "<group>"; };
 		D680C3312A13D998002070DF /* EdamamParserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamParserEndpoint.swift; sourceTree = "<group>"; };
 		D680C3342A13DDD8002070DF /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		D680C3362A13E75D002070DF /* EdamamLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamLogicController.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				D674FB212A518F140066F667 /* MealPlanEditorSheetView.swift */,
 				D6E5695E2A4F5F1F00589573 /* MealPlanGridView.swift */,
 				D69C21E62A46F95E002DE11A /* MealPlanRowView.swift */,
+				D674FB232A5194D60066F667 /* RecipePickerView.swift */,
 				D6E5695C2A4ED23400589573 /* MealPlanListView.swift */,
 				D674FB0F2A5078370066F667 /* MealPlanPageView.swift */,
 				D674FB1B2A50890A0066F667 /* MealPlanTileView.swift */,
@@ -763,6 +766,7 @@
 				D634FF8929FD42F50034B950 /* ContentView.swift in Sources */,
 				D6C3405029FD8085003F6E06 /* Instruction.swift in Sources */,
 				D6D77A712A2339B7006D63B5 /* RecipeCreatorParserView.swift in Sources */,
+				D674FB242A5194D60066F667 /* RecipePickerView.swift in Sources */,
 				D69BAB272A3315B800E2D05D /* ViewWidthKey.swift in Sources */,
 				D65E4C9E2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift in Sources */,
 				D674FB102A5078370066F667 /* MealPlanPageView.swift in Sources */,
