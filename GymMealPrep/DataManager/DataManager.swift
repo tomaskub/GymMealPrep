@@ -69,8 +69,9 @@ class DataManager: NSObject, ObservableObject {
     //MARK: HELPER METHODS
     ///Add data for previews shown in swiftui views
     func addPreviewData() {
-        let recipe = SampleData.recipieCilantroLimeChicken
-        self.updateAndSave(recipe: recipe)
+        self.updateAndSave(recipe: SampleData.recipieCilantroLimeChicken)
+        self.updateAndSave(recipe: SampleData.recipeBreakfastPotatoHash)
+        self.updateAndSave(recipe: SampleData.recipeSlowCookerChickenTikkaMasala)
     }
     ///Checks for changes in the managed object context and saves if uncommited changes are present
     func saveContext() {
