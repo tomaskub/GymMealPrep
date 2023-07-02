@@ -78,9 +78,9 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                 .navigationDestination(for: MealPlanTabNavigationState.self) { state in
                     switch state {
                     case .showingMealPlanDetailView(let plan):
-                        MealPlanCardView(color: .white, mealPlan: plan)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), isEditing: false)
                     case .showingMealPlanEditingView(let plan):
-                        MealPlanEditorView(viewModel: viewModel.createMealPlanViewModel(for: plan))
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), isEditing: true)
                     }
                 }
         } // END OF NAV STACK
