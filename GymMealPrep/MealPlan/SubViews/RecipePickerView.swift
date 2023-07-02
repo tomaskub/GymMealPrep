@@ -13,10 +13,36 @@ protocol RecipeSaveHandler {
 
 struct RecipePickerView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     var saveHandler: RecipeSaveHandler
+    @State var searchTerm: String = String()
+    @State var recipes = [Recipe]()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+            TextField("Type in recipe name", text: $searchTerm)
+                .textFieldStyle(.roundedBorder)
+                Button {
+                    //search for recipe and populate the list
+                    recipes.append(SampleData.recipeBreakfastPotatoHash)
+                } label: {
+                    Image(systemName: "magnifyingglass.circle.fill")
+                        .font(.title)
+                }
+            }.padding(.horizontal)
+            List {
+                ForEach(recipes) { recipe in
+                    RecipeListRowView(recipe)
+                        .onTapGesture {
+                            saveHandler.addRecipe(recipe)
+                            self.dismiss()
+                        }
+                }
+            }
+            .listStyle(.inset)
+        }
     }
 }
 
