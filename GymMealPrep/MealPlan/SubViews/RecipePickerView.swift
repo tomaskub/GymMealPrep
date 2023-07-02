@@ -12,13 +12,21 @@ protocol RecipeSaveHandler {
 }
 
 struct RecipePickerView: View {
+    
+    var saveHandler: RecipeSaveHandler
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 struct RecipePickerView_Previews: PreviewProvider {
+    class PreviewSaveHandler: RecipeSaveHandler {
+        func addRecipe(_ recipeToSave: Recipe) {
+            print("Recipe saved: \(recipeToSave)")
+        }
+    }
     static var previews: some View {
-        RecipePickerView()
+        RecipePickerView(saveHandler: PreviewSaveHandler())
     }
 }
