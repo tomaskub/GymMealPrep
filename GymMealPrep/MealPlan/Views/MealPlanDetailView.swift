@@ -16,8 +16,6 @@ struct MealPlanDetailView<T: MealPlanViewModelProtocol>: View {
             
             Section("Summary") {
                 
-                Text(viewModel.mealPlan.name ?? "Meal plan")
-                
                 RecipeSummaryView(
                     cal: viewModel.mealPlan.nutrition.calories,
                     proteinInGrams: viewModel.mealPlan.nutrition.protein,
@@ -44,11 +42,11 @@ struct MealPlanDetailView<T: MealPlanViewModelProtocol>: View {
                         .font(.caption)
                     
                     ForEach(meal.recipes) { recipe in
-                        Text(recipe.name)
+                        Text(generateRecipeLabel(recipe))
                     } // END OF FOR EACH
                     
                     ForEach(meal.ingredients) { ingredient in
-                        Text(generateIngredientLabel(ingredient:ingredient))
+                        Text(generateIngredientLabel(ingredient))
                     } // END OF FOR EACH
                     
                     
@@ -61,17 +59,19 @@ struct MealPlanDetailView<T: MealPlanViewModelProtocol>: View {
         .navigationTitle(viewModel.mealPlan.name ?? "Meal plan")
     } // END OF BODY
     
-    func generateIngredientLabel(ingredient: Ingredient) -> String {
+    func generateIngredientLabel(_ ingredient: Ingredient) -> String {
         return ingredient.food.name + " " + String(ingredient.quantity) + " " + ingredient.unitOfMeasure
+    }
+    
+    func generateRecipeLabel(_ recipe: Recipe) -> String {
+        return recipe.name
     }
 }
 
 struct MealPlanDetailView_Previews: PreviewProvider {
-    
-    class PreviewViewModel: MealPlanViewModelProtocol {
-        var mealPlan: MealPlan = SampleData.sampleMealPlan
-    }
     static var previews: some View {
-        MealPlanDetailView(viewModel: PreviewViewModel())
+        NavigationStack {
+            MealPlanDetailView(viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan, dataManager: DataManager.preview))
+        }
     }
 }
