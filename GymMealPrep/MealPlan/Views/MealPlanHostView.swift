@@ -8,13 +8,36 @@
 import SwiftUI
 
 struct MealPlanHostView: View {
+    
+    @ObservedObject var viewModel: MealPlanViewModel
+    @State var isEditing: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            if isEditing {
+                MealPlanEditorView(viewModel: viewModel)
+            } else {
+                MealPlanDetailView(viewModel: viewModel)
+            }
+        }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        isEditing.toggle()
+                    } label: {
+                        Text(isEditing ? "Done" : "Edit")
+                    }
+                }
+            }
     }
 }
 
 struct MealPlanHostView_Previews: PreviewProvider {
     static var previews: some View {
-        MealPlanHostView()
+        NavigationStack {
+            MealPlanHostView(
+                viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan,
+                                             dataManager: DataManager.preview))
+        }
     }
 }
