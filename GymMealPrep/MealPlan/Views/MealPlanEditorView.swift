@@ -79,6 +79,14 @@ struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
                 } // END OF HEADER
                 .headerProminence(.increased)
             } // END OF FOR EACH
+            HStack {
+                Spacer()
+                Text("Add new meal")
+                Spacer()
+            }
+            .onTapGesture {
+                viewModel.addMeal()
+            }
         } // END OF LIST
         .sheet(item: $viewModel.selectedMeal) { _ in
             MealPlanEditorSheetView(saveHandler: viewModel as MealPlanEditorSheetView.MealPlanEditorSaveHandler)

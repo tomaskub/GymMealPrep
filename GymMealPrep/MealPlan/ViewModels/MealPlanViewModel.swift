@@ -59,4 +59,8 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
         }
         mealPlan.meals[index].ingredients.append(ingredientToAdd)
     }
+    
+    func addMeal() {
+        mealPlan.meals.append(Meal())
+    }
 }
