@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MealPlanViewModelProtocol: ObservableObject {
+protocol MealPlanViewModelProtocol: ObservableObject, RecipeSaveHandler, IngredientSaveHandler {
     var mealPlan: MealPlan { get }
     var mealPlanName: String { get set }
     
@@ -19,6 +19,7 @@ protocol MealPlanViewModelProtocol: ObservableObject {
 
 class MealPlanViewModel: MealPlanViewModelProtocol {
     
+    @Published var selectedMeal: Meal?
     @Published var mealPlanName: String
     @Published var mealPlan: MealPlan
     private var dataManager: MealPlanDataManagerProtocol
@@ -33,11 +34,29 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
         }
     }
     
-    func removeFromMeal(meal: Meal, _: Ingredient) {
-        //TODO: IMPLEMENT REMOVING INGREDIENT FROM MEAL
+    func removeFromMeal(meal: Meal, _ ingredientToRemove: Ingredient) {
+        guard let index = mealPlan.meals.firstIndex(of: meal) else { return }
+        mealPlan.meals[index].ingredients.removeAll(where: { $0.id == ingredientToRemove.id })
     }
     
-    func removeFromMeal(meal: Meal, _: Recipe) {
-        //TODO: IMPLEMENT REMOVING RECIPE FROM MEAL
+    func removeFromMeal(meal: Meal, _ recipeToRemove: Recipe) {
+        guard let index = mealPlan.meals.firstIndex(of: meal) else { return }
+        mealPlan.meals[index].ingredients.removeAll(where: { $0.id == recipeToRemove.id })
+    }
+    
+    func addRecipe(_ recipeToAdd: Recipe) {
+        guard let meal = selectedMeal, let index = mealPlan.meals.firstIndex(of: meal) else {
+            print("Failure in adding a recipe to meal")
+            return
+        }
+        mealPlan.meals[index].recipes.append(recipeToAdd)
+    }
+    
+    func addIngredient(_ ingredientToAdd: Ingredient, _: String?) {
+        guard let meal = selectedMeal, let index = mealPlan.meals.firstIndex(where: { $0.id == meal.id }) else {
+            print("Failure in ")
+            return
+        }
+        mealPlan.meals[index].ingredients.append(ingredientToAdd)
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
     @ObservedObject var viewModel: MealPlanViewModel
-    @State var selectedMeal: Meal?
     
     var body: some View {
         List {
@@ -72,7 +71,7 @@ struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
                         Spacer()
                     } // END OF H STACK
                     .onTapGesture {
-                        selectedMeal = meal
+                        viewModel.selectedMeal = meal
                     }
                     
                 } header: {
@@ -81,10 +80,8 @@ struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
                 .headerProminence(.increased)
             } // END OF FOR EACH
         } // END OF LIST
-        .sheet(item: $selectedMeal) { _ in
-            Text("Placeholder for editor sheet view")
-            //TODO: REPLACE WITH IMPLEMENTATION OF MEALPLANEDITORSHEETVIEW WHEN READY
-//            MealPlanEditorSheetView()
+        .sheet(item: $viewModel.selectedMeal) { _ in
+            MealPlanEditorSheetView(saveHandler: viewModel as MealPlanEditorSheetView.MealPlanEditorSaveHandler)
         }
     } // END OF BODY
     
@@ -101,6 +98,5 @@ struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
 struct MealPlanEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MealPlanEditorView(viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan, dataManager: DataManager.preview))
-        
     }
 }
