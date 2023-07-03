@@ -12,8 +12,6 @@ struct MealPlanEditorSheetView: View {
     typealias MealPlanEditorSaveHandler = RecipeSaveHandler & IngredientSaveHandler
     var saveHandler: MealPlanEditorSaveHandler
     
-    
-    
     private enum ContentType: String, CaseIterable {
         case ingredient = "Adding ingredient"
         case recipe = "Adding Recipe"
@@ -28,22 +26,19 @@ struct MealPlanEditorSheetView: View {
                         ForEach(ContentType.allCases, id: \.rawValue) { type in
                             Text(type.rawValue).tag(type)
                                 .padding(.vertical, 4)
-                        }
+                        } // END OF FOR EACH
                     } // END OF PICKER
                     .pickerStyle(.segmented)
+                
                 switch selected {
                 case .ingredient:
                     IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel())
                 case .recipe:
-                    //TODO: IMPLEMENT RECIPE PICKER ONCE THE
-                    Spacer()
-                    Text("Selected recipe searcher")
-                    Spacer()
-                }
-             
-            }
-    }
-}
+                    RecipePickerView(saveHandler: saveHandler, viewModel: RecipePickerViewModel(dataManager: .preview))
+                } // END OF SWITCH
+            } // END OF VSTACK
+    } // END OF BODY
+} // END OF STRUCT
 struct MealPlanEditorSheetView_Previews: PreviewProvider {
     class PreviewSaveHandler: RecipeSaveHandler, IngredientSaveHandler {
         func addRecipe(_: Recipe) {
