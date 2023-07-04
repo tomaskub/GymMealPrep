@@ -10,11 +10,17 @@ import Foundation
 protocol MealPlanViewModelProtocol: ObservableObject, RecipeSaveHandler, IngredientSaveHandler {
     var mealPlan: MealPlan { get }
     var mealPlanName: String { get set }
+    var selectedMeal: Meal? { get set }
     
     func removeFromMeal(meal: Meal, _: Ingredient)
     
     func removeFromMeal(meal: Meal, _: Recipe)
     
+    func addRecipe(_: Recipe)
+    
+    func addIngredient(_: Ingredient, _: String?)
+    
+    func addMeal() 
 }
 
 class MealPlanViewModel: MealPlanViewModelProtocol {

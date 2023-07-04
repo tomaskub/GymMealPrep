@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct MealPlanEditorView: View { //<T: MealPlanViewModelProtocol>: View {
-    @ObservedObject var viewModel: MealPlanViewModel
+struct MealPlanEditorView<T: MealPlanViewModelProtocol>: View {
+    @ObservedObject var viewModel: T
     
     var body: some View {
         List {
