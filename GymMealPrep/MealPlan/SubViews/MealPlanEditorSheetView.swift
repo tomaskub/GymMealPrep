@@ -17,6 +17,7 @@ struct MealPlanEditorSheetView: View {
         case recipe = "Adding Recipe"
     }
     @State private var selected: ContentType = .ingredient
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         
@@ -32,9 +33,13 @@ struct MealPlanEditorSheetView: View {
                 
                 switch selected {
                 case .ingredient:
-                    IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: saveHandler, pickerViewModel: IngredientPickerViewModel())
+                    IngredientHostView(title: "Add new ingredient",
+                                       buttonTitle: "Add manually",
+                                       saveHandler: saveHandler,
+                                       pickerViewModel: IngredientPickerViewModel())
                 case .recipe:
-                    RecipePickerView(saveHandler: saveHandler, viewModel: RecipePickerViewModel(dataManager: .preview))
+                    RecipePickerView(saveHandler: saveHandler,
+                                     viewModel: RecipePickerViewModel(dataManager: .preview))
                 } // END OF SWITCH
             } // END OF VSTACK
     } // END OF BODY
@@ -54,7 +59,7 @@ struct MealPlanEditorSheetView_Previews: PreviewProvider {
         NavigationStack {
             Text("Preview")
                 .sheet(isPresented: .constant(true)) {
-                    MealPlanEditorSheetView(saveHandler: PreviewSaveHandler())
+                    MealPlanEditorSheetView(saveHandler: PreviewSaveHandler(), navigationPath: .constant(NavigationPath()))
                 }
         }
         

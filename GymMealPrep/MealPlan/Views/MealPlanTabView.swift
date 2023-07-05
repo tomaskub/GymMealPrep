@@ -32,7 +32,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     }
     
     @StateObject var viewModel: T
-
+    @State var navigationPath = NavigationPath()
     @State var displayType: ViewType = .list
     @State var showTitleInline: Bool = true
     
@@ -78,9 +78,9 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                 .navigationDestination(for: MealPlanTabNavigationState.self) { state in
                     switch state {
                     case .showingMealPlanDetailView(let plan):
-                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), isEditing: false)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: false)
                     case .showingMealPlanEditingView(let plan):
-                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), isEditing: true)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: true)
                     }
                 }
         } // END OF NAV STACK
