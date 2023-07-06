@@ -11,6 +11,7 @@ import PhotosUI
 struct RecipeEditorView: View {
     
     @ObservedObject var viewModel: RecipeViewModel
+    @State var isAddingNewIngredient: Bool = false
     
     var body: some View {
         List {
@@ -33,6 +34,9 @@ struct RecipeEditorView: View {
                 viewModel: IngredientEditorViewModel(ingredientToEdit: ingredientToEdit)) { ingredientToSave in
                 viewModel.addIngredient(ingredientToSave, nil)
             }
+        }
+        .fullScreenCover(isPresented: $isAddingNewIngredient) {
+            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: viewModel, pickerViewModel: IngredientPickerViewModel())
         }
     }//END OF BODY
     
@@ -78,17 +82,15 @@ struct RecipeEditorView: View {
             .onMove { from, to in
                 viewModel.moveIngredient(from: from, to: to)
             }
-            
-            NavigationLink {
-                IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: viewModel, pickerViewModel: IngredientPickerViewModel())
-            } label: {
+
                 HStack {
                     Spacer()
                     Text("Add new ingredient")
                     Spacer()
                 }
-            }
-
+                .onTapGesture {
+                    isAddingNewIngredient.toggle()
+                }
         }//END OF SECTION
     }
     
