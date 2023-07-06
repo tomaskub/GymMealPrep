@@ -20,7 +20,7 @@ protocol MealPlanViewModelProtocol: ObservableObject, RecipeSaveHandler, Ingredi
     
     func addIngredient(_: Ingredient, _: String?)
     
-    func addMeal() 
+    func addMeal()
 }
 
 class MealPlanViewModel: MealPlanViewModelProtocol {
@@ -68,5 +68,14 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
     
     func addMeal() {
         mealPlan.meals.append(Meal())
+    }
+    
+    func saveChanges() {
+        updateMealPlan()
+        dataManager.updateAndSave(mealPlan: mealPlan)
+    }
+    
+    func updateMealPlan() {
+        mealPlan.name = mealPlanName
     }
 }

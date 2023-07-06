@@ -24,6 +24,9 @@ struct MealPlanHostView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        if isEditing == true {
+                            viewModel.saveChanges()
+                        }
                         isEditing.toggle()
                     } label: {
                         Text(isEditing ? "Done" : "Edit")
