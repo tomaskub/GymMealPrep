@@ -20,7 +20,7 @@ struct IngredientHostView: View {
     
     var saveHandler: IngredientSaveHandler
     
-    @StateObject var pickerViewModel: IngredientPickerViewModel
+    @ObservedObject var pickerViewModel: IngredientPickerViewModel
     @State private var addNewIngredient: Bool = false
     @State private var selectedIngredient: Ingredient? = nil
     
