@@ -24,7 +24,7 @@ class DataManager: NSObject, ObservableObject {
     
     //MARK: PRIVATE PROPERTIES
     private(set) var managedContext: NSManagedObjectContext
-    private let recipieFRC: NSFetchedResultsController<RecipeMO>
+    private let recipeFRC: NSFetchedResultsController<RecipeMO>
     private let mealPlanFRC: NSFetchedResultsController<MealPlanMO>
     
     //MARK: INIT
@@ -44,20 +44,21 @@ class DataManager: NSObject, ObservableObject {
         //Build FRCs
         let fetchRequest = RecipeMO.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        self.recipieFRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.recipeFRC = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         let mealPlanFetchRequest = MealPlanMO.fetchRequest()
         mealPlanFetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         self.mealPlanFRC = NSFetchedResultsController(fetchRequest: mealPlanFetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         super.init()
-        
+        recipeFRC.delegate = self
+        mealPlanFRC.delegate = self
         if type == .preview {
             addPreviewData()
         }
         //Initial fetches
-        try? recipieFRC.performFetch()
-        if let newRecipes = recipieFRC.fetchedObjects {
+        try? recipeFRC.performFetch()
+        if let newRecipes = recipeFRC.fetchedObjects {
             self.recipeArray = newRecipes.map { Recipe(recipeMO: $0) }
         }
         try? mealPlanFRC.performFetch()
