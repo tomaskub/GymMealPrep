@@ -50,7 +50,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                 .toolbar {
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(value: MealPlan(meals: [])) {
+                        NavigationLink(value: MealPlanTabNavigationState.showingMealPlanEditingView(MealPlan(meals: []))) {
                             Image(systemName: "plus.circle")
                         }
                         
