@@ -31,18 +31,11 @@ struct RecipeListTabView: View {
             .navigationDestination(for: NavigationState.self) { state in
                 switch state {
                 case .showingRecipeDetailEdit(let recipe):
-                    RecipeHostView(
-                        isEditing: true,
-                        viewModel: RecipeViewModel(recipe: recipe,
-                                                   dataManager: viewModel.provideDataManagerType()),
-                        path: $path)
+                    RecipeHostView(isEditing: true, recipe: recipe, path: $path)
                 case .addingNewRecipeText:
                     RecipeCreatorHostView(path: $path)
                 case .showingRecipeDetail(let recipe):
-                    RecipeHostView(
-                        viewModel: RecipeViewModel(recipe: recipe,
-                                                   dataManager: viewModel.provideDataManagerType()),
-                        path: $path)
+                    RecipeHostView(isEditing: false, recipe: recipe, path: $path)
                 }
             }
         }

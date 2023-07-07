@@ -9,11 +9,16 @@ import SwiftUI
 
 struct RecipeHostView: View {
     
-    @Environment(\.dismiss) var dismiss
-    
     @State var isEditing: Bool = false
-    @ObservedObject var viewModel: RecipeViewModel
+    @StateObject var viewModel: RecipeViewModel
     @Binding var path: NavigationPath
+    
+    init(isEditing: Bool, recipe: Recipe, dataManager: DataManager = DataManager.shared, path: Binding<NavigationPath>) {
+        self._viewModel = StateObject(wrappedValue: RecipeViewModel(recipe: recipe, dataManager: dataManager))
+        self._path = path
+        self.isEditing = isEditing
+    }
+    
     var body: some View {
         ZStack {
             
@@ -66,7 +71,12 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview), path: .constant(NavigationPath()))
+            RecipeHostView(
+                isEditing: false,
+                recipe: SampleData.recipieCilantroLimeChicken,
+                dataManager: .preview,
+                path:.constant(NavigationPath())
+            )
         }
     }
 }
