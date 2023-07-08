@@ -20,7 +20,7 @@ class RecipeViewModel: ObservableObject {
     @Published var selectedPhoto: PhotosPickerItem? = nil {
         didSet {
             if let selectedPhoto {
-                Task {
+                Task { @MainActor in 
                     recipe.imageData = try await loadTransferable(from: selectedPhoto)
                 }
             }
