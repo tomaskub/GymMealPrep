@@ -166,7 +166,7 @@ struct RecipeEditorView: View {
                     viewModel.addTag()
                 }
             
-            ChipView(tags: $viewModel.recipe.tags, avaliableWidth: UIScreen.main.bounds.width - 80, alignment: .leading) { tag in
+            ChipView(tags: $viewModel.tags, avaliableWidth: UIScreen.main.bounds.width - 80, alignment: .leading) { tag in
                 Text(tag.text)
                     .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
                     .background(
