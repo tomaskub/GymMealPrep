@@ -14,11 +14,6 @@ class RecipeViewModel: ObservableObject {
     
     //MARK: PUBLISHED PROPERTIES
     @Published var recipe: Recipe
-    @Published var tags: [Tag] {
-        didSet {
-            recipe.tags = tags
-        }
-    }
     @Published var tagText = String()
     @Published var selectedIngredient: Ingredient?
     @Published private var recipeDataManager: RecipeDataManagerProtocol
@@ -74,7 +69,6 @@ class RecipeViewModel: ObservableObject {
             self.timeWaitingInMinutes = String()
         }
         self.recipeDataManager = dataManager
-        self.tags = recipe.tags
         
     }
     
@@ -107,7 +101,7 @@ extension RecipeViewModel {
     /// Create tag with a new UUID and tagText to the recipie referenced by view model
     func addTag() {
         let tag = Tag(id: UUID(), text: tagText)
-        tags.append(tag)
+        recipe.tags.append(tag)
         tagText = String()
     }
     
