@@ -25,6 +25,11 @@ struct ChipView<Content: View>: View {
                     ForEach(row) { tag in
                         HStack {
                             content(tag)
+                                .onLongPressGesture {
+                                    withAnimation(.linear) {
+                                        selectedTag = tag
+                                    }
+                                }
                             if tag == selectedTag {
                                 Button {
                                     removeSelectedTag()
@@ -32,28 +37,17 @@ struct ChipView<Content: View>: View {
                                     Image(systemName: "x.circle")
                                 }
                             }
-                                
+                        } // END OF HSTACK
+                        .fixedSize()
+                        .readSize { size in
+                            tagSize[tag] = size
                         }
-                            .fixedSize()
-                            .readSize { size in
-                                tagSize[tag] = size
-                            }
-                            .onLongPressGesture {
-                                withAnimation(.linear) {
-                                    selectedTag = tag
-                                }
-                                
-                                    
-                            }
-                    }
+                    } // END OF FOR EACH
                 }// END OF HSTACK
-            }
-            
-
-                
-            
+            } // END OF FOR EACH
         }// END OF VSTACK
     }// END OF BODY
+    
     private func removeSelectedTag() {
         if let selectedTag {
             tags.removeAll(where: {$0.id == selectedTag.id})
@@ -84,15 +78,15 @@ struct ChipView_Previews: PreviewProvider {
     static var previews: some View {
         ChipView(tags:
                 .constant([Tag(text: "Rice"),
-                                     Tag(text: "Chicken"),
-                                     Tag(text: "Dinner"),
-                                     Tag(text: "Lunch")]),
-                                  avaliableWidth: 200, alignment: .leading) { tag in
+                           Tag(text: "Chicken"),
+                           Tag(text: "Dinner"),
+                           Tag(text: "Lunch")]),
+                 avaliableWidth: 200, alignment: .leading) { tag in
             Text(tag.text)
                 .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
                 .background(
-                Capsule()
-                    .foregroundColor(.blue))
+                    Capsule()
+                        .foregroundColor(.blue))
         }
         
     }
