@@ -22,7 +22,7 @@ struct RecipeCreatorView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            TextField("Recipe titile", text: $viewModel.recipeTitle)
+            TextField("Recipe title", text: $viewModel.recipeTitle)
                 .focused($textFieldInFocus, equals: .title)
                 .font(.title3)
                 .fontWeight(.semibold)
