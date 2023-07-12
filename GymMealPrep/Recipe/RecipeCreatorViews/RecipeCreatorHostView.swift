@@ -22,30 +22,30 @@ struct RecipeCreatorHostView: View {
     
     //MARK: BODY
     var body: some View {
-            VStack {
-                switch displayedStage {
-                case 0:
-                    RecipeCreatorView(viewModel: viewModel)
-                        .transition(stageTransition)
-                case 1:
-                    RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
-                        .transition(stageTransition)
-                case 2:
-                    RecipeCreatorInstructionsView(viewModel: viewModel)
-                        .transition(stageTransition)
-                case 3:
-                    RecipeCreatorConfirmationView(viewModel: viewModel)
-                        .transition(stageTransition)
-                default:
-                    Text(String())
-                }
-                stageControls
-                
-            } // END OF VSTACK
-            .ignoresSafeArea(.keyboard)
+        ScrollView {
+                VStack {
+                    switch displayedStage {
+                    case 0:
+                        RecipeCreatorView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    case 1:
+                        RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
+                            .transition(stageTransition)
+                    case 2:
+                        RecipeCreatorInstructionsView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    case 3:
+                        RecipeCreatorConfirmationView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    default:
+                        Text(String())
+                    }
+                    stageControls
+                } // END OF VSTACK
+            } // END OF SCROLL VIEW
             .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
-    
+
     var stageControls: some View {
         HStack {
             Spacer()
