@@ -40,6 +40,7 @@
 		D65E4C9A2A40E3A4008C7A2F /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C992A40E3A4008C7A2F /* Meal.swift */; };
 		D65E4C9D2A40EB23008C7A2F /* MealMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C9B2A40EB23008C7A2F /* MealMO+CoreDataClass.swift */; };
 		D65E4C9E2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C9C2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift */; };
+		D661A4502A5F4A0F005C0C5B /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */; };
 		D666049D2A13804B000AF1B7 /* IngredientPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */; };
 		D666049E2A138122000AF1B7 /* Edamam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6169D942A12C95400CD9C60 /* Edamam-Info.plist */; };
 		D66836D92A18B66600CC28E5 /* IngredientPickerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */; };
@@ -167,6 +168,7 @@
 		D65E4C992A40E3A4008C7A2F /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		D65E4C9B2A40EB23008C7A2F /* MealMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D65E4C9C2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
 		D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerViewModel.swift; sourceTree = "<group>"; };
 		D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerRowView.swift; sourceTree = "<group>"; };
 		D674FB0F2A5078370066F667 /* MealPlanPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanPageView.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */,
+				D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */,
 				D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */,
 			);
 			path = GymMealPrepUITests;
@@ -824,6 +827,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D661A4502A5F4A0F005C0C5B /* RecipeCreatorUITests.swift in Sources */,
 				D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */,
 				D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */,
 			);
