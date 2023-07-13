@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct RecipeCreatorHostView: View {
+struct RecipeCreatorHostView: View, KeyboardReadable {
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
     @State private var displayedStage: Int = 0
     @State private var processStage: Int = 0
-    
+    @State private var isShowingStageControls: Bool = true
     @Binding var path: NavigationPath
     
     let stageTransition: AnyTransition = {
@@ -39,8 +39,13 @@ struct RecipeCreatorHostView: View {
                     default:
                         Text(String())
                     }
-                    stageControls
+                    if isShowingStageControls {
+                        stageControls
+                    }
                 } // END OF VSTACK
+                .onReceive(keyboardPublisher, perform: { isKeyboardVisible in
+                    isShowingStageControls = !isKeyboardVisible
+                })
             .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
 
