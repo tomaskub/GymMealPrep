@@ -22,7 +22,6 @@ struct RecipeCreatorHostView: View {
     
     //MARK: BODY
     var body: some View {
-        ScrollView {
                 VStack {
                     switch displayedStage {
                     case 0:
@@ -42,7 +41,6 @@ struct RecipeCreatorHostView: View {
                     }
                     stageControls
                 } // END OF VSTACK
-            } // END OF SCROLL VIEW
             .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
 
