@@ -22,6 +22,7 @@ final class RecipeCreatorUITests: XCTestCase {
     let recipeTitleInput = "Breakfast burrito"
     let ingredientsInput = "2 eggs\n2bacon strips\n1flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
     let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the buttrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
+    let standardTimeout = 2.5
     
     override func setUp() {
         app = XCUIApplication()
@@ -43,7 +44,7 @@ final class RecipeCreatorUITests: XCTestCase {
         
         // Then
         let addFromTextButton = recipiesNavigationBar.buttons["Add from text"]
-        let addFromTextButtonExists = addFromTextButton.waitForExistence(timeout: 2.5)
+        let addFromTextButtonExists = addFromTextButton.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(addFromTextButtonExists, "Button add from text should exist")
     }
     
@@ -57,7 +58,7 @@ final class RecipeCreatorUITests: XCTestCase {
         
         // Then
         let navigationTitleStaticText = app.navigationBars["Create recipe"].staticTexts["Create recipe"]
-        let navigationTitleExists = navigationTitleStaticText.waitForExistence(timeout: 2.5)
+        let navigationTitleExists = navigationTitleStaticText.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(navigationTitleExists, "Navigation titile should exist")
     }
     
@@ -73,13 +74,31 @@ final class RecipeCreatorUITests: XCTestCase {
         let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
         let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
         
-        let ingredientsToolTipTextViewExists = ingredientsToolTipTextView.waitForExistence(timeout: 2.5)
+        let ingredientsToolTipTextViewExists = ingredientsToolTipTextView.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(ingredientsToolTipTextViewExists, "Tool tip for ingredients should exist")
         
-        let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: 2.5)
+        let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(instructionsToolTipTextViewExists, "Tool tip for instructions should exist")
     }
-
+    
+    func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        
+        // When
+        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
+        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
+        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
+        ingredientsToolTipTextView.tap()
+        instructionToolTipTextView.tap()
+        
+        // Then
+        let expectationForIngredientsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: ingredientsToolTipTextView, handler: .none)
+        let expectationForInstructionsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: instructionToolTipTextView, handler: .none)
+        let testResult = XCTWaiter.wait(for: [expectationForIngredientsToolTipExistance, expectationForInstructionsToolTipExistance], timeout: standardTimeout)
+        XCTAssertEqual(testResult, .completed, "Both tooltips should not exist after tapping")
+    }
+    
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
@@ -94,6 +113,11 @@ final class RecipeCreatorUITests: XCTestCase {
 }
 //MARK: HELPER FUNCTIONS
 extension RecipeCreatorUITests {
+    
+    func navigateToRecipeCreatorView() {
+        navigateToRecipeList()
+        navigateToRecipeCreatorViewFromRecipeList()
+    }
     
     func navigateToRecipeList() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
