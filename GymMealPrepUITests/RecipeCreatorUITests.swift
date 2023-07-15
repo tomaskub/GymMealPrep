@@ -12,7 +12,7 @@ final class RecipeCreatorUITests: XCTestCase {
     //MARK: INFORMATION ABOUT NAMING
     /*
      Naming structure: test_UnitOfWork_StateUnderTest_ExpectedBehaviour
-     Naming structure: test_[Struct or class]_[variable or function]_[expected result]
+     Naming structure: test_[Struct or class]_[UI component]_[expected result]
      Testing structure: Given, When, Then
      */
 
@@ -32,8 +32,23 @@ final class RecipeCreatorUITests: XCTestCase {
     override func tearDown() {
         app = nil
     }
-
-    func testRecipeCreatorTitleRecipe() throws {
+    
+    func test_RecipeCreatorHostView_expandableButton_shouldExpandOnTap() throws {
+        // Given
+        navigateToRecipeList()
+        
+        // When
+        let recipiesNavigationBar = app.navigationBars["Recipies"]
+        recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        // Then
+        let addFromTextButton = recipiesNavigationBar.buttons["Add from text"]
+        let addFromTextButtonExists = addFromTextButton.waitForExistence(timeout: 2.5)
+        XCTAssertTrue(addFromTextButtonExists, "Button add from text should exist")
+    }
+    
+    
+    func test_RecipeCreatorHostView_Navigation_shouldNavigateToView() throws {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipies"]
         recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
@@ -61,4 +76,12 @@ final class RecipeCreatorUITests: XCTestCase {
         }
     }
      */
+}
+//MARK: HELPER FUNCTIONS
+extension RecipeCreatorUITests {
+    
+    func navigateToRecipeList() {
+        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
+        
+    }
 }
