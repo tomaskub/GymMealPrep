@@ -60,7 +60,26 @@ final class RecipeCreatorUITests: XCTestCase {
         let navigationTitleExists = navigationTitleStaticText.waitForExistence(timeout: 2.5)
         XCTAssertTrue(navigationTitleExists, "Navigation titile should exist")
     }
-   
+    
+    func test_RecipeCreatorView_Tooltips_shouldBePresent() throws {
+        // Given
+        navigateToRecipeList()
+        
+        // When
+        navigateToRecipeCreatorViewFromRecipeList()
+        
+        // Then
+        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
+        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
+        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
+        
+        let ingredientsToolTipTextViewExists = ingredientsToolTipTextView.waitForExistence(timeout: 2.5)
+        XCTAssertTrue(ingredientsToolTipTextViewExists, "Tool tip for ingredients should exist")
+        
+        let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: 2.5)
+        XCTAssertTrue(instructionsToolTipTextViewExists, "Tool tip for instructions should exist")
+    }
+
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
