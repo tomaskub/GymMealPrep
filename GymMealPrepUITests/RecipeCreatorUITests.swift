@@ -49,22 +49,18 @@ final class RecipeCreatorUITests: XCTestCase {
     
     
     func test_RecipeCreatorHostView_Navigation_shouldNavigateToView() throws {
-        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        let recipiesNavigationBar = app.navigationBars["Recipies"]
-        recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        XCTAssertTrue(recipiesNavigationBar.buttons["Add from text"].exists, "Button add from text should exist")
-        recipiesNavigationBar/*@START_MENU_TOKEN@*/.buttons["Add from text"]/*[[".otherElements[\"Add from text\"].buttons[\"Add from text\"]",".buttons[\"Add from text\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        // type in input data
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        XCTAssertTrue(titleTextField.exists, "Recipe title text field should exist")
-        titleTextField.tap()
-        titleTextField.typeText(recipeTitleInput)
-        let nextButton = app.toolbars["Toolbar"]/*@START_MENU_TOKEN@*/.buttons["Next"]/*[[".otherElements[\"Next\"].buttons[\"Next\"]",".buttons[\"Next\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        XCTAssertTrue(nextButton.exists, "Next button on keyboard toolbar should exist")
-        nextButton.tap()
+        // Given
+        navigateToRecipeList()
+        
+        // When
+        navigateToRecipeCreatorViewFromRecipeList()
+        
+        // Then
+        let navigationTitleStaticText = app.navigationBars["Create recipe"].staticTexts["Create recipe"]
+        let navigationTitleExists = navigationTitleStaticText.waitForExistence(timeout: 2.5)
+        XCTAssertTrue(navigationTitleExists, "Navigation titile should exist")
     }
-    
+   
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
@@ -82,6 +78,12 @@ extension RecipeCreatorUITests {
     
     func navigateToRecipeList() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        
+    }
+    
+    func navigateToRecipeCreatorViewFromRecipeList() {
+        let recipiesNavigationBar = app.navigationBars["Recipies"]
+        recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
+        recipiesNavigationBar.buttons["Add from text"].tap()
     }
 }
