@@ -20,8 +20,8 @@ final class RecipeCreatorUITests: XCTestCase {
     
     //MARK: static input properties
     let recipeTitleInput = "Breakfast burrito"
-    let ingredientsInput = "2 eggs\n2bacon strips\n1flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
-    let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the buttrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
+    let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
+    let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
     let standardTimeout = 2.5
     
     override func setUp() {
@@ -175,8 +175,6 @@ final class RecipeCreatorUITests: XCTestCase {
         // When
         let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
         let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-//        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
         let nextButton = app.toolbars["Toolbar"].buttons["Next"]
         let backButton = app.toolbars["Toolbar"].buttons["Back"]
         
@@ -190,6 +188,24 @@ final class RecipeCreatorUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "Title text field should have focus")
     }
     
+    func test_RecipeCreatorView_TextFields_shouldHoldData() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
+        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
+        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
+        
+        // When
+        enterData()
+        
+        // Then
+        XCTAssertEqual(titleTextField.value as? String, recipeTitleInput, "The recipe title should be the same as input given")
+        XCTAssertEqual(ingredientsTextField.value as? String, ingredientsInput, "The recipe ingredients should be the same as input given")
+        XCTAssertEqual(instructionsTextField.value as? String, instructionsInput, "The recipe instructions should be the same as input given")
+    }
+
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
@@ -227,4 +243,25 @@ extension RecipeCreatorUITests {
         ingredientsToolTipTextView.tap()
         instructionToolTipTextView.tap()
     }
+    
+    func enterData() {
+        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
+        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
+        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
+        
+        titleTextField.tap()
+        titleTextField.typeText(recipeTitleInput)
+        
+        nextButton.tap()
+        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
+        
+        nextButton.tap()
+        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
+        
+        finishButton.tap()
+    }
+    
 }
