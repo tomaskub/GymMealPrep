@@ -114,6 +114,82 @@ final class RecipeCreatorUITests: XCTestCase {
         XCTAssertTrue(nextButtonExists, "Next button should exist")
     }
     
+    func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldNotExistOnTap() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        
+        // When
+        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
+        titleTextField.tap()
+        
+        // Then
+        let backButton = app.toolbars["Toolbar"].buttons["Back"]
+        let expectationForBackButton = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: backButton)
+        let testResult = XCTWaiter.wait(for: [expectationForBackButton], timeout: standardTimeout)
+        XCTAssertEqual(testResult, .completed, "Back button should not exist")
+    }
+    
+    func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldExistAfterTapOnText() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        
+        // When
+        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
+        titleTextField.tap()
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        nextButton.tap()
+        
+        // Then
+        let backButton = app.toolbars["Toolbar"].buttons["Back"]
+        let backButtonExists = backButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(backButtonExists, "Next button should exist")
+    }
+    
+    func test_RecipeCreatorView_keyboardToolbarNextButton_shouldSwitchFocus() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        
+        // When
+        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
+        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        
+        titleTextField.tap()
+        nextButton.tap()
+        
+        // Then
+        let focusExpectation = expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: ingredientsTextField)
+        let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Ingredients text field should have focus")
+    }
+    
+    func test_RecipeCreatorView_keyboardToolBarBackButton_shouldSwitchFocus() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        
+        // When
+        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
+        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
+//        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        let backButton = app.toolbars["Toolbar"].buttons["Back"]
+        
+        titleTextField.tap()
+        nextButton.tap()
+        backButton.tap()
+        
+        // Then
+        let focusExpectation = expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: titleTextField)
+        let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Title text field should have focus")
+    }
+    
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
