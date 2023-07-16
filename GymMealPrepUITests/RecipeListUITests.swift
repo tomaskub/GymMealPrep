@@ -18,6 +18,8 @@ final class RecipeListUITests: XCTestCase {
 
     var app: XCUIApplication!
     
+    let standardTimeout = 2.5
+    
     override func setUp() {
         app = XCUIApplication()
         continueAfterFailure = false
@@ -28,9 +30,23 @@ final class RecipeListUITests: XCTestCase {
         app = nil
     }
 
-    func testExample() throws {
+    func test_RecipeList_TabBar_shouldNavigateToList() throws {
+        // Given
+        // captured in setup
         
+        // When
+        navigateToRecipeList()
+        
+        // Then
+        let navTitleText = app.navigationBars["Recipes"].staticTexts["Recipes"]
+        let result = navTitleText.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Recipe navigation title should exist")
+    }
+}
 
-        
+extension RecipeListUITests {
+    
+    func navigateToRecipeList() {
+        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
     }
 }
