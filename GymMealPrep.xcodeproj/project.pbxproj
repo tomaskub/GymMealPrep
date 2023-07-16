@@ -350,6 +350,7 @@
 			children = (
 				D6C7A2B82A63F0AE00A82757 /* Extensions */,
 				D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */,
+				D69684642A6420EA0064DD83 /* RecipeListUITests.swift */,
 				D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */,
 				D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */,
 			);
@@ -579,7 +580,6 @@
 			children = (
 				D6C7A2B92A63F0E400A82757 /* XCT+Focus.swift */,
 				D69684622A641C9F0064DD83 /* XCUIElement+Existance.swift */,
-				D69684642A6420EA0064DD83 /* RecipeListUITests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
