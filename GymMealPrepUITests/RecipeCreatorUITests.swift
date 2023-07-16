@@ -99,6 +99,21 @@ final class RecipeCreatorUITests: XCTestCase {
         XCTAssertEqual(testResult, .completed, "Both tooltips should not exist after tapping")
     }
     
+    func test_RecipeCreatorView_KeyboardToolBarNextButton_shouldExistOnTap() throws {
+        // Given
+        navigateToRecipeCreatorView()
+        tapToolTips()
+        
+        // When
+        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
+        titleTextField.tap()
+        
+        // Then
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        let nextButtonExists = nextButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(nextButtonExists, "Next button should exist")
+    }
+    
     // do not test performance in this suite of testing
     /*
     func testLaunchPerformance() throws {
@@ -128,5 +143,12 @@ extension RecipeCreatorUITests {
         recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
+    }
+    func tapToolTips() {
+        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
+        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
+        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
+        ingredientsToolTipTextView.tap()
+        instructionToolTipTextView.tap()
     }
 }
