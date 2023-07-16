@@ -12,7 +12,6 @@ struct RecipeCreatorInstructionsView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
     
     var body: some View {
-        VStack {
             List {
                 ForEach($viewModel.parsedInstructions) { instruction in
                     InstructionRowView(instructionText: instruction.text, step: instruction.step.wrappedValue, editable: true)
@@ -36,11 +35,10 @@ struct RecipeCreatorInstructionsView: View {
                 }
             } // END OF LIST
             .scrollContentBackground(.hidden)
-        } // END OF VSTACK
         .navigationTitle("Instructions")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
+    } // END OF BODY
+} // END OF STRUCT
 
 
 struct RecipeCreatorInstructionsView_Previews: PreviewProvider {

@@ -13,8 +13,6 @@ struct RecipeCreatorParserView: View {
     var saveHandler: IngredientSaveHandler
     
     var body: some View {
-        VStack {
-            
             List {
                 
                 Section {
@@ -70,12 +68,9 @@ struct RecipeCreatorParserView: View {
                         .foregroundColor(.blue)
                 } // END OF SECTION
             } // END OF LIST
-        } // END OF VSTACK
-        
         .listStyle(.inset)
         .navigationTitle("Match ingredients")
         .navigationBarTitleDisplayMode(.inline)
-        
     } // END OF BODY
 } // END OF STRUCT
 

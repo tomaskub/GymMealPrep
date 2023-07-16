@@ -40,6 +40,7 @@
 		D65E4C9A2A40E3A4008C7A2F /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C992A40E3A4008C7A2F /* Meal.swift */; };
 		D65E4C9D2A40EB23008C7A2F /* MealMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C9B2A40EB23008C7A2F /* MealMO+CoreDataClass.swift */; };
 		D65E4C9E2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65E4C9C2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift */; };
+		D661A4502A5F4A0F005C0C5B /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */; };
 		D666049D2A13804B000AF1B7 /* IngredientPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */; };
 		D666049E2A138122000AF1B7 /* Edamam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6169D942A12C95400CD9C60 /* Edamam-Info.plist */; };
 		D66836D92A18B66600CC28E5 /* IngredientPickerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */; };
@@ -53,6 +54,7 @@
 		D680C3352A13DDD8002070DF /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3342A13DDD8002070DF /* NetworkController.swift */; };
 		D680C3372A13E75D002070DF /* EdamamLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3362A13E75D002070DF /* EdamamLogicController.swift */; };
 		D680C3392A140A2F002070DF /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D680C3382A140A2F002070DF /* EndpointProtocol.swift */; };
+		D6866BBD2A60931600A5BAD8 /* KeyboardReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6866BBC2A60931600A5BAD8 /* KeyboardReadable.swift */; };
 		D68D5B652A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D5B642A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift */; };
 		D692EEE72A12879400680CCC /* EdamamParserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692EEE62A12879400680CCC /* EdamamParserResponse.swift */; };
 		D692EEE92A129A6D00680CCC /* SampleParserJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D692EEE82A129A6D00680CCC /* SampleParserJson.json */; };
@@ -92,6 +94,7 @@
 		D6C3405429FE7458003F6E06 /* RecipeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405329FE7458003F6E06 /* RecipeListViewModel.swift */; };
 		D6C3405829FFB88B003F6E06 /* RecipeListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */; };
 		D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C3405929FFCE03003F6E06 /* SampleData.swift */; };
+		D6C7A2BA2A63F0E400A82757 /* XCT+Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C7A2B92A63F0E400A82757 /* XCT+Focus.swift */; };
 		D6CD5DC12A43843C004660EE /* MealPlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CD5DC02A43843C004660EE /* MealPlanCardView.swift */; };
 		D6D77A6D2A2269DA006D63B5 /* RecipeCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D77A6C2A2269DA006D63B5 /* RecipeCreatorView.swift */; };
 		D6D77A6F2A226A02006D63B5 /* RecipeCreatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D77A6E2A226A02006D63B5 /* RecipeCreatorViewModel.swift */; };
@@ -167,6 +170,7 @@
 		D65E4C992A40E3A4008C7A2F /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		D65E4C9B2A40EB23008C7A2F /* MealMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D65E4C9C2A40EB23008C7A2F /* MealMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
 		D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerViewModel.swift; sourceTree = "<group>"; };
 		D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerRowView.swift; sourceTree = "<group>"; };
 		D674FB0F2A5078370066F667 /* MealPlanPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanPageView.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		D680C3342A13DDD8002070DF /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		D680C3362A13E75D002070DF /* EdamamLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamLogicController.swift; sourceTree = "<group>"; };
 		D680C3382A140A2F002070DF /* EndpointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
+		D6866BBC2A60931600A5BAD8 /* KeyboardReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardReadable.swift; sourceTree = "<group>"; };
 		D68D5B642A4CAE7C00B0791E /* DataManager+MealPlanMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+MealPlanMOTests.swift"; sourceTree = "<group>"; };
 		D692EEE62A12879400680CCC /* EdamamParserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamParserResponse.swift; sourceTree = "<group>"; };
 		D692EEE82A129A6D00680CCC /* SampleParserJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleParserJson.json; sourceTree = "<group>"; };
@@ -218,6 +223,7 @@
 		D6C3405329FE7458003F6E06 /* RecipeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewModel.swift; sourceTree = "<group>"; };
 		D6C3405729FFB88B003F6E06 /* RecipeListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListRowView.swift; sourceTree = "<group>"; };
 		D6C3405929FFCE03003F6E06 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		D6C7A2B92A63F0E400A82757 /* XCT+Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCT+Focus.swift"; sourceTree = "<group>"; };
 		D6CD5DC02A43843C004660EE /* MealPlanCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MealPlanCardView.swift; path = GymMealPrep/MealPlan/SubViews/MealPlanCardView.swift; sourceTree = SOURCE_ROOT; };
 		D6D77A6C2A2269DA006D63B5 /* RecipeCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorView.swift; sourceTree = "<group>"; };
 		D6D77A6E2A226A02006D63B5 /* RecipeCreatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorViewModel.swift; sourceTree = "<group>"; };
@@ -338,7 +344,9 @@
 		D634FFA129FD42F60034B950 /* GymMealPrepUITests */ = {
 			isa = PBXGroup;
 			children = (
+				D6C7A2B82A63F0AE00A82757 /* Extensions */,
 				D634FFA229FD42F60034B950 /* GymMealPrepUITests.swift */,
+				D661A44F2A5F4A0F005C0C5B /* RecipeCreatorUITests.swift */,
 				D634FFA429FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift */,
 			);
 			path = GymMealPrepUITests;
@@ -562,6 +570,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		D6C7A2B82A63F0AE00A82757 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D6C7A2B92A63F0E400A82757 /* XCT+Focus.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D6EC92F52A027E8900863F2D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,6 +594,7 @@
 				D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */,
 				D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */,
 				D6C3405929FFCE03003F6E06 /* SampleData.swift */,
+				D6866BBC2A60931600A5BAD8 /* KeyboardReadable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -797,6 +814,7 @@
 				D692EEE72A12879400680CCC /* EdamamParserResponse.swift in Sources */,
 				D674FB1C2A50890B0066F667 /* MealPlanTileView.swift in Sources */,
 				D6C1DDBD2A07B7590062B1C5 /* DataManager+IngredientMO.swift in Sources */,
+				D6866BBD2A60931600A5BAD8 /* KeyboardReadable.swift in Sources */,
 				D674FB1E2A5094B50066F667 /* MealPlanDetailView.swift in Sources */,
 				D680C3322A13D998002070DF /* EdamamParserEndpoint.swift in Sources */,
 				D63AFA242A019E2E00574FE0 /* ChipView.swift in Sources */,
@@ -824,6 +842,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C7A2BA2A63F0E400A82757 /* XCT+Focus.swift in Sources */,
+				D661A4502A5F4A0F005C0C5B /* RecipeCreatorUITests.swift in Sources */,
 				D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */,
 				D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */,
 			);

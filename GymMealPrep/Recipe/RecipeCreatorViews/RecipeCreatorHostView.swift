@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct RecipeCreatorHostView: View {
+struct RecipeCreatorHostView: View, KeyboardReadable {
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
     @State private var displayedStage: Int = 0
     @State private var processStage: Int = 0
-    
+    @State private var isShowingStageControls: Bool = true
     @Binding var path: NavigationPath
     
     let stageTransition: AnyTransition = {
@@ -22,29 +22,33 @@ struct RecipeCreatorHostView: View {
     
     //MARK: BODY
     var body: some View {
-        VStack {
-            switch displayedStage {
-            case 0:
-                RecipeCreatorView(viewModel: viewModel)
-                    .transition(stageTransition)
-            case 1:
-                RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
-                    .transition(stageTransition)
-            case 2:
-                RecipeCreatorInstructionsView(viewModel: viewModel)
-                    .transition(stageTransition)
-            case 3:
-                RecipeCreatorConfirmationView(viewModel: viewModel)
-                    .transition(stageTransition)
-            default:
-                Text(String())
-            }
-            stageControls
-            
-        } // END OF VSTACK
-        .toolbar(.hidden, for: .tabBar)
+                VStack {
+                    switch displayedStage {
+                    case 0:
+                        RecipeCreatorView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    case 1:
+                        RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
+                            .transition(stageTransition)
+                    case 2:
+                        RecipeCreatorInstructionsView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    case 3:
+                        RecipeCreatorConfirmationView(viewModel: viewModel)
+                            .transition(stageTransition)
+                    default:
+                        Text(String())
+                    }
+                    if isShowingStageControls {
+                        stageControls
+                    }
+                } // END OF VSTACK
+                .onReceive(keyboardPublisher, perform: { isKeyboardVisible in
+                    isShowingStageControls = !isKeyboardVisible
+                })
+            .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
-    
+
     var stageControls: some View {
         HStack {
             Spacer()
