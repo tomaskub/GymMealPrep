@@ -23,6 +23,7 @@ final class RecipeListUITests: XCTestCase {
     override func setUp() {
         app = XCUIApplication()
         continueAfterFailure = false
+        app.launchArguments = ["-UITests"]
         app.launch()
     }
 
