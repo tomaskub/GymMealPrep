@@ -7,11 +7,27 @@
 
 import SwiftUI
 
+class DependancyContainer: ObservableObject {
+    let signalColor: Color
+    
+    init() {
+        self.signalColor = {
+            if CommandLine.arguments.contains("-UITests") {
+                return Color.blue
+            } else {
+                return Color.red
+            }
+        }()
+    }
+}
+
 @main
 struct GymMealPrepApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(DependancyContainer())
         }
+        
     }
 }
