@@ -33,11 +33,35 @@ final class MealPlanTabUITests: XCTestCase {
     }
     
     func test_MealPlanTab_TabBar_shouldNavigateToTab() {
-        //When
-        app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
-        //Then
+        // When
+        navigateToMealPlanTabView()
+        // Then
         let mealPlansTitle = app.navigationBars["Meal plans"].staticTexts["Meal plans"]
         let result = mealPlansTitle.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Meal plan navigation title should exist")
+    }
+    
+    func test_MealPlanTab_NavigationButtons_shouldExist() {
+        // When
+        navigateToMealPlanTabView()
+        
+        // Then
+        let navigationBar = app.navigationBars["Meal plans"]
+        let addButton = navigationBar.buttons["Add"]
+        let moreButton = navigationBar.buttons["More"]
+        
+        let expectations = [
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: addButton),
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: moreButton)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Add button and more button should exist")
+    }
+}
+
+extension MealPlanTabUITests {
+    
+    func navigateToMealPlanTabView() {
+        app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
     }
 }
