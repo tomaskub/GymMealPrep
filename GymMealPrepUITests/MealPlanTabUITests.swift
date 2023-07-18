@@ -57,6 +57,44 @@ final class MealPlanTabUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Add button and more button should exist")
     }
+    
+    func test_MealPlanTab_AddButton_shouldNavigateMealPlanHostViewEditing() {
+        // Given
+        navigateToMealPlanTabView()
+        
+        // When
+        app.navigationBars["Meal plans"].buttons["Add"].tap()
+        
+        // Then
+        let navBar = app.navigationBars["Adding new meal plan"]
+        let navigationBarTitle = navBar.staticTexts["Adding new meal plan"]
+        let doneButton = navBar.buttons["Done"]
+        
+        let expectations = [
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: doneButton),
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: navigationBarTitle)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Navigation bar titile should exist and done button should exist")
+    }
+    
+    func test_MealPlanTab_ListRowSwipe_shouldShowSwipeActions() {
+        // Given
+        navigateToMealPlanTabView()
+        
+        // When
+        app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].swipeLeft()
+        
+        //Then
+        let editButton = app.collectionViews.buttons["Edit"]
+        let deleteButton = app.collectionViews.buttons["Delete"]
+        let expectations = [
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: editButton),
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: deleteButton)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Edit and delete buttons should exist on swipe left")
+    }
 }
 
 extension MealPlanTabUITests {
