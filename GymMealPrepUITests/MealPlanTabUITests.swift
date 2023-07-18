@@ -95,6 +95,45 @@ final class MealPlanTabUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Edit and delete buttons should exist on swipe left")
     }
+    
+    func test_MealPlanTab_ListRowSwipeAndEdit_shouldNavigateToMealPlanEditorView() {
+        // Given
+        navigateToMealPlanTabView()
+        app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].swipeLeft()
+        let editButton = app.collectionViews.buttons["Edit"]
+        
+        // When
+        editButton.tap()
+        
+        // Then
+        let navBar = app.navigationBars["Editing meal plan"]
+        let navigationBarTitle = navBar.staticTexts["Editing meal plan"]
+        let doneButton = navBar.buttons["Done"]
+        let textField = app.textFields["Sample Test Plan"]
+        let expectations = [
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: doneButton),
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: navigationBarTitle),
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: textField)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Navigation bar title with Sample Test Plan text should exist and done button should exist, text field containg meal plan name should exist")
+    }
+    
+    func test_MealPlanTab_ListRowSwipeAndDelete_shouldDeleteMealPlan() {
+        //Given
+        navigateToMealPlanTabView()
+        let mealPlanCell = app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"]
+        let deleteButton = app.collectionViews.buttons["Delete"]
+        
+        // When
+        mealPlanCell.swipeLeft()
+        deleteButton.tap()
+        
+        // Then
+        let expectation = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: mealPlanCell)
+        let result = XCTWaiter.wait(for: [expectation], timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Sample Test Plan list row should not exist")
+    }
 }
 
 extension MealPlanTabUITests {
