@@ -80,6 +80,7 @@ class DataManager: NSObject, ObservableObject {
         self.updateAndSave(recipe: SampleData.recipieCilantroLimeChicken)
         self.updateAndSave(recipe: SampleData.recipeBreakfastPotatoHash)
         self.updateAndSave(recipe: SampleData.recipeSlowCookerChickenTikkaMasala)
+        self.updateAndSave(mealPlan: SampleData.sampleMealPlan)
     }
     ///Checks for changes in the managed object context and saves if uncommited changes are present
     func saveContext() {
