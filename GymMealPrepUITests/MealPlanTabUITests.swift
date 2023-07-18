@@ -134,6 +134,28 @@ final class MealPlanTabUITests: XCTestCase {
         let result = XCTWaiter.wait(for: [expectation], timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Sample Test Plan list row should not exist")
     }
+    
+    func test_MealPlanTab_MoreButton_shouldShowMenuOnTap() {
+        // Given
+        navigateToMealPlanTabView()
+        let moreButton = app.navigationBars["Meal plans"].buttons["More"].images["More"]
+        let listButton = app.collectionViews.buttons["List"]
+        let cardsButton = app.collectionViews.buttons["Cards"]
+        let tilesButton = app.collectionViews.buttons["Tiles"]
+        
+        // When
+        moreButton.tap()
+        
+        // Then
+        let existancePredicate = NSPredicate(format: "exists == true")
+        let expectations = [
+        expectation(for: existancePredicate, evaluatedWith: listButton),
+        expectation(for: existancePredicate, evaluatedWith: cardsButton),
+        expectation(for: existancePredicate, evaluatedWith: tilesButton)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "List, Cards and Tiles buttons should exist after tapping more button")
+    }
 }
 
 extension MealPlanTabUITests {
