@@ -75,7 +75,7 @@ final class MealPlanTabUITests: XCTestCase {
             expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: navigationBarTitle)]
         
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Navigation bar titile should exist and done button should exist")
+        XCTAssertEqual(result, .completed, "Navigation bar title should exist and done button should exist")
     }
     
     func test_MealPlanTab_ListRowSwipe_shouldShowSwipeActions() {
