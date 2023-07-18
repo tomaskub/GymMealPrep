@@ -10,6 +10,7 @@ import SwiftUI
 enum MealPlanTabNavigationState: Hashable {
     case showingMealPlanDetailView(MealPlan)
     case showingMealPlanEditingView(MealPlan)
+    case showingMealPlanAddingView(MealPlan)
 }
 
 struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
@@ -50,7 +51,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                 .toolbar {
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(value: MealPlanTabNavigationState.showingMealPlanEditingView(MealPlan(meals: []))) {
+                        NavigationLink(value: MealPlanTabNavigationState.showingMealPlanAddingView(MealPlan(meals: []))) {
                             Image(systemName: "plus.circle")
                         }
                         
@@ -81,6 +82,8 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                         MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: false)
                     case .showingMealPlanEditingView(let plan):
                         MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: true)
+                    case .showingMealPlanAddingView(let plan):
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: true, isAddingNewMealPlan: true)
                     }
                 }
         } // END OF NAV STACK

@@ -12,11 +12,12 @@ struct MealPlanHostView: View {
     @ObservedObject var viewModel: MealPlanViewModel
     @Binding var navigationPath: NavigationPath
     @State var isEditing: Bool = false
+    @State var isAddingNewMealPlan: Bool = false
     
     var body: some View {
         ZStack {
             if isEditing {
-                MealPlanEditorView(viewModel: viewModel, navigationPath: $navigationPath)
+                MealPlanEditorView(viewModel: viewModel, navigationPath: $navigationPath, title: provideEditingTitle())
             } else {
                 MealPlanDetailView(viewModel: viewModel)
             }
@@ -26,6 +27,7 @@ struct MealPlanHostView: View {
                     Button {
                         if isEditing == true {
                             viewModel.saveChanges()
+                            isAddingNewMealPlan = false
                         }
                         isEditing.toggle()
                     } label: {
@@ -33,6 +35,12 @@ struct MealPlanHostView: View {
                     }
                 }
             }
+    }
+    func provideEditingTitle() -> String {
+        if isAddingNewMealPlan {
+         return "Adding new meal plan"
+        }
+        return "Editing meal plan"
     }
 }
 
