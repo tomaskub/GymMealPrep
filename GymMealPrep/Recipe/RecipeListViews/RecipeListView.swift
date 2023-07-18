@@ -30,7 +30,7 @@ struct RecipeListView: View {
                 
             } // END OF LIST
             .listStyle(.plain)
-            .navigationTitle("Recipies")
+            .navigationTitle("Recipes")
             
             .toolbar {
                 

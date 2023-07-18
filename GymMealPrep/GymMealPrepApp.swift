@@ -13,5 +13,6 @@ struct GymMealPrepApp: App {
         WindowGroup {
             ContentView()
         }
+        
     }
 }
