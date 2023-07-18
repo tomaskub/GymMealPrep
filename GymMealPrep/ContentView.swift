@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var backgroundColor: DependancyContainer
     
     var body: some View {
         TabView {
@@ -18,7 +17,6 @@ struct ContentView: View {
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
-                .background(backgroundColor.signalColor)
             
             RecipeListTabView()
                     .tabItem {
