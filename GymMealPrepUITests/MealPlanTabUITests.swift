@@ -31,4 +31,13 @@ final class MealPlanTabUITests: XCTestCase {
     override func tearDown() {
         app = nil
     }
+    
+    func test_MealPlanTab_TabBar_shouldNavigateToTab() {
+        //When
+        app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
+        //Then
+        let mealPlansTitle = app.navigationBars["Meal plans"].staticTexts["Meal plans"]
+        let result = mealPlansTitle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Meal plan navigation title should exist")
+    }
 }
