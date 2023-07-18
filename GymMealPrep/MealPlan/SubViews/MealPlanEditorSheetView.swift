@@ -39,7 +39,7 @@ struct MealPlanEditorSheetView: View {
                                        pickerViewModel: IngredientPickerViewModel())
                 case .recipe:
                     RecipePickerView(saveHandler: saveHandler,
-                                     viewModel: RecipePickerViewModel(dataManager: .preview))
+                                     viewModel: RecipePickerViewModel())
                 } // END OF SWITCH
             } // END OF VSTACK
     } // END OF BODY
