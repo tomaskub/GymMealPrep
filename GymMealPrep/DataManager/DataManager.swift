@@ -29,11 +29,18 @@ class DataManager: NSObject, ObservableObject {
     
     //MARK: INIT
     private init(type: DataManagerType) {
+        //set a flag for running UI tests
+        let isRunningUITests = CommandLine.arguments.contains("-UITests")
         //Set container depending on type
         switch type {
         case .normal:
-            let persistanceContainer = PersistanceContainer()
-            self.managedContext = persistanceContainer.viewContext
+            if isRunningUITests {
+                let persistanceContainer = PersistanceContainer(inMemory: true)
+                self.managedContext = persistanceContainer.viewContext
+            } else {
+                let persistanceContainer = PersistanceContainer()
+                self.managedContext = persistanceContainer.viewContext
+            }
         case .testing:
             let persistanceContainer = PersistanceContainer(inMemory: true)
             self.managedContext = persistanceContainer.viewContext
@@ -53,7 +60,7 @@ class DataManager: NSObject, ObservableObject {
         super.init()
         recipeFRC.delegate = self
         mealPlanFRC.delegate = self
-        if type == .preview {
+        if type == .preview || isRunningUITests {
             addPreviewData()
         }
         //Initial fetches
