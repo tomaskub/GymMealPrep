@@ -9,7 +9,6 @@ import XCTest
 
 final class MealPlanTabUITests: XCTestCase {
 
-    
     //MARK: INFORMATION ABOUT NAMING
     /*
      Naming structure: test_UnitOfWork_StateUnderTest_ExpectedBehaviour
