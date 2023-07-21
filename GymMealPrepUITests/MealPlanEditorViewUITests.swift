@@ -50,6 +50,41 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "The headers static texts should exist")
     }
     
+    func test_mealPlanEditorView_mealRecipesAndIngredientsText_exists() {
+        // Given
+        navigateToEdit()
+        // TODO: Remove with type safe and change safe reference
+        let elementsQuery = app.collectionViews.staticTexts
+        
+        let slowCookerStaticText = elementsQuery["Slow cooker chicken tikka masala"]
+        let riceStaticText = elementsQuery["Rice 50.0 grams"]
+        let porkShoulderStaticText = elementsQuery["Pork shoulder 200.0 grams"]
+        let potatoesStaticText = elementsQuery["Potatoes 250.0 gram"]
+        let coleslawStaticText = elementsQuery["Coleslaw 100.0 grams"]
+        let potatoHashStaticText = elementsQuery["Breakfast potato hash"]
+
+        
+        // Then
+        
+        let existancePredicate = NSPredicate(format: "exists == true")
+        
+        let potatoHashExpectation = expectation(for: existancePredicate, evaluatedWith: potatoHashStaticText)
+        let slowCookerExpectation = expectation(for: existancePredicate, evaluatedWith: slowCookerStaticText)
+        let riceExpectation = expectation(for: existancePredicate, evaluatedWith: riceStaticText)
+        
+        let porkShoulderExpectation = expectation(for: existancePredicate, evaluatedWith: porkShoulderStaticText)
+        let potatoesExpectation = expectation(for: existancePredicate, evaluatedWith: potatoesStaticText)
+        let coleslawExpectation = expectation(for: existancePredicate, evaluatedWith: coleslawStaticText)
+        
+        let firstResult = XCTWaiter.wait(for: [potatoHashExpectation, slowCookerExpectation, riceExpectation], timeout: standardTimeout)
+        XCTAssertEqual(firstResult, .completed, "Potato hash, slow cooker and rice static texts should exist")
+        
+        app.swipeUp()
+        
+        let resultSecond = XCTWaiter.wait(for: [porkShoulderExpectation, potatoesExpectation, coleslawExpectation], timeout: standardTimeout)
+        XCTAssertEqual(resultSecond, .completed, "Pork, potatoes and coleslaw static texts should exist")
+    }
+    
     func navigateToEdit() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
