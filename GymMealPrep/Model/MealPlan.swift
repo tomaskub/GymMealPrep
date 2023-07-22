@@ -26,7 +26,7 @@ struct MealPlan: Identifiable, Hashable {
         self.id = mealPlanMO.id
         self.name = mealPlanMO.name
         if let mealsMO = mealPlanMO.meals {
-            self.meals = mealsMO.allObjects.compactMap({ $0 as? MealMO }).map({ Meal(mealMO: $0)})
+            self.meals = mealsMO.array.compactMap({ $0 as? MealMO}).map({ Meal(mealMO: $0)})
         } else {
             self.meals = []
         }
