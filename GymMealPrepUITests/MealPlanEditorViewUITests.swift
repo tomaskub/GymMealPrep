@@ -126,6 +126,36 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertTrue(result, "Delete button should exist")
     }
     
+    func test_mealPlanEditorView_recipeRowDeleteButtonPressed_shoulRemoveRecipeRow() {
+        // Given
+        navigateToEdit()
+        let recipeRow = app.collectionViews.cells.staticTexts["Breakfast potato hash"]
+        let deleteButton = app.collectionViews.buttons["Delete"]
+        
+        // When
+        recipeRow.swipeLeft()
+        deleteButton.tap()
+        
+        // Then
+        let result = recipeRow.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Recipe row should not exist")
+    }
+    
+    func test_mealPlanEditorView_ingredientRowDeleteButtonPressed_shoulRemoveRecipeRow() {
+        // Given
+        navigateToEdit()
+        let ingredientRow = app.collectionViews.cells.staticTexts["Rice 50.0 grams"]
+        let deleteButton = app.collectionViews.buttons["Delete"]
+        
+        // When
+        ingredientRow.swipeLeft()
+        deleteButton.tap()
+        
+        // Then
+        let result = ingredientRow.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Ingredient row should not exist")
+    }
+    
     func navigateToEdit() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
