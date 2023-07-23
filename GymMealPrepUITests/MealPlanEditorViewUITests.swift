@@ -85,6 +85,20 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertEqual(resultSecond, .completed, "Pork, potatoes and coleslaw static texts should exist")
     }
     
+    func test_mealPlanEditorView_addToMealButton_shouldShowAddingSheet() {
+        // Given
+        navigateToEdit()
+        let addToMealButton = app.collectionViews.staticTexts["Add to meal"].firstMatch
+        let typeToggle = app.sheets.toggles["Adding ingredient"]
+        
+        // When
+        addToMealButton.tap()
+        
+        // Then
+        let result = typeToggle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Toggle switch with adding ingredient should exist")
+    }
+    
     func navigateToEdit() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
