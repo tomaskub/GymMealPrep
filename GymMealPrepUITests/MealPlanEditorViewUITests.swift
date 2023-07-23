@@ -156,6 +156,28 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertTrue(result, "Ingredient row should not exist")
     }
     
+    func test_MealPlanEditorView_AddNewMealButtonPressed_shouldCreateNewMeal() {
+        // Given
+        navigateToEdit()
+        let addNewMealButton = app.collectionViews.cells.staticTexts["Add new meal"]
+        let meal4Text = app.collectionViews.staticTexts["Meal #4"]
+        
+        // When
+        let maxCount: Int = 10
+        var count: Int = 0
+        
+        while !(addNewMealButton.exists) && count < maxCount {
+            app.swipeUp()
+            count += 1
+        }
+        
+        addNewMealButton.tap()
+        
+        // Then
+        let result = meal4Text.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Meal #4 should exist")
+    }
+    
     func navigateToEdit() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
