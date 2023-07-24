@@ -47,7 +47,7 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
     
     func removeFromMeal(meal: Meal, _ recipeToRemove: Recipe) {
         guard let index = mealPlan.meals.firstIndex(of: meal) else { return }
-        mealPlan.meals[index].ingredients.removeAll(where: { $0.id == recipeToRemove.id })
+        mealPlan.meals[index].recipes.removeAll(where: { $0.id == recipeToRemove.id })
     }
     
     func addRecipe(_ recipeToAdd: Recipe) {
