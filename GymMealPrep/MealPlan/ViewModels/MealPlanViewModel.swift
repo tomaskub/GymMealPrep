@@ -21,6 +21,8 @@ protocol MealPlanViewModelProtocol: ObservableObject, RecipeSaveHandler, Ingredi
     func addIngredient(_: Ingredient, _: String?)
     
     func addMeal()
+    
+    func deleteMeal(_: Meal)
 }
 
 class MealPlanViewModel: MealPlanViewModelProtocol {
@@ -77,5 +79,9 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
     
     func updateMealPlan() {
         mealPlan.name = mealPlanName
+    }
+    
+    func deleteMeal(_ meal: Meal) {
+        mealPlan.meals.removeAll(where: { $0.id == meal.id})
     }
 }
