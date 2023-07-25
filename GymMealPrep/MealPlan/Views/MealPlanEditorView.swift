@@ -117,7 +117,16 @@ extension MealPlanEditorView {
             }
             
         } header: {
+            HStack{
                 Text("Meal #\(index + 1)")
+                Spacer()
+                Button {
+                    viewModel.deleteMeal(meal)
+                } label: {
+                    Label("Delete meal", systemImage: "trash.circle.fill")
+                        .foregroundColor(.red)
+                }
+            }
         } // END OF HEADER
         .headerProminence(.increased)
     }
