@@ -1,5 +1,5 @@
 //
-//  XCUIElement+Existance.swift
+//  XCUIElement+Extensions.swift
 //  GymMealPrepUITests
 //
 //  Created by Tomasz Kubiak on 7/16/23.
