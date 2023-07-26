@@ -75,9 +75,26 @@ final class MealPlanHostViewUITests: XCTestCase {
         // Then
         let doneButtonExistance = app.navigationBars["Editing meal plan"].buttons["Done"].waitForExistence(timeout: standardTimeout)
         XCTAssert(doneButtonExistance, "Done button should exist when editing meal plan")
-        
-        
     }
+    
+    func test_MealPlanHostView_DetailView_isUpdatingAfterEdit() {
+        // Given
+        navigateToMealPlanEditor()
+        let deleteMealButton = app.collectionViews.buttons["Delete meal"].firstMatch
+        let doneButton = app.navigationBars.buttons["Done"]
+        let meal1RecipeStaticText = app.collectionViews.cells.staticTexts["Breakfast potato hash"]
+        
+        // When
+        deleteMealButton.tap()
+        doneButton.tap()
+        
+        // Then
+        let result = meal1RecipeStaticText.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Text 'Breakfast potato hash' should not exist")
+    }
+}
+
+extension MealPlanHostViewUITests {
     
     func navigateToMealPlanTabView() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
@@ -86,6 +103,10 @@ final class MealPlanHostViewUITests: XCTestCase {
     func navigateToMealPlanDetail() {
         navigateToMealPlanTabView()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
-        
+    }
+    
+    func navigateToMealPlanEditor() {
+        navigateToMealPlanDetail()
+        app.navigationBars.buttons["Edit"].tap()
     }
 }
