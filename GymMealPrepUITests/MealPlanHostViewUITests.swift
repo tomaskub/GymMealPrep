@@ -75,9 +75,45 @@ final class MealPlanHostViewUITests: XCTestCase {
         // Then
         let doneButtonExistance = app.navigationBars["Editing meal plan"].buttons["Done"].waitForExistence(timeout: standardTimeout)
         XCTAssert(doneButtonExistance, "Done button should exist when editing meal plan")
-        
-        
     }
+    
+    func test_MealPlanHostView_DetailView_isUpdatingMealsAfterEdit() {
+        // Given
+        navigateToMealPlanEditor()
+        let deleteMealButton = app.collectionViews.buttons["Delete meal"].firstMatch
+        let doneButton = app.navigationBars.buttons["Done"]
+        let meal1RecipeStaticText = app.collectionViews.cells.staticTexts["Breakfast potato hash"]
+        
+        // When
+        deleteMealButton.tap()
+        doneButton.tap()
+        
+        // Then
+        let result = meal1RecipeStaticText.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Text 'Breakfast potato hash' should not exist")
+    }
+    
+    func test_MealPlanHostView_DetailView_isUpdatingNameAfterEdit() {
+        // Given
+        navigateToMealPlanEditor()
+        let titleTextField = app.collectionViews.textFields["meal-plan-title-textfield"]
+        let doneButton = app.navigationBars.buttons["Done"]
+        let navigationTitle = app.navigationBars.staticTexts["Changed meal plan name"]
+        let changedMealPlanName = "Changed meal plan name"
+        
+        // When
+        titleTextField.tap()
+        titleTextField.clearAndTypeText(changedMealPlanName)
+//        titleTextField.typeText(changedMealPlanName)
+        doneButton.tap()
+        
+        // Then
+        let result = navigationTitle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Navigation titile 'Changed meal plan' should exist")
+    }
+}
+
+extension MealPlanHostViewUITests {
     
     func navigateToMealPlanTabView() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
@@ -86,6 +122,10 @@ final class MealPlanHostViewUITests: XCTestCase {
     func navigateToMealPlanDetail() {
         navigateToMealPlanTabView()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
-        
+    }
+    
+    func navigateToMealPlanEditor() {
+        navigateToMealPlanDetail()
+        app.navigationBars.buttons["Edit"].tap()
     }
 }

@@ -44,7 +44,7 @@ extension MealPlanEditorView {
             
             TextField("Meal plan name", text: $viewModel.mealPlanName)
                 .textFieldStyle(.roundedBorder)
-            
+                .accessibilityIdentifier("meal-plan-title-textfield")
             RecipeSummaryView(
                 cal: viewModel.mealPlan.nutrition.calories,
                 proteinInGrams: viewModel.mealPlan.nutrition.protein,

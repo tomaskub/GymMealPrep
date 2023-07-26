@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct MealPlanHostView: View {
-    
-    @ObservedObject var viewModel: MealPlanViewModel
+    @StateObject var viewModel: MealPlanViewModel
     @Binding var navigationPath: NavigationPath
     @State var isEditing: Bool = false
-    @State var isAddingNewMealPlan: Bool = false
+    @State var isAddingNewMealPlan: Bool = false  
+    
+    init(viewModel: MealPlanViewModel, navigationPath: Binding<NavigationPath>, isEditing: Bool = false, isAddingNewMealPlan: Bool = false) {
+        self._viewModel = StateObject.init(wrappedValue: viewModel)
+        self._navigationPath = navigationPath
+        self.isEditing = isEditing
+        self.isAddingNewMealPlan = isAddingNewMealPlan
+    }
     
     var body: some View {
         ZStack {

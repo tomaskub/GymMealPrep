@@ -113,10 +113,6 @@ struct MealPlanTabView_Previews: PreviewProvider {
             })
         }
         
-        func createMealPlanViewModel(for: MealPlan) -> some MealPlanViewModelProtocol {
-            MealPlanViewModel(mealPlan: mealPlanArray[0],
-                                dataManager: DataManager.preview as MealPlanDataManagerProtocol)
-        }
         init() {
             self.mealPlanArray = []
             for i in 0..<10 {
