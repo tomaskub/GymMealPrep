@@ -77,7 +77,7 @@ final class MealPlanHostViewUITests: XCTestCase {
         XCTAssert(doneButtonExistance, "Done button should exist when editing meal plan")
     }
     
-    func test_MealPlanHostView_DetailView_isUpdatingAfterEdit() {
+    func test_MealPlanHostView_DetailView_isUpdatingMealsAfterEdit() {
         // Given
         navigateToMealPlanEditor()
         let deleteMealButton = app.collectionViews.buttons["Delete meal"].firstMatch
