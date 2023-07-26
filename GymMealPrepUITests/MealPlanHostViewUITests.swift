@@ -92,6 +92,25 @@ final class MealPlanHostViewUITests: XCTestCase {
         let result = meal1RecipeStaticText.waitForNonExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Text 'Breakfast potato hash' should not exist")
     }
+    
+    func test_MealPlanHostView_DetailView_isUpdatingNameAfterEdit() {
+        // Given
+        navigateToMealPlanEditor()
+        let titleTextField = app.collectionViews.textFields["meal-plan-title-textfield"]
+        let doneButton = app.navigationBars.buttons["Done"]
+        let navigationTitle = app.navigationBars.staticTexts["Changed meal plan name"]
+        let changedMealPlanName = "Changed meal plan name"
+        
+        // When
+        titleTextField.tap()
+        titleTextField.clearAndTypeText(changedMealPlanName)
+//        titleTextField.typeText(changedMealPlanName)
+        doneButton.tap()
+        
+        // Then
+        let result = navigationTitle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Navigation titile 'Changed meal plan' should exist")
+    }
 }
 
 extension MealPlanHostViewUITests {
