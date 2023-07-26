@@ -144,7 +144,7 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertTrue(result, "Recipe row should not exist")
     }
     
-    func test_mealPlanEditorView_ingredientRowDeleteButtonPressed_shoulRemoveRecipeRow() {
+    func test_mealPlanEditorView_ingredientRowDeleteButtonPressed_shoulRemoveIngredientRow() {
         // Given
         navigateToEdit()
         let ingredientRow = app.collectionViews.cells.staticTexts["Rice 50.0 grams"]
@@ -181,6 +181,23 @@ final class MealPlanEditorViewUITests: XCTestCase {
         XCTAssertTrue(result, "Meal #4 should exist")
     }
     
+    func test_MealPlanEditorView_DeleteMealButtonPressed_shouldDeleteMeal() {
+        // Given
+        navigateToEdit()
+        let deleteMealButton = app.collectionViews.buttons["Delete meal"].firstMatch
+        // since meal #1 will be assigned to first meal item on list, checking on recipe in starting meal #1
+        let meal1RecipeStaticText = app.collectionViews.cells.staticTexts["Breakfast potato hash"]
+        
+        // When
+        deleteMealButton.tap()
+        
+        // Then
+        let result = meal1RecipeStaticText.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "'Breakfast potato hash' static text should not exit")
+    }
+}
+
+extension MealPlanEditorViewUITests {
     func navigateToEdit() {
         app.tabBars["Tab Bar"].buttons["Meal plans"].tap()
         app.collectionViews.cells.buttons["Sample Test Plan, Total of 3 meals, Calories, 1845, Proteins, 103, Fats, 88, Carbs, 156"].tap()
