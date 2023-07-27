@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class RecipeCreatorUITests: XCTestCase {
+final class RecipeCreatorHostViewUITests: XCTestCase {
     
     //MARK: INFORMATION ABOUT NAMING
     /*
@@ -33,7 +33,7 @@ final class RecipeCreatorUITests: XCTestCase {
     override func tearDown() {
         app = nil
     }
-    
+    // This should go to recipe list view ui tests
     func test_RecipeCreatorHostView_expandableButton_shouldExpandOnTap() throws {
         // Given
         navigateToRecipeList()
@@ -48,7 +48,7 @@ final class RecipeCreatorUITests: XCTestCase {
         XCTAssertTrue(addFromTextButtonExists, "Button add from text should exist")
     }
     
-    
+    // This should go to recipe list view ui tests
     func test_RecipeCreatorHostView_Navigation_shouldNavigateToView() throws {
         // Given
         navigateToRecipeList()
@@ -61,7 +61,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let navigationTitleExists = navigationTitleStaticText.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(navigationTitleExists, "Navigation titile should exist")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_Tooltips_shouldBePresent() throws {
         // Given
         navigateToRecipeList()
@@ -80,7 +80,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(instructionsToolTipTextViewExists, "Tool tip for instructions should exist")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -98,7 +98,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let testResult = XCTWaiter.wait(for: [expectationForIngredientsToolTipExistance, expectationForInstructionsToolTipExistance], timeout: standardTimeout)
         XCTAssertEqual(testResult, .completed, "Both tooltips should not exist after tapping")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_KeyboardToolBarNextButton_shouldExistOnTap() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -113,7 +113,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let nextButtonExists = nextButton.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(nextButtonExists, "Next button should exist")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldNotExistOnTap() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -129,7 +129,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let testResult = XCTWaiter.wait(for: [expectationForBackButton], timeout: standardTimeout)
         XCTAssertEqual(testResult, .completed, "Back button should not exist")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldExistAfterTapOnText() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -146,7 +146,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let backButtonExists = backButton.waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(backButtonExists, "Next button should exist")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_keyboardToolbarNextButton_shouldSwitchFocus() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -166,7 +166,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Ingredients text field should have focus")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_keyboardToolBarBackButton_shouldSwitchFocus() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -187,7 +187,7 @@ final class RecipeCreatorUITests: XCTestCase {
         let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Title text field should have focus")
     }
-    
+    // This should go to creator tests
     func test_RecipeCreatorView_TextFields_shouldHoldData() throws {
         // Given
         navigateToRecipeCreatorView()
@@ -218,8 +218,9 @@ final class RecipeCreatorUITests: XCTestCase {
     }
      */
 }
+//TODO: NEED TO DECIDE WHERE THOSE FUNCTIONS SHOULD GO 
 //MARK: HELPER FUNCTIONS
-extension RecipeCreatorUITests {
+extension RecipeCreatorHostViewUITests {
     
     func navigateToRecipeCreatorView() {
         navigateToRecipeList()
