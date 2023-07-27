@@ -38,12 +38,12 @@ struct MealPlanEditorSheetView: View {
                                        saveHandler: saveHandler,
                                        pickerViewModel: IngredientPickerViewModel())
                 case .recipe:
-                    RecipePickerView(saveHandler: saveHandler,
-                                     viewModel: RecipePickerViewModel())
+                    RecipePickerView(saveHandler: saveHandler)
                 } // END OF SWITCH
             } // END OF VSTACK
     } // END OF BODY
 } // END OF STRUCT
+
 struct MealPlanEditorSheetView_Previews: PreviewProvider {
     class PreviewSaveHandler: RecipeSaveHandler, IngredientSaveHandler {
         func addRecipe(_: Recipe) {

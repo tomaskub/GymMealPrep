@@ -20,7 +20,7 @@ struct IngredientHostView: View {
     
     var saveHandler: IngredientSaveHandler
     
-    @ObservedObject var pickerViewModel: IngredientPickerViewModel
+    @StateObject var pickerViewModel: IngredientPickerViewModel
     @State private var addNewIngredient: Bool = false
     @State private var selectedIngredient: Ingredient? = nil
     
@@ -37,7 +37,7 @@ struct IngredientHostView: View {
             .buttonStyle(.borderedProminent)
         }
         .sheet(isPresented: $addNewIngredient) {
-            IngredientEditorView(viewModel: IngredientEditorViewModel()) { ingredientToSave in
+            IngredientEditorView { ingredientToSave in
                 // assign ingredient to some value - this is a function already
                 saveHandler.addIngredient(ingredientToSave, pickerViewModel.originalSearchTerm)
                 DispatchQueue.main.async {
@@ -61,9 +61,15 @@ struct IngredientHostView: View {
 struct IngredientHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
-                saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken),
-                pickerViewModel: IngredientPickerViewModel())
+            ZStack {
+                
+            }
+            .fullScreenCover(isPresented: .constant(true)) {
+                IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
+                    saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken),
+                    pickerViewModel: IngredientPickerViewModel())
+            }
+            
         }
     }
 }
