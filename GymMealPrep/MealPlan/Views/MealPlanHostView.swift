@@ -16,8 +16,8 @@ struct MealPlanHostView: View {
     init(viewModel: MealPlanViewModel, navigationPath: Binding<NavigationPath>, isEditing: Bool = false, isAddingNewMealPlan: Bool = false) {
         self._viewModel = StateObject.init(wrappedValue: viewModel)
         self._navigationPath = navigationPath
-        self.isEditing = isEditing
-        self.isAddingNewMealPlan = isAddingNewMealPlan
+        self._isEditing = State.init(initialValue: isEditing)
+        self._isAddingNewMealPlan = State.init(initialValue: isAddingNewMealPlan)
     }
     
     var body: some View {
