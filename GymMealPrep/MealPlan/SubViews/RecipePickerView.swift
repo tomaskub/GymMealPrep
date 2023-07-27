@@ -33,11 +33,17 @@ class RecipePickerViewModel: ObservableObject {
         }
     }
 }
+
 struct RecipePickerView: View {
     
     @Environment(\.dismiss) var dismiss
     var saveHandler: RecipeSaveHandler
-    @StateObject var viewModel: RecipePickerViewModel
+    @StateObject private var viewModel: RecipePickerViewModel
+    
+    init(saveHandler: RecipeSaveHandler, viewModel: RecipePickerViewModel = RecipePickerViewModel()) {
+        self.saveHandler = saveHandler
+        self._viewModel = StateObject.init(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack {
