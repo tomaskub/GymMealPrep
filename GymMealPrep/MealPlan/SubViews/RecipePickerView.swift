@@ -12,28 +12,6 @@ protocol RecipeSaveHandler {
     func addRecipe(_: Recipe)
 }
 
-class RecipePickerViewModel: ObservableObject {
-    @Published var searchTerm: String
-    @Published var retrievedRecipes: [Recipe]
-    
-    private var dataManager: DataManager
-    
-    init(searchTerm: String = String(), retrievedRecipes: [Recipe] = [Recipe](), dataManager: DataManager = .shared) {
-        self.searchTerm = searchTerm
-        self.retrievedRecipes = retrievedRecipes
-        self.dataManager = dataManager
-    }
-    
-    func searchRecipes() {
-        if searchTerm.isEmpty {
-            retrievedRecipes = dataManager.recipeArray
-        } else {
-            retrievedRecipes = dataManager.recipeArray.filter({ $0.name.lowercased().contains(searchTerm.lowercased())
-            })
-        }
-    }
-}
-
 struct RecipePickerView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -77,10 +55,11 @@ struct RecipePickerView: View {
 struct RecipePickerView_Previews: PreviewProvider {
     class PreviewSaveHandler: RecipeSaveHandler {
         func addRecipe(_ recipeToSave: Recipe) {
-            print("Recipe saved: \(recipeToSave)")
+            print("Recipe saved: \(recipeToSave.name)")
         }
     }
     static var previews: some View {
-        RecipePickerView(saveHandler: PreviewSaveHandler(), viewModel: RecipePickerViewModel(dataManager: .preview))
+        RecipePickerView(saveHandler: PreviewSaveHandler(),
+                         viewModel: RecipePickerViewModel(dataManager: .preview))
     }
 }
