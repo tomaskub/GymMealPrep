@@ -68,11 +68,47 @@ final class RecipeListUITests: XCTestCase {
         let testResult = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(testResult, .completed, "All of the elements should exists")
     }
+    
+    // This should go to recipe list view ui tests
+    func test_RecipeList_expandableButton_shouldExpandOnTap() throws {
+        // Given
+        navigateToRecipeList()
+        
+        // When
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
+        recipiesNavigationBar.images["Back"].tap()
+        
+        // Then
+        let addFromTextButton = recipiesNavigationBar.buttons["Add from text"]
+        let result = addFromTextButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Button add from text should exist")
+    }
+    
+    // This should go to recipe list view ui tests
+    func test_RecipeList_Navigation_shouldNavigateToView() throws {
+        // Given
+        navigateToRecipeList()
+        
+        // When
+        navigateToRecipeCreatorViewFromRecipeList()
+        
+        // Then
+        let navigationTitleStaticText = app.navigationBars["Create recipe"].staticTexts["Create recipe"]
+        let result = navigationTitleStaticText.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Navigation titile should exist")
+    }
 }
 
 extension RecipeListUITests {
     
     func navigateToRecipeList() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
+    }
+    
+    func navigateToRecipeCreatorViewFromRecipeList() {
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
+        recipiesNavigationBar.images["Back"].tap()
+        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
+        recipiesNavigationBar.buttons["Add from text"].tap()
     }
 }
