@@ -39,7 +39,7 @@ final class RecipeCreatorUITests: XCTestCase {
         navigateToRecipeList()
         
         // When
-        let recipiesNavigationBar = app.navigationBars["Recipies"]
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
         recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         
         // Then
@@ -231,7 +231,7 @@ extension RecipeCreatorUITests {
     }
     
     func navigateToRecipeCreatorViewFromRecipeList() {
-        let recipiesNavigationBar = app.navigationBars["Recipies"]
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
         recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
