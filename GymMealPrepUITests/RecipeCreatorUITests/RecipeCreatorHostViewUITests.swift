@@ -35,26 +35,122 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
         app = nil
     }
     
+    func test_RecipeCreatorHostView_stageControl_exists() {
+        // Given
+        navigateToRecipeCreatorView()
+        let matchIngredientsButton = app.staticTexts["Match ingredients"]
+        
+        // Then
+        let result = matchIngredientsButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "'Match ingredients' buton should exits")
+    }
+    
+    func test_RecipeCreatorHostView_StageControls_navigatesToParserViewOnTap() {
+        // Given
+        navigateToRecipeCreatorView()
+        let matchIngredientsButton = app.staticTexts["Match ingredients"]
+        let matchIngredientsTitle = app.navigationBars.staticTexts["Match ingredients"]
+        
+        // When
+        matchIngredientsButton.tap()
+        
+        // Then
+        let result = matchIngredientsTitle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Navigation titile 'Match ingredients' should exist")
+    }
+    
+    func test_RecipeCreatorHostView_StageControls_BackButtonAppearsOnAdvancedStage() {
+        // Given
+        navigateToRecipeCreatorView()
+        let matchIngredientsButton = app.staticTexts["Match ingredients"]
+        let backButton = app.images["back-button"]
+        
+        // When
+        matchIngredientsButton.tap()
+        
+        // Then
+        let result = backButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Back button should exist")
+    }
+    
+    func test_RecipeCreatorHostView_StageControls_ForwardButtonShouldExistAfterBackButtonTap() {
+        // Given
+        navigateToRecipeCreatorView()
+        let matchIngredientsButton = app.staticTexts["Match ingredients"]
+        let backButton = app.images["back-button"]
+        let nextButton = app.images["next-button"]
+        
+        // When
+        matchIngredientsButton.tap()
+        _ = backButton.waitForExistence(timeout: standardTimeout)
+        backButton.tap()
+        
+        // Then
+        let result = nextButton.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Next button should exist")
+    }
+
+    func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForParserView() {
+        // Given
+        navigateToRecipeCreatorView()
+        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        
+        // When
+        advanceStageButton.tap()
+        
+        // Then
+        let result = app.staticTexts["Confirm ingredients"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "'Confirm ingredients' static text should exist")
+    }
+    func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForInstructionView() {
+        // Given
+        navigateToRecipeCreatorView()
+        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        
+        // When
+        advanceStageButton.tap()
+        advanceStageButton.tap()
+        
+        // Then
+        let result = app.staticTexts["Confirm instructions"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "'Confirm instructions' static text should exist")
+    }
+    func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForConfirmationView() {
+        // Given
+        navigateToRecipeCreatorView()
+        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        
+        // When
+        advanceStageButton.tap()
+        advanceStageButton.tap()
+        advanceStageButton.tap()
+        
+        // Then
+        let predicate = NSPredicate(format: "exists == true")
+        let expectations = [
+            expectation(for: predicate, evaluatedWith: app.staticTexts["Save and exit"]),
+            expectation(for: predicate, evaluatedWith: app.staticTexts["Save and open"])]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Static texts 'Save and exit' and 'Save and open' should exist")
+    }
 }
 
 //MARK: HELPER FUNCTIONS
 extension RecipeCreatorHostViewUITests {
     
     func navigateToRecipeCreatorView() {
-        navigateToRecipeList()
-        navigateToRecipeCreatorViewFromRecipeList()
-    }
-    
-    func navigateToRecipeList() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-    }
-    
-    func navigateToRecipeCreatorViewFromRecipeList() {
         let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar/*@START_MENU_TOKEN@*/.images["Back"]/*[[".otherElements[\"Back\"].images[\"Back\"]",".images[\"Back\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        recipiesNavigationBar.images["Back"].tap()
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
+    
+    func fillInDataOnCreatorView() {
+        tapToolTips()
+        enterData()
+    }
+    
     func tapToolTips() {
         let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
         let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
