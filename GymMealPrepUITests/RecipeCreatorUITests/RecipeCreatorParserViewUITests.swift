@@ -102,6 +102,23 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
         XCTAssertTrue(result, "Navigation title 'Change match' should exist")
     }
     
+    // Test below will fail if we do not get an incorrect response from API call - we need to launch with no internet or sub the network request with a mock
+    /*
+    func test_RecipeCreatorParserView_IngredientRows_navigatesToIngredientHostViewOnTap() {
+        // Given
+        navigateToRecipeCreatorView()
+        fillInDataOnCreatorView()
+        advanceStage()
+        
+        // When
+        app.cells.staticTexts["We failed to find the ingredient, tap to search for ingredient manually"].tap()
+        
+        // Then
+        let navigationTitle = app.navigationBars.staticTexts["Correct match"]
+        let result = navigationTitle.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Navigation title 'Correct match' should exist")
+    }
+    */
 }
 
 extension RecipeCreatorParserViewUITests {
