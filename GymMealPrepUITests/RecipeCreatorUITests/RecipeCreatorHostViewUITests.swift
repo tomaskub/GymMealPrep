@@ -19,9 +19,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     var app: XCUIApplication!
     
     //MARK: static input properties
-    let recipeTitleInput = "Breakfast burrito"
-    let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
-    let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
+    
     let standardTimeout = 2.5
     
     override func setUp() {
@@ -146,38 +144,4 @@ extension RecipeCreatorHostViewUITests {
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
-    
-    func fillInDataOnCreatorView() {
-        tapToolTips()
-        enterData()
-    }
-    
-    func tapToolTips() {
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
-        ingredientsToolTipTextView.tap()
-        instructionToolTipTextView.tap()
-    }
-    
-    func enterData() {
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
-        
-        titleTextField.tap()
-        titleTextField.typeText(recipeTitleInput)
-        
-        nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
-        
-        nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
-        
-        finishButton.tap()
-    }
-    
 }
