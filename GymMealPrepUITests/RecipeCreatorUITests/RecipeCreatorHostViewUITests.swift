@@ -129,9 +129,10 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
         let predicate = NSPredicate(format: "exists == true")
         let expectations = [
             expectation(for: predicate, evaluatedWith: app.staticTexts["Save and exit"]),
-            expectation(for: predicate, evaluatedWith: app.staticTexts["Save and open"])]
+            expectation(for: predicate, evaluatedWith: app.staticTexts["Save and open"]),
+            expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: app.images["next-button"])]
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Static texts 'Save and exit' and 'Save and open' should exist")
+        XCTAssertEqual(result, .completed, "Static texts 'Save and exit' and 'Save and open' should exist. Next button should not exist")
     }
 }
 
