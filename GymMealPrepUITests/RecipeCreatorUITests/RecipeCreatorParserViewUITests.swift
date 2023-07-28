@@ -28,9 +28,33 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     override func tearDown() {
         app = nil
     }
+    
+    func test_RecipeCreatorParserView_StaticTexts_Shows0CellsWhenNoIngredientsToParse() {
+        // Given
+        navigateToRecipeCreatorView()
+        
+        // When
+        advanceStage()
+        
+        // Then
+        let navigationTitle = app.navigationBars.staticTexts["Match ingredients"]
+        let ingredientCountText = app.collectionViews.staticTexts["0 Ingredients:"]
+        
+        let predicate = NSPredicate(format: "exists == true")
+        let expectations = [
+        expectation(for: predicate, evaluatedWith: navigationTitle),
+        expectation(for: predicate, evaluatedWith: ingredientCountText)]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Navigation text 'Match ingredients' and summary text '0 Ingredients:' should exist")
+    }
 }
 
 extension RecipeCreatorParserViewUITests {
+    
+    func advanceStage() {
+        app.staticTexts["advance-stage-button"].tap()
+    }
+    
     func navigateToRecipeCreatorView() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
