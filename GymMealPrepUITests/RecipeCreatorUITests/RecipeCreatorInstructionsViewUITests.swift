@@ -16,7 +16,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
      */
     var app: XCUIApplication!
     let standardTimeout = 2.5
-    
+    let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
     let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
     
     override func setUp() {
@@ -90,6 +90,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "A number 1 text and text field should exist in collection view")
     }
+    //Note - the test has to add ingredients otherwise the app will not parse instructions 
     func test_RecipeCreatorInstructionsView_instructionCells_areShowingWithInputFromCreator() {
         // Given
         navigateToRecipeCreatorView()
@@ -100,11 +101,16 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         advanceStage()
         
         // Then
-        let expectedTextFields: [String] = instructionsInput.components(separatedBy: "\n")
+        var expectedTextFields = [String]()
+        
+        for string in instructionsInput.components(separatedBy: "\n") {
+            expectedTextFields.append(String(string.dropFirst(3)))
+        }
+        
         let predicate = NSPredicate(format: "exists == true")
         var expectations = [XCTestExpectation]()
         for expectedTexField in expectedTextFields {
-            expectations.append(expectation(for: predicate, evaluatedWith: app.collectionViews.cells.textFields[expectedTexField]))
+            expectations.append(expectation(for: predicate, evaluatedWith: app.collectionViews.cells.textViews[expectedTexField]))
         }
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "All instruction input should be translated into seperate instruction rows")
@@ -126,12 +132,16 @@ extension RecipeCreatorInstructionsViewUITests {
     func enterData() {
         let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
         let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
         let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
         let nextButton = app.toolbars["Toolbar"].buttons["Next"]
         let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
         
         titleTextField.tap()
+        
         nextButton.tap()
+        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
+        
         nextButton.tap()
         waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
         finishButton.tap()
