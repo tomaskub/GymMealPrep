@@ -61,6 +61,20 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     }
     
     // Confirm adding tags works
+    func test_RecipeCreatorConfirmationView_AddButton_addsTagFromTextOnTap() {
+        // Given
+        navigateToRecipeCreatorConfirmationView()
+        let addButton = app.collectionViews.buttons["Add"]
+        let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
+        let testInput = "Test tag"
+        // When
+        inputTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(testInput)
+        addButton.tap()
+        // Then
+        let result = app.collectionViews.staticTexts[testInput].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Static text 'Test tag' should exist")
+    }
     // Confirm removing tags work
     // Confirm photo part works
     // Confirm text fields work
