@@ -85,7 +85,7 @@
 		D6A92C142A72A40D00DB4DEF /* IngredientHostViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C132A72A40D00DB4DEF /* IngredientHostViewUITests.swift */; };
 		D6A92C172A72C83A00DB4DEF /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */; };
 		D6A92C192A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */; };
-		D6A92C1B2A72C85C00DB4DEF /* RecipeCreatorInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsView.swift */; };
+		D6A92C1B2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */; };
 		D6A92C1D2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */; };
 		D6AD53862A699DF20091306B /* MealPlanEditorViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AD53852A699DF20091306B /* MealPlanEditorViewUITests.swift */; };
 		D6C1DDB82A078D120062B1C5 /* DataManager+TagMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C1DDB72A078D120062B1C5 /* DataManager+TagMO.swift */; };
@@ -225,7 +225,7 @@
 		D6A92C132A72A40D00DB4DEF /* IngredientHostViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientHostViewUITests.swift; sourceTree = "<group>"; };
 		D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
 		D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorParserViewUITests.swift; sourceTree = "<group>"; };
-		D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorInstructionsView.swift; sourceTree = "<group>"; };
+		D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorInstructionsViewUITests.swift; sourceTree = "<group>"; };
 		D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorConfirmationViewUITests.swift; sourceTree = "<group>"; };
 		D6AD53852A699DF20091306B /* MealPlanEditorViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanEditorViewUITests.swift; sourceTree = "<group>"; };
 		D6C1DDB72A078D120062B1C5 /* DataManager+TagMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+TagMO.swift"; sourceTree = "<group>"; };
@@ -566,7 +566,7 @@
 				D661A44F2A5F4A0F005C0C5B /* RecipeCreatorHostViewUITests.swift */,
 				D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */,
 				D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */,
-				D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsView.swift */,
+				D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */,
 				D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */,
 			);
 			path = RecipeCreatorUITests;
@@ -897,7 +897,7 @@
 				D6A92C1D2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift in Sources */,
 				D63236882A66CC9400573CFF /* MealPlanTabUITests.swift in Sources */,
 				D69684632A641C9F0064DD83 /* XCUIElement+Extensions.swift in Sources */,
-				D6A92C1B2A72C85C00DB4DEF /* RecipeCreatorInstructionsView.swift in Sources */,
+				D6A92C1B2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
