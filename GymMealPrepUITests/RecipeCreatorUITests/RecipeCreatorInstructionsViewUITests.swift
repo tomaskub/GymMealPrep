@@ -115,6 +115,53 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "All instruction input should be translated into seperate instruction rows")
     }
+    
+    func test_RecipeCreatorInstructionsView_instructionCell_showDeleteButton_WhenSwipedLeft() {
+        // Given
+        navigateToRecipeCreatorView()
+        advanceStage()
+        advanceStage()
+        app.collectionViews.cells.images["add-instruction-button"].tap()
+        
+        // When
+        _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)])
+        app.collectionViews.cells.firstMatch.swipeLeft()
+        
+        // Then
+        let result = app.collectionViews.buttons["Delete"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result)
+    }
+    
+    func test_RecipeCreatorInstructionsView_instructionCell_isRemovedOnDeleteButtonTap() {
+        // Given
+        navigateToRecipeCreatorView()
+        advanceStage()
+        advanceStage()
+        app.collectionViews.cells.images["add-instruction-button"].tap()
+        _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)], timeout: standardTimeout)
+        
+        // When
+        app.collectionViews.cells.firstMatch.swipeLeft()
+        app.collectionViews.buttons["Delete"].tap()
+        
+        // Then
+        let result = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 1"), evaluatedWith: app.collectionViews.cells)], timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "After delete button is tapped on cell, the count of cells should be 1")
+    }
+    
+    func test_RecipeCreatorInstructionsView_instructionCell_isUpdatingStepTextOnMove() {
+        // Given
+        navigateToRecipeCreatorView()
+        enterData()
+        advanceStage()
+        advanceStage()
+        let firstCell = app.collectionViews.cells.firstMatch
+        // When
+        app.collectionViews.cells.element(boundBy: 3).press(forDuration: 0.5, thenDragTo: firstCell)
+        // Then
+        let result = app.collectionViews.cells.element(boundBy: 0).staticTexts["1"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "On first row static text '1' should exist")
+    }
 }
 
 // MARK: HELPER FUNCTIONS
