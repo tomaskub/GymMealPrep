@@ -90,6 +90,25 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "A number 1 text and text field should exist in collection view")
     }
+    func test_RecipeCreatorInstructionsView_instructionCells_areShowingWithInputFromCreator() {
+        // Given
+        navigateToRecipeCreatorView()
+        enterData()
+        
+        // When
+        advanceStage()
+        advanceStage()
+        
+        // Then
+        let expectedTextFields: [String] = instructionsInput.components(separatedBy: "\n")
+        let predicate = NSPredicate(format: "exists == true")
+        var expectations = [XCTestExpectation]()
+        for expectedTexField in expectedTextFields {
+            expectations.append(expectation(for: predicate, evaluatedWith: app.collectionViews.cells.textFields[expectedTexField]))
+        }
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "All instruction input should be translated into seperate instruction rows")
+    }
 }
 
 // MARK: HELPER FUNCTIONS
@@ -104,5 +123,17 @@ extension RecipeCreatorInstructionsViewUITests {
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
-    
+    func enterData() {
+        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
+        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
+        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
+        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
+        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
+        
+        titleTextField.tap()
+        nextButton.tap()
+        nextButton.tap()
+        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
+        finishButton.tap()
+    }
 }
