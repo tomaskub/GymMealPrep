@@ -16,6 +16,7 @@ struct RecipeCreatorConfirmationView: View {
             
             Section("Photo") {
                 Button {
+                    //TODO: MISSING IMPLEMENTATION OF ADDING PHOTO
                     print("Adding photo")
                 } label: {
                     Image(systemName: "photo")
@@ -23,7 +24,7 @@ struct RecipeCreatorConfirmationView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(.horizontal, 50)
                 }
-                
+                .accessibilityIdentifier("add-change-photo")
             }
             
             Section("Time cooking") {
