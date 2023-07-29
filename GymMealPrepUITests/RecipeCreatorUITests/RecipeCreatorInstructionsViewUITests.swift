@@ -149,6 +149,23 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "After delete button is tapped on cell, the count of cells should be 1")
     }
     
+    func testRecipeCreatorInstructionView_instructionCell_isEditableAndHoldingData() {
+        // Given
+        let testText = "Test instruction text"
+        let addButton = app.collectionViews.cells.images["add-instruction-button"]
+        navigateToRecipeCreatorView()
+        advanceStage()
+        advanceStage()
+        addButton.tap()
+        // When
+        let textEditor = app.collectionViews.cells.containing(.staticText, identifier: "1").textViews.firstMatch
+        textEditor.tap()
+        waitUtilElementHasKeyboardFocus(element: textEditor, timeout: standardTimeout).typeText(testText)
+        addButton.tap()
+        // Then
+        XCTAssertEqual(textEditor.value as! String, testText, "Text in text editor should be equal to testText")
+    }
+    
     func test_RecipeCreatorInstructionsView_instructionCell_isUpdatingStepTextOnMove() {
         // Given
         navigateToRecipeCreatorView()
