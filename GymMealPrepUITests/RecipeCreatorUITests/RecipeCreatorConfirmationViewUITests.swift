@@ -27,4 +27,24 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     override func tearDown() {
         app = nil
     }
+    
+    // Confirm all of the elements exist on showing the screen
+    // Confirm adding tags works
+    // Confirm removing tags work
+    // Confirm photo part works
+    // Confirm text fields work
+    
+}
+
+extension RecipeCreatorConfirmationViewUITests {
+    func navigateToRecipeCreatorConfirmationView() {
+        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
+        recipiesNavigationBar.images["Back"].tap()
+        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
+        recipiesNavigationBar.buttons["Add from text"].tap()
+        app.staticTexts["advance-stage-button"].tap()
+        app.staticTexts["advance-stage-button"].tap()
+        app.staticTexts["advance-stage-button"].tap()
+    }
 }
