@@ -28,7 +28,6 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         app = nil
     }
     
-    // Confirm all of the elements exist on showing the screen
     func test_RecipeCreatorConfirmationView_UIElements_exist() {
         // Given
         navigateToRecipeCreatorConfirmationView()
@@ -60,28 +59,49 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "All elements should exist")
     }
     
-    // Confirm adding tags works
     func test_RecipeCreatorConfirmationView_AddButton_addsTagFromTextOnTap() {
         // Given
         navigateToRecipeCreatorConfirmationView()
-        let addButton = app.collectionViews.buttons["Add"]
-        let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
         let testInput = "Test tag"
         // When
-        inputTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(testInput)
-        addButton.tap()
+        addTag(withText: testInput)
         // Then
         let result = app.collectionViews.staticTexts[testInput].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Static text 'Test tag' should exist")
     }
-    // Confirm removing tags work
+    
+    func test_RecipeCreatorConfirmationView_Tag_XButtonExistsAfterLongPress(){
+        // Given
+        let testInput = "Test tag"
+        navigateToRecipeCreatorConfirmationView()
+        addTag(withText: testInput)
+        // When
+        app.collectionViews.staticTexts[testInput].press(forDuration: 1)
+        // Then
+        let result = app.collectionViews.buttons["x.circle"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Delete tag button should exist")
+    }
+    
+    func test_RecipeCreatorConfirmationView_Tag_isRemovedAfterXButtonTap(){
+        // Given
+        let testInput = "Test tag"
+        navigateToRecipeCreatorConfirmationView()
+        addTag(withText: testInput)
+        let tag = app.collectionViews.staticTexts[testInput]
+        tag.press(forDuration: 1)
+        // When
+        app.collectionViews.buttons["x.circle"].tap()
+        // Then
+        let result = tag.waitForNonExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "'Test tag' static test should not exist")
+    }
     // Confirm photo part works
     // Confirm text fields work
     
 }
 
 extension RecipeCreatorConfirmationViewUITests {
+    
     func navigateToRecipeCreatorConfirmationView() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
@@ -91,5 +111,12 @@ extension RecipeCreatorConfirmationViewUITests {
         app.staticTexts["advance-stage-button"].tap()
         app.staticTexts["advance-stage-button"].tap()
         app.staticTexts["advance-stage-button"].tap()
+    }
+    
+    func addTag(withText text: String) {
+        let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
+        inputTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(text)
+        app.collectionViews.buttons["Add"].tap()
     }
 }
