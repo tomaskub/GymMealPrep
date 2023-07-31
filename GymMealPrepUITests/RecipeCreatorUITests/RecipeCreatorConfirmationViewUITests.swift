@@ -107,7 +107,7 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         let result = tag.waitForNonExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "'Test tag' static test should not exist")
     }
-    // Confirm photo part works
+    
     func test_RecipeCreatorConfirmationView_AddPhotoButton_displaysPhotoPicker() {
         // Given
         navigateToRecipeCreatorConfirmationView()
@@ -119,7 +119,63 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         XCTAssertTrue(result, "A 'Photos' navigation bar should exists after tap")
     }
     
-    // Confirm text fields work
+    func test_RecipeCreatorConfirmationView_RecipeImageUpdatedAfterPhotoIsPicked() {
+        // Given
+        let photoId = "Photo, August 08, 2012, 11:29 PM"
+        navigateToRecipeCreatorConfirmationView()
+        app.collectionViews.buttons["add-change-photo"].tap()
+        // When
+        app.scrollViews.images[photoId].tap()
+        // Then
+        // photo does not have id?
+        let result = app.collectionViews.descendants(matching: .image).firstMatch.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Photo '\(photoId)' should exist")
+    }
+    
+    func test_RecipeCreatorConfirmationView_AddPhotoButton_changesLabel_whenPhotoIsLoaded() {
+        // Given
+        let photoId = "Photo, August 08, 2012, 11:29 PM"
+        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
+        navigateToRecipeCreatorConfirmationView()
+        addPhotoButton.tap()
+        // When
+        app.scrollViews.images[photoId].tap()
+        // Then
+        XCTAssertEqual(addPhotoButton.label, "Change photo", "'add-change-photo' button should have value 'Change photo")
+    }
+    
+    func test_RecipeCreatorConfirmationView_DeleteButton_exists_whenPhotoIsLoaded() {
+        // Given
+        let photoId = "Photo, August 08, 2012, 11:29 PM"
+        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
+        let deletePhotoButton = app.collectionViews.buttons["delete-photo"]
+        navigateToRecipeCreatorConfirmationView()
+        addPhotoButton.tap()
+        // When
+        app.scrollViews.images[photoId].tap()
+        // Then
+        let expectations = [expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: deletePhotoButton)]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Delete photo button should exist")
+    }
+    
+    func test_RecipeCreatorConfirmationView_DeleteButton_removesPhotoAndItself_whenTaped() {
+        // Given
+        let deletePhotoButton = app.collectionViews.buttons["delete-photo"]
+        let photoId = "Photo, August 08, 2012, 11:29 PM"
+        navigateToRecipeCreatorConfirmationView()
+        app.collectionViews.buttons["add-change-photo"].tap()
+        app.scrollViews.images[photoId].tap()
+        // When
+        deletePhotoButton.tap()
+        // Then
+        let predicate = NSPredicate(format: "exists == false")
+        let expectations = [expectation(for: predicate, evaluatedWith: deletePhotoButton),
+        expectation(for: predicate, evaluatedWith: app.collectionViews.descendants(matching: .image).firstMatch)]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Photo '\(photoId)' and delete button should not exist")
+    }
+
     func test_RecipeCreatorConfirmationView_TimeTextFields_areEditable() {
         // Given
         navigateToRecipeCreatorConfirmationView()
