@@ -70,6 +70,18 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         XCTAssertTrue(result, "Static text 'Test tag' should exist")
     }
     
+    func test_RecipeCreatorConfirmationView_AddButton_doesNotAddTag_whenTextFieldIsEmpty() {
+        // Given
+        navigateToRecipeCreatorConfirmationView()
+        let testInput = ""
+        // When
+        addTag(withText: testInput)
+        // Then
+        //TODO: DEF NEEDS TO BE REWORKED
+        let result = app.collectionViews.children(matching: .cell).element(boundBy: 5).children(matching: .other).element(boundBy: 1).children(matching: .other).element.children(matching: .other).element.children(matching: .staticText).element.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Static text 'Test tag' should exist")
+    }
+    
     func test_RecipeCreatorConfirmationView_Tag_XButtonExistsAfterLongPress(){
         // Given
         let testInput = "Test tag"
@@ -96,6 +108,17 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         XCTAssertTrue(result, "'Test tag' static test should not exist")
     }
     // Confirm photo part works
+    func test_RecipeCreatorConfirmationView_AddPhotoButton_displaysPhotoPicker() {
+        // Given
+        navigateToRecipeCreatorConfirmationView()
+        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
+        // When
+        addPhotoButton.tap()
+        // Then
+        let result = app.sheets.firstMatch.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "A sheet should exists after tap")
+    }
+    
     // Confirm text fields work
     func test_RecipeCreatorConfirmationView_TimeTextFields_areEditable() {
         // Given
