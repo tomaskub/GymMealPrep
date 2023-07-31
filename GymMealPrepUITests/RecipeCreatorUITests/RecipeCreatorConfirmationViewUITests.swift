@@ -115,8 +115,8 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         // When
         addPhotoButton.tap()
         // Then
-        let result = app.sheets.firstMatch.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(result, "A sheet should exists after tap")
+        let result = app.navigationBars["Photos"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "A 'Photos' navigation bar should exists after tap")
     }
     
     // Confirm text fields work
