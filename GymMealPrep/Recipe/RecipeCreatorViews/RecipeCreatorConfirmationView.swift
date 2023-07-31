@@ -36,6 +36,7 @@ struct RecipeCreatorConfirmationView: View {
                             } label: {
                                 Text("Delete")
                             } // END OF BUTTON
+                            .accessibilityIdentifier("delete-photo")
                             .buttonStyle(.borderedProminent)
                         } // END OF IF
                         Spacer()
