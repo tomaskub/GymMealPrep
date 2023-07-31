@@ -27,12 +27,9 @@ struct RecipeCreatorConfirmationView: View {
                         Spacer()
                         PhotosPicker(selection: $viewModel.selectedImage){
                             Text(viewModel.recipeImage == nil ? "Add photo" : "Change photo")
-                                .foregroundColor(.white)
-                                .padding(.all, 8)
-                                .background(Color.blue)
-                                .cornerRadius(4)
                                 .accessibilityIdentifier("add-change-photo")
                         } // END OF PHOTOSPICKER
+                        .buttonStyle(.borderedProminent)
                         if viewModel.recipeImage != nil {
                             Button(role: .destructive) {
                                 viewModel.recipeImage = nil
