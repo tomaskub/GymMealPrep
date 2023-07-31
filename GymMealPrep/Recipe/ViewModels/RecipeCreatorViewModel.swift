@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import PhotosUI
+import SwiftUI
 
 /// This class is a protocol definition for view model of RecipeCreatorViews
 class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
@@ -21,6 +23,8 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var timeWaitingInMinutes: String = String()
     @Published var tagText: String = String()
     @Published var servings: Int = 1
+    // image input
+    @Published var selectedImage: PhotosPickerItem?
     // input processed properties
     @Published var ingredientsNLArray: [String] = []
     var instructionsNLArray: [String] = []
@@ -30,6 +34,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var matchedIngredients = [String : Ingredient]()
     @Published var parsedInstructions: [Instruction] = []
     @Published var tags: [Tag] = []
+    @Published var recipeImage: Image?
     
     func processInput() {
         assertionFailure("Missing override: Please override this method in the subclass")
@@ -66,6 +71,18 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     private var dataManager: DataManager
     var subscriptions = Set<AnyCancellable>()
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
+    
+    override var selectedImage: PhotosPickerItem? {
+        didSet {
+                Task { @MainActor in
+                    do {
+                        recipeImage = try await selectedImage?.loadTransferable(type: Image.self)
+                    } catch {
+                        print("Error loading photo: \(error.localizedDescription)")
+                    }
+                }
+        }
+    }
     
     init(dataManager: DataManager = .shared) {
         self.dataManager = dataManager
