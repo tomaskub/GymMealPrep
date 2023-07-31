@@ -35,6 +35,7 @@ struct RecipeCreatorConfirmationView: View {
                         
                         TextField("minutes", text: $viewModel.timeCookingInMinutes)
                             .numericalInputOnly($viewModel.timeCookingInMinutes)
+                            .accessibilityIdentifier("cooking-time-text-field")
                             .textFieldStyle(.roundedBorder)
                     } // END OF GRID ROW
                     
@@ -43,6 +44,7 @@ struct RecipeCreatorConfirmationView: View {
                         
                         TextField("minutes", text: $viewModel.timePreparingInMinutes)
                             .numericalInputOnly($viewModel.timePreparingInMinutes)
+                            .accessibilityIdentifier("preparing-time-text-field")
                             .textFieldStyle(.roundedBorder)
                     } // END OF GRID ROW
                     
@@ -51,6 +53,7 @@ struct RecipeCreatorConfirmationView: View {
                         
                         TextField("minutes", text: $viewModel.timeWaitingInMinutes)
                             .numericalInputOnly($viewModel.timeWaitingInMinutes)
+                            .accessibilityIdentifier("waiting-time-text-field")
                             .textFieldStyle(.roundedBorder)
                         
                     } // END OF GRID ROW
