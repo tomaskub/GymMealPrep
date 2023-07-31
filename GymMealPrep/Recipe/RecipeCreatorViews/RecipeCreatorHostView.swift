@@ -53,6 +53,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
         HStack {
             Spacer()
             Text(buttonText)
+                .accessibilityIdentifier("advance-stage-button")
                 .font(.title3)
                 .foregroundColor(.white)
                 .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
@@ -63,6 +64,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                 } // END OF ON TAP GESTURE
             if displayedStage == 3 {
                 Text("Save and open")
+                    .accessibilityIdentifier("save-and-open-button")
                     .font(.title3)
                     .foregroundColor(.white)
                     .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
@@ -79,6 +81,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
             HStack {
                 if displayedStage != 0 {
                     Image(systemName: "chevron.left")
+                        .accessibilityIdentifier("back-button")
                         .foregroundColor(.white)
                         .font(.title3)
                         .padding(.all, 10)
@@ -92,6 +95,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                 Spacer()
                 if displayedStage < processStage && displayedStage != 3 {
                         Image(systemName: "chevron.right")
+                        .accessibilityIdentifier("next-button")
                             .foregroundColor(.white)
                             .font(.title3)
                             .padding(.all, 10)

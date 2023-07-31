@@ -29,6 +29,7 @@ struct RecipeCreatorInstructionsView: View {
                     Image(systemName: "plus.circle")
                     Spacer()
                 }
+                .accessibilityIdentifier("add-instruction-button")
                 .onTapGesture {
                     // add new instruction
                     viewModel.addInstruction()
