@@ -41,9 +41,9 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         let preparingTimeStaticText = app.collectionViews.staticTexts["Preparing time:"]
         let waitingTimeStaticText = app.collectionViews.staticTexts["Time waiting:"]
         
-        let cookingTimeTextField = app.collectionViews.cells.containing(.staticText, identifier: "Cooking time:").textFields["minutes"]
-        let preparingTimeTextField = app.collectionViews.cells.containing(.staticText, identifier: "Preparing time:").textFields["minutes"]
-        let waitingTimeTextField = app.collectionViews.cells.containing(.staticText, identifier: "Time waiting:").textFields["minutes"]
+        let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
+        let preparingTimeTextField = app.collectionViews.textFields["preparing-time-text-field"]
+        let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
         
         let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
         let addTagButton = app.collectionViews.buttons["Add"]
