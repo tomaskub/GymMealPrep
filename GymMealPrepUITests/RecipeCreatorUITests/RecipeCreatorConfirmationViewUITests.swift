@@ -97,6 +97,28 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     }
     // Confirm photo part works
     // Confirm text fields work
+    func test_RecipeCreatorConfirmationView_TimeTextFields_areEditable() {
+        // Given
+        navigateToRecipeCreatorConfirmationView()
+        let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
+        let preparingTimeTextField = app.collectionViews.textFields["preparing-time-text-field"]
+        let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
+        // When
+        cookingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
+        preparingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("25")
+        waitingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("35")
+        // Then
+        let expectations = [
+        expectation(for: NSPredicate(format: "value == '15'"), evaluatedWith: cookingTimeTextField),
+        expectation(for: NSPredicate(format: "value == '25'"), evaluatedWith: preparingTimeTextField),
+        expectation(for: NSPredicate(format: "value == '35'"), evaluatedWith: waitingTimeTextField)]
+        
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "The field values should match the typed in values")
+    }
     
 }
 
