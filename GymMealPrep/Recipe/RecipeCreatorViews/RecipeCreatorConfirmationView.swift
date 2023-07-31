@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct RecipeCreatorConfirmationView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
@@ -15,17 +16,35 @@ struct RecipeCreatorConfirmationView: View {
         List {
             
             Section("Photo") {
-                Button {
-                    //TODO: MISSING IMPLEMENTATION OF ADDING PHOTO
-                    print("Adding photo")
-                } label: {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.horizontal, 50)
-                }
-                .accessibilityIdentifier("add-change-photo")
-            }
+                    if let image = viewModel.recipeImage {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 250)
+                            .listRowInsets(EdgeInsets())
+                    } // END OF IMAGE
+                    HStack {
+                        Spacer()
+                        PhotosPicker(selection: $viewModel.selectedImage){
+                            Text(viewModel.recipeImage == nil ? "Add photo" : "Change photo")
+                                .foregroundColor(.white)
+                                .padding(.all, 8)
+                                .background(Color.blue)
+                                .cornerRadius(4)
+                                .accessibilityIdentifier("add-change-photo")
+                        } // END OF PHOTOSPICKER
+                        if viewModel.recipeImage != nil {
+                            Button(role: .destructive) {
+                                viewModel.recipeImage = nil
+                            } label: {
+                                Text("Delete")
+                            } // END OF BUTTON
+                            .buttonStyle(.borderedProminent)
+                        } // END OF IF
+                        Spacer()
+                    } // END OF HSTACK
+                } // END OF SECTION
+            
             
             Section("Time cooking") {
                 Grid(alignment: .leading) {
@@ -95,6 +114,22 @@ struct RecipeCreatorConfirmationView: View {
 struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
     
     class PreviewViewModel: RecipeCreatorViewModelProtocol {
+        
+        override var selectedImage: PhotosPickerItem? {
+            didSet {
+                if let selectedImage {
+                    Task { @MainActor in
+                        do {
+                            recipeImage = try await selectedImage.loadTransferable(type: Image.self) ?? Image(systemName: "photo")
+                            //try await loadTransferable(from: selectedImage)
+                        } catch {
+                            print("Error loading photo: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        }
+        
         override init() {
             super.init()
             self.tags = [
