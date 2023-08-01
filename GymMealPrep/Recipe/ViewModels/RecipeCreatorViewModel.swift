@@ -64,7 +64,9 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func addInstruction() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
-    
+    func deletePhoto() {
+        assertionFailure("Missing override: Please override this method in the subclass")
+    }
 }
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {

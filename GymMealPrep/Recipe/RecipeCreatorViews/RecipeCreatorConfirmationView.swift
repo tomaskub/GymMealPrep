@@ -32,7 +32,7 @@ struct RecipeCreatorConfirmationView: View {
                         .buttonStyle(.borderedProminent)
                         if viewModel.recipeImage != nil {
                             Button(role: .destructive) {
-                                viewModel.recipeImage = nil
+                                viewModel.deletePhoto()
                             } label: {
                                 Text("Delete")
                             } // END OF BUTTON
@@ -119,13 +119,16 @@ struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
                     Task { @MainActor in
                         do {
                             recipeImage = try await selectedImage.loadTransferable(type: Image.self) ?? Image(systemName: "photo")
-                            //try await loadTransferable(from: selectedImage)
                         } catch {
                             print("Error loading photo: \(error.localizedDescription)")
                         }
                     }
                 }
             }
+        }
+        
+        override func deletePhoto() {
+            recipeImage = nil
         }
         
         override init() {
