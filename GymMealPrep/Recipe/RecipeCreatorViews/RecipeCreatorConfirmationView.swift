@@ -15,98 +15,110 @@ struct RecipeCreatorConfirmationView: View {
         
         List {
             
-            Section("Photo") {
-                    if let image = viewModel.recipeImage {
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 250)
-                            .listRowInsets(EdgeInsets())
-                    } // END OF IMAGE
-                    HStack {
-                        Spacer()
-                        PhotosPicker(selection: $viewModel.selectedImage){
-                            Text(viewModel.recipeImage == nil ? "Add photo" : "Change photo")
-                                .accessibilityIdentifier("add-change-photo")
-                        } // END OF PHOTOSPICKER
-                        .buttonStyle(.borderedProminent)
-                        if viewModel.recipeImage != nil {
-                            Button(role: .destructive) {
-                                viewModel.deletePhoto()
-                            } label: {
-                                Text("Delete")
-                            } // END OF BUTTON
-                            .accessibilityIdentifier("delete-photo")
-                            .buttonStyle(.borderedProminent)
-                        } // END OF IF
-                        Spacer()
-                    } // END OF HSTACK
-                } // END OF SECTION
+            photoSection
             
+            timeCookingSection
             
-            Section("Time cooking") {
-                Grid(alignment: .leading) {
-                    
-                    GridRow {
-                        Text("Cooking time:")
-                        
-                        TextField("minutes", text: $viewModel.timeCookingInMinutes)
-                            .numericalInputOnly($viewModel.timeCookingInMinutes)
-                            .accessibilityIdentifier("cooking-time-text-field")
-                            .textFieldStyle(.roundedBorder)
-                    } // END OF GRID ROW
-                    
-                    GridRow {
-                        Text("Preparing time:")
-                        
-                        TextField("minutes", text: $viewModel.timePreparingInMinutes)
-                            .numericalInputOnly($viewModel.timePreparingInMinutes)
-                            .accessibilityIdentifier("preparing-time-text-field")
-                            .textFieldStyle(.roundedBorder)
-                    } // END OF GRID ROW
-                    
-                    GridRow {
-                        Text("Time waiting:")
-                        
-                        TextField("minutes", text: $viewModel.timeWaitingInMinutes)
-                            .numericalInputOnly($viewModel.timeWaitingInMinutes)
-                            .accessibilityIdentifier("waiting-time-text-field")
-                            .textFieldStyle(.roundedBorder)
-                        
-                    } // END OF GRID ROW
-                } // END OF GRID
-            } // END OF SECTION
-            
-            
-            Section("Tags") {
-                
-                ChipView(tags: $viewModel.tags, avaliableWidth: UIScreen.main.bounds.width - 50, alignment: .center) { tag in
-                    Text(tag.text)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 8)
-                        .background(Capsule().foregroundColor(.blue))
-                } // END OF CHIPVIEW
-                
-                HStack {
-                    
-                    TextField("Add new tag", text: $viewModel.tagText)
-                        .onSubmit {
-                            viewModel.addTag()
-                        }
-                    
-                    Button("Add") {
-                        viewModel.addTag()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    
-                } // END OF HSTACK
-            } // END OF SECTION
+            tagsSection
             
         } // END OF LIST
         .navigationTitle("Add details")
         .navigationBarTitleDisplayMode(.inline)
     } // END OF BODY
+    
+    // MARK: UI VAR DECLARATION
+    var photoSection: some View {
+        Section("Photo") {
+            
+                if let image = viewModel.recipeImage {
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 250)
+                        .listRowInsets(EdgeInsets())
+                } // END OF IMAGE
+                HStack {
+                    Spacer()
+                    PhotosPicker(selection: $viewModel.selectedImage){
+                        Text(viewModel.recipeImage == nil ? "Add photo" : "Change photo")
+                            .accessibilityIdentifier("add-change-photo")
+                    } // END OF PHOTOSPICKER
+                    .buttonStyle(.borderedProminent)
+                    if viewModel.recipeImage != nil {
+                        Button(role: .destructive) {
+                            viewModel.deletePhoto()
+                        } label: {
+                            Text("Delete")
+                        } // END OF BUTTON
+                        .accessibilityIdentifier("delete-photo")
+                        .buttonStyle(.borderedProminent)
+                    } // END OF IF
+                    Spacer()
+                } // END OF HSTACK
+            } // END OF SECTION
+    }
+    
+    var timeCookingSection: some View {
+        Section("Time cooking") {
+            
+            Grid(alignment: .leading) {
+                
+                GridRow {
+                    Text("Cooking time:")
+                    
+                    TextField("minutes", text: $viewModel.timeCookingInMinutes)
+                        .numericalInputOnly($viewModel.timeCookingInMinutes)
+                        .accessibilityIdentifier("cooking-time-text-field")
+                        .textFieldStyle(.roundedBorder)
+                } // END OF GRID ROW
+                
+                GridRow {
+                    Text("Preparing time:")
+                    
+                    TextField("minutes", text: $viewModel.timePreparingInMinutes)
+                        .numericalInputOnly($viewModel.timePreparingInMinutes)
+                        .accessibilityIdentifier("preparing-time-text-field")
+                        .textFieldStyle(.roundedBorder)
+                } // END OF GRID ROW
+                
+                GridRow {
+                    Text("Time waiting:")
+                    
+                    TextField("minutes", text: $viewModel.timeWaitingInMinutes)
+                        .numericalInputOnly($viewModel.timeWaitingInMinutes)
+                        .accessibilityIdentifier("waiting-time-text-field")
+                        .textFieldStyle(.roundedBorder)
+                } // END OF GRID ROW
+            } // END OF GRID
+        } // END OF SECTION
+    }
+    
+    var tagsSection: some View {
+        Section("Tags") {
+            
+            ChipView(tags: $viewModel.tags, avaliableWidth: UIScreen.main.bounds.width - 50, alignment: .center) { tag in
+                Text(tag.text)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 8)
+                    .background(Capsule().foregroundColor(.blue))
+            } // END OF CHIPVIEW
+            
+            HStack {
+                
+                TextField("Add new tag", text: $viewModel.tagText)
+                    .onSubmit {
+                        viewModel.addTag()
+                    }
+                
+                Button("Add") {
+                    viewModel.addTag()
+                }
+                .disabled(viewModel.tagText.isEmpty)
+                .buttonStyle(.borderedProminent)
+            } // END OF HSTACK
+        } // END OF SECTION
+    }
 }
 
 struct RecipeCreatorConfirmationView_Previews: PreviewProvider {

@@ -74,12 +74,12 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         // Given
         navigateToRecipeCreatorConfirmationView()
         let testInput = ""
+        let addTagButton = app.collectionViews.buttons["Add"]
         // When
         addTag(withText: testInput)
         // Then
-        //TODO: DEF NEEDS TO BE REWORKED
-        let result = app.collectionViews.children(matching: .cell).element(boundBy: 5).children(matching: .other).element(boundBy: 1).children(matching: .other).element.children(matching: .other).element.children(matching: .staticText).element.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(result, "Static text 'Test tag' should exist")
+        let result = XCTWaiter.wait(for:[expectation(for:  NSPredicate(format: "isEnabled == false"), evaluatedWith: addTagButton)], timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Add button should not be enabled")
     }
     
     func test_RecipeCreatorConfirmationView_Tag_XButtonExistsAfterLongPress(){
