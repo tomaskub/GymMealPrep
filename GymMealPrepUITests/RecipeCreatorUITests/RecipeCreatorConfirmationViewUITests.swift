@@ -159,6 +159,25 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "Delete photo button should exist")
     }
     
+    // TOMASZ: FOR THIS TEST TO OPERATE ASSET ID HAS TO BE OBTAINED FROM PHOTO PICKER
+    /*
+    func test_RecipeCreatorConfirmationView_ChangePhotoButton_changesPhotoOnTap() {
+        // Given
+        let firstPhotoId = "Photo, August 08, 2012, 11:29 PM"
+        let secondPhotoId = "Photo, Augus 08, 2012, 11:55 PM"
+        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
+        navigateToRecipeCreatorConfirmationView()
+        addPhotoButton.tap()
+        firstPhotoId.tap()
+        
+        // When
+        addPhotoButton.tap()
+        secondPhotoId.tap()
+        // Then
+        let result = app.collectionViews.images[secondPhotoId].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Image with second photo id should be present")
+    }
+    */
     func test_RecipeCreatorConfirmationView_DeleteButton_removesPhotoAndItself_whenTaped() {
         // Given
         let deletePhotoButton = app.collectionViews.buttons["delete-photo"]
