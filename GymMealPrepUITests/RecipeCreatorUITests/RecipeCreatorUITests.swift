@@ -48,13 +48,37 @@ final class RecipeCreatorUITests: XCTestCase {
         // When
         saveAndOpen()
         // Then
-        checkInputDataOnRecipeDetailView()
+        let expectations = checkInputDataOnRecipeDetailView()
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Basic elements should exist")
     }
 }
 
 extension RecipeCreatorUITests {
-    func checkInputDataOnRecipeDetailView() {
-        XCTAssert(false)
+    func checkInputDataOnRecipeDetailView() -> [XCTestExpectation]{
+        let recipeImage = app.collectionViews.images.firstMatch
+        let recipeTitle = app.collectionViews.cells.staticTexts[recipeTitleInput()]
+        let tagStaticTexts: [XCUIElement] = {
+           var array = [XCUIElement]()
+            for text in tagsInput() {
+                let staticText = app.collectionViews.staticTexts[text]
+                array.append(staticText)
+            }
+            return array
+        }()
+        let elementsToEvaluate: [XCUIElement] = {
+            var array = [XCUIElement]()
+            array.append(recipeImage)
+            array.append(recipeTitle)
+            array.append(contentsOf: tagStaticTexts)
+            return array
+        }()
+        let predicate = NSPredicate(format: "exists == true")
+        var expectations = [XCTestExpectation]()
+        for element in elementsToEvaluate {
+            expectations.append( expectation(for: predicate, evaluatedWith: element))
+        }
+        return expectations
     }
     func typeInCookingTimes() {
         let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
