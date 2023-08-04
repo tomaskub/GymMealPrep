@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D600A38C2A7AD2F500495CE3 /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D600A38B2A7AD2F500495CE3 /* RecipeCreatorUITests.swift */; };
 		D60598702A37B2D000186F7F /* RecipeListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605986F2A37B2D000186F7F /* RecipeListTabView.swift */; };
 		D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */; };
 		D614A0422A1D4FA700C55D34 /* IngredientEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */; };
@@ -83,7 +84,7 @@
 		D6A313EE2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A313ED2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift */; };
 		D6A92C122A729BCA00DB4DEF /* RecipePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C112A729BCA00DB4DEF /* RecipePickerViewModel.swift */; };
 		D6A92C142A72A40D00DB4DEF /* IngredientHostViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C132A72A40D00DB4DEF /* IngredientHostViewUITests.swift */; };
-		D6A92C172A72C83A00DB4DEF /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */; };
+		D6A92C172A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C162A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift */; };
 		D6A92C192A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */; };
 		D6A92C1B2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */; };
 		D6A92C1D2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */; };
@@ -143,6 +144,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D600A38B2A7AD2F500495CE3 /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
 		D605986F2A37B2D000186F7F /* RecipeListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListTabView.swift; sourceTree = "<group>"; };
 		D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModelTests.swift; sourceTree = "<group>"; };
 		D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorViewModel.swift; sourceTree = "<group>"; };
@@ -223,7 +225,7 @@
 		D6A313ED2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+MealMOTests.swift"; sourceTree = "<group>"; };
 		D6A92C112A729BCA00DB4DEF /* RecipePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePickerViewModel.swift; sourceTree = "<group>"; };
 		D6A92C132A72A40D00DB4DEF /* IngredientHostViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientHostViewUITests.swift; sourceTree = "<group>"; };
-		D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
+		D6A92C162A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorViewUITests.swift; sourceTree = "<group>"; };
 		D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorParserViewUITests.swift; sourceTree = "<group>"; };
 		D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorInstructionsViewUITests.swift; sourceTree = "<group>"; };
 		D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorConfirmationViewUITests.swift; sourceTree = "<group>"; };
@@ -564,10 +566,11 @@
 			isa = PBXGroup;
 			children = (
 				D661A44F2A5F4A0F005C0C5B /* RecipeCreatorHostViewUITests.swift */,
-				D6A92C162A72C83A00DB4DEF /* RecipeCreatorUITests.swift */,
+				D6A92C162A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift */,
 				D6A92C182A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift */,
 				D6A92C1A2A72C85C00DB4DEF /* RecipeCreatorInstructionsViewUITests.swift */,
 				D6A92C1C2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift */,
+				D600A38B2A7AD2F500495CE3 /* RecipeCreatorUITests.swift */,
 			);
 			path = RecipeCreatorUITests;
 			sourceTree = "<group>";
@@ -888,10 +891,11 @@
 				D6C7A2BA2A63F0E400A82757 /* XCT+Focus.swift in Sources */,
 				D69684652A6420EA0064DD83 /* RecipeListUITests.swift in Sources */,
 				D661A4502A5F4A0F005C0C5B /* RecipeCreatorHostViewUITests.swift in Sources */,
-				D6A92C172A72C83A00DB4DEF /* RecipeCreatorUITests.swift in Sources */,
+				D6A92C172A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift in Sources */,
 				D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */,
 				D6E77DDE2A686B500093DB8A /* MealPlanHostViewUITests.swift in Sources */,
 				D6A92C142A72A40D00DB4DEF /* IngredientHostViewUITests.swift in Sources */,
+				D600A38C2A7AD2F500495CE3 /* RecipeCreatorUITests.swift in Sources */,
 				D6AD53862A699DF20091306B /* MealPlanEditorViewUITests.swift in Sources */,
 				D634FFA329FD42F60034B950 /* GymMealPrepUITests.swift in Sources */,
 				D6A92C1D2A72C87800DB4DEF /* RecipeCreatorConfirmationViewUITests.swift in Sources */,

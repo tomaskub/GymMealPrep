@@ -1,14 +1,15 @@
 //
-//  RecipeCreatorUITests.swift
+//  RecipeCreatorUserWorkflowUITests.swift
 //  GymMealPrepUITests
 //
-//  Created by Tomasz Kubiak on 7/27/23.
+//  Created by Tomasz Kubiak on 8/2/23.
 //
 
 import XCTest
 
 final class RecipeCreatorUITests: XCTestCase {
 
+    
     //MARK: INFORMATION ABOUT NAMING
     /*
      Naming structure: test_UnitOfWork_StateUnderTest_ExpectedBehaviour
@@ -18,6 +19,7 @@ final class RecipeCreatorUITests: XCTestCase {
 
     var app: XCUIApplication!
     
+    //MARK: static input properties
     
     let standardTimeout = 2.5
     
@@ -32,157 +34,86 @@ final class RecipeCreatorUITests: XCTestCase {
         app = nil
     }
     
-    func test_RecipeCreatorView_Tooltips_shouldBePresent() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        
-        // Then
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
-        
-        let ingredientsToolTipTextViewExists = ingredientsToolTipTextView.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(ingredientsToolTipTextViewExists, "Tool tip for ingredients should exist")
-        
-        let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(instructionsToolTipTextViewExists, "Tool tip for instructions should exist")
-    }
-    
-    func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        
-        // When
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
-        ingredientsToolTipTextView.tap()
-        instructionToolTipTextView.tap()
-        
-        // Then
-        let expectationForIngredientsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: ingredientsToolTipTextView, handler: .none)
-        let expectationForInstructionsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: instructionToolTipTextView, handler: .none)
-        let testResult = XCTWaiter.wait(for: [expectationForIngredientsToolTipExistance, expectationForInstructionsToolTipExistance], timeout: standardTimeout)
-        XCTAssertEqual(testResult, .completed, "Both tooltips should not exist after tapping")
-    }
-    
-    func test_RecipeCreatorView_KeyboardToolBarNextButton_shouldExistOnTap() throws {
+    func test_RecipeCreator_UserAddingRecipeFromText() {
         // Given
         navigateToRecipeCreatorView()
         tapToolTips()
-        
-        // When
-        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
-        titleTextField.tap()
-        
-        // Then
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let nextButtonExists = nextButton.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(nextButtonExists, "Next button should exist")
-    }
-    
-    func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldNotExistOnTap() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        
-        // When
-        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
-        titleTextField.tap()
-        
-        // Then
-        let backButton = app.toolbars["Toolbar"].buttons["Back"]
-        let expectationForBackButton = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: backButton)
-        let testResult = XCTWaiter.wait(for: [expectationForBackButton], timeout: standardTimeout)
-        XCTAssertEqual(testResult, .completed, "Back button should not exist")
-    }
-    
-    func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldExistAfterTapOnText() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        
-        // When
-        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
-        titleTextField.tap()
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        nextButton.tap()
-        
-        // Then
-        let backButton = app.toolbars["Toolbar"].buttons["Back"]
-        let backButtonExists = backButton.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(backButtonExists, "Next button should exist")
-    }
-    
-    func test_RecipeCreatorView_keyboardToolbarNextButton_shouldSwitchFocus() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        
-        // When
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        
-        titleTextField.tap()
-        nextButton.tap()
-        
-        // Then
-        let focusExpectation = expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: ingredientsTextField)
-        let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Ingredients text field should have focus")
-    }
-    
-    func test_RecipeCreatorView_keyboardToolBarBackButton_shouldSwitchFocus() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        
-        // When
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let backButton = app.toolbars["Toolbar"].buttons["Back"]
-        
-        titleTextField.tap()
-        nextButton.tap()
-        backButton.tap()
-        
-        // Then
-        let focusExpectation = expectation(for: NSPredicate(format: "hasKeyboardFocus == true"), evaluatedWith: titleTextField)
-        let result = XCTWaiter.wait(for: [focusExpectation], timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Title text field should have focus")
-    }
-    
-    // This test coul go somewhere else possibly or be tested with parser view? 
-    func test_RecipeCreatorView_TextFields_shouldHoldData() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
-        
-        // When
         enterData()
-        
+        advanceStage()
+        advanceStage()
+        advanceStage()
+        addPhoto()
+        typeInCookingTimes()
+        addTags(tagsText: tagsInput())
+        // When
+        saveAndOpen()
         // Then
-        XCTAssertEqual(titleTextField.value as? String, recipeTitleInput(), "The recipe title should be the same as input given")
-        XCTAssertEqual(ingredientsTextField.value as? String, ingredientsInput(), "The recipe ingredients should be the same as input given")
-        XCTAssertEqual(instructionsTextField.value as? String, instructionsInput(), "The recipe instructions should be the same as input given")
+        let expectations = checkInputDataOnRecipeDetailView()
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Basic elements should exist")
     }
-    
 }
 
-// MARK: HELPER FUNCTIONS & STATIC INPUT PROPERTIES
 extension RecipeCreatorUITests {
+    func checkInputDataOnRecipeDetailView() -> [XCTestExpectation]{
+        let recipeImage = app.collectionViews.images.firstMatch
+        let recipeTitle = app.collectionViews.cells.staticTexts[recipeTitleInput()]
+        let tagStaticTexts: [XCUIElement] = {
+           var array = [XCUIElement]()
+            for text in tagsInput() {
+                let staticText = app.collectionViews.staticTexts[text]
+                array.append(staticText)
+            }
+            return array
+        }()
+        let elementsToEvaluate: [XCUIElement] = {
+            var array = [XCUIElement]()
+            array.append(recipeImage)
+            array.append(recipeTitle)
+            array.append(contentsOf: tagStaticTexts)
+            return array
+        }()
+        let predicate = NSPredicate(format: "exists == true")
+        var expectations = [XCTestExpectation]()
+        for element in elementsToEvaluate {
+            expectations.append( expectation(for: predicate, evaluatedWith: element))
+        }
+        return expectations
+    }
+    func typeInCookingTimes() {
+        let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
+        let preparingTimeTextField = app.collectionViews.textFields["preparing-time-text-field"]
+        let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
+        
+        cookingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
+        preparingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("10")
+        waitingTimeTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("0")
+    }
     
-    func recipeTitleInput() -> String { return "Breakfast burrito" }
-    func ingredientsInput() -> String { return "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper" }
-    func instructionsInput() -> String { return "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"}
+    func saveAndOpen() {
+        app.staticTexts["Save and open"].tap()
+    }
     
+    func addTags(tagsText: [String]) {
+        for text in tagsText {
+            addTag(text: text)
+        }
+        app.keyboards.buttons["Return"].tap()
+        
+    }
+    func addTag(text: String) {
+        let tagTextField = app.collectionViews.cells.textFields["Add new tag"]
+        tagTextField.tap()
+        waitUtilElementHasKeyboardFocus(element: tagTextField, timeout: standardTimeout).typeText(text)
+        app.collectionViews.cells.buttons["Add"].tap()
+    }
+    func addPhoto() {
+        app.collectionViews.buttons["add-change-photo"].tap()
+        app.scrollViews.images["Photo, August 08, 2012, 11:29 PM"].tap()
+    }
     func navigateToRecipeCreatorView() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
@@ -217,5 +148,25 @@ extension RecipeCreatorUITests {
         waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput())
         
         finishButton.tap()
+    }
+    
+    func advanceStage() {
+        app.staticTexts["advance-stage-button"].tap()
+    }
+    
+    func recipeTitleInput() -> String {
+        return "Breakfast burrito"
+    }
+    
+    func ingredientsInput() -> String {
+        return "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
+    }
+    
+    func instructionsInput() -> String {
+        return "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
+    }
+    
+    func tagsInput() -> [String] {
+        ["breakfast", "mexican", "burrito", "freezer-friendly"]
     }
 }
