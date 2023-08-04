@@ -36,4 +36,9 @@ final class RecipeCreatorUITestsHelper {
     func goToNextStage() {
         app.images["next-button"].tap()
     }
+    
+    func tapToolTips() {
+        app.staticTexts["ingredients-tool-tip"].firstMatch.tap()
+        app.staticTexts["instructions-tool-tip"].firstMatch.tap()
+    }
 }
