@@ -33,69 +33,60 @@ final class RecipeCreatorViewUITests: XCTestCase {
         app = nil
     }
     
-    func test_RecipeCreatorView_Tooltips_shouldBePresent() throws {
+    func test_RecipeCreatorView_Tooltips_shouldBePresent() {
         // Given
-        navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorView()
         
         // Then
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
+        let ingredientsToolTip = app.staticTexts["ingredients-tool-tip"]
+        let instructionToolTip = app.staticTexts["instructions-tool-tip"]
         
-        let ingredientsToolTipTextViewExists = ingredientsToolTipTextView.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(ingredientsToolTipTextViewExists, "Tool tip for ingredients should exist")
-        
-        let instructionsToolTipTextViewExists = instructionToolTipTextView.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(instructionsToolTipTextViewExists, "Tool tip for instructions should exist")
+        let predicate = NSPredicate(format: "exists == true")
+        let expectations = [
+            expectation(for: predicate, evaluatedWith: ingredientsToolTip),
+            expectation(for: predicate, evaluatedWith: instructionToolTip)
+        ]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Tooltips for ingredients and isntructions should exist")
     }
     
-    func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() throws {
+    func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() {
         // Given
         navigateToRecipeCreatorView()
         
         // When
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
-        ingredientsToolTipTextView.tap()
-        instructionToolTipTextView.tap()
-        
+        helper.tapToolTips()
+
         // Then
-        let expectationForIngredientsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: ingredientsToolTipTextView, handler: .none)
-        let expectationForInstructionsToolTipExistance = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: instructionToolTipTextView, handler: .none)
-        let testResult = XCTWaiter.wait(for: [expectationForIngredientsToolTipExistance, expectationForInstructionsToolTipExistance], timeout: standardTimeout)
-        XCTAssertEqual(testResult, .completed, "Both tooltips should not exist after tapping")
+        let ingredientsToolTip = app.staticTexts["ingredients-tool-tip"]
+        let instructionToolTip = app.staticTexts["instructions-tool-tip"]
+        
+        let predicate = NSPredicate(format: "exists == false")
+        let expectations = [
+            expectation(for: predicate, evaluatedWith: ingredientsToolTip),
+            expectation(for: predicate, evaluatedWith: instructionToolTip)
+        ]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Tooltips for ingredients and isntructions should not exist after tap")
+        
     }
     
-    func test_RecipeCreatorView_KeyboardToolBarNextButton_shouldExistOnTap() throws {
+    func test_RecipeCreatorView_KeyboardToolBarButtons_shouldDisplayCorrectly_whenRecipeTitleTap() {
         // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
         
         // When
-        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
-        titleTextField.tap()
+        app.textFields["recipe-title-text-field"].tap()
         
         // Then
         let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let nextButtonExists = nextButton.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(nextButtonExists, "Next button should exist")
-    }
-    
-    func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldNotExistOnTap() throws {
-        // Given
-        navigateToRecipeCreatorView()
-        tapToolTips()
-        
-        // When
-        let titleTextField  = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title").textFields["Recipe title"]
-        titleTextField.tap()
-        
-        // Then
         let backButton = app.toolbars["Toolbar"].buttons["Back"]
-        let expectationForBackButton = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: backButton)
-        let testResult = XCTWaiter.wait(for: [expectationForBackButton], timeout: standardTimeout)
-        XCTAssertEqual(testResult, .completed, "Back button should not exist")
+        let expectations = [
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: nextButton),
+            expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: backButton)]
+        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
+        XCTAssertEqual(result, .completed, "Next button should exist, back button should not exist")
     }
     
     func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldExistAfterTapOnText() throws {
@@ -193,9 +184,9 @@ extension RecipeCreatorViewUITests {
     }
     
     func tapToolTips() {
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
+        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"recipe-title-text-field").children(matching: .staticText)
+        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "ingredients-tool-tip").element(boundBy: 0)
+        let instructionToolTipTextView = staticTextQuery.matching(identifier: "instructions-tool-tip").element(boundBy: 0)
         ingredientsToolTipTextView.tap()
         instructionToolTipTextView.tap()
     }
