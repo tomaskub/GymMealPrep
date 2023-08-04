@@ -17,18 +17,19 @@ final class RecipeCreatorViewUITests: XCTestCase {
      */
 
     var app: XCUIApplication!
-    
-    
+    var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
     
     override func setUp() {
         app = XCUIApplication()
+        helper = RecipeCreatorUITestsHelper(forApplication: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
     }
 
     override func tearDown() {
+        helper = nil
         app = nil
     }
     

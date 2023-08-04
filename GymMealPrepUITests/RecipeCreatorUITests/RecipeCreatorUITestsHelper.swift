@@ -11,8 +11,8 @@ final class RecipeCreatorUITestsHelper {
     
     var app: XCUIApplication!
     
-    init(app: XCUIApplication!) {
-        self.app = app
+    init(forApplication: XCUIApplication!) {
+        self.app = forApplication
     }
     
     func navigateToRecipeCreatorView() {

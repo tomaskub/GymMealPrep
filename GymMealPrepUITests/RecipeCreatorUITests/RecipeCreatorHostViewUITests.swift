@@ -22,7 +22,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     override func setUp() {
         app = XCUIApplication()
-        helper = RecipeCreatorUITestsHelper(app: app)
+        helper = RecipeCreatorUITestsHelper(forApplication: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
