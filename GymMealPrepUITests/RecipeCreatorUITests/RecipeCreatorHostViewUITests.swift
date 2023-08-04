@@ -17,13 +17,12 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
      */
 
     var app: XCUIApplication!
-    
-    //MARK: static input properties
-    
+    var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
     
     override func setUp() {
         app = XCUIApplication()
+        helper = RecipeCreatorUITestsHelper(app: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
@@ -31,97 +30,91 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
 
     override func tearDown() {
         app = nil
+        helper = nil
     }
     
     func test_RecipeCreatorHostView_stageControl_exists() {
         // Given
-        navigateToRecipeCreatorView()
-        let matchIngredientsButton = app.staticTexts["Match ingredients"]
+        helper.navigateToRecipeCreatorView()
         
         // Then
-        let result = matchIngredientsButton.waitForExistence(timeout: standardTimeout)
+        let result = app.staticTexts["Match ingredients"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "'Match ingredients' buton should exits")
     }
     
     func test_RecipeCreatorHostView_StageControls_navigatesToParserViewOnTap() {
         // Given
-        navigateToRecipeCreatorView()
-        let matchIngredientsButton = app.staticTexts["Match ingredients"]
-        let matchIngredientsTitle = app.navigationBars.staticTexts["Match ingredients"]
+        helper.navigateToRecipeCreatorView()
         
         // When
-        matchIngredientsButton.tap()
+        helper.advanceStage()
         
         // Then
-        let result = matchIngredientsTitle.waitForExistence(timeout: standardTimeout)
+        let result = app.navigationBars.staticTexts["Match ingredients"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Navigation titile 'Match ingredients' should exist")
     }
     
     func test_RecipeCreatorHostView_StageControls_BackButtonAppearsOnAdvancedStage() {
         // Given
-        navigateToRecipeCreatorView()
-        let matchIngredientsButton = app.staticTexts["Match ingredients"]
-        let backButton = app.images["back-button"]
+        helper.navigateToRecipeCreatorView()
         
         // When
-        matchIngredientsButton.tap()
+        helper.advanceStage()
         
         // Then
-        let result = backButton.waitForExistence(timeout: standardTimeout)
+        let result = app.images["back-button"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Back button should exist")
     }
     
     func test_RecipeCreatorHostView_StageControls_ForwardButtonShouldExistAfterBackButtonTap() {
         // Given
-        navigateToRecipeCreatorView()
-        let matchIngredientsButton = app.staticTexts["Match ingredients"]
-        let backButton = app.images["back-button"]
-        let nextButton = app.images["next-button"]
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage()
         
         // When
-        matchIngredientsButton.tap()
-        _ = backButton.waitForExistence(timeout: standardTimeout)
-        backButton.tap()
+        helper.goToLastStage()
         
         // Then
-        let result = nextButton.waitForExistence(timeout: standardTimeout)
+        let result = app.images["next-button"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Next button should exist")
     }
 
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForParserView() {
         // Given
-        navigateToRecipeCreatorView()
-        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStageButton.tap()
+        helper.advanceStage()
         
         // Then
-        let result = app.staticTexts["Confirm ingredients"].waitForExistence(timeout: standardTimeout)
+        let result = app.staticTexts["Confirm ingredients"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "'Confirm ingredients' static text should exist")
     }
+    
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForInstructionView() {
         // Given
-        navigateToRecipeCreatorView()
-        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStageButton.tap()
-        advanceStageButton.tap()
+        helper.advanceStage(numberOfStages: 2)
         
         // Then
-        let result = app.staticTexts["Confirm instructions"].waitForExistence(timeout: standardTimeout)
+        let result = app.staticTexts["Confirm instructions"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "'Confirm instructions' static text should exist")
     }
+    
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForConfirmationView() {
         // Given
-        navigateToRecipeCreatorView()
-        let advanceStageButton = app.staticTexts["advance-stage-button"]
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStageButton.tap()
-        advanceStageButton.tap()
-        advanceStageButton.tap()
+        helper.advanceStage(numberOfStages: 3)
         
         // Then
         let predicate = NSPredicate(format: "exists == true")
@@ -131,17 +124,5 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
             expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: app.images["next-button"])]
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Static texts 'Save and exit' and 'Save and open' should exist. Next button should not exist")
-    }
-}
-
-//MARK: HELPER FUNCTIONS
-extension RecipeCreatorHostViewUITests {
-    
-    func navigateToRecipeCreatorView() {
-        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
-        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
-        recipiesNavigationBar.buttons["Add from text"].tap()
     }
 }
