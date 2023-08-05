@@ -48,6 +48,11 @@ final class RecipeCreatorUITestsHelper {
         app.staticTexts["instructions-tool-tip"].firstMatch.tap()
     }
     
+    func tapAddInstructionButton() {
+        app.collectionViews.cells.images["add-instruction-button"].tap()
+    }
+    /// Enter data in input text field on recipe creator view
+    /// To work properly it needs tool tips to not exist
     func enterData(recipeTitle: String = RecipeInputStrings.recipeTitleInput,
                    recipeIngredients: String = RecipeInputStrings.ingredientsInput,
                    recipeInstructions: String = RecipeInputStrings.instructionsInput) {
