@@ -29,6 +29,11 @@ final class RecipeCreatorUITestsHelper {
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
     
+    func navigateToRecipeCreatorConfirmationView() {
+        navigateToRecipeCreatorView()
+        advanceStage(numberOfStages: 3)
+    }
+    
     func advanceStage(numberOfStages i: Int = 1) {
         for _ in 0..<i {
             app.staticTexts["advance-stage-button"].tap()
@@ -51,6 +56,15 @@ final class RecipeCreatorUITestsHelper {
     func tapAddInstructionButton() {
         app.collectionViews.cells.images["add-instruction-button"].tap()
     }
+    
+    func tapAddPhotoButton() {
+        app.collectionViews.buttons["add-change-photo"].tap()
+    }
+    
+    func tapDeletePhotoButton() {
+        app.collectionViews.buttons["delete-photo"].tap()
+    }
+    
     /// Enter data in input text field on recipe creator view
     /// To work properly it needs tool tips to not exist
     func enterData(recipeTitle: String = RecipeInputStrings.recipeTitleInput,
@@ -72,6 +86,28 @@ final class RecipeCreatorUITestsHelper {
         instructionsTextField.typeText(recipeInstructions)
         
         finishButton.tap()
+    }
+    
+    func enterCookingTimes(cookingTime: String, preparingTime: String, waitingTime: String) {
+        let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
+        let preparingTimeTextField = app.collectionViews.textFields["preparing-time-text-field"]
+        let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
+        
+        cookingTimeTextField.tap()
+        cookingTimeTextField.typeText("15")
+        
+        preparingTimeTextField.tap()
+        preparingTimeTextField.typeText("25")
+        
+        waitingTimeTextField.tap()
+        waitingTimeTextField.typeText("35")
+    }
+    
+    func addTag(tagText: String){
+        let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
+        inputTextField.tap()
+        inputTextField.typeText(tagText)
+        app.collectionViews.buttons["Add"].tap()
     }
     
     
