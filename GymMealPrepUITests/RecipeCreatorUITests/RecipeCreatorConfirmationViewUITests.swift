@@ -203,11 +203,11 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
         let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
         // When
         cookingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
+        waitUntilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
         preparingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("25")
+        waitUntilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("25")
         waitingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("35")
+        waitUntilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("35")
         // Then
         let expectations = [
         expectation(for: NSPredicate(format: "value == '15'"), evaluatedWith: cookingTimeTextField),
@@ -236,7 +236,7 @@ extension RecipeCreatorConfirmationViewUITests {
     func addTag(withText text: String) {
         let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
         inputTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(text)
+        waitUntilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(text)
         app.collectionViews.buttons["Add"].tap()
     }
 }

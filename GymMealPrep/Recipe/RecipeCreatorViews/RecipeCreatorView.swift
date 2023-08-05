@@ -53,7 +53,7 @@ struct RecipeCreatorView: View {
                 }
                 
                 TextEditor(text: $viewModel.ingredientsEntry)
-                    .accessibilityIdentifier("IngredientsTextField")
+                    .accessibilityIdentifier("ingredients-text-field")
                     .focused($textFieldInFocus, equals: .ingredients)
                     .scrollContentBackground(.hidden)
                     .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
@@ -113,7 +113,7 @@ struct RecipeCreatorView: View {
                 } // END OF HSTACK
                 
                 TextEditor(text: $viewModel.instructionsEntry)
-                    .accessibilityIdentifier("InstructionsTextField")
+                    .accessibilityIdentifier("instructions-text-field")
                     .focused($textFieldInFocus, equals: .instructions)
                     .scrollContentBackground(.hidden)
                     .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))

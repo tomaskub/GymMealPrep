@@ -9,6 +9,12 @@ import XCTest
 /// This is a class that can handle the interactions with RecipeCreator views
 final class RecipeCreatorUITestsHelper {
     
+    struct RecipeInputStrings {
+        static let recipeTitleInput: String = "Breakfast burrito"
+        static let ingredientsInput: String = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
+        static let instructionsInput: String = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
+    }
+    
     var app: XCUIApplication!
     
     init(forApplication: XCUIApplication!) {
@@ -41,4 +47,27 @@ final class RecipeCreatorUITestsHelper {
         app.staticTexts["ingredients-tool-tip"].firstMatch.tap()
         app.staticTexts["instructions-tool-tip"].firstMatch.tap()
     }
+    
+    func enterData(recipeTitle: String = RecipeInputStrings.recipeTitleInput,
+                   recipeIngredients: String = RecipeInputStrings.ingredientsInput,
+                   recipeInstructions: String = RecipeInputStrings.instructionsInput) {
+        
+        let titleTextField = app.scrollViews.textFields["recipe-title-text-field"]
+        let ingredientsTextField = app.scrollViews.textViews["ingredients-text-field"]
+        let instructionsTextField = app.scrollViews.textViews["instructions-text-field"]
+        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
+        
+        titleTextField.tap()
+        titleTextField.typeText(recipeTitle)
+        
+        ingredientsTextField.tap()
+        ingredientsTextField.typeText(recipeIngredients)
+        
+        instructionsTextField.tap()
+        instructionsTextField.typeText(recipeInstructions)
+        
+        finishButton.tap()
+    }
+    
+    
 }

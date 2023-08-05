@@ -160,7 +160,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         // When
         let textEditor = app.collectionViews.cells.containing(.staticText, identifier: "1").textViews.firstMatch
         textEditor.tap()
-        waitUtilElementHasKeyboardFocus(element: textEditor, timeout: standardTimeout).typeText(testText)
+        waitUntilElementHasKeyboardFocus(element: textEditor, timeout: standardTimeout).typeText(testText)
         addButton.tap()
         // Then
         XCTAssertEqual(textEditor.value as! String, testText, "Text in text editor should be equal to testText")
@@ -204,10 +204,10 @@ extension RecipeCreatorInstructionsViewUITests {
         titleTextField.tap()
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
+        waitUntilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
+        waitUntilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
         finishButton.tap()
     }
 }

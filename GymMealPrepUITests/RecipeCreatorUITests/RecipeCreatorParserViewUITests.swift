@@ -159,10 +159,10 @@ extension RecipeCreatorParserViewUITests {
         titleTextField.typeText(recipeTitleInput)
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
+        waitUntilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
+        waitUntilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
         
         finishButton.tap()
     }

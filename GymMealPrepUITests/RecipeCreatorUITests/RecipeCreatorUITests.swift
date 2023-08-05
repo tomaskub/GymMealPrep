@@ -86,11 +86,11 @@ extension RecipeCreatorUITests {
         let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
         
         cookingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
+        waitUntilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
         preparingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("10")
+        waitUntilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("10")
         waitingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("0")
+        waitUntilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("0")
     }
     
     func saveAndOpen() {
@@ -107,7 +107,7 @@ extension RecipeCreatorUITests {
     func addTag(text: String) {
         let tagTextField = app.collectionViews.cells.textFields["Add new tag"]
         tagTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: tagTextField, timeout: standardTimeout).typeText(text)
+        waitUntilElementHasKeyboardFocus(element: tagTextField, timeout: standardTimeout).typeText(text)
         app.collectionViews.cells.buttons["Add"].tap()
     }
     func addPhoto() {
@@ -142,10 +142,10 @@ extension RecipeCreatorUITests {
         titleTextField.typeText(recipeTitleInput())
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput())
+        waitUntilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput())
         
         nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput())
+        waitUntilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput())
         
         finishButton.tap()
     }
