@@ -18,9 +18,6 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     var app: XCUIApplication!
     var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
-    let recipeTitleInput = "Breakfast burrito"
-    let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
-    let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
     
     override func setUp() {
         app = XCUIApplication()
@@ -37,51 +34,55 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     
     func test_RecipeCreatorParserView_StaticTexts_Shows0CellsWhenNoIngredientsToParse() {
         // Given
-        navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStage()
+        helper.advanceStage()
         
         // Then
         let navigationTitle = app.navigationBars.staticTexts["Match ingredients"]
         let ingredientCountText = app.collectionViews.staticTexts["0 Ingredients:"]
-        
         let predicate = NSPredicate(format: "exists == true")
         let expectations = [
-        expectation(for: predicate, evaluatedWith: navigationTitle),
-        expectation(for: predicate, evaluatedWith: ingredientCountText)]
+            expectation(for: predicate, evaluatedWith: navigationTitle),
+            expectation(for: predicate, evaluatedWith: ingredientCountText)
+        ]
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Navigation text 'Match ingredients' and summary text '0 Ingredients:' should exist")
     }
     
     func test_RecipeCreatorParserView_StaticTexts_DisplayCorrectAmountOfCells() {
         // Given
-        navigateToRecipeCreatorView()
-        fillInDataOnCreatorView()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
         
         // When
-        advanceStage()
+        helper.advanceStage()
         
         // Then
-        let predicate = NSPredicate(format: "exists == true")
         let expectations = [
-            expectation(for: predicate, evaluatedWith: app.staticTexts["5 Ingredients:"])]
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.staticTexts["5 Ingredients:"]),
+            expectation(for: NSPredicate(format: "count == 6"), evaluatedWith: app.collectionViews.cells)
+        ]
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
-        XCTAssertEqual(result, .completed)
+        XCTAssertEqual(result, .completed, "Static text '5 Ingredients:' should exists, and view should have 6 cells")
+        
     }
     
     func test_RecipeCreatorParserView_IngredientRows_displayInputText() {
         // Given
-        navigateToRecipeCreatorView()
-        fillInDataOnCreatorView()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
         
         // When
-        advanceStage()
+        helper.advanceStage()
         
         // Then
         let predicate = NSPredicate(format: "exists == true")
         var expectations = [XCTestExpectation]()
-        let labels = ingredientsInput.components(separatedBy: "\n")
+        let labels = RecipeCreatorUITestsHelper.RecipeInputStrings.ingredientsInput.components(separatedBy: "\n")
         for label in labels {
             expectations.append(expectation(for: predicate, evaluatedWith: app.collectionViews.staticTexts[label]))
         }
@@ -92,9 +93,10 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     // This test relies on call to api - it should be replaced by the mock configured to run when -UITests argument is passed on launch
     func test_RecipeCreatorParserView_IngredientRows_navigatesToIngredientHostViewOnTap() {
         // Given
-        navigateToRecipeCreatorView()
-        fillInDataOnCreatorView()
-        advanceStage()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
+        helper.advanceStage()
         
         // When
         app.cells.staticTexts["2 eggs"].tap()
@@ -109,9 +111,10 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     /*
     func test_RecipeCreatorParserView_IngredientRows_navigatesToIngredientHostViewOnTap() {
         // Given
-        navigateToRecipeCreatorView()
-        fillInDataOnCreatorView()
-        advanceStage()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
+        helper.advanceStage()
         
         // When
         app.cells.staticTexts["We failed to find the ingredient, tap to search for ingredient manually"].tap()
@@ -124,49 +127,3 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     */
 }
 
-extension RecipeCreatorParserViewUITests {
-    
-    func advanceStage() {
-        app.staticTexts["advance-stage-button"].tap()
-    }
-    
-    func navigateToRecipeCreatorView() {
-        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
-        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
-        recipiesNavigationBar.buttons["Add from text"].tap()
-    }
-    func fillInDataOnCreatorView() {
-        tapToolTips()
-        enterData()
-    }
-    
-    func tapToolTips() {
-        let staticTextQuery = app.scrollViews.otherElements.containing(.textField, identifier:"RecipeTitleTextField").children(matching: .staticText)
-        let ingredientsToolTipTextView = staticTextQuery.matching(identifier: "IngredientsToolTip").element(boundBy: 0)
-        let instructionToolTipTextView = staticTextQuery.matching(identifier: "InstructionsToolTip").element(boundBy: 0)
-        ingredientsToolTipTextView.tap()
-        instructionToolTipTextView.tap()
-    }
-    
-    func enterData() {
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
-        
-        titleTextField.tap()
-        titleTextField.typeText(recipeTitleInput)
-        
-        nextButton.tap()
-        waitUntilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
-        
-        nextButton.tap()
-        waitUntilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
-        
-        finishButton.tap()
-    }
-}
