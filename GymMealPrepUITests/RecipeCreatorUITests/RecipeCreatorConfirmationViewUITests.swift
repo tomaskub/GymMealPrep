@@ -15,10 +15,12 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
      Testing structure: Given, When, Then
      */
     var app: XCUIApplication!
+    var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
     
     override func setUp() {
         app = XCUIApplication()
+        helper = RecipeCreatorUITestsHelper(forApplication: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
@@ -26,11 +28,12 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
 
     override func tearDown() {
         app = nil
+        helper = nil
     }
     
     func test_RecipeCreatorConfirmationView_UIElements_exist() {
         // Given
-        navigateToRecipeCreatorConfirmationView()
+        helper.navigateToRecipeCreatorConfirmationView()
         
         let navigationTitle = app.navigationBars.staticTexts["Add details"]
         let photoSectionHeader = app.collectionViews.staticTexts["PHOTO"]
@@ -61,10 +64,12 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     
     func test_RecipeCreatorConfirmationView_AddButton_addsTagFromTextOnTap() {
         // Given
-        navigateToRecipeCreatorConfirmationView()
+        helper.navigateToRecipeCreatorConfirmationView()
         let testInput = "Test tag"
+        
         // When
-        addTag(withText: testInput)
+        helper.addTag(tagText: testInput)
+        
         // Then
         let result = app.collectionViews.staticTexts[testInput].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Static text 'Test tag' should exist")
@@ -72,12 +77,13 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     
     func test_RecipeCreatorConfirmationView_AddButton_doesNotAddTag_whenTextFieldIsEmpty() {
         // Given
-        navigateToRecipeCreatorConfirmationView()
-        let testInput = ""
-        let addButton = app.collectionViews.buttons["Add"]
+        helper.navigateToRecipeCreatorConfirmationView()
+        
         // When
-        addTag(withText: testInput)
+        helper.addTag(tagText: "")
+        
         // Then
+        let addButton = app.collectionViews.buttons["Add"]
         let result = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "isEnabled == false"), evaluatedWith: addButton)], timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "Add button should not be enabled")
     }
@@ -85,10 +91,12 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     func test_RecipeCreatorConfirmationView_Tag_XButtonExistsAfterLongPress(){
         // Given
         let testInput = "Test tag"
-        navigateToRecipeCreatorConfirmationView()
-        addTag(withText: testInput)
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.addTag(tagText: testInput)
+        
         // When
         app.collectionViews.staticTexts[testInput].press(forDuration: 1)
+        
         // Then
         let result = app.collectionViews.buttons["x.circle"].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "Delete tag button should exist")
@@ -97,12 +105,14 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     func test_RecipeCreatorConfirmationView_Tag_isRemovedAfterXButtonTap(){
         // Given
         let testInput = "Test tag"
-        navigateToRecipeCreatorConfirmationView()
-        addTag(withText: testInput)
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.addTag(tagText: testInput)
         let tag = app.collectionViews.staticTexts[testInput]
         tag.press(forDuration: 1)
+        
         // When
         app.collectionViews.buttons["x.circle"].tap()
+        
         // Then
         let result = tag.waitForNonExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "'Test tag' static test should not exist")
@@ -110,10 +120,11 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     
     func test_RecipeCreatorConfirmationView_AddPhotoButton_displaysPhotoPicker() {
         // Given
-        navigateToRecipeCreatorConfirmationView()
-        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
+        helper.navigateToRecipeCreatorConfirmationView()
+        
         // When
-        addPhotoButton.tap()
+        helper.tapAddPhotoButton()
+        
         // Then
         let result = app.navigationBars["Photos"].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "A 'Photos' navigation bar should exists after tap")
@@ -121,42 +132,40 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     
     func test_RecipeCreatorConfirmationView_RecipeImageUpdatedAfterPhotoIsPicked() {
         // Given
-        let photoId = "Photo, August 08, 2012, 11:29 PM"
-        navigateToRecipeCreatorConfirmationView()
-        app.collectionViews.buttons["add-change-photo"].tap()
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.tapAddPhotoButton()
+        
         // When
-        app.scrollViews.images[photoId].tap()
+        app.scrollViews.images["Photo, August 08, 2012, 11:29 PM"].tap()
+        
         // Then
-        // photo does not have id?
         let result = app.collectionViews.descendants(matching: .image).firstMatch.waitForExistence(timeout: standardTimeout)
-        XCTAssertTrue(result, "Photo '\(photoId)' should exist")
+        XCTAssertTrue(result, "Added photo should exist")
     }
     
     func test_RecipeCreatorConfirmationView_AddPhotoButton_changesLabel_whenPhotoIsLoaded() {
         // Given
-        let photoId = "Photo, August 08, 2012, 11:29 PM"
-        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
-        navigateToRecipeCreatorConfirmationView()
-        addPhotoButton.tap()
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.tapAddPhotoButton()
+        
         // When
-        app.scrollViews.images[photoId].tap()
+        app.scrollViews.images["Photo, August 08, 2012, 11:29 PM"].tap()
+        
         // Then
-        XCTAssertEqual(addPhotoButton.label, "Change photo", "'add-change-photo' button should have value 'Change photo")
+        XCTAssertEqual(app.collectionViews.buttons["add-change-photo"].label, "Change photo", "'add-change-photo' button should have value 'Change photo")
     }
     
     func test_RecipeCreatorConfirmationView_DeleteButton_exists_whenPhotoIsLoaded() {
         // Given
-        let photoId = "Photo, August 08, 2012, 11:29 PM"
-        let addPhotoButton = app.collectionViews.buttons["add-change-photo"]
-        let deletePhotoButton = app.collectionViews.buttons["delete-photo"]
-        navigateToRecipeCreatorConfirmationView()
-        addPhotoButton.tap()
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.tapAddPhotoButton()
+        
         // When
-        app.scrollViews.images[photoId].tap()
+        app.scrollViews.images["Photo, August 08, 2012, 11:29 PM"].tap()
+        
         // Then
-        let expectations = [expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: deletePhotoButton)]
-        let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Delete photo button should exist")
+        let result = app.collectionViews.buttons["delete-photo"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "Delete photo button should exist")
     }
     
     // TOMASZ: FOR THIS TEST TO OPERATE ASSET ID HAS TO BE OBTAINED FROM PHOTO PICKER
@@ -180,63 +189,42 @@ final class RecipeCreatorConfirmationViewUITests: XCTestCase {
     */
     func test_RecipeCreatorConfirmationView_DeleteButton_removesPhotoAndItself_whenTaped() {
         // Given
-        let deletePhotoButton = app.collectionViews.buttons["delete-photo"]
-        let photoId = "Photo, August 08, 2012, 11:29 PM"
-        navigateToRecipeCreatorConfirmationView()
-        app.collectionViews.buttons["add-change-photo"].tap()
-        app.scrollViews.images[photoId].tap()
+        helper.navigateToRecipeCreatorConfirmationView()
+        helper.tapAddPhotoButton()
+        app.scrollViews.images["Photo, August 08, 2012, 11:29 PM"].tap()
+        
         // When
-        deletePhotoButton.tap()
+        helper.tapDeletePhotoButton()
+        
         // Then
         let predicate = NSPredicate(format: "exists == false")
-        let expectations = [expectation(for: predicate, evaluatedWith: deletePhotoButton),
-        expectation(for: predicate, evaluatedWith: app.collectionViews.descendants(matching: .image).firstMatch)]
+        let expectations = [
+            expectation(for: predicate, evaluatedWith: app.collectionViews.buttons["delete-photo"]),
+            expectation(for: predicate, evaluatedWith: app.collectionViews.descendants(matching: .image).firstMatch)]
+        
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
-        XCTAssertEqual(result, .completed, "Photo '\(photoId)' and delete button should not exist")
+        XCTAssertEqual(result, .completed, "Photo and delete button should not exist")
     }
 
     func test_RecipeCreatorConfirmationView_TimeTextFields_areEditable() {
         // Given
-        navigateToRecipeCreatorConfirmationView()
-        let cookingTimeTextField = app.collectionViews.textFields["cooking-time-text-field"]
-        let preparingTimeTextField = app.collectionViews.textFields["preparing-time-text-field"]
-        let waitingTimeTextField = app.collectionViews.textFields["waiting-time-text-field"]
+        helper.navigateToRecipeCreatorConfirmationView()
+        
         // When
-        cookingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: cookingTimeTextField, timeout: standardTimeout).typeText("15")
-        preparingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: preparingTimeTextField, timeout: standardTimeout).typeText("25")
-        waitingTimeTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: waitingTimeTextField, timeout: standardTimeout).typeText("35")
+        helper.enterCookingTimes(cookingTime: "15", preparingTime: "25", waitingTime: "35")
+        
         // Then
         let expectations = [
-        expectation(for: NSPredicate(format: "value == '15'"), evaluatedWith: cookingTimeTextField),
-        expectation(for: NSPredicate(format: "value == '25'"), evaluatedWith: preparingTimeTextField),
-        expectation(for: NSPredicate(format: "value == '35'"), evaluatedWith: waitingTimeTextField)]
+        expectation(for: NSPredicate(format: "value == '15'"),
+                    evaluatedWith: app.collectionViews.textFields["cooking-time-text-field"]),
+        expectation(for: NSPredicate(format: "value == '25'"),
+                    evaluatedWith: app.collectionViews.textFields["preparing-time-text-field"]),
+        expectation(for: NSPredicate(format: "value == '35'"),
+                    evaluatedWith: app.collectionViews.textFields["waiting-time-text-field"])
+        ]
         
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "The field values should match the typed in values")
     }
     
-}
-
-extension RecipeCreatorConfirmationViewUITests {
-    
-    func navigateToRecipeCreatorConfirmationView() {
-        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
-        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
-        recipiesNavigationBar.buttons["Add from text"].tap()
-        app.staticTexts["advance-stage-button"].tap()
-        app.staticTexts["advance-stage-button"].tap()
-        app.staticTexts["advance-stage-button"].tap()
-    }
-    
-    func addTag(withText text: String) {
-        let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
-        inputTextField.tap()
-        waitUtilElementHasKeyboardFocus(element: inputTextField, timeout: standardTimeout).typeText(text)
-        app.collectionViews.buttons["Add"].tap()
-    }
 }

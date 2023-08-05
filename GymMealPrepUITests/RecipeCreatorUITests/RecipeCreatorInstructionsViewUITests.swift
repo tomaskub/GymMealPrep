@@ -15,12 +15,12 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
      Testing structure: Given, When, Then
      */
     var app: XCUIApplication!
+    var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
-    let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
-    let instructionsInput = "1. Fry bacon strips and scramble the eggs \n2. Remove bacon and eggs, put shredded cheese on the pan. \n3. After the cheese melts, cover cheese with tortilla \n4. Flip the tortilla and put it on plate, top with the rest of ingredients. Roll the burrito.\n5. Put the burrito on the hot pan, seam side down. After 30 seconds remove and prepare for serving"
     
     override func setUp() {
         app = XCUIApplication()
+        helper = RecipeCreatorUITestsHelper(forApplication: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
@@ -28,82 +28,76 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
 
     override func tearDown() {
         app = nil
+        helper = nil
     }
     
     func test_RecipeCreatorInstructionsView_NavigationTitle_isDisplayed() {
         // Given
-        navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStage()
-        advanceStage()
+        helper.advanceStage(numberOfStages: 2)
         
         // Then
-        let title = app.navigationBars["Instructions"]
-        let result = title.waitForExistence(timeout: standardTimeout)
+        let result = app.navigationBars["Instructions"].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result,"'Instructions' navigation titile should exist")
     }
     
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_exists() {
         // Given
-        navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorView()
         
         // When
-        advanceStage()
-        advanceStage()
+        helper.advanceStage(numberOfStages: 2)
         
         // Then
-        let addButton = app.collectionViews.images["add-instruction-button"]
-        let result = addButton.waitForExistence(timeout: standardTimeout)
+        let result = app.collectionViews.images["add-instruction-button"]
+            .waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result,"'Add' button should exist")
     }
     
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_AddsCellOnTap() {
         // Given
-        navigateToRecipeCreatorView()
-        advanceStage()
-        advanceStage()
-        let startingAmountOfCells = app.collectionViews.cells.count
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage(numberOfStages: 2)
         
         // When
         app.collectionViews.images["add-instruction-button"].tap()
         
         // Then
-        let resultingAmountOfCells = app.collectionViews.cells.count
-        XCTAssertEqual(resultingAmountOfCells - startingAmountOfCells, 1, "Difference in cell counts should be 1")
+        XCTAssertEqual(app.collectionViews.cells.count, 2, "There should be 2 cells existing")
     }
     
     func test_RecipeCreatorInstructionsView_newInstructionCell_hasNumberAndTextField() {
         // Given
-        navigateToRecipeCreatorView()
-        advanceStage()
-        advanceStage()
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage(numberOfStages: 2)
         
         // When
-        app.collectionViews.images["add-instruction-button"].tap()
+        helper.tapAddInstructionButton()
         
         // Then
         let predicate = NSPredicate(format: "exists == true")
         let expectations = [
             expectation(for: predicate, evaluatedWith: app.collectionViews.staticTexts["1"]),
-            expectation(for: predicate, evaluatedWith: app.collectionViews.textFields.firstMatch)]
+            expectation(for: predicate, evaluatedWith: app.collectionViews.textViews.firstMatch)]
         let result = XCTWaiter.wait(for: expectations, timeout: standardTimeout)
         XCTAssertEqual(result, .completed, "A number 1 text and text field should exist in collection view")
     }
-    //Note - the test has to add ingredients otherwise the app will not parse instructions 
+
     func test_RecipeCreatorInstructionsView_instructionCells_areShowingWithInputFromCreator() {
         // Given
-        navigateToRecipeCreatorView()
-        enterData()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
         
         // When
-        advanceStage()
-        advanceStage()
+        helper.advanceStage(numberOfStages: 2)
         
         // Then
         var expectedTextFields = [String]()
         
-        for string in instructionsInput.components(separatedBy: "\n") {
+        for string in RecipeCreatorUITestsHelper.RecipeInputStrings.instructionsInput.components(separatedBy: "\n") {
             expectedTextFields.append(String(string.dropFirst(3)))
         }
         
@@ -118,11 +112,10 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_instructionCell_showDeleteButton_WhenSwipedLeft() {
         // Given
-        navigateToRecipeCreatorView()
-        advanceStage()
-        advanceStage()
-        app.collectionViews.cells.images["add-instruction-button"].tap()
-        
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage(numberOfStages: 2)
+        helper.tapAddInstructionButton()
+
         // When
         _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)])
         app.collectionViews.cells.firstMatch.swipeLeft()
@@ -134,10 +127,10 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_instructionCell_isRemovedOnDeleteButtonTap() {
         // Given
-        navigateToRecipeCreatorView()
-        advanceStage()
-        advanceStage()
-        app.collectionViews.cells.images["add-instruction-button"].tap()
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage(numberOfStages: 2)
+        helper.tapAddInstructionButton()
+        
         _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)], timeout: standardTimeout)
         
         // When
@@ -152,62 +145,33 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func testRecipeCreatorInstructionView_instructionCell_isEditableAndHoldingData() {
         // Given
         let testText = "Test instruction text"
-        let addButton = app.collectionViews.cells.images["add-instruction-button"]
-        navigateToRecipeCreatorView()
-        advanceStage()
-        advanceStage()
-        addButton.tap()
+        helper.navigateToRecipeCreatorView()
+        helper.advanceStage(numberOfStages: 2)
+        helper.tapAddInstructionButton()
+        
         // When
         let textEditor = app.collectionViews.cells.containing(.staticText, identifier: "1").textViews.firstMatch
         textEditor.tap()
-        waitUtilElementHasKeyboardFocus(element: textEditor, timeout: standardTimeout).typeText(testText)
-        addButton.tap()
+        waitUntilElementHasKeyboardFocus(element: textEditor, timeout: standardTimeout).typeText(testText)
+        helper.tapAddInstructionButton()
         // Then
         XCTAssertEqual(textEditor.value as! String, testText, "Text in text editor should be equal to testText")
     }
     
     func test_RecipeCreatorInstructionsView_instructionCell_isUpdatingStepTextOnMove() {
         // Given
-        navigateToRecipeCreatorView()
-        enterData()
-        advanceStage()
-        advanceStage()
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData()
+        helper.advanceStage(numberOfStages: 2)
+    
         let firstCell = app.collectionViews.cells.firstMatch
         // When
         app.collectionViews.cells.element(boundBy: 3).press(forDuration: 0.5, thenDragTo: firstCell)
         // Then
+        // this does not make sense really? we should already have one cell above as a header?
         let result = app.collectionViews.cells.element(boundBy: 0).staticTexts["1"].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "On first row static text '1' should exist")
     }
 }
 
-// MARK: HELPER FUNCTIONS
-extension RecipeCreatorInstructionsViewUITests {
-    func advanceStage() {
-        app.staticTexts["advance-stage-button"].tap()
-    }
-    func navigateToRecipeCreatorView() {
-        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
-        let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
-        _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
-        recipiesNavigationBar.buttons["Add from text"].tap()
-    }
-    func enterData() {
-        let recipeTitleElementsQuery = app.scrollViews.otherElements.containing(.textField, identifier:"Recipe title")
-        let titleTextField = recipeTitleElementsQuery.textFields["Recipe title"]
-        let ingredientsTextField = recipeTitleElementsQuery.textViews["IngredientsTextField"]
-        let instructionsTextField = recipeTitleElementsQuery.textViews["InstructionsTextField"]
-        let nextButton = app.toolbars["Toolbar"].buttons["Next"]
-        let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
-        
-        titleTextField.tap()
-        
-        nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: ingredientsTextField, timeout: standardTimeout).typeText(ingredientsInput)
-        
-        nextButton.tap()
-        waitUtilElementHasKeyboardFocus(element: instructionsTextField, timeout: standardTimeout).typeText(instructionsInput)
-        finishButton.tap()
-    }
-}

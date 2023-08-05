@@ -24,7 +24,7 @@ struct RecipeCreatorView: View {
             VStack(alignment: .leading) {
                 
                 TextField("Recipe title", text: $viewModel.recipeTitle)
-                    .accessibilityIdentifier("RecipeTitleTextField")
+                    .accessibilityIdentifier("recipe-title-text-field")
                     .focused($textFieldInFocus, equals: .title)
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -49,11 +49,11 @@ struct RecipeCreatorView: View {
                     Spacer()
                     Stepper("\(viewModel.servings) \(stepperLabel)", value: $viewModel.servings)
                         .fixedSize()
-                        .accessibilityIdentifier("ServingsQuantityStepper")
+                        .accessibilityIdentifier("servings-quantity-stepper")
                 }
                 
                 TextEditor(text: $viewModel.ingredientsEntry)
-                    .accessibilityIdentifier("IngredientsTextField")
+                    .accessibilityIdentifier("ingredients-text-field")
                     .focused($textFieldInFocus, equals: .ingredients)
                     .scrollContentBackground(.hidden)
                     .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
@@ -75,7 +75,7 @@ struct RecipeCreatorView: View {
                                 
                                 Text("2 slices of bacon\n1 egg")
                             } // END OF VSTACK
-                            .accessibilityIdentifier("IngredientsToolTip")
+                            .accessibilityIdentifier("ingredients-tool-tip")
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
@@ -113,7 +113,7 @@ struct RecipeCreatorView: View {
                 } // END OF HSTACK
                 
                 TextEditor(text: $viewModel.instructionsEntry)
-                    .accessibilityIdentifier("InstructionsTextField")
+                    .accessibilityIdentifier("instructions-text-field")
                     .focused($textFieldInFocus, equals: .instructions)
                     .scrollContentBackground(.hidden)
                     .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
@@ -135,7 +135,7 @@ struct RecipeCreatorView: View {
                                 
                                 Text("1. First sample instruction.\n2. Second dample instruction")
                             } // END OF VSTACK
-                            .accessibilityIdentifier("InstructionsToolTip")
+                            .accessibilityIdentifier("instructions-tool-tip")
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 20)

@@ -9,7 +9,7 @@ import Foundation
 import XCTest
 
 extension XCTestCase {
-    func waitUtilElementHasKeyboardFocus(element: XCUIElement, timeout: TimeInterval, file: StaticString = #file, line: UInt = #line) -> XCUIElement {
+    func waitUntilElementHasKeyboardFocus(element: XCUIElement, timeout: TimeInterval, file: StaticString = #file, line: UInt = #line) -> XCUIElement {
         let expectation = expectation(description: "waiting for element \(element) to have focus")
         
         let timer = Timer(timeInterval: 1, repeats: true) { timer in
