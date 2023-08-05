@@ -16,6 +16,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
      */
 
     var app: XCUIApplication!
+    var helper: RecipeCreatorUITestsHelper!
     let standardTimeout = 2.5
     let recipeTitleInput = "Breakfast burrito"
     let ingredientsInput = "2 eggs\n2 bacon strips\n1 flour tortilla\n28 grams of cheddar cheese\n50 grams of green bell pepper"
@@ -23,6 +24,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     
     override func setUp() {
         app = XCUIApplication()
+        helper = RecipeCreatorUITestsHelper(forApplication: app)
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]
         app.launch()
@@ -30,6 +32,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
 
     override func tearDown() {
         app = nil
+        helper = nil
     }
     
     func test_RecipeCreatorParserView_StaticTexts_Shows0CellsWhenNoIngredientsToParse() {
