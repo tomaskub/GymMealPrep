@@ -21,6 +21,7 @@ final class RecipeCreatorUITestsHelper {
         self.app = forApplication
     }
     
+    // MARK: NAVIGATION HELPERS
     func navigateToRecipeCreatorView() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
@@ -40,6 +41,7 @@ final class RecipeCreatorUITestsHelper {
         }
     }
     
+    // MARK: TAP ELEMENT FUNCTIONS
     func goToLastStage() {
         app.images["back-button"].tap()
     }
@@ -65,6 +67,11 @@ final class RecipeCreatorUITestsHelper {
         app.collectionViews.buttons["delete-photo"].tap()
     }
     
+    func tapSaveAndOpenButton() {
+        app.staticTexts["Save and open"].tap()
+    }
+    
+    // MARK: INPUT DATA FUNCTIONS
     /// Enter data in input text field on recipe creator view
     /// To work properly it needs tool tips to not exist
     func enterData(recipeTitle: String = RecipeInputStrings.recipeTitleInput,
@@ -103,6 +110,13 @@ final class RecipeCreatorUITestsHelper {
         waitingTimeTextField.typeText("35")
     }
     
+    func addTags(tagTexts: [String]) {
+        for tagText in tagTexts {
+            addTag(tagText: tagText)
+        }
+        app.keyboards.buttons["Return"].tap()
+    }
+    
     func addTag(tagText: String){
         let inputTextField = app.collectionViews.cells.containing(.button, identifier: "Add").textFields["Add new tag"]
         inputTextField.tap()
@@ -110,5 +124,9 @@ final class RecipeCreatorUITestsHelper {
         app.collectionViews.buttons["Add"].tap()
     }
     
+    func addPhoto(photoId: String = "Photo, August 08, 2012, 11:29 PM") {
+        app.collectionViews.buttons["add-change-photo"].tap()
+        app.scrollViews.images[photoId].tap()
+    }
     
 }
