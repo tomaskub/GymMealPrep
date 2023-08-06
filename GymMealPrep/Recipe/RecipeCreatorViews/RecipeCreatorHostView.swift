@@ -9,12 +9,12 @@ import SwiftUI
 
 struct RecipeCreatorHostView: View, KeyboardReadable {
     
-    enum Stage: Int {
-        case webEntry = 0
-        case dataEntry = 1
-        case ingredientParsing = 2
-        case instructionParsing = 3
-        case confirmation = 4
+    enum Stage: CaseIterable {
+        case webEntry
+        case dataEntry
+        case ingredientParsing
+        case instructionParsing
+        case confirmation
     }
     
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
