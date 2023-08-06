@@ -10,7 +10,6 @@ import SwiftUI
 struct RecipeCreatorHostView: View, KeyboardReadable {
     
     enum Stage: CaseIterable {
-        case webEntry
         case dataEntry
         case ingredientParsing
         case instructionParsing
@@ -18,8 +17,8 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
     }
     
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    @State private var displayedStage: Int = 0
-    @State private var processStage: Int = 0
+    @State private var displayedStage: Stage = .dataEntry
+    @State private var processStage: Stage = .dataEntry
     @State private var isShowingStageControls: Bool = true
     @Binding var path: NavigationPath
     
@@ -33,20 +32,18 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
     var body: some View {
                 VStack {
                     switch displayedStage {
-                    case 0:
+                    case .dataEntry:
                         RecipeCreatorView(viewModel: viewModel)
                             .transition(stageTransition)
-                    case 1:
+                    case .ingredientParsing:
                         RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
                             .transition(stageTransition)
-                    case 2:
+                    case .instructionParsing:
                         RecipeCreatorInstructionsView(viewModel: viewModel)
                             .transition(stageTransition)
-                    case 3:
+                    case .confirmation:
                         RecipeCreatorConfirmationView(viewModel: viewModel)
                             .transition(stageTransition)
-                    default:
-                        Text(String())
                     }
                     if isShowingStageControls {
                         stageControls
@@ -71,7 +68,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                 .onTapGesture {
                     advanceStage()
                 } // END OF ON TAP GESTURE
-            if displayedStage == 3 {
+            if displayedStage == .confirmation {
                 Text("Save and open")
                     .accessibilityIdentifier("save-and-open-button")
                     .font(.title3)
@@ -88,7 +85,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
         } // END OF HSTACK
         .overlay(alignment: .leading) {
             HStack {
-                if displayedStage != 0 {
+                if displayedStage != .dataEntry {
                     Image(systemName: "chevron.left")
                         .accessibilityIdentifier("back-button")
                         .foregroundColor(.white)
@@ -102,7 +99,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                         .transition(.opacity)
                 }
                 Spacer()
-                if displayedStage < processStage && displayedStage != 3 {
+                if isDisplayingPreviousStage && displayedStage != .confirmation {
                         Image(systemName: "chevron.right")
                         .accessibilityIdentifier("next-button")
                             .foregroundColor(.white)
@@ -119,59 +116,63 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
             .padding(.horizontal, 10)
         }
     }
+// MARK: COMPUTED PROPERTIES
+    var isDisplayingPreviousStage: Bool {
+        guard let displayedStageIndex = Stage.allCases.firstIndex(of: displayedStage),
+              let processStageIndex = Stage.allCases.firstIndex(of: processStage) else {
+            fatalError("Fatal error encountered at: \(#file)\n at line: \(#file)\n displayedStage or process stage was not foung in all cases of Stage enum")
+        }
+        return displayedStageIndex < processStageIndex
+    }
     
     var buttonText: String {
         switch displayedStage {
-        case 0:
+        case .dataEntry:
             return "Match ingredients"
-        case 1:
+        case .ingredientParsing:
             return "Confirm ingredients"
-        case 2:
+        case .instructionParsing:
             return "Confirm instructions"
-        case 3:
+        case .confirmation:
             return "Save and exit"
-        default:
-            return String()
         }
     }
 } // END OF STRUCT
 
-// MARK: STAGE NAV FUNCTIONS
+// MARK: STAGE CONTROL & NAVIGATION FUNCTIONS
 extension RecipeCreatorHostView {
     
     func advanceStage() {
-       
         if processStage != displayedStage {
             processStage = displayedStage
         }
-        
         switch processStage {
-        case 0:
+        case .dataEntry:
             viewModel.processInput()
             withAnimation {
-                displayedStage += 1
+                displayedStage = displayedStage.next()
             }
-            processStage += 1
-        case 3:
+            processStage = processStage.next()
+        case .confirmation:
             _ = viewModel.saveRecipe()
             path = NavigationPath()
         default:
             withAnimation {
-                displayedStage += 1
+                displayedStage = displayedStage.next()
             }
-            processStage += 1
+            processStage = processStage.next()
         }
     }
     
     func regressDisplayedStage() {
         withAnimation {
-            displayedStage -= 1
+            displayedStage = displayedStage.previous()
         }
     }
     
     func advanceDisplayedStage() {
         withAnimation {
-            displayedStage += 1
+            displayedStage = displayedStage.next()
         }
     }
     
