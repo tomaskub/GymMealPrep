@@ -52,6 +52,14 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                 .onReceive(keyboardPublisher, perform: { isKeyboardVisible in
                     isShowingStageControls = !isKeyboardVisible
                 })
+                .alert(viewModel.alertTitle, isPresented: $viewModel.isShowingAlert) {
+                    Button("OK") {
+                        viewModel.isShowingAlert.toggle()
+                        viewModel.clearAlertMessage()
+                    }
+                } message: {
+                    Text(viewModel.alertMessage)
+                }
             .toolbar(.hidden, for: .tabBar)
     } // END OF BODY
 
@@ -149,10 +157,12 @@ extension RecipeCreatorHostView {
         switch processStage {
         case .dataEntry:
             viewModel.processInput()
-            withAnimation {
-                displayedStage = displayedStage.next()
+            if !viewModel.isShowingAlert {
+                withAnimation {
+                    displayedStage = displayedStage.next()
+                }
+                processStage = processStage.next()
             }
-            processStage = processStage.next()
         case .confirmation:
             _ = viewModel.saveRecipe()
             path = NavigationPath()

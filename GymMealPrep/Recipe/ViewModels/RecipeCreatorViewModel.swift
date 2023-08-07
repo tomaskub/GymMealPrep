@@ -37,6 +37,11 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var tags: [Tag] = []
     @Published var recipeImage: Image?
     
+    // alert properties
+    @Published var isShowingAlert: Bool = false
+    var alertTitle: String = String()
+    var alertMessage: String = String()
+    
     func processInput() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
@@ -67,6 +72,10 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     }
     func deletePhoto() {
         assertionFailure("Missing override: Please override this method in the subclass")
+    }
+    func clearAlertMessage() {
+        alertTitle = String()
+        alertMessage = String()
     }
 }
 
