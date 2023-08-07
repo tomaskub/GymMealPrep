@@ -74,24 +74,27 @@ final class RecipeCreatorUITestsHelper {
     // MARK: INPUT DATA FUNCTIONS
     /// Enter data in input text field on recipe creator view
     /// To work properly it needs tool tips to not exist
-    func enterData(recipeTitle: String = RecipeInputStrings.recipeTitleInput,
-                   recipeIngredients: String = RecipeInputStrings.ingredientsInput,
-                   recipeInstructions: String = RecipeInputStrings.instructionsInput) {
+    func enterData(recipeTitle: String? = RecipeInputStrings.recipeTitleInput,
+                   recipeIngredients: String? = RecipeInputStrings.ingredientsInput,
+                   recipeInstructions: String? = RecipeInputStrings.instructionsInput) {
         
         let titleTextField = app.scrollViews.textFields["recipe-title-text-field"]
         let ingredientsTextField = app.scrollViews.textViews["ingredients-text-field"]
         let instructionsTextField = app.scrollViews.textViews["instructions-text-field"]
         let finishButton = app.toolbars["Toolbar"].buttons["Finish"]
         
-        titleTextField.tap()
-        titleTextField.typeText(recipeTitle)
-        
-        ingredientsTextField.tap()
-        ingredientsTextField.typeText(recipeIngredients)
-        
-        instructionsTextField.tap()
-        instructionsTextField.typeText(recipeInstructions)
-        
+        if let recipeTitle {
+            titleTextField.tap()
+            titleTextField.typeText(recipeTitle)
+        }
+        if let recipeIngredients {
+            ingredientsTextField.tap()
+            ingredientsTextField.typeText(recipeIngredients)
+        }
+        if let recipeInstructions {
+            instructionsTextField.tap()
+            instructionsTextField.typeText(recipeInstructions)
+        }
         finishButton.tap()
     }
     
