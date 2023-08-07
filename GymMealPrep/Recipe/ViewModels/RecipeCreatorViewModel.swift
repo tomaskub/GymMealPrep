@@ -129,7 +129,12 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
     override func processInput() {
         // check if there is ingredient input, otherwise return
-        guard !ingredientsEntry.isEmpty else { return }
+        guard !ingredientsEntry.isEmpty else {
+            alertTitle = "Cannot create recipe"
+            alertMessage = "The recipe cannot be created without ingredients! To proceed please add ingredients"
+            isShowingAlert.toggle()
+            return
+        }
         parseIngredients(input: ingredientsEntry)
         parseInstructions(input: instructionsEntry)
     }
