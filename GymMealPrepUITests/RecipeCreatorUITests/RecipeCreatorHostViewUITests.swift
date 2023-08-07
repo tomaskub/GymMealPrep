@@ -126,3 +126,74 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "Static texts 'Save and exit' and 'Save and open' should exist. Next button should not exist")
     }
 }
+
+extension RecipeCreatorHostViewUITests {
+    
+    func test_RecipeCreatorHostView_Alert_isDisplayed_whenAdvancingStageWhileNoIngredientsExist() {
+        // Given
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeIngredients: nil)
+        
+        // When
+        helper.advanceStage()
+
+        // Then
+        let result = app.alerts.firstMatch.waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "An alert should exist")
+    }
+    func test_RecipeCreatorHostView_Alert_okButtonExists() {
+        // Given
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeIngredients: nil)
+        
+        // When
+        helper.advanceStage()
+
+        // Then
+        let result = app.alerts.buttons["OK"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "An OK button should exist on alert")
+    }
+    func test_RecipeCreatorHostView_Alert_isDisplayingCorrectTitle() {
+        // Given
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeIngredients: nil)
+        
+        // When
+        helper.advanceStage()
+
+        // Then
+        let result = app.alerts.staticTexts["Cannot create recipe"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "A title 'Cannot create recipe' should exist on alert")
+    }
+    
+    func test_RecipeCreatorHostView_Alert_isDisplayingCorrectMessage() {
+        // Given
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeIngredients: nil)
+        
+        // When
+        helper.advanceStage()
+
+        // Then
+        let result = app.alerts.staticTexts["The recipe cannot be created without ingredients! To proceed please add ingredients"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "The alert should display correct message")
+    }
+    func test_RecipeCreatorHostView_Alert_isDissmised_whenOkButtonPressed() {
+        // Given
+        helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeIngredients: nil)
+        helper.advanceStage()
+        // When
+        app.alerts.buttons["OK"].tap()
+        
+        // Then
+        let result = app.alerts.firstMatch.waitForNonExistence(timeout: standardTimeout)
+        
+        XCTAssertTrue(result, "The alert should not exist")
+    }
+}
