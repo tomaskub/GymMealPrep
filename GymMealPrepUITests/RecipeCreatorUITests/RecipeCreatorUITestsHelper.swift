@@ -32,6 +32,8 @@ final class RecipeCreatorUITestsHelper {
     
     func navigateToRecipeCreatorConfirmationView() {
         navigateToRecipeCreatorView()
+        tapToolTips()
+        enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         advanceStage(numberOfStages: 3)
     }
     
