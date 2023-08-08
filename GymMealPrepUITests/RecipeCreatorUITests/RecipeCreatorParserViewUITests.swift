@@ -35,6 +35,8 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     func test_RecipeCreatorParserView_StaticTexts_Shows0CellsWhenNoIngredientsToParse() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
         // When
         helper.advanceStage()
