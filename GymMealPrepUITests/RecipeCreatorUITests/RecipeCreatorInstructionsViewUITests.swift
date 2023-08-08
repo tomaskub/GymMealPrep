@@ -170,7 +170,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         XCTAssertEqual(textEditor.value as! String, testText, "Text in text editor should be equal to testText")
     }
     // TODO: SEE ISSUE #34 - UNTIL RESOLVED TEST BELOW WILL FAIL
-    /*
+    
     func test_RecipeCreatorInstructionsView_instructionCell_isUpdatingStepTextOnMove() {
         // Given
         helper.navigateToRecipeCreatorView()
@@ -186,6 +186,6 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         let result = app.collectionViews.cells.element(boundBy: 0).staticTexts["1"].waitForExistence(timeout: standardTimeout)
         XCTAssertTrue(result, "On first row static text '1' should exist")
     }
-     */
+ 
 }
 
