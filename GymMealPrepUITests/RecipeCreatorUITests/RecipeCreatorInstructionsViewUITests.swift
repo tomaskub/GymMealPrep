@@ -34,6 +34,8 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func test_RecipeCreatorInstructionsView_NavigationTitle_isDisplayed() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
         // When
         helper.advanceStage(numberOfStages: 2)
@@ -46,6 +48,8 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_exists() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
         // When
         helper.advanceStage(numberOfStages: 2)
@@ -59,18 +63,22 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_AddsCellOnTap() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
         
         // When
         app.collectionViews.images["add-instruction-button"].tap()
         
         // Then
-        XCTAssertEqual(app.collectionViews.cells.count, 2, "There should be 2 cells existing")
+        XCTAssertEqual(app.collectionViews.cells.count, 3, "There should be 2 cells existing")
     }
     
     func test_RecipeCreatorInstructionsView_newInstructionCell_hasNumberAndTextField() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
         
         // When
@@ -113,8 +121,9 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func test_RecipeCreatorInstructionsView_instructionCell_showDeleteButton_WhenSwipedLeft() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
-        helper.tapAddInstructionButton()
 
         // When
         _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)])
@@ -128,8 +137,9 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func test_RecipeCreatorInstructionsView_instructionCell_isRemovedOnDeleteButtonTap() {
         // Given
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
-        helper.tapAddInstructionButton()
         
         _ = XCTWaiter.wait(for: [expectation(for: NSPredicate(format: "count == 2"), evaluatedWith: app.collectionViews.cells)], timeout: standardTimeout)
         
@@ -146,6 +156,8 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
         // Given
         let testText = "Test instruction text"
         helper.navigateToRecipeCreatorView()
+        helper.tapToolTips()
+        helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
         helper.tapAddInstructionButton()
         
