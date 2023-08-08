@@ -42,7 +42,7 @@ final class RecipeCreatorUITestsHelper {
     }
     
     // MARK: TAP ELEMENT FUNCTIONS
-    func goToLastStage() {
+    func goToPreviousStage() {
         app.images["back-button"].tap()
     }
     
