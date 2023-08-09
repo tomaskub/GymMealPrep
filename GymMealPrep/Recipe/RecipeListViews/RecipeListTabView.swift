@@ -12,6 +12,7 @@ struct RecipeListTabView: View {
     enum NavigationState: Hashable {
         case showingRecipeDetailEdit(Recipe)
         case addingNewRecipeText
+        case addingNewRecipeWeb
         case showingRecipeDetail(Recipe)
     }
     
@@ -36,6 +37,8 @@ struct RecipeListTabView: View {
                     RecipeCreatorHostView(path: $path)
                 case .showingRecipeDetail(let recipe):
                     RecipeHostView(isEditing: false, recipe: recipe, path: $path)
+                case .addingNewRecipeWeb:
+                    Text("Adding recipe from web placeholder")
                 }
             }
         }
