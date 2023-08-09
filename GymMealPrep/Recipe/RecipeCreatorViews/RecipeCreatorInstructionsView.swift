@@ -59,12 +59,6 @@ struct RecipeCreatorInstructionsView_Previews: PreviewProvider {
         override func processInput() {
             print("Processing input called")
         }
-        override func createRecipeViewModel() -> RecipeViewModel {
-            var recipe = Recipe()
-            recipe.instructions = parsedInstructions
-            return RecipeViewModel(recipe: recipe, dataManager: DataManager.preview)
-            
-        }
         override func deleteInstruction(at offset: IndexSet) {
             parsedInstructions.remove(atOffsets: offset)
         }

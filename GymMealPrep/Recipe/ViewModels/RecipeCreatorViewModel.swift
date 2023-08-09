@@ -53,10 +53,6 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
         assertionFailure("Missing override: Please override this method in the subclass")
         return Recipe()
     }
-    func createRecipeViewModel() -> RecipeViewModel {
-        assertionFailure("Missing override: Please override this method in the subclass")
-        return RecipeViewModel(recipe: Recipe())
-    }
     func addTag() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
@@ -96,10 +92,10 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     override var selectedImage: PhotosPickerItem? {
         didSet {
             // this needs to change
-                Task { @MainActor in
-                    recipeImageData = await loadPhoto(from: selectedImage)
-//                        recipeImage = try await selectedImage?.loadTransferable(type: Image.self)
-                }
+            Task { @MainActor in
+                recipeImageData = await loadPhoto(from: selectedImage)
+                //                        recipeImage = try await selectedImage?.loadTransferable(type: Image.self)
+            }
         }
     }
     func loadPhoto(from imageSelection: PhotosPickerItem?) async -> Data? {
@@ -151,7 +147,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         
         // send request for matching ingredients to EdamamAPI
         for searchTerm in ingredientsNLArray {
-           edamamLogicController.getIngredientsWithParsed(for: searchTerm)
+            edamamLogicController.getIngredientsWithParsed(for: searchTerm)
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
@@ -220,11 +216,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         return recipe
     }
     
-    override func createRecipeViewModel() -> RecipeViewModel {
-        return RecipeViewModel(recipe:
-        Recipe(name: recipeTitle, servings: 1, timeCookingInMinutes: 0, timePreparingInMinutes: 0, timeWaitingInMinutes: 0, ingredients: [], instructions: [], tags: []))
-    }
-    
     override func addTag() {
         tags.append(Tag(text: tagText))
         tagText = String()
@@ -238,9 +229,15 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     override func deleteInstruction(at offset: IndexSet) {
         parsedInstructions.remove(atOffsets: offset)
     }
+    
     override func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
         parsedInstructions.move(fromOffsets: source, toOffset: destination)
+        for (index, instruction) in parsedInstructions.enumerated() {
+            let targetInstruction = Instruction(id: instruction.id, step: index + 1, text: instruction.text)
+            parsedInstructions[index] = targetInstruction
+        }
     }
+    
     override func addInstruction() {
         parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
     }
