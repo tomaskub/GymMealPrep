@@ -160,9 +160,6 @@ struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
         override func addIngredient(_: Ingredient, _: String?) {
             // do nothing
         }
-        override func createRecipeViewModel() -> RecipeViewModel {
-            return RecipeViewModel(recipe: Recipe())
-        }
     }
     
     static var previews: some View {
