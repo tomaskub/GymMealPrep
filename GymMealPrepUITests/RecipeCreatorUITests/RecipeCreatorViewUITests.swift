@@ -35,7 +35,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_Tooltips_shouldBePresent() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         
         // Then
         let ingredientsToolTip = app.staticTexts["ingredients-tool-tip"]
@@ -52,7 +52,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_Tooltips_shouldDissapearAfterTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         
         // When
         helper.tapToolTips()
@@ -73,7 +73,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_KeyboardToolBarButtons_shouldDisplayCorrectly_whenRecipeTitleTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         
         // When
@@ -91,7 +91,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_KeyboardToolBarBackButton_shouldExistAfterTapOnNext() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         
         // When
@@ -106,7 +106,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_keyboardToolbarNextButton_shouldSwitchFocus() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         
         // When
@@ -122,7 +122,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_keyboardToolBarBackButton_shouldSwitchFocus() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         let titleTextField = app.scrollViews.textFields["recipe-title-text-field"]
         
@@ -139,7 +139,7 @@ final class RecipeCreatorViewUITests: XCTestCase {
     
     func test_RecipeCreatorView_TextFields_shouldHoldData() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         
         // When

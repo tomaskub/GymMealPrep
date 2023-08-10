@@ -35,7 +35,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_stageControl_exists() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         
         // Then
         let result = app.staticTexts["Match ingredients"]
@@ -45,7 +45,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_StageControls_navigatesToParserViewOnTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         // When
@@ -59,7 +59,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_StageControls_BackButtonAppearsOnAdvancedStage() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         
@@ -74,7 +74,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_StageControls_ForwardButtonShouldExistAfterBackButtonTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         helper.advanceStage()
@@ -90,7 +90,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
 
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForParserView() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         
@@ -105,7 +105,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForInstructionView() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         
@@ -120,7 +120,7 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     
     func test_RecipeCreatorHostView_StageControls_displayCorrectButtonLabelsForConfirmationView() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "test", recipeIngredients: "test", recipeInstructions: "test")
         
@@ -143,7 +143,7 @@ extension RecipeCreatorHostViewUITests {
     
     func test_RecipeCreatorHostView_Alert_isDisplayed_whenAdvancingStageWhileNoIngredientsExist() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeIngredients: nil)
         
@@ -156,7 +156,7 @@ extension RecipeCreatorHostViewUITests {
     }
     func test_RecipeCreatorHostView_Alert_okButtonExists() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeIngredients: nil)
         
@@ -169,7 +169,7 @@ extension RecipeCreatorHostViewUITests {
     }
     func test_RecipeCreatorHostView_Alert_isDisplayingCorrectTitle() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeIngredients: nil)
         
@@ -183,7 +183,7 @@ extension RecipeCreatorHostViewUITests {
     
     func test_RecipeCreatorHostView_Alert_isDisplayingCorrectMessage() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeIngredients: nil)
         
@@ -196,7 +196,7 @@ extension RecipeCreatorHostViewUITests {
     }
     func test_RecipeCreatorHostView_Alert_isDissmised_whenOkButtonPressed() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeIngredients: nil)
         helper.advanceStage()

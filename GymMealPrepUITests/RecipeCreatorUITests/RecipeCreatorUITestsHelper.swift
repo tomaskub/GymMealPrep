@@ -22,7 +22,7 @@ final class RecipeCreatorUITestsHelper {
     }
     
     // MARK: NAVIGATION HELPERS
-    func navigateToRecipeCreatorView() {
+    func navigateToRecipeCreatorViewFromText() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
         recipiesNavigationBar.images["Back"].tap()
@@ -31,7 +31,7 @@ final class RecipeCreatorUITestsHelper {
     }
     
     func navigateToRecipeCreatorConfirmationView() {
-        navigateToRecipeCreatorView()
+        navigateToRecipeCreatorViewFromText()
         tapToolTips()
         enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         advanceStage(numberOfStages: 3)
