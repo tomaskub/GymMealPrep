@@ -19,7 +19,6 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var recipeTitle: String = String()
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
-    
     @Published var timePreparingInMinutes: String = String()
     @Published var timeCookingInMinutes: String = String()
     @Published var timeWaitingInMinutes: String = String()
@@ -46,7 +45,9 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func processInput() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
-    
+    func processLink() {
+        assertionFailure("Missing override: Please override this method in the subclass")
+    }
     func addIngredient(_: Ingredient, _: String?) {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
@@ -78,8 +79,10 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     private var dataManager: DataManager
-    var subscriptions = Set<AnyCancellable>()
-    var recipeImageData: Data? {
+    let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private var recipeImageData: Data? {
         didSet {
             if let data = recipeImageData, let uiImage = UIImage(data: data) {
                 recipeImage = Image(uiImage: uiImage)
@@ -88,8 +91,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             }
         }
     }
-    let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
-    
     override var selectedImage: PhotosPickerItem? {
         didSet {
             // this needs to change
@@ -99,22 +100,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             }
         }
     }
-    func loadPhoto(from imageSelection: PhotosPickerItem?) async -> Data? {
-        do {
-            if let data = try await imageSelection?.loadTransferable(type: Data.self) {
-                if let _ = UIImage(data: data) {
-                    return data
-                }
-            }
-            return nil
-        } catch {
-            print("Error loading photo: \(error.localizedDescription)")
-            return nil
-        }
-    }
-    override func deletePhoto() {
-        recipeImageData = nil
-    }
     
     init(dataManager: DataManager = .shared) {
         self.dataManager = dataManager
@@ -122,6 +107,10 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         self.ingredientsNLArray = [String]()
         self.ingredientsEntry = String()
         self.instructionsEntry = String()
+    }
+    
+    override func processLink() {
+        //TODO: ADD IMPLEMENTATION
     }
     //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
     override func processInput() {
@@ -221,12 +210,14 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         tags.append(Tag(text: tagText))
         tagText = String()
     }
-    
+    //MARK: INGREDIENT FUNCTIONS
     override func addIngredient(_ ingredientToSave: Ingredient, _ key: String?) {
         if let key {
             matchedIngredients.updateValue(ingredientToSave, forKey: key)
         }
     }
+    
+    //MARK: INSTRUCTION FUNCTIONS
     override func deleteInstruction(at offset: IndexSet) {
         parsedInstructions.remove(atOffsets: offset)
     }
@@ -241,6 +232,24 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
     override func addInstruction() {
         parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
+    }
+    
+    //MARK: PHOTO FUNCTIONS
+    func loadPhoto(from imageSelection: PhotosPickerItem?) async -> Data? {
+        do {
+            if let data = try await imageSelection?.loadTransferable(type: Data.self) {
+                if let _ = UIImage(data: data) {
+                    return data
+                }
+            }
+            return nil
+        } catch {
+            print("Error loading photo: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    override func deletePhoto() {
+        recipeImageData = nil
     }
 }
 

@@ -178,7 +178,7 @@ extension RecipeCreatorHostView {
         }
         switch processStage {
         case .webLinkEntry:
-            print("Getting web view for recipe")
+            viewModel.processLink()
             withAnimation {
                 displayedStage = displayedStage.next()
             }
@@ -201,7 +201,7 @@ extension RecipeCreatorHostView {
             processStage = processStage.next()
         }
     }
-    //TODO: THIS SHOULD BE REWORKED TO WORK WITH SETUP
+    
     func regressDisplayedStage() {
         if !includeWebLink && displayedStage.previous() == .webLinkEntry {
             withAnimation {
