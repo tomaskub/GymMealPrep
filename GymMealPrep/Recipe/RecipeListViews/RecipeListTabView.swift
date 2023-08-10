@@ -38,7 +38,7 @@ struct RecipeListTabView: View {
                 case .showingRecipeDetail(let recipe):
                     RecipeHostView(isEditing: false, recipe: recipe, path: $path)
                 case .addingNewRecipeWeb:
-                    Text("Adding recipe from web placeholder")
+                    RecipeCreatorHostView(includeWebLink: true, path: $path)
                 }
             }
         }
