@@ -48,7 +48,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                 VStack {
                     switch displayedStage {
                     case .webLinkEntry:
-                        RecipeCreatorWebLinkView()
+                        RecipeCreatorWebLinkView(viewModel: viewModel)
                     case .dataEntry:
                         RecipeCreatorView(viewModel: viewModel)
                             .transition(stageTransition)

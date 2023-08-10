@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct RecipeCreatorWebLinkView: View {
+    
+    @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
+    let navTitle: String = "Import recipe"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack (alignment: .leading) {
+                TextField("Import from link", text: $viewModel.recipeLink)
+                    .accessibilityIdentifier("recipe-link-text-field")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .padding()
+                    .background(.gray.opacity(0.1))
+                    .cornerRadius(20)
+            }
+            .padding()
+        }
+            .navigationTitle(navTitle)
     }
 }
 
 struct RecipeCreatorWebLinkView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeCreatorWebLinkView()
+        NavigationStack {
+            RecipeCreatorWebLinkView(viewModel: RecipeCreatorViewModel())
+        }
     }
 }

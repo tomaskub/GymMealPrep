@@ -15,6 +15,7 @@ import UIKit
 class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     
     // input properties
+    @Published var recipeLink: String = String()
     @Published var recipeTitle: String = String()
     @Published var ingredientsEntry: String = String()
     @Published var instructionsEntry: String = String()
