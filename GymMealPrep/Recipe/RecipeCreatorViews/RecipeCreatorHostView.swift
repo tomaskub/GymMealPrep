@@ -178,11 +178,13 @@ extension RecipeCreatorHostView {
         }
         switch processStage {
         case .webLinkEntry:
-            viewModel.processLink()
-            withAnimation {
-                displayedStage = displayedStage.next()
+                viewModel.processLink()
+            if !viewModel.isShowingAlert {
+                withAnimation {
+                    displayedStage = displayedStage.next()
+                }
+                processStage = processStage.next()
             }
-            processStage = processStage.next()
         case .dataEntry:
             viewModel.processInput()
             if !viewModel.isShowingAlert {

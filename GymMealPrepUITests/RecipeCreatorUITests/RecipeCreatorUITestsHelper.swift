@@ -30,6 +30,14 @@ final class RecipeCreatorUITestsHelper {
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
     
+    func navigateToRecipeCreatorViewFromWeb() {
+        app.tabBars["Tab Bar"].buttons["Recipes"].tap()
+        let recipiesNavigationBar = app.navigationBars["Recipes"]
+        recipiesNavigationBar.images["Back"].tap()
+        _ = recipiesNavigationBar.buttons["Add from web"].waitForExistence(timeout: 1)
+        recipiesNavigationBar.buttons["Add from web"].tap()
+    }
+    
     func navigateToRecipeCreatorConfirmationView() {
         navigateToRecipeCreatorViewFromText()
         tapToolTips()
@@ -74,6 +82,11 @@ final class RecipeCreatorUITestsHelper {
     }
     
     // MARK: INPUT DATA FUNCTIONS
+    func enterLink(link: String? = nil) {
+        let linkTextField = app.scrollViews.textFields["recipe-link-text-field"]
+        linkTextField.tap()
+        linkTextField.typeText(link)
+    }
     /// Enter data in input text field on recipe creator view
     /// To work properly it needs tool tips to not exist
     func enterData(recipeTitle: String? = RecipeInputStrings.recipeTitleInput,
