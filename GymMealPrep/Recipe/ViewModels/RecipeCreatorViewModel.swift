@@ -111,6 +111,13 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
     override func processLink() {
         //TODO: ADD IMPLEMENTATION
+        guard let url = URL(string: recipeLink) else {
+            alertTitle = "Cannot load the link"
+            alertMessage = "The recipe link provided was not valid"
+            isShowingAlert.toggle()
+            return
+        }
+        //do the download and parsing
     }
     //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
     override func processInput() {
