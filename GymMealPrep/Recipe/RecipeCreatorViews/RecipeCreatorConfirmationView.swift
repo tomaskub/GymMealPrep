@@ -7,9 +7,12 @@
 
 import SwiftUI
 import PhotosUI
+import UIKit
 
 struct RecipeCreatorConfirmationView: View {
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
+    @State private var image: Image?
+    @State private var pickerSelection: PhotosPickerItem?
     
     var body: some View {
         
@@ -25,11 +28,11 @@ struct RecipeCreatorConfirmationView: View {
         .navigationTitle("Add details")
         .navigationBarTitleDisplayMode(.inline)
     } // END OF BODY
-    
+    //MARK: UI VAR DECLARATION
     var photoSection: some View {
         Section("Photo") {
-                if let image = viewModel.recipeImage {
-                    image
+                if let _image = image {
+                    _image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(height: 250)
@@ -37,14 +40,18 @@ struct RecipeCreatorConfirmationView: View {
                 } // END OF IMAGE
                 HStack {
                     Spacer()
-                    PhotosPicker(selection: $viewModel.selectedImage){
-                        Text(viewModel.recipeImage == nil ? "Add photo" : "Change photo")
+                    PhotosPicker(selection: $pickerSelection, matching: .images){
+                        Text(image == nil ? "Add photo" : "Change photo")
                             .accessibilityIdentifier("add-change-photo")
                     } // END OF PHOTOSPICKER
+                    .task(id: pickerSelection) {
+                        image = await loadPhoto(from: pickerSelection)
+                    }
                     .buttonStyle(.borderedProminent)
-                    if viewModel.recipeImage != nil {
+                    if image != nil {
                         Button(role: .destructive) {
-                            viewModel.deletePhoto()
+                            viewModel.deleteImageData()
+                            self.image = nil
                         } label: {
                             Text("Delete")
                         } // END OF BUTTON
@@ -91,7 +98,6 @@ struct RecipeCreatorConfirmationView: View {
         } // END OF SECTION
     }
     
-    //MARK: UI VAR DECLARATION
     var tagsSection: some View {
         Section("Tags") {
             
@@ -120,26 +126,31 @@ struct RecipeCreatorConfirmationView: View {
     }
 }
 
+//MARK: LOAD PHOTO
+extension RecipeCreatorConfirmationView {
+    func loadPhoto(from imageSelection: PhotosPickerItem?) async -> Image? {
+        do {
+            if let data = try await imageSelection?.loadTransferable(type: Data.self) {
+                if let uiImage = UIImage(data: data) {
+                    viewModel.addImageData(data: data)
+                    return Image(uiImage: uiImage)
+                }
+            }
+            return nil
+        } catch {
+            print("Error loading photo: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+}
+
 struct RecipeCreatorConfirmationView_Previews: PreviewProvider {
     
     class PreviewViewModel: RecipeCreatorViewModelProtocol {
         
-        override var selectedImage: PhotosPickerItem? {
-            didSet {
-                if let selectedImage {
-                    Task { @MainActor in
-                        do {
-                            recipeImage = try await selectedImage.loadTransferable(type: Image.self) ?? Image(systemName: "photo")
-                        } catch {
-                            print("Error loading photo: \(error.localizedDescription)")
-                        }
-                    }
-                }
-            }
-        }
-        
-        override func deletePhoto() {
-            recipeImage = nil
+        override func deleteImageData() {
+            
         }
         
         override init() {

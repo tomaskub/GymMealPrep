@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import PhotosUI
+
 /// This class is a protocol definition for view model of RecipeCreatorViews
 class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     
@@ -21,18 +22,14 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var timeWaitingInMinutes: String = String()
     @Published var tagText: String = String()
     @Published var servings: Int = 1
-    // image input
-    @Published var selectedImage: PhotosPickerItem?
     // input processed properties
     @Published var ingredientsNLArray: [String] = []
     var instructionsNLArray: [String] = []
-    
     // output properties
     @Published var parsedIngredients = [String : [[Ingredient]]]()
     @Published var matchedIngredients = [String : Ingredient]()
     @Published var parsedInstructions: [Instruction] = []
     @Published var tags: [Tag] = []
-    @Published var recipeImage: Image?
     
     // alert properties
     @Published var isShowingAlert: Bool = false
@@ -65,7 +62,10 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     func addInstruction() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
-    func deletePhoto() {
+    func addImageData(data: Data) {
+        assertionFailure("Missing override: Please override this method in the subclass")
+    }
+    func deleteImageData() {
         assertionFailure("Missing override: Please override this method in the subclass")
     }
     func clearAlertMessage() {
