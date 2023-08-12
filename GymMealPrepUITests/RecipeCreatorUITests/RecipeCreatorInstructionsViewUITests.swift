@@ -33,7 +33,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_NavigationTitle_isDisplayed() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
@@ -47,7 +47,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_exists() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
@@ -62,7 +62,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_AddInstructionsButton_AddsCellOnTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
@@ -76,7 +76,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_newInstructionCell_hasNumberAndTextField() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
@@ -95,7 +95,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
 
     func test_RecipeCreatorInstructionsView_instructionCells_areShowingWithInputFromCreator() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         
@@ -120,7 +120,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_instructionCell_showDeleteButton_WhenSwipedLeft() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
@@ -136,7 +136,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_instructionCell_isRemovedOnDeleteButtonTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
@@ -155,7 +155,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     func testRecipeCreatorInstructionView_instructionCell_isEditableAndHoldingData() {
         // Given
         let testText = "Test instruction text"
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         helper.advanceStage(numberOfStages: 2)
@@ -173,7 +173,7 @@ final class RecipeCreatorInstructionsViewUITests: XCTestCase {
     
     func test_RecipeCreatorInstructionsView_instructionCell_isUpdatingStepTextOnMove() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         helper.advanceStage(numberOfStages: 2)

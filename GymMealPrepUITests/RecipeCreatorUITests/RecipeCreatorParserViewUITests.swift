@@ -34,7 +34,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     
     func test_RecipeCreatorParserView_StaticTexts_Shows0CellsWhenNoIngredientsToParse() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData(recipeTitle: "TEST", recipeIngredients: "TEST", recipeInstructions: "TEST")
         
@@ -55,7 +55,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     
     func test_RecipeCreatorParserView_StaticTexts_DisplayCorrectAmountOfCells() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         
@@ -74,7 +74,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     
     func test_RecipeCreatorParserView_IngredientRows_displayInputText() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         
@@ -95,7 +95,7 @@ final class RecipeCreatorParserViewUITests: XCTestCase {
     // This test relies on call to api - it should be replaced by the mock configured to run when -UITests argument is passed on launch
     func test_RecipeCreatorParserView_IngredientRows_navigatesToIngredientHostViewOnTap() {
         // Given
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         helper.advanceStage()

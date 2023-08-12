@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipeCreatorHostView: View, KeyboardReadable {
     
     enum Stage: CaseIterable {
+        case webLinkEntry
         case dataEntry
         case ingredientParsing
         case instructionParsing
@@ -17,21 +18,37 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
     }
     
     @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
-    @State private var displayedStage: Stage = .dataEntry
-    @State private var processStage: Stage = .dataEntry
+    @State private var displayedStage: Stage
+    @State private var processStage: Stage
     @State private var isShowingStageControls: Bool = true
     @Binding var path: NavigationPath
     
+    private let includeWebLink: Bool
     let stageTransition: AnyTransition = {
         AnyTransition.asymmetric(
             insertion: .push(from: .trailing),
             removal: .move(edge: .leading))
     }()
     
+    init(includeWebLink: Bool = false, path: Binding<NavigationPath>) {
+        self.includeWebLink = includeWebLink
+        self._path = path
+        
+        if includeWebLink {
+            self._displayedStage = State.init(initialValue: .webLinkEntry)
+            self._processStage = State.init(initialValue: .webLinkEntry)
+        } else {
+            self._displayedStage = State.init(initialValue: .dataEntry)
+            self._processStage = State.init(initialValue: .dataEntry)
+        }
+    }
+    
     //MARK: BODY
     var body: some View {
                 VStack {
                     switch displayedStage {
+                    case .webLinkEntry:
+                        RecipeCreatorWebLinkView(viewModel: viewModel)
                     case .dataEntry:
                         RecipeCreatorView(viewModel: viewModel)
                             .transition(stageTransition)
@@ -93,7 +110,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
         } // END OF HSTACK
         .overlay(alignment: .leading) {
             HStack {
-                if displayedStage != .dataEntry {
+                if isDisplayingPreviousStageButton {
                     Image(systemName: "chevron.left")
                         .accessibilityIdentifier("back-button")
                         .foregroundColor(.white)
@@ -135,6 +152,8 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
     
     var buttonText: String {
         switch displayedStage {
+        case .webLinkEntry:
+            return "Get recipe from link"
         case .dataEntry:
             return "Match ingredients"
         case .ingredientParsing:
@@ -144,6 +163,9 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
         case .confirmation:
             return "Save and exit"
         }
+    }
+    var isDisplayingPreviousStageButton: Bool {
+        return !includeWebLink ? displayedStage != .dataEntry : (displayedStage != .webLinkEntry)
     }
 } // END OF STRUCT
 
@@ -155,6 +177,14 @@ extension RecipeCreatorHostView {
             processStage = displayedStage
         }
         switch processStage {
+        case .webLinkEntry:
+                viewModel.processLink()
+            if !viewModel.isShowingAlert {
+                withAnimation {
+                    displayedStage = displayedStage.next()
+                }
+                processStage = processStage.next()
+            }
         case .dataEntry:
             viewModel.processInput()
             if !viewModel.isShowingAlert {
@@ -175,8 +205,14 @@ extension RecipeCreatorHostView {
     }
     
     func regressDisplayedStage() {
-        withAnimation {
-            displayedStage = displayedStage.previous()
+        if !includeWebLink && displayedStage.previous() == .webLinkEntry {
+            withAnimation {
+                displayedStage = displayedStage.previous().previous()
+            }
+        } else {
+            withAnimation {
+                displayedStage = displayedStage.previous()
+            }
         }
     }
     
@@ -197,7 +233,7 @@ extension RecipeCreatorHostView {
 struct RecipeCreatorHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            RecipeCreatorHostView(path: .constant(NavigationPath()))
+            RecipeCreatorHostView(includeWebLink: true ,path: .constant(NavigationPath()))
         }
     }
 }

@@ -39,7 +39,7 @@ final class RecipeCreatorUITests: XCTestCase {
     func test_RecipeCreator_UserAddingRecipeFromText() {
         // Given
         let tags = ["breakfast", "mexican", "burrito", "freezer-friendly"]
-        helper.navigateToRecipeCreatorView()
+        helper.navigateToRecipeCreatorViewFromText()
         helper.tapToolTips()
         helper.enterData()
         helper.advanceStage(numberOfStages: 3)
