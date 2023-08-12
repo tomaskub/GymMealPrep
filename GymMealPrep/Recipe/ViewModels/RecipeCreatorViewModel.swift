@@ -11,95 +11,11 @@ import PhotosUI
 import SwiftUI
 import UIKit
 
-/// This class is a protocol definition for view model of RecipeCreatorViews
-class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
-    
-    // input properties
-    @Published var recipeLink: String = String()
-    @Published var recipeTitle: String = String()
-    @Published var ingredientsEntry: String = String()
-    @Published var instructionsEntry: String = String()
-    @Published var timePreparingInMinutes: String = String()
-    @Published var timeCookingInMinutes: String = String()
-    @Published var timeWaitingInMinutes: String = String()
-    @Published var tagText: String = String()
-    @Published var servings: Int = 1
-    // image input
-    @Published var selectedImage: PhotosPickerItem?
-    // input processed properties
-    @Published var ingredientsNLArray: [String] = []
-    var instructionsNLArray: [String] = []
-    
-    // output properties
-    @Published var parsedIngredients = [String : [[Ingredient]]]()
-    @Published var matchedIngredients = [String : Ingredient]()
-    @Published var parsedInstructions: [Instruction] = []
-    @Published var tags: [Tag] = []
-    @Published var recipeImage: Image?
-    
-    // alert properties
-    @Published var isShowingAlert: Bool = false
-    var alertTitle: String = String()
-    var alertMessage: String = String()
-    
-    func processInput() {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func processLink() {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func addIngredient(_: Ingredient, _: String?) {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func saveRecipe() -> Recipe {
-        assertionFailure("Missing override: Please override this method in the subclass")
-        return Recipe()
-    }
-    func addTag() {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    
-    func deleteInstruction(at offset: IndexSet) {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func moveInstruction(fromOffset source: IndexSet, toOffset destination: Int) {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func addInstruction() {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func deletePhoto() {
-        assertionFailure("Missing override: Please override this method in the subclass")
-    }
-    func clearAlertMessage() {
-        alertTitle = String()
-        alertMessage = String()
-    }
-}
-
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
+    private var recipeImageData: Data?
     private var dataManager: DataManager
     let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     private var subscriptions = Set<AnyCancellable>()
-    
-    private var recipeImageData: Data? {
-        didSet {
-            if let data = recipeImageData, let uiImage = UIImage(data: data) {
-                recipeImage = Image(uiImage: uiImage)
-            } else {
-                recipeImage = nil
-            }
-        }
-    }
-    override var selectedImage: PhotosPickerItem? {
-        didSet {
-            // this needs to change
-            Task { @MainActor in
-                recipeImageData = await loadPhoto(from: selectedImage)
-                //                        recipeImage = try await selectedImage?.loadTransferable(type: Image.self)
-            }
-        }
-    }
     
     init(dataManager: DataManager = .shared) {
         self.dataManager = dataManager
@@ -240,22 +156,10 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     override func addInstruction() {
         parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
     }
-    
-    //MARK: PHOTO FUNCTIONS
-    func loadPhoto(from imageSelection: PhotosPickerItem?) async -> Data? {
-        do {
-            if let data = try await imageSelection?.loadTransferable(type: Data.self) {
-                if let _ = UIImage(data: data) {
-                    return data
-                }
-            }
-            return nil
-        } catch {
-            print("Error loading photo: \(error.localizedDescription)")
-            return nil
-        }
+    override func addImageData(data: Data) {
+        recipeImageData = data
     }
-    override func deletePhoto() {
+    override func deleteImageData() {
         recipeImageData = nil
     }
 }

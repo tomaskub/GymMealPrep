@@ -83,9 +83,11 @@ final class RecipeCreatorUITestsHelper {
     
     // MARK: INPUT DATA FUNCTIONS
     func enterLink(link: String? = nil) {
-        let linkTextField = app.scrollViews.textFields["recipe-link-text-field"]
-        linkTextField.tap()
-        linkTextField.typeText(link)
+        if let _link = link {
+            let linkTextField = app.scrollViews.textFields["recipe-link-text-field"]
+            linkTextField.tap()
+            linkTextField.typeText(_link)
+        }
     }
     /// Enter data in input text field on recipe creator view
     /// To work properly it needs tool tips to not exist
