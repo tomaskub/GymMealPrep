@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA6AE68BBA474C80DE0A375D /* Pods_GymMealPrep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7A2DBA325CB78ADDDD8608 /* Pods_GymMealPrep.framework */; };
+		CAC8560DF37D2F4B3F4878A0 /* Pods_GymMealPrep_GymMealPrepUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 606CD2564D173C4103422D25 /* Pods_GymMealPrep_GymMealPrepUITests.framework */; };
 		D600A38C2A7AD2F500495CE3 /* RecipeCreatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D600A38B2A7AD2F500495CE3 /* RecipeCreatorUITests.swift */; };
 		D60598702A37B2D000186F7F /* RecipeListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605986F2A37B2D000186F7F /* RecipeListTabView.swift */; };
 		D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */; };
@@ -128,6 +130,7 @@
 		D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */; };
 		D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */; };
 		D6EF30D22A35C6F2004CAAE7 /* NavigationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */; };
+		F1CE74ECEA25D9FFBFF1BF1F /* Pods_GymMealPrepTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99543B9485197678CFAEADA0 /* Pods_GymMealPrepTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +151,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3471FBBD9636566B9AA796D9 /* Pods-GymMealPrep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrep.release.xcconfig"; path = "Target Support Files/Pods-GymMealPrep/Pods-GymMealPrep.release.xcconfig"; sourceTree = "<group>"; };
+		4DC11DBECE4ADE63A217AAB3 /* Pods-GymMealPrepTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrepTests.debug.xcconfig"; path = "Target Support Files/Pods-GymMealPrepTests/Pods-GymMealPrepTests.debug.xcconfig"; sourceTree = "<group>"; };
+		606CD2564D173C4103422D25 /* Pods_GymMealPrep_GymMealPrepUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GymMealPrep_GymMealPrepUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6367E1483056B7EFC3545FF9 /* Pods-GymMealPrep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrep.debug.xcconfig"; path = "Target Support Files/Pods-GymMealPrep/Pods-GymMealPrep.debug.xcconfig"; sourceTree = "<group>"; };
+		6E7A2DBA325CB78ADDDD8608 /* Pods_GymMealPrep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GymMealPrep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7808D13480FE1C202AD94A1A /* Pods-GymMealPrepTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrepTests.release.xcconfig"; path = "Target Support Files/Pods-GymMealPrepTests/Pods-GymMealPrepTests.release.xcconfig"; sourceTree = "<group>"; };
+		99543B9485197678CFAEADA0 /* Pods_GymMealPrepTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GymMealPrepTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6296AB50C00C3A267A6124B /* Pods-GymMealPrep-GymMealPrepUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrep-GymMealPrepUITests.debug.xcconfig"; path = "Target Support Files/Pods-GymMealPrep-GymMealPrepUITests/Pods-GymMealPrep-GymMealPrepUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D23F9EB24A1AE7CB2721EB99 /* Pods-GymMealPrep-GymMealPrepUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GymMealPrep-GymMealPrepUITests.release.xcconfig"; path = "Target Support Files/Pods-GymMealPrep-GymMealPrepUITests/Pods-GymMealPrep-GymMealPrepUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D600A38B2A7AD2F500495CE3 /* RecipeCreatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorUITests.swift; sourceTree = "<group>"; };
 		D605986F2A37B2D000186F7F /* RecipeListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListTabView.swift; sourceTree = "<group>"; };
 		D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModelTests.swift; sourceTree = "<group>"; };
@@ -280,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6AE68BBA474C80DE0A375D /* Pods_GymMealPrep.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +300,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1CE74ECEA25D9FFBFF1BF1F /* Pods_GymMealPrepTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,12 +308,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC8560DF37D2F4B3F4878A0 /* Pods_GymMealPrep_GymMealPrepUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F1F23FC569ED75FFAABD924 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E7A2DBA325CB78ADDDD8608 /* Pods_GymMealPrep.framework */,
+				606CD2564D173C4103422D25 /* Pods_GymMealPrep_GymMealPrepUITests.framework */,
+				99543B9485197678CFAEADA0 /* Pods_GymMealPrepTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B71EA06DDB9D017962077806 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6367E1483056B7EFC3545FF9 /* Pods-GymMealPrep.debug.xcconfig */,
+				3471FBBD9636566B9AA796D9 /* Pods-GymMealPrep.release.xcconfig */,
+				B6296AB50C00C3A267A6124B /* Pods-GymMealPrep-GymMealPrepUITests.debug.xcconfig */,
+				D23F9EB24A1AE7CB2721EB99 /* Pods-GymMealPrep-GymMealPrepUITests.release.xcconfig */,
+				4DC11DBECE4ADE63A217AAB3 /* Pods-GymMealPrepTests.debug.xcconfig */,
+				7808D13480FE1C202AD94A1A /* Pods-GymMealPrepTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		D605986E2A37B2BA00186F7F /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +354,8 @@
 				D634FF9729FD42F60034B950 /* GymMealPrepTests */,
 				D634FFA129FD42F60034B950 /* GymMealPrepUITests */,
 				D634FF8429FD42F50034B950 /* Products */,
+				B71EA06DDB9D017962077806 /* Pods */,
+				6F1F23FC569ED75FFAABD924 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -662,9 +703,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D634FFA829FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrep" */;
 			buildPhases = (
+				388F1D22E29E683BA12AD9BC /* [CP] Check Pods Manifest.lock */,
 				D634FF7F29FD42F50034B950 /* Sources */,
 				D634FF8029FD42F50034B950 /* Frameworks */,
 				D634FF8129FD42F50034B950 /* Resources */,
+				CD46AAE733FAAE76E3411A26 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -679,6 +722,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D634FFAB29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepTests" */;
 			buildPhases = (
+				A54EED8F5BBFF0459BA0DFDC /* [CP] Check Pods Manifest.lock */,
 				D634FF9029FD42F60034B950 /* Sources */,
 				D634FF9129FD42F60034B950 /* Frameworks */,
 				D634FF9229FD42F60034B950 /* Resources */,
@@ -697,9 +741,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D634FFAE29FD42F60034B950 /* Build configuration list for PBXNativeTarget "GymMealPrepUITests" */;
 			buildPhases = (
+				79629D86201C923C03C47AE2 /* [CP] Check Pods Manifest.lock */,
 				D634FF9A29FD42F60034B950 /* Sources */,
 				D634FF9B29FD42F60034B950 /* Frameworks */,
 				D634FF9C29FD42F60034B950 /* Resources */,
+				618B6534DFDF6EDDA3C078F4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -781,6 +827,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		388F1D22E29E683BA12AD9BC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GymMealPrep-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		618B6534DFDF6EDDA3C078F4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep-GymMealPrepUITests/Pods-GymMealPrep-GymMealPrepUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep-GymMealPrepUITests/Pods-GymMealPrep-GymMealPrepUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep-GymMealPrepUITests/Pods-GymMealPrep-GymMealPrepUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79629D86201C923C03C47AE2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GymMealPrep-GymMealPrepUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A54EED8F5BBFF0459BA0DFDC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GymMealPrepTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD46AAE733FAAE76E3411A26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep/Pods-GymMealPrep-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep/Pods-GymMealPrep-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GymMealPrep/Pods-GymMealPrep-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D634FF7F29FD42F50034B950 /* Sources */ = {
@@ -1048,6 +1197,7 @@
 		};
 		D634FFA929FD42F60034B950 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6367E1483056B7EFC3545FF9 /* Pods-GymMealPrep.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1086,6 +1236,7 @@
 		};
 		D634FFAA29FD42F60034B950 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3471FBBD9636566B9AA796D9 /* Pods-GymMealPrep.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1124,6 +1275,7 @@
 		};
 		D634FFAC29FD42F60034B950 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DC11DBECE4ADE63A217AAB3 /* Pods-GymMealPrepTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1147,6 +1299,7 @@
 		};
 		D634FFAD29FD42F60034B950 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7808D13480FE1C202AD94A1A /* Pods-GymMealPrepTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1170,6 +1323,7 @@
 		};
 		D634FFAF29FD42F60034B950 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B6296AB50C00C3A267A6124B /* Pods-GymMealPrep-GymMealPrepUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1192,6 +1346,7 @@
 		};
 		D634FFB029FD42F60034B950 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D23F9EB24A1AE7CB2721EB99 /* Pods-GymMealPrep-GymMealPrepUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
