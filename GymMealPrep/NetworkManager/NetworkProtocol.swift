@@ -14,4 +14,5 @@ protocol Network: AnyObject {
     
     func get<T>(type: T.Type, url: URL, headers: Headers) -> AnyPublisher<T, Error> where T: Decodable
     
+    func getData(url: URL) -> AnyPublisher<Data, Error>
 }
