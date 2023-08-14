@@ -35,6 +35,7 @@
 		D648FC4E2A422D0E00393AC3 /* MealPlanMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D648FC4C2A422D0E00393AC3 /* MealPlanMO+CoreDataClass.swift */; };
 		D648FC4F2A422D0E00393AC3 /* MealPlanMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D648FC4D2A422D0E00393AC3 /* MealPlanMO+CoreDataProperties.swift */; };
 		D648FC512A422F6300393AC3 /* MealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D648FC502A422F6300393AC3 /* MealPlan.swift */; };
+		D64A075E2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64A075D2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift */; };
 		D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */; };
 		D64D95002A0FB0E80080CD70 /* RecipeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */; };
 		D64D95062A10E12E0080CD70 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64D95052A10E12E0080CD70 /* Resource.swift */; };
@@ -130,6 +131,7 @@
 		D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */; };
 		D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */; };
 		D6EF30D22A35C6F2004CAAE7 /* NavigationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */; };
+		D6FA1ACB2A8900E000DB9628 /* WebLinkLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA1ACA2A8900E000DB9628 /* WebLinkLogicController.swift */; };
 		F1CE74ECEA25D9FFBFF1BF1F /* Pods_GymMealPrepTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99543B9485197678CFAEADA0 /* Pods_GymMealPrepTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +193,7 @@
 		D648FC4C2A422D0E00393AC3 /* MealPlanMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealPlanMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D648FC4D2A422D0E00393AC3 /* MealPlanMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealPlanMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D648FC502A422F6300393AC3 /* MealPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlan.swift; sourceTree = "<group>"; };
+		D64A075D2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteRecipeParserEngine.swift; sourceTree = "<group>"; };
 		D64AB89A2A05933F0025CE7A /* TagMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TagMO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D64D94FF2A0FB0E80080CD70 /* RecipeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecipeSummaryView.swift; path = GymMealPrep/ViewComponents/RecipeSummaryView.swift; sourceTree = SOURCE_ROOT; };
 		D64D95052A10E12E0080CD70 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
@@ -285,6 +288,7 @@
 		D6EC92F92A027EFD00863F2D /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		D6EC92FB2A02F23800863F2D /* IngredientEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorView.swift; sourceTree = "<group>"; };
 		D6EF30D12A35C6F2004CAAE7 /* NavigationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtility.swift; sourceTree = "<group>"; };
+		D6FA1ACA2A8900E000DB9628 /* WebLinkLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkLogicController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,7 +339,6 @@
 				4DC11DBECE4ADE63A217AAB3 /* Pods-GymMealPrepTests.debug.xcconfig */,
 				7808D13480FE1C202AD94A1A /* Pods-GymMealPrepTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -456,6 +459,7 @@
 			children = (
 				D64D95072A114DC50080CD70 /* NetworkProtocol.swift */,
 				D680C3342A13DDD8002070DF /* NetworkController.swift */,
+				D6FA1ACA2A8900E000DB9628 /* WebLinkLogicController.swift */,
 				D680C3382A140A2F002070DF /* EndpointProtocol.swift */,
 				D680C3312A13D998002070DF /* EdamamParserEndpoint.swift */,
 				D692EEE62A12879400680CCC /* EdamamParserResponse.swift */,
@@ -653,6 +657,7 @@
 				D6C3404029FD7735003F6E06 /* Nutrition.swift */,
 				D648FC502A422F6300393AC3 /* MealPlan.swift */,
 				D65E4C992A40E3A4008C7A2F /* Meal.swift */,
+				D64A075D2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -953,6 +958,7 @@
 				D64AB89B2A05933F0025CE7A /* TagMO+CoreDataProperties.swift in Sources */,
 				D6C3405229FE7362003F6E06 /* RecipeListView.swift in Sources */,
 				D6A313EB2A49F7BC00D5DCC2 /* DataManager+MealPlanMO.swift in Sources */,
+				D6FA1ACB2A8900E000DB9628 /* WebLinkLogicController.swift in Sources */,
 				D64D95002A0FB0E80080CD70 /* RecipeSummaryView.swift in Sources */,
 				D66836D92A18B66600CC28E5 /* IngredientPickerRowView.swift in Sources */,
 				D634FFB329FD44330034B950 /* PresistanceContainer.swift in Sources */,
@@ -1004,6 +1010,7 @@
 				D694E3F62A057D370077E72F /* FoodMO+CoreDataProperties.swift in Sources */,
 				D6C3404329FD7D17003F6E06 /* Recipe.swift in Sources */,
 				D69BAB212A2FE45900E2D05D /* InstructionRowView.swift in Sources */,
+				D64A075E2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift in Sources */,
 				D655E8C42A4D0051004D5079 /* MealPlanViewModel.swift in Sources */,
 				D638926E2A1BE109008CC0D6 /* IngredientHostView.swift in Sources */,
 				D6DBF29A2A07F78800CB04AA /* DataManager+InstructionMO.swift in Sources */,
