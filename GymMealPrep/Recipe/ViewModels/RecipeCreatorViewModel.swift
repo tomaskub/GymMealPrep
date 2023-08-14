@@ -14,11 +14,16 @@ import UIKit
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     private var recipeImageData: Data?
     private var dataManager: DataManager
-    let edamamLogicController: EdamamLogicControllerProtocol = EdamamLogicController(networkController: NetworkController())
     private var subscriptions = Set<AnyCancellable>()
+    let networkController: NetworkController
+    let edamamLogicController: EdamamLogicControllerProtocol
+    let webLinkLogicController: WebLinkLogicController
     
     init(dataManager: DataManager = .shared) {
         self.dataManager = dataManager
+        self.networkController = NetworkController()
+        self.edamamLogicController = EdamamLogicController(networkController: networkController)
+        self.webLinkLogicController = WebLinkLogicController(networkController: networkController)
         super.init()
         self.ingredientsNLArray = [String]()
         self.ingredientsEntry = String()
@@ -33,6 +38,44 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             isShowingAlert.toggle()
             return
         }
+        self.webLinkLogicController.getData(for: recipeLink)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.alertTitle = "Error while downloading the recipe"
+                    self?.alertMessage = "\(error.localizedDescription)"
+                    self?.isShowingAlert.toggle()
+                    return
+                case .finished:
+                    print("Network request for data finished with success")
+                }
+            } receiveValue: { [weak self] data in
+                if let value = try? NSAttributedString(data: data, options: [
+                        .documentType: NSAttributedString.DocumentType.html,
+                        .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) {
+                    
+                    // Parsing takes place here:
+                    let parser = WebsiteRecipeParserEngine(source: value.string)
+                    let (scannedIngredients, scannedInstructions) = parser.scanForRecipeData()
+                    let reduceClosure: (String, String) -> String = { first, second in
+                        if first.isEmpty {
+                            return second
+                        }
+                        return "\(first)\n\(second)"
+                    }
+                    self?.ingredientsEntry = scannedIngredients.reduce("", reduceClosure)
+                    self?.instructionsEntry = scannedInstructions.reduce("", reduceClosure)
+                    
+                } else {
+                    self?.alertTitle = "Cannot parse recipe from the link"
+                    self?.alertMessage = "The retrived recipe failed to parse, please continue and enter the ingredients and instructions manually"
+                    self?.isShowingAlert.toggle()
+                }
+            }
+            .store(in: &subscriptions)
+        
+
         //do the download and parsing
     }
     //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
