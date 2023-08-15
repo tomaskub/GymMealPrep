@@ -34,10 +34,10 @@ final class WebsiteRecipeParserEngine {
         var scannedInstructions = [String]()
         while !scanner.isAtEnd {
             if var newLine = scanNewLine() {
-                if newLine.hasPrefix("Ingredients") {
+                if newLine.lowercased().hasPrefix("ingredients") {
                     scanForListItems(&newLine, appendNewLinesTo: &scannedIngredients)
                 }
-                if newLine.hasPrefix("Instructions") {
+                if newLine.lowercased().hasPrefix("instructions") {
                     scanForListItems(&newLine, appendNewLinesTo: &scannedInstructions)
                 }
             }
