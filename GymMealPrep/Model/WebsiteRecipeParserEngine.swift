@@ -7,17 +7,26 @@
 
 import Foundation
 
-class WebsiteRecipeParserEngine {
+final class WebsiteRecipeParserEngine {
     private let scanner: Scanner
     private let listCharacters: CharacterSet
+    private let reduceClosure: (String, String) -> String = { $0.isEmpty ? $1 : "\($0)\n\($1)" }
     
-    
-    init(source: String,
+    init(source: Data,
          charactersToBeSkipped: CharacterSet = .whitespacesAndNewlines,
-         listCharacters: CharacterSet = CharacterSet(charactersIn: "•")) {
-        self.scanner = Scanner.init(string: source)
+         listCharacters: CharacterSet = CharacterSet(charactersIn: "•")) throws {
+        let attributedString = try NSAttributedString(data: source,
+                                                    options: [.documentType: NSAttributedString.DocumentType.html,
+                                                              .characterEncoding: String.Encoding.utf8.rawValue],
+                                                    documentAttributes: nil)
+        self.scanner = Scanner.init(string: attributedString.string)
         self.scanner.charactersToBeSkipped = charactersToBeSkipped
         self.listCharacters = listCharacters
+    }
+    
+    func scanForRecipeData() -> (String, String) {
+        let (first, second): ([String], [String]) = scanForRecipeData()
+        return (first.reduce("", reduceClosure), second.reduce("", reduceClosure))
     }
     
     func scanForRecipeData() -> ([String], [String]) {
