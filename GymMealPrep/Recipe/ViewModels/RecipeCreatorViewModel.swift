@@ -49,32 +49,9 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
                     print("Network request for data finished with success")
                 }
             } receiveValue: { [weak self] data in
-                if let value = try? NSAttributedString(data: data, options: [
-                        .documentType: NSAttributedString.DocumentType.html,
-                        .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) {
-                    
-                    // Parsing takes place here:
-                    let parser = WebsiteRecipeParserEngine(source: value.string)
-                    let (scannedIngredients, scannedInstructions) = parser.scanForRecipeData()
-                    let reduceClosure: (String, String) -> String = { first, second in
-                        if first.isEmpty {
-                            return second
-                        }
-                        return "\(first)\n\(second)"
-                    }
-                    self?.ingredientsEntry = scannedIngredients.reduce("", reduceClosure)
-                    self?.instructionsEntry = scannedInstructions.reduce("", reduceClosure)
-                    
-                } else {
-                    self?.alertTitle = "Cannot parse recipe from the link"
-                    self?.alertMessage = "The retrived recipe failed to parse, please continue and enter the ingredients and instructions manually"
-                    self?.isShowingAlert.toggle()
-                }
+                self?.processDataFromLink(data: data)
             }
             .store(in: &subscriptions)
-        
-
-        //do the download and parsing
     }
     //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
     override func processInput() {
@@ -87,68 +64,6 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         }
         parseIngredients(input: ingredientsEntry)
         parseInstructions(input: instructionsEntry)
-    }
-    
-    func parseIngredients(input: String) {
-        // remove data from previous calls
-        ingredientsNLArray = [String]()
-        parsedIngredients = [String : [[Ingredient]]]()
-        matchedIngredients = [String : Ingredient]()
-        
-        
-        // process ingredients entry into array of natural language ingredients for use with edamam parser
-        ingredientsNLArray = input.components(separatedBy: .newlines)
-        
-        // send request for matching ingredients to EdamamAPI
-        for searchTerm in ingredientsNLArray {
-            edamamLogicController.getIngredientsWithParsed(for: searchTerm)
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        print("Completed edamam API request with success for \(searchTerm)")
-                    case .failure(let error):
-                        print("Error requesting response for \(searchTerm). Error: \(error) - \(error.localizedDescription)")
-                    }
-                } receiveValue: { [weak self] (data, parsed) in
-                    guard let self else { return }
-                    self.parsedIngredients.updateValue(data, forKey: searchTerm)
-                    if let bestMatch = parsed {
-                        self.matchedIngredients.updateValue(bestMatch, forKey: searchTerm)
-                    }
-                }
-                .store(in: &subscriptions)
-        }
-    }
-    //add a function to figure out the beging of the instruction (number, dash etc)
-    func parseInstructions(input: String) {
-        //Reset any remeaing data from previous parsing
-        instructionsNLArray = [String]()
-        parsedInstructions = [Instruction]()
-        
-        // seperate entry string into components
-        instructionsNLArray = input.components(separatedBy: .newlines)
-        
-        
-        for (index, instructionText) in instructionsNLArray.enumerated() {
-            
-            if let character = instructionText.first {
-                if character.isNumber || character.isSymbol || parsedInstructions.isEmpty {
-                    var text = instructionText
-                    while (text.first?.isNumber ?? false || text.first?.isSymbol ?? false || text.first?.isPunctuation ?? false || text.first?.isWhitespace ?? false) {
-                        text = String(text.dropFirst())
-                    }
-                    let instructionToAppend = Instruction(step: index + 1, text: text)
-                    parsedInstructions.append(instructionToAppend)
-                } else {
-                    if index - 2 >= 0 {
-                        parsedInstructions[index-2].text.append(instructionText)
-                    } else {
-                        let instructionToAppend = Instruction(step: index + 1, text: instructionText)
-                    }
-                }
-            }
-        }
     }
     
     override func saveRecipe() -> Recipe {
@@ -197,11 +112,109 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     override func addInstruction() {
         parsedInstructions.append(Instruction(step: parsedInstructions.count + 1))
     }
+    
+    //MARK: IMAGE FUNCTIONS
     override func addImageData(data: Data) {
         recipeImageData = data
     }
+    
     override func deleteImageData() {
         recipeImageData = nil
     }
 }
 
+//MARK: Data processing functions
+extension RecipeCreatorViewModel {
+    
+    private func processDataFromLink(data: Data) {
+        //Parse recipe titile and image source links with swift soup
+        do {
+            let soupEngine = try WebsiteRecipeSoupEngine(documentData: data)
+            if let titleString = try soupEngine.getTitle() {
+                recipeTitle = titleString
+            }
+            if let imageSources = try soupEngine.getImageSourceLinks() {
+                imageSourcesRef = imageSources
+            }
+        } catch WebsiteRecipeSoupEngineError.failedToCreateStringFromData {
+            print("Error while creating a string from data")
+        } catch {
+            print("Error while parsing into document")
+        }
+        // Parse text from data for lists with ingredients and instructions
+        do{
+            let parser = try WebsiteRecipeParserEngine(source: data)
+            let (scannedIngredients, scannedInstructions): (String, String) = parser.scanForRecipeData()
+            ingredientsEntry = scannedIngredients
+            instructionsEntry = scannedInstructions
+
+        } catch {
+            alertTitle = "Cannot parse recipe from the link"
+            alertMessage = "The retrived recipe failed to parse, please continue and enter the ingredients and instructions manually"
+            isShowingAlert.toggle()
+        }
+    }
+    
+    private func parseIngredients(input: String) {
+        // remove data from previous calls
+        ingredientsNLArray = [String]()
+        parsedIngredients = [String : [[Ingredient]]]()
+        matchedIngredients = [String : Ingredient]()
+        
+        
+        // process ingredients entry into array of natural language ingredients for use with edamam parser
+        ingredientsNLArray = input.components(separatedBy: .newlines)
+        
+        // send request for matching ingredients to EdamamAPI
+        for searchTerm in ingredientsNLArray {
+            edamamLogicController.getIngredientsWithParsed(for: searchTerm)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("Completed edamam API request with success for \(searchTerm)")
+                    case .failure(let error):
+                        print("Error requesting response for \(searchTerm). Error: \(error) - \(error.localizedDescription)")
+                    }
+                } receiveValue: { [weak self] (data, parsed) in
+                    guard let self else { return }
+                    self.parsedIngredients.updateValue(data, forKey: searchTerm)
+                    if let bestMatch = parsed {
+                        self.matchedIngredients.updateValue(bestMatch, forKey: searchTerm)
+                    }
+                }
+                .store(in: &subscriptions)
+        }
+    }
+    
+    //TODO: add a function to figure out the beging of the instruction (number, dash etc)
+    private func parseInstructions(input: String) {
+        //Reset any remeaing data from previous parsing
+        instructionsNLArray = [String]()
+        parsedInstructions = [Instruction]()
+        
+        // seperate entry string into components
+        instructionsNLArray = input.components(separatedBy: .newlines)
+        
+        
+        for (index, instructionText) in instructionsNLArray.enumerated() {
+            
+            if let character = instructionText.first {
+                if character.isNumber || character.isSymbol || parsedInstructions.isEmpty {
+                    var text = instructionText
+                    while (text.first?.isNumber ?? false || text.first?.isSymbol ?? false || text.first?.isPunctuation ?? false || text.first?.isWhitespace ?? false) {
+                        text = String(text.dropFirst())
+                    }
+                    let instructionToAppend = Instruction(step: index + 1, text: text)
+                    parsedInstructions.append(instructionToAppend)
+                } else {
+                    if index - 2 >= 0 {
+                        parsedInstructions[index-2].text.append(instructionText)
+                    } else {
+                        let instructionToAppend = Instruction(step: index + 1, text: instructionText)
+                    }
+                }
+            }
+        }
+    }
+}
