@@ -7,13 +7,11 @@
 
 import Foundation
 import Combine
-import PhotosUI
-import SwiftUI
-import UIKit
 
 class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     private var recipeImageData: Data?
     private var dataManager: DataManager
+    private var imageSourcesRef: [String]?
     private var subscriptions = Set<AnyCancellable>()
     let networkController: NetworkController
     let edamamLogicController: EdamamLogicControllerProtocol
