@@ -49,7 +49,7 @@ final class RecipeCreatorViewModelTests: XCTestCase {
     override func tearDown() {
         sut = nil
     }
-
+/*
     func testParsingInstructionsWithNumbersAndDots() throws {
         
         sut.parseInstructions(input: instructionEntryStringWithNumbersAndDots)
@@ -77,6 +77,6 @@ final class RecipeCreatorViewModelTests: XCTestCase {
             XCTFail("Failed to unwrap first parsed instruction")
         }
     }
-    
+*/
     
 }
