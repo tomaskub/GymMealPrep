@@ -10,6 +10,7 @@ import XCTest
 final class RecipeInputParserEngineTests: XCTestCase {
     
     //MARK: LIST DELIMITER STYLES TESTED BELOW
+    // basic lists - no delimeter
     // basic lists - list with a singular delimiter
     // iterated list - list with a letter or number increasing
     
@@ -29,7 +30,6 @@ final class RecipeInputParserEngineTests: XCTestCase {
 //            let result = try sut.parseIngredients()
 //        }
 //    }
-
 }
 
 extension RecipeInputParserEngineTests {
@@ -50,9 +50,14 @@ extension RecipeInputParserEngineTests {
         case numerical
         case alphabetical
     }
-    fileprivate func generateInputWithSimpleDelimiter(from source: [String], delimiter: Character) -> String {
+    fileprivate func generateInputWithSimpleDelimiter(from source: [String], delimiter: Character?) -> String {
+        
         let array = source.map { element in
-            "\(delimiter)"+element+"\n"
+            if let delimiter {
+                return "\(delimiter)"+element+"\n"
+            } else {
+                return element+"\n"
+            }
         }
         return array.reduce(String()) { a, b in
             a.isEmpty ? b : a+b
