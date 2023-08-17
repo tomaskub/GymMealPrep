@@ -12,6 +12,12 @@ enum RecipeInputParserEngineError: Error {
     case couldNotDetermineSymbol
 }
 
+enum ListDelimiterType {
+    case simple(CharacterSet)
+    case iteratedSimple(CharacterSet)
+    case iteratedComplex(CharacterSet, CharacterSet)
+}
+
 class RecipeInputParserEngine {
     private let input: String
     
@@ -19,28 +25,25 @@ class RecipeInputParserEngine {
         self.input = input
     }
     
-    /// Return character used for list starting symbol if any
-    func findListSymbol() throws -> Character {
+    func parseInstructions() throws -> [String] {
         guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
-        let scanner = Scanner(string: input)
-        scanner.charactersToBeSkipped = nil
-        var result: [Character : Int] = [:]
-        var lastChar = input.first!
-        while !scanner.isAtEnd {
-            if let currentChar = scanner.scanCharacter(){
-                if !currentChar.isNewline && lastChar.isNewline {
-                    let oldValue = result[currentChar] ?? 0
-                    result.updateValue(oldValue + 1, forKey: currentChar)
+        var result = [String]()
+        do {
+            let characterSet = try findListSymbol()
+            let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
+            result = input.components(separatedBy: characterSet).map({ value in
+                value.trimmingCharacters(in: trimmingCharacterSet)
+            })
+            result.removeAll(where: { $0.isEmpty })
+        } catch RecipeInputParserEngineError.couldNotDetermineSymbol {
+            let scanner = Scanner(string: input)
+            while !scanner.isAtEnd {
+                if let newLine = scanNewLine(scanner: scanner) {
+                    result.append(newLine)
                 }
-                lastChar = currentChar
             }
         }
-        // find the symbol with max repetitions
-        if let symbol = result.max(by: { a, b in a.value < b.value }) {
-            return symbol.key
-        } else {
-            throw RecipeInputParserEngineError.couldNotDetermineSymbol
-        }
+        return result
     }
     
     func parseIngredients() throws -> [String] {
@@ -67,6 +70,54 @@ class RecipeInputParserEngine {
             }
         }
         return result
+    }
+    
+    //TODO: SOLVE PROBLEM WHEN MULTIPLE NUMERICAL VALUES ARE INTERPRETED AS DELIMETER WINNER
+    /// Return character used for list starting symbol if any
+    func findListSymbol() throws -> CharacterSet {
+        // List types that should be recognized:
+        
+        
+        guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
+        let scanner = Scanner(string: input)
+        scanner.charactersToBeSkipped = nil
+        var result: [Character : Int] = [:]
+        var numberResult = [Int]()
+        var letterResult = [Character]()
+        var numerOfLines: Int = 1
+        var lastChar = input.first!
+        while !scanner.isAtEnd {
+            if let currentChar = scanner.scanCharacter(){
+                if !currentChar.isNewline && lastChar.isNewline {
+                    numerOfLines += 1
+                    // append to the array if it is a number
+                    if let number = Int(String(currentChar)) {
+                        numberResult.append(number)
+                    }
+                    if currentChar.isLetter {
+                        letterResult.append(currentChar)
+                    }
+                    let oldValue = result[currentChar] ?? 0
+                    result.updateValue(oldValue + 1, forKey: currentChar)
+                }
+                lastChar = currentChar
+            }
+        }
+        // validate for numbers
+        if !numberResult.isEmpty {
+//            let weight: Double = Double(numberResult.count) / Double(numerOfLines)
+            let orderedValues = numberResult.sorted()
+            if orderedValues == numberResult {
+                return CharacterSet(charactersIn: String("0123456789"))
+            }
+        }
+        
+        // find the symbol with max repetitions
+        if let symbol = result.max(by: { a, b in a.value < b.value }) {
+            return CharacterSet(charactersIn: String(symbol.key))
+        } else {
+            throw RecipeInputParserEngineError.couldNotDetermineSymbol
+        }
     }
     
     private func scanNewLine(scanner: Scanner) -> String? {

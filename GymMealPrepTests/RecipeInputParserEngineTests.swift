@@ -22,7 +22,7 @@ final class RecipeInputParserEngineTests: XCTestCase {
     func test_findListSymbol_whenSameSymbolOnNewLine() throws {
         sut = RecipeInputParserEngine(input: InputStaticStrings.ingredientsWithBulletList)
         let result = try sut.findListSymbol()
-        XCTAssertEqual(result, "•")
+        XCTAssertEqual(result, CharacterSet(charactersIn: "•"))
     }
     
     func test_parseIngredients() throws {
@@ -33,12 +33,12 @@ final class RecipeInputParserEngineTests: XCTestCase {
     }
     
     
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() {
+//        sut = RecipeInputParserEngine(input: InputStaticStrings.ingredientsWithBulletList)
+//        self.measure {
+//            let result = try sut.parseIngredients()
+//        }
+//    }
 
 }
 
