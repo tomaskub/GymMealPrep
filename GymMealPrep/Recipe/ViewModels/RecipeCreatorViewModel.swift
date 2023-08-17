@@ -30,7 +30,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
     override func processLink() {
         //TODO: ADD IMPLEMENTATION
-        guard let url = URL(string: recipeLink) else {
+        guard let _ = URL(string: recipeLink) else {
             alertTitle = "Cannot load the link"
             alertMessage = "The recipe link provided was not valid"
             isShowingAlert.toggle()
@@ -53,7 +53,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
             }
             .store(in: &subscriptions)
     }
-    //TODO: REWORK THE GUARD STATEMENT AND PARSING INSTRUCTIONS (SEPERATE TO PARSER CLASS)
+    
     override func processInput() {
         // check if there is ingredient input, otherwise return
         guard !ingredientsEntry.isEmpty else {
@@ -156,16 +156,49 @@ extension RecipeCreatorViewModel {
     }
     
     private func parseIngredients(input: String) {
-        // remove data from previous calls
+        clearIngredientsParsedData()
+        // process ingredients entry into array of natural language ingredients for use with edamam parser
+        let ingredientParser = RecipeInputParserEngine(input: input)
+        do {
+            ingredientsNLArray = try ingredientParser.parseIngredients()
+        } catch {
+            //show error and return
+            print(error)
+            return
+        }
+        retriveIngredientDataFromEdamam()
+    }
+    
+    private func parseInstructions(input: String) {
+        clearInstructionsParsedData()
+        do {
+            let parser = RecipeInputParserEngine(input: instructionsEntry)
+            instructionsNLArray = try parser.parseInstructions()
+        } catch {
+            print(error)
+        }
+        for (index, instructionText) in instructionsNLArray.enumerated() {
+            let instructionToAppend = Instruction(step: index + 1, text: instructionText)
+            parsedInstructions.append(instructionToAppend)
+        }
+    }
+    
+    /// Remove parsed ingredients data from previous calls
+    private func clearIngredientsParsedData() {
         ingredientsNLArray = [String]()
         parsedIngredients = [String : [[Ingredient]]]()
         matchedIngredients = [String : Ingredient]()
+    }
+    
+    /// Remove parsed instructions data from previous calls
+    private func clearInstructionsParsedData() {
+        instructionsNLArray = [String]()
+        parsedInstructions = [Instruction]()
+    }
+    
+    /// Get matching ingredients from Edamam API
+    private func retriveIngredientDataFromEdamam() {
         
-        
-        // process ingredients entry into array of natural language ingredients for use with edamam parser
-        ingredientsNLArray = input.components(separatedBy: .newlines)
-        
-        // send request for matching ingredients to EdamamAPI
         for searchTerm in ingredientsNLArray {
             edamamLogicController.getIngredientsWithParsed(for: searchTerm)
                 .receive(on: DispatchQueue.main)
@@ -184,37 +217,6 @@ extension RecipeCreatorViewModel {
                     }
                 }
                 .store(in: &subscriptions)
-        }
-    }
-    
-    //TODO: add a function to figure out the beging of the instruction (number, dash etc)
-    private func parseInstructions(input: String) {
-        //Reset any remeaing data from previous parsing
-        instructionsNLArray = [String]()
-        parsedInstructions = [Instruction]()
-        
-        // seperate entry string into components
-        instructionsNLArray = input.components(separatedBy: .newlines)
-        
-        
-        for (index, instructionText) in instructionsNLArray.enumerated() {
-            
-            if let character = instructionText.first {
-                if character.isNumber || character.isSymbol || parsedInstructions.isEmpty {
-                    var text = instructionText
-                    while (text.first?.isNumber ?? false || text.first?.isSymbol ?? false || text.first?.isPunctuation ?? false || text.first?.isWhitespace ?? false) {
-                        text = String(text.dropFirst())
-                    }
-                    let instructionToAppend = Instruction(step: index + 1, text: text)
-                    parsedInstructions.append(instructionToAppend)
-                } else {
-                    if index - 2 >= 0 {
-                        parsedInstructions[index-2].text.append(instructionText)
-                    } else {
-                        let instructionToAppend = Instruction(step: index + 1, text: instructionText)
-                    }
-                }
-            }
         }
     }
 }
