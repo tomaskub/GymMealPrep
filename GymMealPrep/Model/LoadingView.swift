@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct LoadingView: View {
+    let actionText: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.white.opacity(0.9)
+            VStack(spacing: 20) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    
+                Text(actionText)
+                    .foregroundColor(.blue)
+            }
+        }
     }
 }
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView()
+            LoadingView(actionText: "Loading recipe from web")
     }
 }
