@@ -160,7 +160,7 @@ extension RecipeCreatorViewModel {
         // process ingredients entry into array of natural language ingredients for use with edamam parser
         let ingredientParser = RecipeInputParserEngine(input: input)
         do {
-            ingredientsNLArray = try ingredientParser.parseIngredients()
+            ingredientsNLArray = try ingredientParser.parseList()
         } catch {
             //show error and return
             print(error)
@@ -173,7 +173,7 @@ extension RecipeCreatorViewModel {
         clearInstructionsParsedData()
         do {
             let parser = RecipeInputParserEngine(input: instructionsEntry)
-            instructionsNLArray = try parser.parseInstructions()
+            instructionsNLArray = try parser.parseList()
         } catch {
             print(error)
         }

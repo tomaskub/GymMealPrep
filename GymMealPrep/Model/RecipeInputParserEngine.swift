@@ -12,112 +12,163 @@ enum RecipeInputParserEngineError: Error {
     case couldNotDetermineSymbol
 }
 
-enum ListDelimiterType {
+enum ListDelimiterType: Equatable {
     case simple(CharacterSet)
     case iteratedSimple(CharacterSet)
-    case iteratedComplex(CharacterSet, CharacterSet)
 }
 
 class RecipeInputParserEngine {
-    private let input: String
+    var input: String
     
     init(input: String) {
         self.input = input
     }
     
-    func parseInstructions() throws -> [String] {
+    func setInput(input: String) {
+        self.input = input
+    }
+    
+    /// Parse list from input of the parser into array of strings with list delimiters, whitespaces and new lines removed
+    func parseList() throws -> [String] {
         guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
         var result = [String]()
         do {
-            let characterSet = try findListSymbol()
-            let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
-            result = input.components(separatedBy: characterSet).map({ value in
-                value.trimmingCharacters(in: trimmingCharacterSet)
-            })
-            result.removeAll(where: { $0.isEmpty })
+            let delimiterType = try findListSymbol()
+            switch delimiterType {
+            case .simple(let characterSet):
+                let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
+                result = input.components(separatedBy: characterSet).map({ value in
+                    value.trimmingCharacters(in: trimmingCharacterSet)
+                })
+                result.removeAll(where: { $0.isEmpty })
+            case .iteratedSimple(let characterSet):
+                // this does not work very well for list with characters or numbers as a delimiter
+                let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
+                result = input.components(separatedBy: characterSet).map({ value in
+                    value.trimmingCharacters(in: trimmingCharacterSet)
+                })
+                result.removeAll(where: { $0.isEmpty })
+            }
+            // assume there is no delimiter, seperate by newlines
         } catch RecipeInputParserEngineError.couldNotDetermineSymbol {
             let scanner = Scanner(string: input)
             while !scanner.isAtEnd {
                 if let newLine = scanNewLine(scanner: scanner) {
-                    result.append(newLine)
+                    result.append(newLine.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
                 }
             }
         }
         return result
     }
     
-    func parseIngredients() throws -> [String] {
+    /// Return list delimeter type for tinput text, if one can be detected
+    func findListSymbol() throws -> ListDelimiterType {
+        // setup
         guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
-        var result = [String]()
-        // attempt to find delimiter
-        do {
-            let bullet = try findListSymbol()
-            let charSet = CharacterSet(charactersIn: String("\(bullet)"))
-            let trimmingCharSet = charSet.union(CharacterSet.whitespacesAndNewlines)
-            result = input.components(separatedBy: charSet).map { value in
-                value.trimmingCharacters(in: trimmingCharSet)
-            }
-            result.removeAll(where: { value in
-                return value.isEmpty
-            })
-        } catch RecipeInputParserEngineError.couldNotDetermineSymbol {
-            // parse by new lines
-            let scanner = Scanner(string: input)
-            while !scanner.isAtEnd {
-                if let newLine = scanNewLine(scanner: scanner) {
-                    result.append(newLine)
-                }
-            }
-        }
-        return result
-    }
-    
-    //TODO: SOLVE PROBLEM WHEN MULTIPLE NUMERICAL VALUES ARE INTERPRETED AS DELIMETER WINNER
-    /// Return character used for list starting symbol if any
-    func findListSymbol() throws -> CharacterSet {
-        // List types that should be recognized:
-        
-        
-        guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
-        let scanner = Scanner(string: input)
-        scanner.charactersToBeSkipped = nil
-        var result: [Character : Int] = [:]
-        var numberResult = [Int]()
-        var letterResult = [Character]()
-        var numerOfLines: Int = 1
-        var lastChar = input.first!
-        while !scanner.isAtEnd {
-            if let currentChar = scanner.scanCharacter(){
+        let basicScanner = Scanner(string: input)
+        basicScanner.charactersToBeSkipped = nil
+        // start scanning for basic list (exclude numbers and letters)
+        var basicResult = [Character : Int]()
+        var lastChar: Character = "\n"
+        while !basicScanner.isAtEnd {
+            if let currentChar = basicScanner.scanCharacter(){
                 if !currentChar.isNewline && lastChar.isNewline {
-                    numerOfLines += 1
-                    // append to the array if it is a number
-                    if let number = Int(String(currentChar)) {
-                        numberResult.append(number)
-                    }
-                    if currentChar.isLetter {
-                        letterResult.append(currentChar)
-                    }
-                    let oldValue = result[currentChar] ?? 0
-                    result.updateValue(oldValue + 1, forKey: currentChar)
+                    let oldValue = basicResult[currentChar] ?? 0
+                    basicResult.updateValue(oldValue + 1, forKey: currentChar)
                 }
                 lastChar = currentChar
             }
         }
-        // validate for numbers
-        if !numberResult.isEmpty {
-//            let weight: Double = Double(numberResult.count) / Double(numerOfLines)
-            let orderedValues = numberResult.sorted()
-            if orderedValues == numberResult {
-                return CharacterSet(charactersIn: String("0123456789"))
+        // Evaluate the results of basic delimiter recognition
+        let numberOfDetections = Double(basicResult.values.reduce(0, +))
+        if let symbol = basicResult.max(by: { a, b in a.value < b.value }) {
+            let score = Double(symbol.value) / numberOfDetections
+            // see if it is 80% right and assume the rest is a mistake
+            if score > 0.8 {
+                let returnSet =  CharacterSet(charactersIn: String(symbol.key))
+                return ListDelimiterType.simple(returnSet)
+            }
+            // if the score is really low we can assume that it is numbered/lettered list
+            //MARK: if the score is somewhere in between there is a possibility of no delimiter used (chars are repeating and not unique)
+        }
+        // if failed start scannning for numbered list - this works
+        let numberCharacterSet = CharacterSet(charactersIn: "0123456789")
+        var numberResult = [Int]()
+        let numberScanner = Scanner(string: input)
+        numberScanner.charactersToBeSkipped = nil
+        lastChar = "\n"
+        while !numberScanner.isAtEnd {
+            if let currentChar = numberScanner.scanCharacter(){
+                var nextLastValue = currentChar
+                if !currentChar.isNewline && lastChar.isNewline {
+                    if currentChar.isNumber {
+                        if let lineNumber = numberScanner.scanUpToCharacters(from: numberCharacterSet.inverted ),
+                           let number = Int("\(currentChar)"+lineNumber) {
+                            numberResult.append(number)
+                            if let lineNumberLastChar = lineNumber.last {
+                                nextLastValue = lineNumberLastChar
+                            }
+                        } else if let number = Int(String(currentChar)) {
+                            numberResult.append(number)
+                        }
+                    }
+                }
+                lastChar = nextLastValue
             }
         }
-        
-        // find the symbol with max repetitions
-        if let symbol = result.max(by: { a, b in a.value < b.value }) {
-            return CharacterSet(charactersIn: String(symbol.key))
-        } else {
-            throw RecipeInputParserEngineError.couldNotDetermineSymbol
+        // Evaluate numbers result
+//        let weight = Double(numberResult.count) / numberOfDetections
+        var hits: Int = 0
+        var lastValue: Int = 0
+        for value in numberResult {
+            if value == lastValue + 1 {
+                hits += 1
+            }
+            lastValue = value
         }
+        // see if it is 80% right and assume the rest is a mistake
+        if Double(hits) / numberOfDetections > 0.8 {
+            return .iteratedSimple(numberCharacterSet)
+        }
+        // if failed start scanning for lettered list
+        let letterCharacterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
+        var letterResult = [String]() // this maybe should be a string array
+        let letterScanner = Scanner(string: input)
+        letterScanner.charactersToBeSkipped = nil
+        lastChar = "\n"
+        while !letterScanner.isAtEnd {
+            if let currentChar = letterScanner.scanCharacter(){
+                var nextLastValue = currentChar
+                if !currentChar.isNewline && lastChar.isNewline {
+                    if currentChar.isLetter {
+                        if let lineLettering = letterScanner.scanUpToCharacters(from: letterCharacterSet.inverted ) {
+                            let lineDelimiter = "\(currentChar)"+lineLettering
+                            letterResult.append(lineDelimiter)
+                            if let lineDelimeterLastChar = letterResult.last {
+                                nextLastValue = Character(lineDelimeterLastChar)
+                            }
+                        } else {
+                            letterResult.append(String(currentChar))
+                        }
+                    }
+                }
+                lastChar = nextLastValue
+            }
+        }
+        // see if it is 80% right and assume the rest is a mistake
+        hits = 0
+        var lastLetter: String = letterResult.first ?? "a"
+        for value in letterResult {
+            if value > lastLetter {
+                hits += 1
+            }
+            lastLetter = value
+        }
+        if Double(hits) / numberOfDetections > 0.8 {
+            return .iteratedSimple(letterCharacterSet)
+        }
+        // assume the list is not using limiter
+        throw RecipeInputParserEngineError.couldNotDetermineSymbol
     }
     
     private func scanNewLine(scanner: Scanner) -> String? {
