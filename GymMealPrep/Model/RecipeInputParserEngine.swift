@@ -144,8 +144,8 @@ class RecipeInputParserEngine {
                         if let lineLettering = letterScanner.scanUpToCharacters(from: letterCharacterSet.inverted ) {
                             let lineDelimiter = "\(currentChar)"+lineLettering
                             letterResult.append(lineDelimiter)
-                            if let lineDelimeterLastChar = letterResult.last {
-                                nextLastValue = Character(lineDelimeterLastChar)
+                            if let lineDelimeterLastChar = lineLettering.last {
+                                    nextLastValue = lineDelimeterLastChar
                             }
                         } else {
                             letterResult.append(String(currentChar))
