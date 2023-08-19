@@ -46,12 +46,55 @@ final class RecipeInputParserEngineTests: XCTestCase {
         let expectedCharSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
         XCTAssertEqual(result, .iteratedSimple(expectedCharSet), "The values should be equal")
     }
-//    func testPerformanceExample() {
-//        sut = RecipeInputParserEngine(input: InputStaticStrings.ingredientsWithBulletList)
-//        self.measure {
-//            let result = try sut.parseIngredients()
-//        }
-//    }
+    
+    func testPerformanceExampleForSimpleDelimiter() {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
+        sut.setInput(input: textInput)
+        
+        self.measure {
+            do {
+                let result = try sut.findListSymbol()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    func testPerformanceExampleForSimpleDelimiterWithNilValue() {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
+        sut.setInput(input: textInput)
+        
+        self.measure {
+            do {
+                let result = try sut.findListSymbol()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    func testPerformanceExampleForIteratedNumberDelimiter() {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
+        sut.setInput(input: textInput)
+        
+        self.measure {
+            do {
+                let result = try sut.findListSymbol()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    func testPerformanceExampleForIteratedLetterDelimiter() {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
+        sut.setInput(input: textInput)
+        
+        self.measure {
+            do {
+                let result = try sut.findListSymbol()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 extension RecipeInputParserEngineTests {
