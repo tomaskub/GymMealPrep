@@ -24,6 +24,28 @@ final class RecipeInputParserEngineTests: XCTestCase {
         sut = nil
     }
     
+    func test_recognizingListDelimiter_whenSimpleDelimeterIsUsed() throws {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
+        sut.setInput(input: textInput)
+        let result = try sut.findListSymbol()
+        let expectedCharSet = CharacterSet(charactersIn: "-")
+        XCTAssertEqual(result, .simple(expectedCharSet), "Result value should be equal to simple delimeter with char set containing only '-'")
+    }
+     
+    func test_recognizingListDelimiter_whenIteratedNumberDelimeterIsUsed() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
+        sut.setInput(input: textInput)
+        let result = try sut.findListSymbol()
+        XCTAssertEqual(result, .iteratedSimple(CharacterSet(charactersIn: "0123456789")), "Result value should be equal to " )
+    }
+    
+    func test_recognizingListDelimiter_whenIteratedLetterDelimeterIsUsed() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
+        sut.setInput(input: textInput)
+        let result = try sut.findListSymbol()
+        let expectedCharSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
+        XCTAssertEqual(result, .iteratedSimple(expectedCharSet), "The values should be equal")
+    }
 //    func testPerformanceExample() {
 //        sut = RecipeInputParserEngine(input: InputStaticStrings.ingredientsWithBulletList)
 //        self.measure {
@@ -33,11 +55,10 @@ final class RecipeInputParserEngineTests: XCTestCase {
 }
 
 extension RecipeInputParserEngineTests {
-    // Test for input generation - prints into console generated input
+    // Test for input generation - prints into console generated input - do not need to run in test suite
     /*
     func test_inputGenerations() {
         let input = InputStaticStrings.ingredientsArray
-        
         let simple = generateInputWithSimpleDelimiter(from: input, delimiter: "-")
         print("Basic iterator generates:\n\n\(simple)\n\n")
         let first = generateInputWithIteratedDelimiter(from: input, iteratorType: .alphabetical)
