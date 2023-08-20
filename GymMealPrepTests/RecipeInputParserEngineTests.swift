@@ -19,11 +19,14 @@ final class RecipeInputParserEngineTests: XCTestCase {
     override func setUpWithError() throws {
         sut = RecipeInputParserEngine(input: "test")
     }
-
+    
     override func tearDownWithError() throws {
         sut = nil
     }
-    
+}
+ 
+//MARK: RECOGNIZING DELIMITER TESTS
+extension  RecipeInputParserEngineTests {
     func test_recognizingListDelimiter_whenSimpleDelimeterIsUsed() throws {
         let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
         sut.setInput(input: textInput)
@@ -59,6 +62,7 @@ final class RecipeInputParserEngineTests: XCTestCase {
             }
         }
     }
+    
     func testPerformanceExampleForSimpleDelimiterWithNilValue() {
         let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
         sut.setInput(input: textInput)
@@ -71,6 +75,7 @@ final class RecipeInputParserEngineTests: XCTestCase {
             }
         }
     }
+    
     func testPerformanceExampleForIteratedNumberDelimiter() {
         let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
         sut.setInput(input: textInput)
@@ -83,6 +88,7 @@ final class RecipeInputParserEngineTests: XCTestCase {
             }
         }
     }
+    
     func testPerformanceExampleForIteratedLetterDelimiter() {
         let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
         sut.setInput(input: textInput)
@@ -97,6 +103,37 @@ final class RecipeInputParserEngineTests: XCTestCase {
     }
 }
 
+//MARK: PARSING LIST TESTS
+extension RecipeInputParserEngineTests {
+    func test_parsingList_withSimpleDelimiterPresent() throws {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
+        sut.setInput(input: textInput)
+        let result = try sut.parseList()
+        XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
+    }
+    
+    func test_parsingList_withSimpleDelimeterNotPresent() throws {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
+        sut.setInput(input: textInput)
+        let result = try sut.parseList()
+        XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
+    }
+    
+    func test_parsingList_withIteratedNumberDelimiter() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
+        sut.setInput(input: textInput)
+        let result = try sut.parseList()
+        XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
+    }
+    
+    func test_parsingList_withIteratedLetterDelimiter() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
+        sut.setInput(input: textInput)
+        let result = try sut.parseList()
+        XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
+    }
+}
+//MARK: CONVINIENCE FUNCTIONS
 extension RecipeInputParserEngineTests {
     // Test for input generation - prints into console generated input - do not need to run in test suite
     /*
