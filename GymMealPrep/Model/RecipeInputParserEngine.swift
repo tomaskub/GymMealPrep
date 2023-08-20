@@ -36,11 +36,20 @@ class RecipeInputParserEngine {
             let delimiterType = try findListSymbol()
             switch delimiterType {
             case .simple(let characterSet):
-                let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
-                result = input.components(separatedBy: characterSet).map({ value in
-                    value.trimmingCharacters(in: trimmingCharacterSet)
-                })
-                result.removeAll(where: { $0.isEmpty })
+                let localScanner = Scanner(string: input)
+                while !localScanner.isAtEnd {
+                    if let newLine = scanNewLine(scanner: localScanner) {
+                        let processedLine = newLine.trimmingPrefix { character in
+                            for unicodeScalar in character.unicodeScalars {
+                                if characterSet.contains(unicodeScalar) {
+                                    return true
+                                }
+                            }
+                            return false
+                        }
+                        result.append(processedLine.trimmingCharacters(in: .whitespacesAndNewlines))
+                    }
+                }
             case .iteratedSimple(let characterSet):
                 // this does not work very well for list with characters or numbers as a delimiter
                 let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
