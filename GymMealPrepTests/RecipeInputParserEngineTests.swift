@@ -56,7 +56,7 @@ extension  RecipeInputParserEngineTests {
         
         self.measure {
             do {
-                let result = try sut.findListSymbol()
+                _ = try sut.findListSymbol()
             } catch {
                 print(error)
             }
@@ -69,7 +69,7 @@ extension  RecipeInputParserEngineTests {
         
         self.measure {
             do {
-                let result = try sut.findListSymbol()
+                _ = try sut.findListSymbol()
             } catch {
                 print(error)
             }
@@ -82,7 +82,7 @@ extension  RecipeInputParserEngineTests {
         
         self.measure {
             do {
-                let result = try sut.findListSymbol()
+                _ = try sut.findListSymbol()
             } catch {
                 print(error)
             }
@@ -95,7 +95,7 @@ extension  RecipeInputParserEngineTests {
         
         self.measure {
             do {
-                let result = try sut.findListSymbol()
+                _ = try sut.findListSymbol()
             } catch {
                 print(error)
             }
