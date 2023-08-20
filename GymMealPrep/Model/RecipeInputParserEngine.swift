@@ -51,22 +51,41 @@ class RecipeInputParserEngine {
                     }
                 }
             case .iteratedSimple(let characterSet):
-                // this does not work very well for list with characters or numbers as a delimiter
-                let trimmingCharacterSet = characterSet.union(.whitespacesAndNewlines)
-                result = input.components(separatedBy: characterSet).map({ value in
-                    value.trimmingCharacters(in: trimmingCharacterSet)
-                })
-                result.removeAll(where: { $0.isEmpty })
+                let trimmingCharactersSet = CharacterSet.whitespacesAndNewlines.union(CharacterSet.punctuationCharacters)
+                let localScanner = Scanner(string: input)
+                while !localScanner.isAtEnd {
+                    if let newLine = scanNewLine(scanner: localScanner) {
+                        let processedLine = newLine.trimmingPrefix { character in
+                            for unicodeScalar in character.unicodeScalars {
+                                if characterSet.contains(unicodeScalar) {
+                                    return true
+                                }
+                            }
+                            return false
+                        }
+                        if processedLine == newLine {
+                            if let lastElement = result.last {
+                                let replacingElement = lastElement + processedLine
+                                _ = result.removeLast()
+                                result.append(replacingElement.trimmingCharacters(in: trimmingCharactersSet))
+                            }
+                        } else {
+                            result.append(processedLine.trimmingCharacters(in: trimmingCharactersSet))
+                        }
+                    }
+                }
             }
             // assume there is no delimiter, seperate by newlines
         } catch RecipeInputParserEngineError.couldNotDetermineSymbol {
             let scanner = Scanner(string: input)
+            scanner.charactersToBeSkipped = nil
             while !scanner.isAtEnd {
                 if let newLine = scanNewLine(scanner: scanner) {
                     result.append(newLine.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
                 }
             }
         }
+        result.removeAll(where: { $0.isEmpty })
         return result
     }
     
