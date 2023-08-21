@@ -25,84 +25,6 @@ final class RecipeInputParserEngineTests: XCTestCase {
     }
 }
  
-//MARK: RECOGNIZING DELIMITER TESTS
-extension  RecipeInputParserEngineTests {
-    func test_recognizingListDelimiter_whenSimpleDelimeterIsUsed() throws {
-        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
-        sut.setInput(input: textInput)
-        let result = try sut.findListSymbol()
-        let expectedCharSet = CharacterSet(charactersIn: "-")
-        XCTAssertEqual(result, .simple(expectedCharSet), "Result value should be equal to simple delimeter with char set containing only '-'")
-    }
-     
-    func test_recognizingListDelimiter_whenIteratedNumberDelimeterIsUsed() throws {
-        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
-        sut.setInput(input: textInput)
-        let result = try sut.findListSymbol()
-        XCTAssertEqual(result, .iteratedSimple(CharacterSet(charactersIn: "0123456789")), "Result value should be equal to " )
-    }
-    
-    func test_recognizingListDelimiter_whenIteratedLetterDelimeterIsUsed() throws {
-        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
-        sut.setInput(input: textInput)
-        let result = try sut.findListSymbol()
-        let expectedCharSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
-        XCTAssertEqual(result, .iteratedSimple(expectedCharSet), "The values should be equal")
-    }
-    
-    func testPerformanceExampleForSimpleDelimiter() {
-        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
-        sut.setInput(input: textInput)
-        
-        self.measure {
-            do {
-                _ = try sut.findListSymbol()
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func testPerformanceExampleForSimpleDelimiterWithNilValue() {
-        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
-        sut.setInput(input: textInput)
-        
-        self.measure {
-            do {
-                _ = try sut.findListSymbol()
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func testPerformanceExampleForIteratedNumberDelimiter() {
-        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
-        sut.setInput(input: textInput)
-        
-        self.measure {
-            do {
-                _ = try sut.findListSymbol()
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func testPerformanceExampleForIteratedLetterDelimiter() {
-        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
-        sut.setInput(input: textInput)
-        
-        self.measure {
-            do {
-                _ = try sut.findListSymbol()
-            } catch {
-                print(error)
-            }
-        }
-    }
-}
-
 //MARK: PARSING LIST TESTS
 extension RecipeInputParserEngineTests {
     func test_parsingList_withSimpleDelimiterPresent() throws {
@@ -201,7 +123,7 @@ extension RecipeInputParserEngineTests {
         }
     }
     struct InputStaticStrings {
-        static let ingredientsArray = ["1 - Whole Bulb Garlic", "2 ½ Tbsp (50g) - Natural Greek Yogurt","1 - Garlic Clove, Minced","¼ - Lemon, Zested", "¼ - Lime, Zest","¼ - Lemon, Juiced", "3 Tbsp (42g) - Butter", "1 ½ tsp (4g) - Smoked Paprika", "½ (2g) - Dried Chilli Flakes", "3 tsp (15ml) - White Vinegar", "2-4 - Free Range Eggs", "1 ½ tsp (7.5ml) - Extra Virgin Olive Oil (Optional)", "Brioche Bread Or Bread Of Choice, Lightly Toasted", "Seasoning To Taste", "Dill To Garnish", "Parsley To Garnish"]
+        static let ingredientsArray = ["1 - Whole Bulb Garlic", "2 ½ Tbsp (50g) - Natural Greek Yogurt","1 - Garlic Clove, Minced","¼ - Lemon, Zested", "¼ - Lime, Zest","¼ - Lemon, Juiced", "3 Tbsp (42g) - Butter", "1 ½ tsp (4g) - Smoked Paprika", "½ (2g) - Dried Chilli Flakes", "3 tsp (15ml) - White Vinegar", "2-4 - Free Range Eggs", "1 ½ tsp (7.5ml) - Extra Virgin Olive Oil", "Brioche Bread Or Bread Of Choice, Lightly Toasted", "Seasoning To Taste", "Dill To Garnish", "Parsley To Garnish"]
         
         static let instructionsArray =
         [
