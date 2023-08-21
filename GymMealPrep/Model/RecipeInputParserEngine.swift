@@ -198,15 +198,4 @@ class RecipeInputParserEngine {
         // assume the list is not using limiter
         throw RecipeInputParserEngineError.couldNotDetermineSymbol
     }
-    
-    private func scanNewLine(scanner: Scanner) -> String? {
-        var currentChar: Character = Character("\n")
-        while currentChar.isNewline && !scanner.isAtEnd {
-            currentChar = scanner.scanCharacter() ?? Character("\n")
-        }
-        var newLine: String = String(currentChar)
-        newLine.append(scanner.scanUpToCharacters(from: .newlines) ?? String())
-        return newLine
-    }
-    
 }

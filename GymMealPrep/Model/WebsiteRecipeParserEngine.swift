@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class WebsiteRecipeParserEngine {
+final class WebsiteRecipeParserEngine: ParserEngine {
     private let scanner: Scanner
     private let listCharacters: CharacterSet
     private let reduceClosure: (String, String) -> String = { $0.isEmpty ? $1 : "\($0)\n\($1)" }
@@ -33,7 +33,7 @@ final class WebsiteRecipeParserEngine {
         var scannedIngredients = [String]()
         var scannedInstructions = [String]()
         while !scanner.isAtEnd {
-            if var newLine = scanNewLine() {
+            if var newLine = scanNewLine(scanner: scanner) {
                 if newLine.lowercased().hasPrefix("ingredients") {
                     scanForListItems(&newLine, appendNewLinesTo: &scannedIngredients)
                 }
@@ -50,7 +50,7 @@ final class WebsiteRecipeParserEngine {
     
     private func scanForListItems(_ currentLine: inout String, appendNewLinesTo target: inout [String]) {
         while !scanner.isAtEnd {
-            if let newLine = scanNewLine() {
+            if let newLine = scanNewLine(scanner: scanner) {
                 currentLine = newLine
                 if let char = newLine.first {
                     if listCharacters.containsUnicodeScalars(of: char) {
@@ -65,15 +65,6 @@ final class WebsiteRecipeParserEngine {
         }
     }
     
-    private func scanNewLine() -> String? {
-        var currentChar: Character = Character("\n")
-        while currentChar.isNewline && !scanner.isAtEnd {
-            currentChar = scanner.scanCharacter() ?? Character("\n")
-        }
-        var newLine: String = String(currentChar)
-        newLine.append(scanner.scanUpToCharacters(from: .newlines) ?? String())
-        return newLine
-    }
 }
 
 fileprivate extension CharacterSet {
