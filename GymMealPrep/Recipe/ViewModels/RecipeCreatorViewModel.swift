@@ -158,9 +158,9 @@ extension RecipeCreatorViewModel {
     private func parseIngredients(input: String) {
         clearIngredientsParsedData()
         // process ingredients entry into array of natural language ingredients for use with edamam parser
-        let ingredientParser = RecipeInputParserEngine(input: input)
+        let ingredientParser = RecipeInputParserEngine()
         do {
-            ingredientsNLArray = try ingredientParser.parseList()
+            ingredientsNLArray = try ingredientParser.parseList(from: input)
         } catch {
             //show error and return
             print(error)
@@ -172,8 +172,8 @@ extension RecipeCreatorViewModel {
     private func parseInstructions(input: String) {
         clearInstructionsParsedData()
         do {
-            let parser = RecipeInputParserEngine(input: instructionsEntry)
-            instructionsNLArray = try parser.parseList()
+            let parser = RecipeInputParserEngine()
+            instructionsNLArray = try parser.parseList(from: instructionsEntry)
         } catch {
             print(error)
         }

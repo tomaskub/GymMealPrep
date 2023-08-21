@@ -17,23 +17,14 @@ enum ListDelimiterType: Equatable {
     case iteratedSimple(CharacterSet)
 }
 
-class RecipeInputParserEngine {
-    var input: String
-    
-    init(input: String) {
-        self.input = input
-    }
-    
-    func setInput(input: String) {
-        self.input = input
-    }
+class RecipeInputParserEngine: ParserEngine {
     
     /// Parse list from input of the parser into array of strings with list delimiters, whitespaces and new lines removed
-    func parseList() throws -> [String] {
+    func parseList(from input: String) throws -> [String] {
         guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
         var result = [String]()
         do {
-            let delimiterType = try findListSymbol()
+            let delimiterType = try findListSymbol(in: input)
             switch delimiterType {
             case .simple(let characterSet):
                 let localScanner = Scanner(string: input)

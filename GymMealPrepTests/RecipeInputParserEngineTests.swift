@@ -17,7 +17,7 @@ final class RecipeInputParserEngineTests: XCTestCase {
     var sut: RecipeInputParserEngine!
     
     override func setUpWithError() throws {
-        sut = RecipeInputParserEngine(input: "test")
+        sut = RecipeInputParserEngine()
     }
     
     override func tearDownWithError() throws {
@@ -29,29 +29,25 @@ final class RecipeInputParserEngineTests: XCTestCase {
 extension RecipeInputParserEngineTests {
     func test_parsingList_withSimpleDelimiterPresent() throws {
         let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
-        sut.setInput(input: textInput)
-        let result = try sut.parseList()
+        let result = try sut.parseList(from: textInput)
         XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
     }
     
     func test_parsingList_withSimpleDelimeterNotPresent() throws {
         let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
-        sut.setInput(input: textInput)
-        let result = try sut.parseList()
+        let result = try sut.parseList(from: textInput)
         XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
     }
     
     func test_parsingList_withIteratedNumberDelimiter() throws {
         let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
-        sut.setInput(input: textInput)
-        let result = try sut.parseList()
+        let result = try sut.parseList(from: textInput)
         XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
     }
     
     func test_parsingList_withIteratedLetterDelimiter() throws {
         let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
-        sut.setInput(input: textInput)
-        let result = try sut.parseList()
+        let result = try sut.parseList(from: textInput)
         XCTAssertEqual(result, InputStaticStrings.ingredientsArray, "The parsed array should be equal to array used to construct the input")
     }
 }
