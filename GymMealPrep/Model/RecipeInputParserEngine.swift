@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum RecipeInputParserEngineError: Error {
-    case emptyInput
-    case couldNotDetermineSymbol
-}
-
 enum ListDelimiterType: Equatable {
     case simple(CharacterSet)
     case iteratedSimple(CharacterSet)
@@ -21,7 +16,7 @@ class RecipeInputParserEngine: ParserEngine {
     
     /// Parse list from input of the parser into array of strings with list delimiters, whitespaces and new lines removed
     func parseList(from input: String) throws -> [String] {
-        guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
+        guard !input.isEmpty else { throw ParserEngineError.emptyInput }
         var result = [String]()
         do {
             let delimiterType = try findListSymbol(in: input)
@@ -67,7 +62,7 @@ class RecipeInputParserEngine: ParserEngine {
                 }
             }
             // assume there is no delimiter, seperate by newlines
-        } catch RecipeInputParserEngineError.couldNotDetermineSymbol {
+        } catch ParserEngineError.couldNotDetermineSymbol {
             let scanner = Scanner(string: input)
             scanner.charactersToBeSkipped = nil
             while !scanner.isAtEnd {

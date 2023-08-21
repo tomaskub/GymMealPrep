@@ -11,7 +11,7 @@ class ParserEngine {
     
     func findListSymbol(in input: String, maximumScannedLines: Int? = nil) throws -> ListDelimiterType {
         // setup
-        guard !input.isEmpty else { throw RecipeInputParserEngineError.emptyInput }
+        guard !input.isEmpty else { throw ParserEngineError.emptyInput }
         
         let basicScanner = Scanner(string: input)
         basicScanner.charactersToBeSkipped = nil
@@ -116,7 +116,7 @@ class ParserEngine {
             return .iteratedSimple(letterCharacterSet)
         }
         // assume the list is not using limiter
-        throw RecipeInputParserEngineError.couldNotDetermineSymbol
+        throw ParserEngineError.couldNotDetermineSymbol
     }
     
     func scanNewLine(scanner: Scanner) -> String? {
