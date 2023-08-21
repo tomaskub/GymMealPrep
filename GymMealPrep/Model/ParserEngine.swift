@@ -8,11 +8,39 @@
 import Foundation
 
 class ParserEngine {
+    let numberCharacterSet = CharacterSet(charactersIn: "0123456789")
+    let letterCharacterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
+    
+    typealias ListDelimierScore = (ListDelimiterType, Double)
     
     func findListSymbol(in input: String, maximumScannedLines: Int? = nil) throws -> ListDelimiterType {
-        // setup
+        
         guard !input.isEmpty else { throw ParserEngineError.emptyInput }
         
+        if let symbol = scoreForSimpleList(input: input) {
+            let score = Double(symbol.1)
+            if score > 0.8 {
+                let returnSet =  CharacterSet(charactersIn: String(symbol.0))
+                return ListDelimiterType.simple(returnSet)
+            }
+        }
+        
+        if scoreForIteratedNumberedList(input: input) > 0.8 {
+            return .iteratedSimple(numberCharacterSet)
+        }
+        
+        if scoreForIteratedLetteredList(input: input) > 0.8 {
+            return .iteratedSimple(letterCharacterSet)
+        }
+            
+        throw ParserEngineError.couldNotDetermineSymbol
+    }
+    
+    
+    ///Return most probable character with number of appearances divided by number of list points
+    private func scoreForSimpleList(input: String) -> (Character, Double)? {
+        // if the score is really low we can assume that it is numbered/lettered list
+        //MARK: if the score is somewhere in between there is a possibility of no delimiter used (chars are repeating and not unique)
         let basicScanner = Scanner(string: input)
         basicScanner.charactersToBeSkipped = nil
         // start scanning for basic list (exclude numbers and letters)
@@ -30,25 +58,23 @@ class ParserEngine {
         // Evaluate the results of basic delimiter recognition
         let numberOfDetections = Double(basicResult.values.reduce(0, +))
         if let symbol = basicResult.max(by: { a, b in a.value < b.value }) {
-            let score = Double(symbol.value) / numberOfDetections
-            // see if it is 80% right and assume the rest is a mistake
-            if score > 0.8 {
-                let returnSet =  CharacterSet(charactersIn: String(symbol.key))
-                return ListDelimiterType.simple(returnSet)
-            }
-            // if the score is really low we can assume that it is numbered/lettered list
-            //MARK: if the score is somewhere in between there is a possibility of no delimiter used (chars are repeating and not unique)
+            return (symbol.key, Double(symbol.value) / numberOfDetections)
+        } else {
+            return nil
         }
-        // if failed start scannning for numbered list - this works
-        let numberCharacterSet = CharacterSet(charactersIn: "0123456789")
+    }
+    
+    private func scoreForIteratedNumberedList(input: String) -> Double {
         var numberResult = [Int]()
         let numberScanner = Scanner(string: input)
         numberScanner.charactersToBeSkipped = nil
-        lastChar = "\n"
+        var lastChar: Character = "\n"
+        var numberOfDetections: Double = 0
         while !numberScanner.isAtEnd {
             if let currentChar = numberScanner.scanCharacter(){
                 var nextLastValue = currentChar
                 if !currentChar.isNewline && lastChar.isNewline {
+                    numberOfDetections += 1
                     if currentChar.isNumber {
                         if let lineNumber = numberScanner.scanUpToCharacters(from: numberCharacterSet.inverted ),
                            let number = Int("\(currentChar)"+lineNumber) {
@@ -64,8 +90,6 @@ class ParserEngine {
                 lastChar = nextLastValue
             }
         }
-        // Evaluate numbers result
-//        let weight = Double(numberResult.count) / numberOfDetections
         var hits: Int = 0
         var lastValue: Int = 0
         for value in numberResult {
@@ -74,49 +98,49 @@ class ParserEngine {
             }
             lastValue = value
         }
-        // see if it is 80% right and assume the rest is a mistake
-        if Double(hits) / numberOfDetections > 0.8 {
-            return .iteratedSimple(numberCharacterSet)
-        }
-        // if failed start scanning for lettered list
-        let letterCharacterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
-        var letterResult = [String]() // this maybe should be a string array
-        let letterScanner = Scanner(string: input)
-        letterScanner.charactersToBeSkipped = nil
-        lastChar = "\n"
-        while !letterScanner.isAtEnd {
-            if let currentChar = letterScanner.scanCharacter(){
+        let score = Double(hits) / numberOfDetections
+        return score
+    }
+    
+    private func scoreForIteratedLetteredList(input: String) -> Double {
+        var result = [String]()
+        let scanner = Scanner(string: input)
+        scanner.charactersToBeSkipped = nil
+        var lastScannedCharacter: Character = "\n"
+        var numberOfLines: Double = 0
+        
+        while !scanner.isAtEnd {
+            if let currentChar = scanner.scanCharacter(){
                 var nextLastValue = currentChar
-                if !currentChar.isNewline && lastChar.isNewline {
+                if !currentChar.isNewline && lastScannedCharacter.isNewline {
+                    numberOfLines += 1
                     if currentChar.isLetter {
-                        if let lineLettering = letterScanner.scanUpToCharacters(from: letterCharacterSet.inverted ) {
+                        if let lineLettering = scanner.scanUpToCharacters(from: letterCharacterSet.inverted ) {
                             let lineDelimiter = "\(currentChar)"+lineLettering
-                            letterResult.append(lineDelimiter)
+                            result.append(lineDelimiter)
                             if let lineDelimeterLastChar = lineLettering.last {
-                                    nextLastValue = lineDelimeterLastChar
+                                nextLastValue = lineDelimeterLastChar
                             }
                         } else {
-                            letterResult.append(String(currentChar))
+                            result.append(String(currentChar))
                         }
                     }
                 }
-                lastChar = nextLastValue
+                lastScannedCharacter = nextLastValue
             }
         }
         // see if it is 80% right and assume the rest is a mistake
-        hits = 0
-        var lastLetter: String = letterResult.first ?? "a"
-        for value in letterResult {
+        var hits: Int = 0
+        var lastLetter: String = result.first ?? "a"
+        for value in result {
             if value > lastLetter {
                 hits += 1
             }
             lastLetter = value
         }
-        if Double(hits) / numberOfDetections > 0.8 {
-            return .iteratedSimple(letterCharacterSet)
-        }
-        // assume the list is not using limiter
-        throw ParserEngineError.couldNotDetermineSymbol
+        let score = Double(hits) / numberOfLines
+        
+        return score
     }
     
     func scanNewLine(scanner: Scanner) -> String? {
