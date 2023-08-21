@@ -18,61 +18,81 @@ class RecipeInputParserEngine: ParserEngine {
     func parseList(from input: String) throws -> [String] {
         guard !input.isEmpty else { throw ParserEngineError.emptyInput }
         var result = [String]()
+        
         do {
             let delimiterType = try findListSymbol(in: input)
             switch delimiterType {
             case .simple(let characterSet):
-                let localScanner = Scanner(string: input)
-                while !localScanner.isAtEnd {
-                    if let newLine = scanNewLine(scanner: localScanner) {
-                        let processedLine = newLine.trimmingPrefix { character in
-                            for unicodeScalar in character.unicodeScalars {
-                                if characterSet.contains(unicodeScalar) {
-                                    return true
-                                }
-                            }
-                            return false
-                        }
-                        result.append(processedLine.trimmingCharacters(in: .whitespacesAndNewlines))
-                    }
-                }
+                result = parseListWithSimpleDelimiter(input: input, characterSet: characterSet)
             case .iteratedSimple(let characterSet):
-                let trimmingCharactersSet = CharacterSet.whitespacesAndNewlines.union(CharacterSet.punctuationCharacters)
-                let localScanner = Scanner(string: input)
-                while !localScanner.isAtEnd {
-                    if let newLine = scanNewLine(scanner: localScanner) {
-                        let processedLine = newLine.trimmingPrefix { character in
-                            for unicodeScalar in character.unicodeScalars {
-                                if characterSet.contains(unicodeScalar) {
-                                    return true
-                                }
-                            }
-                            return false
-                        }
-                        if processedLine == newLine {
-                            if let lastElement = result.last {
-                                let replacingElement = lastElement + processedLine
-                                _ = result.removeLast()
-                                result.append(replacingElement.trimmingCharacters(in: trimmingCharactersSet))
-                            }
-                        } else {
-                            result.append(processedLine.trimmingCharacters(in: trimmingCharactersSet))
-                        }
-                    }
-                }
+                result = parseListWithIteratedDelimiter(input: input, characterSet: characterSet)
             }
-            // assume there is no delimiter, seperate by newlines
         } catch ParserEngineError.couldNotDetermineSymbol {
-            let scanner = Scanner(string: input)
-            scanner.charactersToBeSkipped = nil
-            while !scanner.isAtEnd {
-                if let newLine = scanNewLine(scanner: scanner) {
-                    result.append(newLine.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
-                }
-            }
+            result = parseListWithNoDelimiter(input: input)
         }
+        
         result.removeAll(where: { $0.isEmpty })
         return result
     }
     
+    private func parseListWithSimpleDelimiter(input: String, characterSet: CharacterSet) -> [String] {
+        var result = [String]()
+        let localScanner = Scanner(string: input)
+        let trimmingPrefixClosure = createTrimmingClosure(trimmingCharSet: characterSet)
+        
+        while !localScanner.isAtEnd {
+            if let newLine = scanNewLine(scanner: localScanner) {
+                let processedLine = newLine.trimmingPrefix(while: trimmingPrefixClosure)
+                result.append(processedLine.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+        }
+        return result
+    }
+    
+    private func parseListWithIteratedDelimiter(input: String, characterSet: CharacterSet) -> [String] {
+        var result = [String]()
+        let localScanner = Scanner(string: input)
+        let trimingPrefixClosure = createTrimmingClosure(trimmingCharSet: characterSet)
+        let trimmingCharactersSet: CharacterSet = .whitespacesAndNewlines.union(.punctuationCharacters)
+        
+        while !localScanner.isAtEnd {
+            if let newLine = scanNewLine(scanner: localScanner) {
+                let processedLine = newLine.trimmingPrefix(while: trimingPrefixClosure)
+                if processedLine == newLine {
+                    if let lastElement = result.last {
+                        let replacingElement = lastElement + processedLine
+                        _ = result.removeLast()
+                        result.append(replacingElement.trimmingCharacters(in: trimmingCharactersSet))
+                    }
+                } else {
+                    result.append(processedLine.trimmingCharacters(in: trimmingCharactersSet))
+                }
+            }
+        }
+        return result
+    }
+    
+    private func parseListWithNoDelimiter(input: String) -> [String] {
+        var result = [String]()
+        let scanner = Scanner(string: input)
+        scanner.charactersToBeSkipped = nil
+        while !scanner.isAtEnd {
+            if let newLine = scanNewLine(scanner: scanner) {
+                result.append(newLine.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+            }
+        }
+        return result
+    }
+    
+    private func createTrimmingClosure(trimmingCharSet: CharacterSet) -> ((Character) -> Bool) {
+        let result: (Character) -> Bool = { character in
+            for unicodeScalar in character.unicodeScalars {
+                if trimmingCharSet.contains(unicodeScalar) {
+                    return true
+                }
+            }
+            return false
+        }
+        return result
+    }
 }
