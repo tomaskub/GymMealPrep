@@ -12,9 +12,8 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     
     var sut: WebsiteRecipeParserEngine!
     
-    override func setUpWithError() throws {
-        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
-        sut = WebsiteRecipeParserEngine(source: data)
+    override func setUp() {
+        sut = WebsiteRecipeParserEngine()
     }
     
     override func tearDown() {
@@ -22,7 +21,12 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     }
     
     func testParsingOutIngredients() throws {
-        let result = try sut.scanForListsData(listHeadlines: ["ingredients", "instructions"])
+        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
+        let attributedString = try NSAttributedString(data: data,
+                                                    options: [.documentType: NSAttributedString.DocumentType.html,
+                                                              .characterEncoding: String.Encoding.utf8.rawValue],
+                                                    documentAttributes: nil)
+        let result = try sut.scanForListsData(in: attributedString.string, listHeadlines: ["ingredients", "instructions"])
         guard let resultIngredients = result["ingredients"] else { fatalError() }
         XCTAssertEqual(resultIngredients.count, Output.ingredientsResult.count, "Resulting array should have correct count of element")
         for (i, element) in resultIngredients.enumerated() {
@@ -31,7 +35,12 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     }
     
     func testParsingOutInstructions() throws {
-        let result = try sut.scanForListsData(listHeadlines: ["ingredients", "instructions"])
+        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
+        let attributedString = try NSAttributedString(data: data,
+                                                    options: [.documentType: NSAttributedString.DocumentType.html,
+                                                              .characterEncoding: String.Encoding.utf8.rawValue],
+                                                    documentAttributes: nil)
+        let result = try sut.scanForListsData(in: attributedString.string, listHeadlines: ["ingredients", "instructions"])
         guard let resultInstructions = result["instructions"] else { fatalError() }
         XCTAssertEqual(resultInstructions.count, Output.instructionsResult.count, "Resulting array should have correct count of element")
         for (i, element) in resultInstructions.enumerated() {
