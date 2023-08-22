@@ -14,25 +14,27 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     
     override func setUpWithError() throws {
         guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
-        sut = try WebsiteRecipeParserEngine(source: data)
+        sut = WebsiteRecipeParserEngine(source: data)
     }
     
     override func tearDown() {
         sut = nil
     }
     
-    func testParsingOutIngredients() {
-        let (result, _): ([String], [String]) = sut.scanForRecipeData()
-        XCTAssertEqual(result.count, Output.ingredientsResult.count, "Resulting array should have correct count of element")
-        for (i, element) in result.enumerated() {
+    func testParsingOutIngredients() throws {
+        let result = try sut.scanForListsData(listHeadlines: ["ingredients", "instructions"])
+        guard let resultIngredients = result["ingredients"] else { fatalError() }
+        XCTAssertEqual(resultIngredients.count, Output.ingredientsResult.count, "Resulting array should have correct count of element")
+        for (i, element) in resultIngredients.enumerated() {
             XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.ingredientsResult[i], "Element at index: \(i) is parsed incorrectly")
         }
     }
     
-    func testParsingOutInstructions() {
-        let (_ , result): ([String], [String]) = sut.scanForRecipeData()
-        XCTAssertEqual(result.count, Output.instructionsResult.count, "Resulting array should have correct count of element")
-        for (i, element) in result.enumerated() {
+    func testParsingOutInstructions() throws {
+        let result = try sut.scanForListsData(listHeadlines: ["ingredients", "instructions"])
+        guard let resultInstructions = result["instructions"] else { fatalError() }
+        XCTAssertEqual(resultInstructions.count, Output.instructionsResult.count, "Resulting array should have correct count of element")
+        for (i, element) in resultInstructions.enumerated() {
             XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.instructionsResult[i], "Element at index: \(i) is parsed incorrectly")
         }
     }

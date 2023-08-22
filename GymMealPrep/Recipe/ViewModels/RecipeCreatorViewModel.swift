@@ -142,9 +142,9 @@ extension RecipeCreatorViewModel {
             print("Error while parsing into document")
         }
         // Parse text from data for lists with ingredients and instructions
+        let parser = WebsiteRecipeParserEngine(source: data)
         do{
-            let parser = try WebsiteRecipeParserEngine(source: data)
-            let (scannedIngredients, scannedInstructions): (String, String) = parser.scanForRecipeData()
+            let (scannedIngredients, scannedInstructions): (String, String) = try parser.scanForRecipeData()
             ingredientsEntry = scannedIngredients
             instructionsEntry = scannedInstructions
 

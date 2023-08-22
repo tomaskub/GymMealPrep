@@ -8,47 +8,58 @@
 import Foundation
 
 final class WebsiteRecipeParserEngine: ParserEngine {
-    private let scanner: Scanner
-    private let listCharacters: CharacterSet
     private let reduceClosure: (String, String) -> String = { $0.isEmpty ? $1 : "\($0)\n\($1)" }
+    
+    private let listCharacters: CharacterSet
+    private let charactersToBeSkipped: CharacterSet
+    private let source: Data
     
     init(source: Data,
          charactersToBeSkipped: CharacterSet = .whitespacesAndNewlines,
-         listCharacters: CharacterSet = CharacterSet(charactersIn: "•")) throws {
+         listCharacters: CharacterSet = CharacterSet(charactersIn: "•")) {
+        self.source = source
+        self.charactersToBeSkipped = charactersToBeSkipped
+        self.listCharacters = listCharacters
+    }
+    
+    func scanForRecipeData() throws -> (String, String) {
+        let result = try scanForListsData(listHeadlines: ["ingredients", "instructions"])
+        guard let first = result["ingredients"], let second = result["instructions"] else {
+            fatalError()
+        }
+        return (first.reduce("", reduceClosure), second.reduce("", reduceClosure))
+    }
+    
+    func scanForListsData(listHeadlines: [String]) throws -> [String : [String]] {
         let attributedString = try NSAttributedString(data: source,
                                                     options: [.documentType: NSAttributedString.DocumentType.html,
                                                               .characterEncoding: String.Encoding.utf8.rawValue],
                                                     documentAttributes: nil)
-        self.scanner = Scanner.init(string: attributedString.string)
-        self.scanner.charactersToBeSkipped = charactersToBeSkipped
-        self.listCharacters = listCharacters
-    }
-    
-    func scanForRecipeData() -> (String, String) {
-        let (first, second): ([String], [String]) = scanForRecipeData()
-        return (first.reduce("", reduceClosure), second.reduce("", reduceClosure))
-    }
-    
-    func scanForRecipeData() -> ([String], [String]) {
-        var scannedIngredients = [String]()
-        var scannedInstructions = [String]()
+        let scanner = Scanner(string: attributedString.string)
+        var targetHeadlines: [String] = listHeadlines
+        var scannedItems = [String : [String]]()
+        for headline in targetHeadlines {
+            scannedItems.updateValue([String](), forKey: headline)
+        }
         while !scanner.isAtEnd {
             if var newLine = scanNewLine(scanner: scanner) {
-                if newLine.lowercased().hasPrefix("ingredients") {
-                    scanForListItems(&newLine, appendNewLinesTo: &scannedIngredients)
-                }
-                if newLine.lowercased().hasPrefix("instructions") {
-                    scanForListItems(&newLine, appendNewLinesTo: &scannedInstructions)
+                for targetHeadline in targetHeadlines {
+                    if newLine.lowercased().hasPrefix(targetHeadline) {
+                        var temp = [String]()
+                        scanForListItems(&newLine, scanner: scanner, appendNewLinesTo: &temp)
+                        scannedItems.updateValue(temp, forKey: targetHeadline)
+                        targetHeadlines.removeAll(where: {$0 == targetHeadline})
+                    }
                 }
             }
-            if !scannedIngredients.isEmpty && !scannedInstructions.isEmpty {
+            if scannedItems.values.allSatisfy({ !$0.isEmpty }) {
                 break
             }
         }
-        return (scannedIngredients, scannedInstructions)
+        return scannedItems
     }
     
-    private func scanForListItems(_ currentLine: inout String, appendNewLinesTo target: inout [String]) {
+    private func scanForListItems(_ currentLine: inout String, scanner: Scanner, appendNewLinesTo target: inout [String]) {
         while !scanner.isAtEnd {
             if let newLine = scanNewLine(scanner: scanner) {
                 currentLine = newLine
