@@ -14,39 +14,53 @@ class ParserEngine {
     typealias ListDelimierScore = (ListDelimiterType, Double)
     
     func findListSymbol(in input: String, maximumScannedLines: Int? = nil) throws -> ListDelimiterType {
-        
         guard !input.isEmpty else { throw ParserEngineError.emptyInput }
         
-        if let symbol = scoreForSimpleList(input: input) {
-            let score = Double(symbol.1)
-            if score > 0.8 {
-                let returnSet =  CharacterSet(charactersIn: String(symbol.0))
-                return ListDelimiterType.simple(returnSet)
+        if let maximumScannedLines {
+            let scoreForNumberedList = scoreForIteratedNumberedList(input: input, maximumScannedLines: maximumScannedLines)
+            let scoreForLetteredList = scoreForIteratedLetteredList(input: input, maximumScannedLines: maximumScannedLines)
+            let (symbol, scoreForSymbolList) = scoreForSimpleList(input: input, maximumScannedLines: maximumScannedLines) ?? (Character(""), 0)
+            let result: [ListDelimiterType: Double] = [
+                .simple(CharacterSet(charactersIn: "\(symbol)")): scoreForSymbolList,
+                .iteratedSimple(letterCharacterSet): scoreForLetteredList,
+                .iteratedSimple(numberCharacterSet): scoreForNumberedList]
+            if let maximumScoreElement = result.max (by:{
+                $0.value < $1.value
+            }) {
+                return maximumScoreElement.key
+            } else {
+                throw ParserEngineError.couldNotDetermineSymbol
+            }
+        } else {
+            if let symbol = scoreForSimpleList(input: input) {
+                let score = Double(symbol.1)
+                if score > 0.8 {
+                    let returnSet =  CharacterSet(charactersIn: String(symbol.0))
+                    return ListDelimiterType.simple(returnSet)
+                }
+            }
+            if scoreForIteratedNumberedList(input: input) > 0.8 {
+                return .iteratedSimple(numberCharacterSet)
+            }
+            if scoreForIteratedLetteredList(input: input) > 0.8 {
+                return .iteratedSimple(letterCharacterSet)
             }
         }
-        
-        if scoreForIteratedNumberedList(input: input) > 0.8 {
-            return .iteratedSimple(numberCharacterSet)
-        }
-        
-        if scoreForIteratedLetteredList(input: input) > 0.8 {
-            return .iteratedSimple(letterCharacterSet)
-        }
-            
         throw ParserEngineError.couldNotDetermineSymbol
     }
     
     
     ///Return most probable character with number of appearances divided by number of list points
-    private func scoreForSimpleList(input: String) -> (Character, Double)? {
-        // if the score is really low we can assume that it is numbered/lettered list
-        //MARK: if the score is somewhere in between there is a possibility of no delimiter used (chars are repeating and not unique)
+    private func scoreForSimpleList(input: String, maximumScannedLines: Int? = nil) -> (Character, Double)? {
         let basicScanner = Scanner(string: input)
         basicScanner.charactersToBeSkipped = nil
-        // start scanning for basic list (exclude numbers and letters)
         var basicResult = [Character : Int]()
         var lastChar: Character = "\n"
-        while !basicScanner.isAtEnd {
+        var scanningCondition: () -> Bool = { return true }
+        if let maximumScannedLines {
+            scanningCondition = { basicResult.values.reduce(0, +) < maximumScannedLines }
+        }
+        while !basicScanner.isAtEnd && scanningCondition() {
             if let currentChar = basicScanner.scanCharacter(){
                 if !currentChar.isNewline && lastChar.isNewline {
                     let oldValue = basicResult[currentChar] ?? 0
@@ -55,8 +69,8 @@ class ParserEngine {
                 lastChar = currentChar
             }
         }
-        // Evaluate the results of basic delimiter recognition
         let numberOfDetections = Double(basicResult.values.reduce(0, +))
+        print("Scoring for simple list - number of scanned lines: \(numberOfDetections)")
         if let symbol = basicResult.max(by: { a, b in a.value < b.value }) {
             return (symbol.key, Double(symbol.value) / numberOfDetections)
         } else {
@@ -64,17 +78,18 @@ class ParserEngine {
         }
     }
     
-    private func scoreForIteratedNumberedList(input: String) -> Double {
+    private func scoreForIteratedNumberedList(input: String, maximumScannedLines: Int? = nil) -> Double {
         var numberResult = [Int]()
         let numberScanner = Scanner(string: input)
         numberScanner.charactersToBeSkipped = nil
         var lastChar: Character = "\n"
-        var numberOfDetections: Double = 0
-        while !numberScanner.isAtEnd {
+        var numberOfScannedLines: Double = 0
+        
+        while !numberScanner.isAtEnd && Int(numberOfScannedLines) < maximumScannedLines ?? (Int(numberOfScannedLines) + 1) {
             if let currentChar = numberScanner.scanCharacter(){
                 var nextLastValue = currentChar
                 if !currentChar.isNewline && lastChar.isNewline {
-                    numberOfDetections += 1
+                    numberOfScannedLines += 1
                     if currentChar.isNumber {
                         if let lineNumber = numberScanner.scanUpToCharacters(from: numberCharacterSet.inverted ),
                            let number = Int("\(currentChar)"+lineNumber) {
@@ -98,22 +113,23 @@ class ParserEngine {
             }
             lastValue = value
         }
-        let score = Double(hits) / numberOfDetections
+        let score = Double(hits) / numberOfScannedLines
+        print("Scoring for numbered list - number of scanned lines: \(numberOfScannedLines)")
         return score
     }
     
-    private func scoreForIteratedLetteredList(input: String) -> Double {
+    private func scoreForIteratedLetteredList(input: String, maximumScannedLines: Int? = nil) -> Double {
         var result = [String]()
         let scanner = Scanner(string: input)
         scanner.charactersToBeSkipped = nil
         var lastScannedCharacter: Character = "\n"
-        var numberOfLines: Double = 0
+        var numberOfScannedLines: Double = 0
         
-        while !scanner.isAtEnd {
+        while !scanner.isAtEnd && Int(numberOfScannedLines) < maximumScannedLines ?? (Int(numberOfScannedLines) + 1){
             if let currentChar = scanner.scanCharacter(){
                 var nextLastValue = currentChar
                 if !currentChar.isNewline && lastScannedCharacter.isNewline {
-                    numberOfLines += 1
+                    numberOfScannedLines += 1
                     if currentChar.isLetter {
                         if let lineLettering = scanner.scanUpToCharacters(from: letterCharacterSet.inverted ) {
                             let lineDelimiter = "\(currentChar)"+lineLettering
@@ -138,8 +154,8 @@ class ParserEngine {
             }
             lastLetter = value
         }
-        let score = Double(hits) / numberOfLines
-        
+        let score = Double(hits) / numberOfScannedLines
+        print("Scoring for lettered list - number of scanned lines: \(numberOfScannedLines)")
         return score
     }
     
