@@ -21,12 +21,8 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     }
     
     func testParsingOutIngredients() throws {
-        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
-        let attributedString = try NSAttributedString(data: data,
-                                                    options: [.documentType: NSAttributedString.DocumentType.html,
-                                                              .characterEncoding: String.Encoding.utf8.rawValue],
-                                                    documentAttributes: nil)
-        let result = try sut.scanForListsData(in: attributedString.string, listHeadlines: ["ingredients", "instructions"])
+        let input = try getInputString()
+        let result = try sut.scanForListsData(in: input, listHeadlines: ["ingredients", "instructions"])
         guard let resultIngredients = result["ingredients"] else { fatalError() }
         XCTAssertEqual(resultIngredients.count, Output.ingredientsResult.count, "Resulting array should have correct count of element")
         for (i, element) in resultIngredients.enumerated() {
@@ -35,12 +31,8 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
     }
     
     func testParsingOutInstructions() throws {
-        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
-        let attributedString = try NSAttributedString(data: data,
-                                                    options: [.documentType: NSAttributedString.DocumentType.html,
-                                                              .characterEncoding: String.Encoding.utf8.rawValue],
-                                                    documentAttributes: nil)
-        let result = try sut.scanForListsData(in: attributedString.string, listHeadlines: ["ingredients", "instructions"])
+        let input = try getInputString()
+        let result = try sut.scanForListsData(in: input, listHeadlines: ["ingredients", "instructions"])
         guard let resultInstructions = result["instructions"] else { fatalError() }
         XCTAssertEqual(resultInstructions.count, Output.instructionsResult.count, "Resulting array should have correct count of element")
         for (i, element) in resultInstructions.enumerated() {
@@ -52,19 +44,7 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
 
 //MARK: INPUT DATA AND OUTPUT RESULTS
 extension WebsiteRecipeParserEngineTests {
-    
-    ///Get data from file in current bundle and return as data
-    ///- Parameters:
-    /// - name: fileName
-    /// - withExtension: extension name, i. e. "xml"
-    ///- Returns: Data of the onents of the file or nil if file is not found
-    func getFile(_ name: String, withExtension: String) -> Data? {
-        guard let url = Bundle(for: Self.self)
-            .url(forResource: name, withExtension: withExtension) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        return data
-    }
-    
+
     struct Output {
         static let ingredientsResult = [
             "•1 - Whole Bulb Garlic",
@@ -90,5 +70,28 @@ extension WebsiteRecipeParserEngineTests {
             "•In the meantime, prepare the citrus yogurt sauce by placing the yogurt into a bowl, adding the minced garlic, lemon and lime zest, lemon juice and seasoning to taste.",
             "•Bring a saucepan of water over high heat, add the vinegar and bring to a boil. Poach the eggs for 2 1/2 minutes or until done to your liking. Remove and drain on a paper towel.",
             "•Toast the bread to your liking, and spread with the roasted garlic and citrus yogurt dressing. Add the poached eggs and drizzle with the smoked paprika and chilli butter. Garnish with dill, parsley and cracked black pepper."]
+    }
+    
+    /// Get input string from test file data
+    /// - Returns: String constructed from test website data
+    func getInputString() throws  -> String {
+        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
+        let attributedString = try NSAttributedString(data: data,
+                                                    options: [.documentType: NSAttributedString.DocumentType.html,
+                                                              .characterEncoding: String.Encoding.utf8.rawValue],
+                                                    documentAttributes: nil)
+        return attributedString.string
+    }
+    
+    ///Get data from file in current bundle and return as data
+    ///- Parameters:
+    /// - name: fileName
+    /// - withExtension: extension name, i. e. "xml"
+    ///- Returns: Data of the conents of the file or nil if file is not found
+    func getFile(_ name: String, withExtension: String) -> Data? {
+        guard let url = Bundle(for: Self.self)
+            .url(forResource: name, withExtension: withExtension) else { return nil }
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        return data
     }
 }
