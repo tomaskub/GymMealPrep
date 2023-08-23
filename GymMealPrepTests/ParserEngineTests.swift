@@ -86,8 +86,77 @@ extension ParserEngineTests {
             }
         }
     }
-
 }
+
+//MARK: RECOGNIZING DELIMITER WITH MAX LINE SCAN SET
+extension ParserEngineTests {
+    func test_recognizingListDelimiter_whenSimpleDelimeterIsUsed_with5maxLines() throws {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
+        let result = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+        let expectedCharSet = CharacterSet(charactersIn: "-")
+        XCTAssertEqual(result, .simple(expectedCharSet), "Result value should be equal to simple delimeter with char set containing only '-'")
+    }
+    
+    func test_recognizingListDelimiter_whenIteratedNumberDelimeterIsUsed_with5maxLines() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
+        let result = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+        XCTAssertEqual(result, .iteratedSimple(CharacterSet(charactersIn: "0123456789")), "Result value should be equal to " )
+    }
+    
+    func test_recognizingListDelimiter_whenIteratedLetterDelimeterIsUsed_with5maxLines() throws {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
+        let result = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+        let expectedCharSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz")
+        XCTAssertEqual(result, .iteratedSimple(expectedCharSet), "The values should be equal")
+    }
+    
+    //MARK: PERFORMANCE TESTS
+    func testPerformanceExampleForSimpleDelimiter_with5maxLines() {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: "-")
+        self.measure {
+            do {
+                _ = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func testPerformanceExampleForSimpleDelimiterWithNilValue_with5maxLines() {
+        let textInput = generateInputWithSimpleDelimiter(from: InputStaticStrings.ingredientsArray, delimiter: nil)
+        self.measure {
+            do {
+                _ = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func testPerformanceExampleForIteratedNumberDelimiter_with5maxLines() {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .numerical)
+        self.measure {
+            do {
+                _ = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func testPerformanceExampleForIteratedLetterDelimiter_with5maxLines() {
+        let textInput = generateInputWithIteratedDelimiter(from: InputStaticStrings.ingredientsArray, iteratorType: .alphabetical)
+        self.measure {
+            do {
+                _ = try sut.findListSymbol(in: textInput, maximumScannedLines: 5)
+            } catch {
+                print(error)
+            }
+        }
+    }
+}
+
+//MARK: INPUT GENERATION AND HELPERS
 extension ParserEngineTests {
     // Test for input generation - prints into console generated input - do not need to run in test suite
     /*
