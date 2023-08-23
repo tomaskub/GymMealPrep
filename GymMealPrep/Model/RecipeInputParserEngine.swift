@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ListDelimiterType: Equatable {
+enum ListDelimiterType: Hashable {
     case simple(CharacterSet)
     case iteratedSimple(CharacterSet)
 }
