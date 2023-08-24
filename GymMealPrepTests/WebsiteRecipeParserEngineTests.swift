@@ -24,9 +24,9 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
         let input = try getInputString()
         let result = try sut.scanForListsData(in: input, listHeadlines: ["ingredients", "instructions"])
         guard let resultIngredients = result["ingredients"] else { fatalError() }
-        XCTAssertEqual(resultIngredients.count, Output.ingredientsResult.count, "Resulting array should have correct count of element")
+        XCTAssertEqual(resultIngredients.count, Output.ingredientsResultWithSimpleDelimiter.count, "Resulting array should have correct count of element")
         for (i, element) in resultIngredients.enumerated() {
-            XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.ingredientsResult[i], "Element at index: \(i) is parsed incorrectly")
+            XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.ingredientsResultWithSimpleDelimiter[i], "Element at index: \(i) is parsed incorrectly")
         }
     }
     
@@ -34,9 +34,9 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
         let input = try getInputString()
         let result = try sut.scanForListsData(in: input, listHeadlines: ["ingredients", "instructions"])
         guard let resultInstructions = result["instructions"] else { fatalError() }
-        XCTAssertEqual(resultInstructions.count, Output.instructionsResult.count, "Resulting array should have correct count of element")
+        XCTAssertEqual(resultInstructions.count, Output.instructionsResultWithSimpleDelimiter.count, "Resulting array should have correct count of element")
         for (i, element) in resultInstructions.enumerated() {
-            XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.instructionsResult[i], "Element at index: \(i) is parsed incorrectly")
+            XCTAssertEqual(element.trimmingCharacters(in: .whitespaces), Output.instructionsResultWithSimpleDelimiter[i], "Element at index: \(i) is parsed incorrectly")
         }
     }
 }
@@ -44,9 +44,9 @@ final class WebsiteRecipeParserEngineTests: XCTestCase {
 
 //MARK: INPUT DATA AND OUTPUT RESULTS
 extension WebsiteRecipeParserEngineTests {
-
+    
     struct Output {
-        static let ingredientsResult = [
+        static let ingredientsResultWithSimpleDelimiter = [
             "•1 - Whole Bulb Garlic",
             "•2 ½ Tbsp (50g) - Natural Greek Yogurt",
             "•1 - Garlic Clove, Minced",
@@ -64,7 +64,7 @@ extension WebsiteRecipeParserEngineTests {
             "•Dill To Garnish",
             "•Parsley To Garnish"]
         
-        static let instructionsResult = [
+        static let instructionsResultWithSimpleDelimiter = [
             "•Preheat oven to 180.c - 350.f. Place the whole garlic bulb onto a sheet of aluminium foil, drizzle over the oil, fold into a parcel, and roast in the oven for 45 minutes or until soft and tender. Remove and let cool slightly.",
             "•Place a small pan over medium heat; add the butter, smoked paprika, chilli flakes and seasoning to taste. Melt and cook for 2 minutes. Remove and set aside.",
             "•In the meantime, prepare the citrus yogurt sauce by placing the yogurt into a bowl, adding the minced garlic, lemon and lime zest, lemon juice and seasoning to taste.",
@@ -74,8 +74,8 @@ extension WebsiteRecipeParserEngineTests {
     
     /// Get input string from test file data
     /// - Returns: String constructed from test website data
-    func getInputString() throws  -> String {
-        guard let data = getFile("TestWebsiteData", withExtension: "html") else { fatalError("Failed to retrive data from file") }
+    func getInputString(_ fileName: String = "TestWebsiteData", fileExtension: String = "html") throws  -> String {
+        guard let data = getFile(fileName, withExtension: fileExtension) else { fatalError("Failed to retrive data from file") }
         let attributedString = try NSAttributedString(data: data,
                                                     options: [.documentType: NSAttributedString.DocumentType.html,
                                                               .characterEncoding: String.Encoding.utf8.rawValue],
