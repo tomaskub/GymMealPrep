@@ -41,14 +41,27 @@ final class WebsiteRecipeParserEngine: ParserEngine {
                 for targetHeadline in targetHeadlines {
                     if newLine.lowercased().hasPrefix(targetHeadline) {
                         var temp = [String]()
-                        scanForListItems(&newLine, appendNewLinesTo: &temp, scanner: scanner, listDelimeterCharacters: listCharacters)
-                        scannedItems.updateValue(temp, forKey: targetHeadline)
-                        targetHeadlines.removeAll(where: {$0 == targetHeadline})
+                        do {
+                            let listSubString = scanner.returnNotScannedString()
+                            let delimiter = try findListSymbol(in: listSubString, maximumScannedLines: 5)
+                            switch delimiter {
+                            case .simple(let characterSet):
+                                scanForListItems(&newLine, appendNewLinesTo: &temp, scanner: scanner, listDelimeterCharacters: characterSet)
+                            case .iteratedSimple(let characterSet):
+                                scanForListItems(&newLine, appendNewLinesTo: &temp, scanner: scanner, listDelimeterCharacters: characterSet)
+                            }
+                            if let savedList = scannedItems[targetHeadline] {
+                                if savedList.count < temp.count {
+                                    scannedItems.updateValue(temp, forKey: targetHeadline)
+                                }
+                            } else {
+                                scannedItems.updateValue(temp, forKey: targetHeadline)
+                            }
+                        } catch ParserEngineError.couldNotDetermineSymbol {
+                            print("Could not determine error")
+                        }
                     }
                 }
-            }
-            if scannedItems.values.allSatisfy({ !$0.isEmpty }) {
-                break
             }
         }
         return scannedItems
@@ -79,4 +92,12 @@ fileprivate extension CharacterSet {
     }
 }
 
-
+fileprivate extension Scanner {
+    func returnNotScannedString() -> String {
+        let startingIndex = self.string.startIndex
+        let endIndex = self.currentIndex
+        var notScannedString = self.string
+        notScannedString.removeSubrange(startingIndex..<endIndex)
+        return notScannedString
+    }
+}
