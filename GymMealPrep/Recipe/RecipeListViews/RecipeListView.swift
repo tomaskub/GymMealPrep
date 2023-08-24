@@ -48,6 +48,7 @@ struct RecipeListView: View {
             HStack {
                 
                 Image(systemName: "chevron.left")
+                    .accessibilityIdentifier("expand-button")
                     .foregroundColor(.blue)
                     .rotationEffect(Angle(degrees: isExpanded ? 180 : 0), anchor: UnitPoint(x: 0.5, y: 0.5))
                     .onTapGesture {

@@ -25,7 +25,7 @@ final class RecipeCreatorUITestsHelper {
     func navigateToRecipeCreatorViewFromText() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
+        recipiesNavigationBar.images["expand-button"].tap()
         _ = recipiesNavigationBar.buttons["Add from text"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from text"].tap()
     }
@@ -33,7 +33,7 @@ final class RecipeCreatorUITestsHelper {
     func navigateToRecipeCreatorViewFromWeb() {
         app.tabBars["Tab Bar"].buttons["Recipes"].tap()
         let recipiesNavigationBar = app.navigationBars["Recipes"]
-        recipiesNavigationBar.images["Back"].tap()
+        recipiesNavigationBar.images["expand-button"].tap()
         _ = recipiesNavigationBar.buttons["Add from web"].waitForExistence(timeout: 1)
         recipiesNavigationBar.buttons["Add from web"].tap()
     }

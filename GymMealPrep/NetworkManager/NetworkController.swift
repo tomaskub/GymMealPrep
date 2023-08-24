@@ -32,6 +32,18 @@ final class NetworkController: Network {
             .eraseToAnyPublisher()
     }
     
+    func getData(url: URL) -> AnyPublisher<Data, Error> {
+        let urlRequest = URLRequest(url: url)
+        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .tryMap { (data, response) -> Data in
+                guard let response = response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return data
+            }
+            .eraseToAnyPublisher()
+    }
     
 }
 
