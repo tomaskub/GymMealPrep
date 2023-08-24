@@ -53,7 +53,7 @@ class ParserEngine {
     ///Return most probable character with number of appearances divided by number of list points
     private func scoreForSimpleList(input: String, maximumScannedLines: Int? = nil) -> (Character, Double)? {
         let basicScanner = Scanner(string: input)
-        basicScanner.charactersToBeSkipped = nil
+        basicScanner.charactersToBeSkipped = .whitespaces
         var basicResult = [Character : Int]()
         var lastChar: Character = "\n"
         var scanningCondition: () -> Bool = { return true }
@@ -81,7 +81,7 @@ class ParserEngine {
     private func scoreForIteratedNumberedList(input: String, maximumScannedLines: Int? = nil) -> Double {
         var numberResult = [Int]()
         let numberScanner = Scanner(string: input)
-        numberScanner.charactersToBeSkipped = nil
+        numberScanner.charactersToBeSkipped = .whitespaces
         var lastChar: Character = "\n"
         var numberOfScannedLines: Double = 0
         
