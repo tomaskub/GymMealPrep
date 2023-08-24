@@ -66,6 +66,11 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                         stageControls
                     }
                 } // END OF VSTACK
+                .overlay {
+                    if viewModel.isProcessingData {
+                        LoadingView(actionText: viewModel.processName)
+                    }
+                }
                 .onReceive(keyboardPublisher, perform: { isKeyboardVisible in
                     isShowingStageControls = !isKeyboardVisible
                 })
@@ -164,6 +169,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
             return "Save and exit"
         }
     }
+    
     var isDisplayingPreviousStageButton: Bool {
         return !includeWebLink ? displayedStage != .dataEntry : (displayedStage != .webLinkEntry)
     }
