@@ -11,7 +11,7 @@ struct LoadingView: View {
     let actionText: String
     var body: some View {
         ZStack {
-            Color.white.opacity(0.9)
+            Color.white.opacity(0.93)
             VStack(spacing: 20) {
                 ProgressView()
                     .progressViewStyle(.circular)
