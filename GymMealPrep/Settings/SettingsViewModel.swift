@@ -8,5 +8,8 @@
 import Foundation
 
 class SettingsViewModel: ObservableObject {
-    
+    var setingsArray = [
+        K.SettingKeys.theme,
+        K.SettingKeys.calorieTarget
+    ]
 }

@@ -9,10 +9,13 @@ import SwiftUI
 
 struct SettingsTabView: View {
     @StateObject private var viewModel = SettingsViewModel()
+    @State private var path = NavigationPath()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+        NavigationStack {
+                SettingsListView(viewModel: viewModel, path: $path)
+        } // END OF NAV-STACK
+    } // END OF BODY
+} // END OF STRUCT
 
 struct SettingsTabView_Previews: PreviewProvider {
     static var previews: some View {
