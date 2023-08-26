@@ -32,7 +32,7 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var tags: [Tag] = []
     // processing properties
     @Published var isProcessingData: Bool = false
-    var processName = String()
+    @Published var processName = String()
     // alert properties
     @Published var isShowingAlert: Bool = false
     var alertTitle: String = String()

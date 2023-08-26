@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadingView: View {
-    let actionText: String
+    var actionText: String
     var body: some View {
         ZStack {
             Color.white.opacity(0.93)
