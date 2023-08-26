@@ -50,7 +50,9 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                     case .webLinkEntry:
                         RecipeCreatorWebLinkView(viewModel: viewModel)
                     case .dataEntry:
-                        RecipeCreatorView(viewModel: viewModel)
+                        RecipeCreatorView(viewModel: viewModel,
+                                          isShowingInstructionTooltip: !includeWebLink,
+                                          isShowingIngredientsTooltip: !includeWebLink)
                             .transition(stageTransition)
                     case .ingredientParsing:
                         RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
@@ -66,6 +68,11 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                         stageControls
                     }
                 } // END OF VSTACK
+                .overlay {
+                    if viewModel.isProcessingData {
+                        LoadingView(actionText: viewModel.processName)
+                    }
+                }
                 .onReceive(keyboardPublisher, perform: { isKeyboardVisible in
                     isShowingStageControls = !isKeyboardVisible
                 })
@@ -164,6 +171,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
             return "Save and exit"
         }
     }
+    
     var isDisplayingPreviousStageButton: Bool {
         return !includeWebLink ? displayedStage != .dataEntry : (displayedStage != .webLinkEntry)
     }

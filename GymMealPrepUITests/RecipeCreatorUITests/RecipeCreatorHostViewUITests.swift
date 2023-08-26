@@ -138,6 +138,37 @@ final class RecipeCreatorHostViewUITests: XCTestCase {
     }
 }
 
+extension RecipeCreatorHostViewUITests {
+    
+    func test_RecipeCreatorHostView_LoadingView_isDisplayed_afterRecipeDownloadStarts() {
+        // Given
+        let recipeLink = "https://chefjackovens.com/turkish-cilbir/"
+        helper.navigateToRecipeCreatorViewFromWeb()
+        helper.enterLink(link: recipeLink)
+        
+        // When
+        helper.advanceStage()
+        
+        // Then
+        let result = app.staticTexts["loading-action-text"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "A text with id 'loading-action-text' should exists")   
+    }
+    
+    func test_RecipeCreatorHostView_LoadingView_isDisplayed_afterInputParsingStarts() {
+        // Given
+        helper.navigateToRecipeCreatorViewFromText()
+        helper.tapToolTips()
+        helper.enterData()
+        
+        // When
+        helper.advanceStage()
+        
+        // Then
+        let result = app.staticTexts["loading-action-text"].waitForExistence(timeout: standardTimeout)
+        XCTAssertTrue(result, "A text with id 'loading-action-text' should exists")
+    }
+}
+
 // MARK: ALERT TESTS
 extension RecipeCreatorHostViewUITests {
     

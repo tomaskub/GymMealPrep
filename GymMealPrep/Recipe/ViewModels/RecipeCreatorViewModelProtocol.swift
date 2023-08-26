@@ -30,7 +30,9 @@ class RecipeCreatorViewModelProtocol: ObservableObject, IngredientSaveHandler {
     @Published var matchedIngredients = [String : Ingredient]()
     @Published var parsedInstructions: [Instruction] = []
     @Published var tags: [Tag] = []
-    
+    // processing properties
+    @Published var isProcessingData: Bool = false
+    @Published var processName = String()
     // alert properties
     @Published var isShowingAlert: Bool = false
     var alertTitle: String = String()
