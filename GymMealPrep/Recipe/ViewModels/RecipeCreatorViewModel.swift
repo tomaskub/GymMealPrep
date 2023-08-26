@@ -29,7 +29,8 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     }
     
     override func processLink() {
-        isProcessingData.toggle()
+        setProcessingState(to: true, withText: "Downloading the recipe")
+        
         //TODO: ADD IMPLEMENTATION
         guard let _ = URL(string: recipeLink) else {
             showAlert("Cannot load the link", message: "The recipe link provided was not valid")
@@ -54,12 +55,14 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     
     override func processInput() {
         // check if there is ingredient input, otherwise return
+        setProcessingState(to: true, withText: "Processing ingredients & instructions")
         guard !ingredientsEntry.isEmpty else {
             showAlert("Cannot create recipe", message: "The recipe cannot be created without ingredients! To proceed please add ingredients")
             return
         }
         parseIngredients(input: ingredientsEntry)
         parseInstructions(input: instructionsEntry)
+        setProcessingState(to: false)   
     }
     
     override func saveRecipe() -> Recipe {
@@ -123,6 +126,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
 extension RecipeCreatorViewModel {
     
     private func processDataFromLink(data: Data) {
+        setProcessingState(to: true, withText: "Scanning downloaded data")
         //Parse recipe titile and image source links with swift soup
         do {
             let soupEngine = try WebsiteRecipeSoupEngine(documentData: data)
@@ -139,6 +143,7 @@ extension RecipeCreatorViewModel {
         }
         // Parse text from data for lists with ingredients and instructions
         let parser = WebsiteRecipeParserEngine()
+        setProcessingState(to: true, withText: "Getting ingredeints and instructions")
         do{
             let (scannedIngredients, scannedInstructions): (String, String) = try parser.scanForRecipeData(in: data)
             ingredientsEntry = scannedIngredients
@@ -147,7 +152,7 @@ extension RecipeCreatorViewModel {
         } catch {
             showAlert("Cannot parse recipe from the link", message: "The retrived recipe failed to parse, please continue and enter the ingredients and instructions manually")
         }
-            isProcessingData = false
+        setProcessingState(to: false)
     }
     
     private func parseIngredients(input: String) {
@@ -177,7 +182,7 @@ extension RecipeCreatorViewModel {
             let instructionToAppend = Instruction(step: index + 1, text: instructionText)
             parsedInstructions.append(instructionToAppend)
         }
-        isProcessingData = false
+        setProcessingState(to: false)
     }
     
     /// Remove parsed ingredients data from previous calls
@@ -217,10 +222,18 @@ extension RecipeCreatorViewModel {
         }
     }
 }
+//MARK: LOADING VIEW
+extension RecipeCreatorViewModel {
+    func setProcessingState(to value: Bool, withText text: String? = nil) {
+        isProcessingData = value
+        processName = value ? (text ?? String()) : String()
+    }
+}
 
 //MARK: ALERTS
 extension RecipeCreatorViewModel {
     func showAlert(_ title: String, message: String) {
+        setProcessingState(to: false)
         alertTitle = title
         alertMessage = message
         isShowingAlert = true
