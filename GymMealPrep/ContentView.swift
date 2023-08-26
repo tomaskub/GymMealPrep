@@ -32,7 +32,7 @@ struct ContentView: View {
                 Text("Meal plans")
             }
             
-            Text("Settings placeholder")
+            SettingsTabView()
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
