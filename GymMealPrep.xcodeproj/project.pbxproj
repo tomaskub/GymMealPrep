@@ -14,6 +14,7 @@
 		D605F0EF2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D605F0EE2A0E1A7F006CF9C0 /* RecipeViewModelTests.swift */; };
 		D614A0422A1D4FA700C55D34 /* IngredientEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */; };
 		D61CF3A02A002A52004B31E1 /* RecipeHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */; };
+		D61E3A662A9A729400AB2527 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61E3A652A9A729400AB2527 /* K.swift */; };
 		D63236882A66CC9400573CFF /* MealPlanTabUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63236872A66CC9400573CFF /* MealPlanTabUITests.swift */; };
 		D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */; };
 		D634FF8929FD42F50034B950 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D634FF8829FD42F50034B950 /* ContentView.swift */; };
@@ -177,6 +178,7 @@
 		D614A0412A1D4FA700C55D34 /* IngredientEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientEditorViewModel.swift; sourceTree = "<group>"; };
 		D6169D942A12C95400CD9C60 /* Edamam-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Edamam-Info.plist"; sourceTree = "<group>"; };
 		D61CF39F2A002A52004B31E1 /* RecipeHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHostView.swift; sourceTree = "<group>"; };
+		D61E3A652A9A729400AB2527 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		D63236872A66CC9400573CFF /* MealPlanTabUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanTabUITests.swift; sourceTree = "<group>"; };
 		D634FF8329FD42F50034B950 /* GymMealPrep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymMealPrep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymMealPrepApp.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				D674FB152A5083E90066F667 /* Recipe */,
 				D634FF8629FD42F50034B950 /* GymMealPrepApp.swift */,
 				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
+				D61E3A652A9A729400AB2527 /* K.swift */,
 				D634FF8829FD42F50034B950 /* ContentView.swift */,
 				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,
 				D634FF8A29FD42F60034B950 /* Assets.xcassets */,
@@ -1049,6 +1052,7 @@
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
 				D694E3F62A057D370077E72F /* FoodMO+CoreDataProperties.swift in Sources */,
 				D6C3404329FD7D17003F6E06 /* Recipe.swift in Sources */,
+				D61E3A662A9A729400AB2527 /* K.swift in Sources */,
 				D69BAB212A2FE45900E2D05D /* InstructionRowView.swift in Sources */,
 				D64A075E2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift in Sources */,
 				D655E8C42A4D0051004D5079 /* MealPlanViewModel.swift in Sources */,
