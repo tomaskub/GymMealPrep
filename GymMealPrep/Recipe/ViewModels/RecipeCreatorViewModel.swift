@@ -62,7 +62,7 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
         }
         parseIngredients(input: ingredientsEntry)
         parseInstructions(input: instructionsEntry)
-        setProcessingState(to: false)   
+        setProcessingState(to: false)
     }
     
     override func saveRecipe() -> Recipe {

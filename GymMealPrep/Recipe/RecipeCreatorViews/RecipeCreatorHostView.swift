@@ -50,7 +50,9 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
                     case .webLinkEntry:
                         RecipeCreatorWebLinkView(viewModel: viewModel)
                     case .dataEntry:
-                        RecipeCreatorView(viewModel: viewModel)
+                        RecipeCreatorView(viewModel: viewModel,
+                                          isShowingInstructionTooltip: !includeWebLink,
+                                          isShowingIngredientsTooltip: !includeWebLink)
                             .transition(stageTransition)
                     case .ingredientParsing:
                         RecipeCreatorParserView(viewModel: viewModel, saveHandler: viewModel)
