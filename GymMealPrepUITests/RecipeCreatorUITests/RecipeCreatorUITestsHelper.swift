@@ -87,6 +87,7 @@ final class RecipeCreatorUITestsHelper {
             let linkTextField = app.scrollViews.textFields["recipe-link-text-field"]
             linkTextField.tap()
             linkTextField.typeText(_link)
+            app.keyboards.buttons["return"].tap()
         }
     }
     /// Enter data in input text field on recipe creator view
