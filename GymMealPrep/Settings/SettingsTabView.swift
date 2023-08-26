@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsTabView: View {
+    @StateObject private var viewModel = SettingsViewModel()
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
