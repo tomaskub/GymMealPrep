@@ -18,6 +18,7 @@ struct LoadingView: View {
                     
                 Text(actionText)
                     .foregroundColor(.blue)
+                    .accessibilityIdentifier("loading-action-text")
             }
         }
     }
