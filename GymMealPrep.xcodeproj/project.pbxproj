@@ -368,6 +368,18 @@
 			path = TabViews;
 			sourceTree = "<group>";
 		};
+		D61E3A642A9A726B00AB2527 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				D64A07632A8BB22900053EE1 /* RecipeInputParserEngine.swift */,
+				D65713572A93D3140063BA8C /* ParserEngineError.swift */,
+				D65713532A93AD4C0063BA8C /* ParserEngine.swift */,
+				D64A075D2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift */,
+				D64A07612A8B70CD00053EE1 /* WebsiteRecipeSoupEngine.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
 		D634FF7A29FD42F50034B950 = {
 			isa = PBXGroup;
 			children = (
@@ -680,11 +692,7 @@
 				D6C3404029FD7735003F6E06 /* Nutrition.swift */,
 				D648FC502A422F6300393AC3 /* MealPlan.swift */,
 				D65E4C992A40E3A4008C7A2F /* Meal.swift */,
-				D64A07632A8BB22900053EE1 /* RecipeInputParserEngine.swift */,
-				D65713572A93D3140063BA8C /* ParserEngineError.swift */,
-				D65713532A93AD4C0063BA8C /* ParserEngine.swift */,
-				D64A075D2A8A4B5B00053EE1 /* WebsiteRecipeParserEngine.swift */,
-				D64A07612A8B70CD00053EE1 /* WebsiteRecipeSoupEngine.swift */,
+				D61E3A642A9A726B00AB2527 /* Parsers */,
 			);
 			path = Model;
 			sourceTree = "<group>";
