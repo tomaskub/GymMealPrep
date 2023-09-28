@@ -7,9 +7,22 @@
 
 import Foundation
 
+struct SettingModel: Identifiable {
+    var id: UUID = .init()
+    var setting: SettingStore.Setting
+    var value: Int
+}
+
 class SettingsViewModel: ObservableObject {
-    var setingsArray = [
-        K.SettingKeys.theme,
-        K.SettingKeys.calorieTarget
-    ]
+    @Published private var settingStore: SettingStore = .init()
+    
+    var setingsArray: [SettingModel]
+    
+    init() {
+        self.setingsArray = .init()
+        self.setingsArray = [
+            SettingModel(setting: .calorieTarget, value: settingStore.calorieTarget),
+            SettingModel(setting: .macroTargetProtein, value: settingStore.proteinTarget)
+        ]
+    }
 }

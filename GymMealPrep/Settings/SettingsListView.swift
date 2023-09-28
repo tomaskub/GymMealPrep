@@ -12,13 +12,17 @@ struct SettingsListView: View {
     @Binding var path: NavigationPath
     var body: some View {
         List {
-            ForEach(viewModel.setingsArray, id: \.self) { text in
-                NavigationLink(text, value: text)
+            ForEach(viewModel.setingsArray) { setting in
+                HStack {
+                    Text(setting.setting.label)
+                    Spacer()
+                    Text(String(setting.value))
+                }
             } // END OF FOR-EACH
         } // END OF LIST
         .navigationTitle("Settings")
     } // END OF BODY
-} // END OF STRUCT 
+} // END OF STRUCT
 
 struct SettingsListView_Previews: PreviewProvider {
     struct Container: View {
