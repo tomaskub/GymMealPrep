@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             
-            Text("Dashboard view placeholder")
+            HomeTabView()
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Home")
