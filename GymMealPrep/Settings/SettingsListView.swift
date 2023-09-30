@@ -14,9 +14,16 @@ struct SettingsListView: View {
         List {
             ForEach(viewModel.setingsArray) { setting in
                 HStack {
-                    Text(setting.setting.label)
-                    Spacer()
-                    Text(String(setting.value))
+                    switch setting.value {
+                    case .int(let intVal):
+                        Text(setting.setting.label)
+                        Spacer()
+                        Text(String(intVal))
+                    case .bool(let boolVal):
+                        Toggle(isOn: .constant(boolVal)) {
+                            Text(setting.setting.label)
+                        }
+                    }
                 }
             } // END OF FOR-EACH
         } // END OF LIST

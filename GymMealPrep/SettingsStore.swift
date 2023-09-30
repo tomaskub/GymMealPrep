@@ -15,6 +15,7 @@ class SettingStore: ObservableObject {
         case macroTargetProtein
         case macroTargetFat
         case macroTargetCarb
+        case useImperial
         case theme
         
         var label: String {
@@ -29,6 +30,8 @@ class SettingStore: ObservableObject {
                 return "Target carb intake"
             case .theme:
                 return "Color theme"
+            case .useImperial:
+                return "Use imperial units"
             }
         }
         
@@ -44,12 +47,13 @@ class SettingStore: ObservableObject {
     @Published var proteinTarget: Int
     @Published var fatTarget: Int
     @Published var carbTarget: Int
-
+    @Published var useImperial: Bool
     init() {
         self.calorieTarget = defaults.integer(forKey: Setting.calorieTarget.key)
         self.proteinTarget = defaults.integer(forKey: Setting.macroTargetProtein.key)
         self.fatTarget = defaults.integer(forKey: Setting.macroTargetFat.key)
         self.carbTarget = defaults.integer(forKey: Setting.macroTargetCarb.key)
+        self.useImperial = defaults.bool(forKey: Setting.useImperial.key)
         self.setUpWriteSubscribers()
     }
 }
