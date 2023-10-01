@@ -11,24 +11,31 @@ struct SettingsListView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @Binding var path: NavigationPath
     var body: some View {
-        List {
-            ForEach(viewModel.setingsArray) { setting in
-                HStack {
-                    switch setting.value {
-                    case .int(let intVal):
-                        Text(setting.setting.label)
-                        Spacer()
-                        Text(String(intVal))
-                    case .bool(let boolVal):
-                        Toggle(isOn: .constant(boolVal)) {
-                            Text(setting.setting.label)
+        VStack {
+            List {
+                ForEach(viewModel.settings) { sectionModel in
+                    Section {
+                        ForEach(sectionModel.items, id: \.self.id) { element in
+                            Label {
+                                Text(element.label)
+                            } icon: {
+                                Image(systemName: element.iconSystemName)
+                            }
                         }
+                    } header: {
+                        Text(sectionModel.sectionName)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
                     }
                 }
-            } // END OF FOR-EACH
-        } // END OF LIST
+            }
+            Text("work in progress settings for\n GymMealPrep ❤︎ Tomasz Kubiak")
+                .multilineTextAlignment(.center)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
         .navigationTitle("Settings")
-    } // END OF BODY
+    }
 } // END OF STRUCT
 
 struct SettingsListView_Previews: PreviewProvider {
@@ -41,6 +48,7 @@ struct SettingsListView_Previews: PreviewProvider {
             }
         }
     }
+    
     static var previews: some View {
         Container()
     }
