@@ -1,0 +1,92 @@
+//
+//  Setting.swift
+//  GymMealPrep
+//
+//  Created by Tomasz Kubiak on 30/09/2023.
+//
+
+import Foundation
+
+enum Setting: String, CaseIterable, Hashable {
+    case calorieTarget
+    case macroTargetProtein
+    case macroTargetFat
+    case macroTargetCarb
+    case numberOfMeals
+    case mealNames
+    case groceries // day of groceries (next date)
+    case nextPlan // day of week where next plan starts
+    case units // metric or imperial
+    case theme
+    case rateApp
+    case contactUs
+    case terms
+    case privacy
+    case apiReference
+    
+    var label: String {
+        switch self {
+        case .calorieTarget:
+            return "Target calories"
+        case .macroTargetProtein:
+            return "Target protein intake"
+        case .macroTargetFat:
+            return "Target fat intake"
+        case .macroTargetCarb:
+            return "Target carb intake"
+        case .theme:
+            return "Color theme"
+        case .units:
+            return "Units"
+        case .groceries:
+            return "Groceries"
+        case .nextPlan:
+            return "Next plan"
+        case .numberOfMeals:
+            return "Number of meals"
+        case .mealNames:
+            return "Meal names"
+        default:
+            return "Not implemented: \(self.rawValue)"
+        }
+    }
+    var systemImageName: String {
+        switch self {
+        case .calorieTarget:
+            return "target"
+        case .macroTargetProtein:
+            return "target"
+        case .macroTargetFat:
+            return "target"
+        case .macroTargetCarb:
+            return "target"
+        case .groceries:
+            return "bag"
+        case .nextPlan:
+            return "calendar"
+        case .units:
+            return "ruler"
+        case .theme:
+            return "circle.lefthalf.filled"
+        case .rateApp:
+            return "star.fill"
+        case .contactUs:
+            return "phone"
+        case .terms:
+            return "clipboard"
+        case .privacy:
+            return "person"
+        case .apiReference:
+            return "questionmark"
+        case .numberOfMeals:
+            return "number.circle"
+        case .mealNames:
+            return "takeoutbag.and.cup.and.straw"
+        default:
+            return "circle"
+        }
+    }
+    var key: String {
+        return self.rawValue
+    }
+}

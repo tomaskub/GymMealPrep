@@ -10,34 +10,10 @@ import Combine
 
 class SettingStore: ObservableObject {
     
-    enum Setting: String {
-        case calorieTarget
-        case macroTargetProtein
-        case macroTargetFat
-        case macroTargetCarb
-        case useImperial
-        case theme
-        
-        var label: String {
-            switch self {
-            case .calorieTarget:
-                return "Target calories"
-            case .macroTargetProtein:
-                return "Target protein intake"
-            case .macroTargetFat:
-                return "Target fat intake"
-            case .macroTargetCarb:
-                return "Target carb intake"
-            case .theme:
-                return "Color theme"
-            case .useImperial:
-                return "Use imperial units"
-            }
-        }
-        
-        var key: String {
-            return self.rawValue
-        }
+
+    
+    enum Units: String {
+        case metric, imperial
     }
     
     private let defaults = UserDefaults.standard
