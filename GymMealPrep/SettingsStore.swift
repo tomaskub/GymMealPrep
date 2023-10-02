@@ -14,6 +14,11 @@ class SettingStore: ObservableObject {
         case metric, imperial
     }
     
+    let dateFormatter = {
+       let result = DateFormatter()
+        result.dateFormat = "dd/MM/yyy HH:mm"
+        return result
+    }()
     private let defaults = UserDefaults.standard
     private var subscriptions = Set<AnyCancellable>()
     
@@ -34,7 +39,23 @@ class SettingStore: ObservableObject {
         
         self.settings = .init()
         for setting in Setting.allCases {
-            settings.updateValue(defaults.value(forKey: setting.key), forKey: setting)
+            switch setting.value {
+            case .integer:
+                settings.updateValue(defaults.integer(forKey: setting.key), forKey: setting)
+            case .bool:
+                settings.updateValue(defaults.bool(forKey: setting.key), forKey: setting)
+            case .string:
+                settings.updateValue(defaults.string(forKey: setting.key), forKey: setting)
+            case .stringArray:
+                settings.updateValue(defaults.stringArray(forKey: setting.key), forKey: setting)
+            case .date:
+                if let date = defaults.object(forKey: setting.key) as? Date {
+                    settings.updateValue(date, forKey: setting)
+                }
+            case .nilValue:
+                break
+            }
+            
         }
         self.setUpWriteSubscribers()
     }
