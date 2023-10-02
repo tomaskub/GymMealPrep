@@ -7,30 +7,26 @@
 
 import Foundation
 
-protocol SettingListable: Identifiable {
+protocol SettingListable: Identifiable, Hashable {
     var id: UUID { get }
     var iconSystemName: String { get }
-    var label: String { get }
-    var value: Any? { get }
+    var labelText: String { get }
+    var valueText: String? { get }
 }
 
 struct SettingModel: SettingListable {
     let id: UUID = .init()
     let setting: Setting
-    var value: Any?
-    var iconSystemName: String {
-        return setting.systemImageName
-    }
-    var label: String {
-        return setting.label
-    }
+    var valueText: String?
+    var iconSystemName: String { setting.systemImageName }
+    var labelText: String { setting.label }
 }
 
 struct SettingGroup: SettingListable {
     let id: UUID = .init()
     let iconSystemName: String
-    let label: String
-    var value: Any? = nil
+    let labelText: String
+    var valueText: String? { return nil }
     var settings: [SettingModel]
 }
 
