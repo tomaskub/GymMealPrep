@@ -16,25 +16,48 @@ struct SettingsListView: View {
                 ForEach(viewModel.settings) { sectionModel in
                     Section {
                         ForEach(sectionModel.items, id: \.self.id) { element in
-                            Label {
-                                Text(element.label)
-                            } icon: {
-                                Image(systemName: element.iconSystemName)
+                            NavigationLink(value: element) {
+                                makeSettingsRow(element: element)
                             }
                         }
                     } header: {
-                        Text(sectionModel.sectionName)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
+                        makeSectionHeader(sectionModel)
                     }
                 }
             }
-            Text("work in progress settings for\n GymMealPrep ❤︎ Tomasz Kubiak")
-                .multilineTextAlignment(.center)
-                .font(.caption2)
-                .foregroundColor(.secondary)
+            makeViewFooter()
         }
         .navigationTitle("Settings")
+    }
+    
+    @ViewBuilder
+    private func makeSettingsRow(element: any SettingListable) -> some View {
+        HStack {
+            Label {
+                Text(element.labelText)
+            } icon: {
+                Image(systemName: element.iconSystemName)
+            }
+            Spacer()
+            if let value = element.valueText {
+                Text(value)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func makeSectionHeader(_ sectionModel: SettingSection) -> some View {
+        Text(sectionModel.sectionName)
+            .fontWeight(.semibold)
+            .foregroundColor(.primary)
+    }
+    
+    @ViewBuilder
+    private func makeViewFooter() -> some View {
+        Text("work in progress settings for\n GymMealPrep ❤︎ Tomasz Kubiak")
+            .multilineTextAlignment(.center)
+            .font(.caption2)
+            .foregroundColor(.secondary)
     }
 } // END OF STRUCT
 
