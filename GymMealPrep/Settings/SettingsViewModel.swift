@@ -25,7 +25,7 @@ class SettingsViewModel: ObservableObject {
                 makeSettingModel(setting: .calorieTarget),
                 SettingGroup(
                     iconSystemName: "chart.pie",
-                    label: "Macro targets",
+                    labelText: "Macro targets",
                     settings: [
                         makeSettingModel(setting: .macroTargetProtein),
                         makeSettingModel(setting: .macroTargetFat),
@@ -38,17 +38,56 @@ class SettingsViewModel: ObservableObject {
                 makeSettingModel(setting: .numberOfMeals),
                 makeSettingModel(setting: .mealNames)
             ])
-        let variousSetting = SettingSection(sectionName: "Various", items: [
+        let calendarSection = SettingSection(
+            sectionName: "Calendar",
+            items: [
+                makeSettingModel(setting: .nextPlan),
+                makeSettingModel(setting: .groceries)
+            ])
+        let variousSection = SettingSection(sectionName: "Various", items: [
             makeSettingModel(setting: .units),
-            makeSettingModel(setting: .theme)
+            makeSettingModel(setting: .theme),
         ])
+        
+        let informationSection = SettingSection(
+            sectionName: "Information",
+            items: [
+                makeSettingModel(setting: .rateApp),
+                makeSettingModel(setting: .privacy),
+                makeSettingModel(setting: .terms),
+                makeSettingModel(setting: .apiReference),
+                makeSettingModel(setting: .contactUs)
+            ])
+        
         result.append(dietSection)
         result.append(mealPlanSection)
-        result.append(variousSetting)
+        result.append(calendarSection)
+        result.append(variousSection)
+        result.append(informationSection)
         return result
     }
     
     private func makeSettingModel(setting: Setting) -> SettingModel {
-        return SettingModel(setting: setting, value: settingStore.settings[setting] as Any?)
+        var stringValue: String?
+        switch setting.value {
+        case .bool:
+            if let value = settingStore.settings[setting] as? Bool {
+                stringValue = String(value)
+            }
+        case .integer:
+            if let value = settingStore.settings[setting] as? Int {
+                stringValue = String(value)
+            }
+        case .date:
+            if let value = settingStore.settings[setting] as? Date {
+                stringValue = value.formatted(date: .abbreviated, time: .omitted)
+            }
+        case .string:
+            stringValue = settingStore.settings[setting] as? String
+        case .stringArray, .nilValue:
+            stringValue = nil
+        }
+        
+        return SettingModel(setting: setting, valueText: stringValue)
     }
 }
