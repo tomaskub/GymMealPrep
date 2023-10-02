@@ -6,6 +6,14 @@
 //
 
 import Foundation
+enum SettingValue: Hashable {
+    case integer
+    case bool
+    case string
+    case stringArray
+    case date
+    case nilValue
+}
 
 enum Setting: String, CaseIterable, Hashable {
     case calorieTarget
@@ -14,7 +22,7 @@ enum Setting: String, CaseIterable, Hashable {
     case macroTargetCarb
     case numberOfMeals
     case mealNames
-    case groceries // day of groceries (next date)
+    case groceries // date for groceries (next date)
     case nextPlan // day of week where next plan starts
     case units // metric or imperial
     case theme
@@ -46,10 +54,19 @@ enum Setting: String, CaseIterable, Hashable {
             return "Number of meals"
         case .mealNames:
             return "Meal names"
-        default:
-            return "Not implemented: \(self.rawValue)"
+        case .apiReference:
+            return "API information"
+        case .privacy:
+            return "Privacy information"
+        case .terms:
+            return "Terms information"
+        case .contactUs:
+            return "Contact Us"
+        case .rateApp:
+            return "Rate Us!"
         }
     }
+    
     var systemImageName: String {
         switch self {
         case .calorieTarget:
@@ -82,11 +99,25 @@ enum Setting: String, CaseIterable, Hashable {
             return "number.circle"
         case .mealNames:
             return "takeoutbag.and.cup.and.straw"
-        default:
-            return "circle"
         }
     }
+    
     var key: String {
         return self.rawValue
+    }
+    
+    var value: SettingValue {
+        switch self {
+        case .calorieTarget, .macroTargetProtein, .macroTargetFat, .macroTargetCarb, .numberOfMeals:
+            return .integer
+        case .mealNames:
+            return .stringArray
+        case .groceries, .nextPlan:
+            return .date
+        case .units, .theme:
+            return .string
+        case .apiReference, .rateApp, .contactUs, .terms, .privacy:
+            return .nilValue
+        }
     }
 }
