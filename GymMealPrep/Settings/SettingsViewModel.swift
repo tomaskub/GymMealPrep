@@ -32,39 +32,19 @@ class SettingsViewModel: ObservableObject {
                         makeSettingModel(setting: .macroTargetCarb)
                     ])
             ])
-        let mealPlanSection = SettingSection(
-            sectionName: "Meal Plan",
-            items: [
-                makeSettingModel(setting: .numberOfMeals),
-                makeSettingModel(setting: .mealNames)
-            ])
-        let calendarSection = SettingSection(
-            sectionName: "Calendar",
-            items: [
-                makeSettingModel(setting: .nextPlan),
-                makeSettingModel(setting: .groceries)
-            ])
-        let variousSection = SettingSection(sectionName: "Various", items: [
-            makeSettingModel(setting: .units),
-            makeSettingModel(setting: .theme),
-        ])
-        
-        let informationSection = SettingSection(
-            sectionName: "Information",
-            items: [
-                makeSettingModel(setting: .rateApp),
-                makeSettingModel(setting: .privacy),
-                makeSettingModel(setting: .terms),
-                makeSettingModel(setting: .apiReference),
-                makeSettingModel(setting: .contactUs)
-            ])
-        
-        result.append(dietSection)
-        result.append(mealPlanSection)
-        result.append(calendarSection)
-        result.append(variousSection)
-        result.append(informationSection)
-        return result
+        let mealPlanSection = makeSettingSection(name: "Meal Plan", items: [.numberOfMeals, .mealNames])
+        let calendarSection = makeSettingSection(name: "Calendar", items: [.nextPlan, .groceries])
+        let variousSection = makeSettingSection(name: "App", items: [.units, .theme])
+        let informationSection = makeSettingSection(name: "Information",
+                                                    items: [.rateApp, .privacy, .terms, .apiReference, .contactUs])
+        return [dietSection, mealPlanSection, calendarSection, variousSection, informationSection]
+    }
+    
+    private func makeSettingSection(name: String, items: [Setting]) -> SettingSection {
+        return SettingSection(
+            sectionName: name,
+            items: items.compactMap { makeSettingModel(setting: $0) }
+        )
     }
     
     private func makeSettingModel(setting: Setting) -> SettingModel {
