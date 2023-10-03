@@ -18,8 +18,17 @@ class SettingsViewModel: ObservableObject {
     }
     
     private func createSettingSections() -> [SettingSection] {
-        var result = [SettingSection]()
-        let dietSection = SettingSection(
+        let dietSection = makeDietSettingSection()
+        let mealPlanSection = makeSettingSection(name: "Meal Plan", items: [.numberOfMeals, .mealNames])
+        let calendarSection = makeSettingSection(name: "Calendar", items: [.nextPlan, .groceries])
+        let variousSection = makeSettingSection(name: "App", items: [.units, .theme])
+        let informationSection = makeSettingSection(name: "Information",
+                                                    items: [.rateApp, .privacy, .terms, .apiReference, .contactUs])
+        return [dietSection, mealPlanSection, calendarSection, variousSection, informationSection]
+    }
+    
+    private func makeDietSettingSection() -> SettingSection {
+        return SettingSection(
             sectionName: "Diet",
             items: [
                 makeSettingModel(setting: .calorieTarget),
@@ -32,12 +41,6 @@ class SettingsViewModel: ObservableObject {
                         makeSettingModel(setting: .macroTargetCarb)
                     ])
             ])
-        let mealPlanSection = makeSettingSection(name: "Meal Plan", items: [.numberOfMeals, .mealNames])
-        let calendarSection = makeSettingSection(name: "Calendar", items: [.nextPlan, .groceries])
-        let variousSection = makeSettingSection(name: "App", items: [.units, .theme])
-        let informationSection = makeSettingSection(name: "Information",
-                                                    items: [.rateApp, .privacy, .terms, .apiReference, .contactUs])
-        return [dietSection, mealPlanSection, calendarSection, variousSection, informationSection]
     }
     
     private func makeSettingSection(name: String, items: [Setting]) -> SettingSection {
