@@ -10,8 +10,19 @@ import SwiftUI
 struct SettingsDetailView: View {
     @State private var boolExample: Bool = false
     @State private var stringExample: String = .init()
+    let settingModels: [SettingModel]
     var body: some View {
         List {
+            // Placeholder
+            ForEach(settingModels) { model in
+                HStack {
+                    Text(model.labelText)
+                    Spacer()
+                    if let value = model.valueText {
+                        Text(value)
+                    }
+                }
+            }
             Section {
                 Toggle("Sample setting", isOn: $boolExample)
                 makeTooltip(text: "This is an description of the settings and a short instructions about how you should use it. The way it is constructed should be automatic depending on the data the view gets when it gets initiated. Additionaly it has to have a way to change the setting on dismiss or just in general")
@@ -56,7 +67,7 @@ struct SettingsDetailView: View {
 struct SettingsDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            SettingsDetailView()
+            SettingsDetailView(settingModels: [SettingModel(setting: .calorieTarget, valueText: "3100")])
         }
     }
 }

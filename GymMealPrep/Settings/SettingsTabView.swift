@@ -13,6 +13,12 @@ struct SettingsTabView: View {
     var body: some View {
         NavigationStack {
                 SettingsListView(viewModel: viewModel, path: $path)
+                .navigationDestination(for: SettingModel.self) { model in
+                    SettingsDetailView(settingModels: [model])
+                }
+                .navigationDestination(for: SettingGroup.self) { group in
+                    SettingsDetailView(settingModels: group.settings)
+                }
         } // END OF NAV-STACK
     } // END OF BODY
 } // END OF STRUCT
