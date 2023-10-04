@@ -14,10 +14,20 @@ struct SettingsTabView: View {
         NavigationStack {
                 SettingsListView(viewModel: viewModel, path: $path)
                 .navigationDestination(for: SettingModel.self) { model in
-                    SettingsDetailView(settingModels: [model], title: model.labelText)
+                    SettingsDetailView(title: model.labelText,
+                                       viewModel: SettingsDetailViewModel(
+                                        settingStore: SettingStore(),
+                                        settingModels: [model]
+                                       )
+                    )
                 }
                 .navigationDestination(for: SettingGroup.self) { group in
-                    SettingsDetailView(settingModels: group.settings, title: group.labelText)
+                    SettingsDetailView(title: group.labelText,
+                                       viewModel: SettingsDetailViewModel(
+                                        settingStore: SettingStore(),
+                                        settingModels: group.settings
+                                       )
+                    )
                 }
         } // END OF NAV-STACK
     } // END OF BODY
