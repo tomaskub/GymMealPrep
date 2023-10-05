@@ -73,14 +73,38 @@ extension SettingsDetailView {
         }
     }
     
+    @ViewBuilder
+    private func makeIntRow(setting: SettingModel, value: Binding<Int>) -> some View {
+        
+        let bindingString = Binding(
+            get: {
+                return String(value.wrappedValue)
+            }, set: { stringValue in
+                if let newIntValue = Int(stringValue){
+                    value.wrappedValue = newIntValue
+                }
+            }
+          )
+        
+        HStack {
+            Label {
+                Text(setting.labelText)
+                    .fixedSize()
+            } icon: {
+                Image(systemName: setting.iconSystemName)
+            }
+            Spacer()
+            TextField("placeholder",
+                      text: bindingString
+            )
+            .numericalInputOnly(bindingString)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+    
     //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
     private func makeStringArrayRows() -> some View {
-        Text("Placeholder")
-    }
-    
-    @ViewBuilder
-    private func makeIntRow(setting: SettingModel, value: Binding<Int>) -> some View {
         Text("Placeholder")
     }
     
@@ -139,8 +163,7 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .privacy),
-                        SettingModel(setting: .groceries)
+                        SettingModel(setting: .calorieTarget)
                     ])
             )
         }
