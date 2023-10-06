@@ -108,7 +108,7 @@ extension SettingsDetailView {
             ForEach(Array(array.enumerated()), id: \.offset) { index, element in
                 HStack {
                     Text("\(index+1).")
-                    TextField(String(), text: viewModel.bindingToStringArray(for: settingModel.setting, at: index))
+                    TextField(String(), text: viewModel.bindingArray(type: String.self, for: settingModel.setting, at: index))
                         .textFieldStyle(.roundedBorder)
                 }
             }
