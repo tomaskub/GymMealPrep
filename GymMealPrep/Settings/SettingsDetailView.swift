@@ -35,7 +35,7 @@ struct SettingsDetailView: View {
                         makeDateRow(setting: model,
                                     value: viewModel.binding(type: Date.self, for: model.setting))
                     case .stringArray:
-                        makeStringArrayRows()
+                        makeStringArraySection(settingModel: model)
                     case .nilValue:
                         makePlaceholderRow(setting: model)
                     }
@@ -102,12 +102,28 @@ extension SettingsDetailView {
         }
     }
     
-    //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
-    private func makeStringArrayRows() -> some View {
-        Text("Placeholder")
+    private func makeStringArraySection(settingModel: SettingModel) -> some View {
+        if let array = viewModel.settingValues[settingModel.setting] as? [String] {
+            ForEach(Array(array.enumerated()), id: \.offset) { index, element in
+                HStack {
+                    Text("\(index+1).")
+                    TextField(String(), text: viewModel.bindingToStringArray(for: settingModel.setting, at: index))
+                        .textFieldStyle(.roundedBorder)
+                }
+            }
+            .onDelete { indexSet in
+                viewModel.removeFromArray(for: settingModel.setting, atOffsets: indexSet)
+            }
+        }
+        Button {
+            viewModel.appendToArray(for: settingModel.setting, newValue: String())
+        } label: {
+            Label("Add", systemImage: "plus.circle")
+        }
     }
-    
+
+    //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
     private func makePickerRow(setting: SettingModel) -> some View {
         Section {
@@ -163,7 +179,7 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .calorieTarget)
+                        SettingModel(setting: .mealNames)
                     ])
             )
         }

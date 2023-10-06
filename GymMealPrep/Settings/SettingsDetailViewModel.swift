@@ -34,6 +34,35 @@ class SettingsDetailViewModel: ObservableObject {
             self.settingValues[key] = value
         }
     }
+    
+    func bindingToStringArray(for key: Setting, at index: Int) -> Binding<String> {
+        return Binding {
+            return (self.settingValues[key] as? [String])?[index] ?? String()
+        } set: { value in
+            if var array = self.settingValues[key] as? [String], index < array.count {
+                array[index] = value
+                self.settingValues[key] = array
+                print("successfuly set a new value of: \(value) at index: \(index)")
+            }
+        }
+    }
+    
+    func appendToArray(for setting: Setting, newValue: String) {
+        if var array = settingValues[setting] as? [String] {
+            array.append(newValue)
+            settingValues[setting] = array
+        } else {
+            let array = Array(repeating: String(), count: 1)
+            settingValues[setting] = array
+        }
+    }
+    
+    func removeFromArray(for setting: Setting, atOffsets indexSet: IndexSet) {
+        if var mutableArray = settingValues[setting] as? [Any] {
+            mutableArray.remove(atOffsets: indexSet)
+            settingValues[setting] = mutableArray
+        }
+    }
 }
 
 
