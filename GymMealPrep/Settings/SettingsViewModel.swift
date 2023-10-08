@@ -69,6 +69,8 @@ class SettingsViewModel: ObservableObject {
             stringValue = settingStore.settings[setting] as? String
         case .stringArray, .nilValue:
             stringValue = nil
+        case .enumeration(_):
+            stringValue = settingStore.settings[setting] as? String
         }
         
         return SettingModel(setting: setting, valueText: stringValue)
