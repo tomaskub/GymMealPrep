@@ -10,10 +10,6 @@ import Combine
 
 class SettingStore: ObservableObject {
     
-    enum Units: String {
-        case metric, imperial
-    }
-    
     let dateFormatter = {
        let result = DateFormatter()
         result.dateFormat = "dd/MM/yyy HH:mm"
@@ -51,6 +47,21 @@ class SettingStore: ObservableObject {
             case .date:
                 if let date = defaults.object(forKey: setting.key) as? Date {
                     settings.updateValue(date, forKey: setting)
+                }
+            case .enumeration(let enumType):
+                if let value = defaults.string(forKey: setting.key) {
+                    switch enumType {
+                    case _ as Units.Type:
+                        if let result = Units(rawValue: value) {
+                            settings.updateValue(result, forKey: setting)
+                        }
+                    case _ as Theme.Type:
+                        if let result = Theme(rawValue: value) {
+                            settings.updateValue(result, forKey: setting)
+                        }
+                    default:
+                        print("Failed at gretting enumeration initialized for setting store dictonary")
+                    }
                 }
             case .nilValue:
                 break
