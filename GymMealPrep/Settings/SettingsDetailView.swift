@@ -38,6 +38,12 @@ struct SettingsDetailView: View {
                         makeStringArraySection(settingModel: model)
                     case .nilValue:
                         makePlaceholderRow(setting: model)
+                    case .enumeration(let type):
+                        if type is Units.Type {
+                            EnumRow(selectedT: .constant(Units.imperial), tCases: Units.allCases)
+                        } else if type is Theme.Type {
+                            EnumRow(selectedT: .constant(Theme.dark), tCases: Theme.allCases)
+                        }
                     }
                 }
             }
@@ -125,12 +131,8 @@ extension SettingsDetailView {
 
     //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
-    private func makePickerRow(setting: SettingModel) -> some View {
-        Section {
-            Text("picker thing?")
-        } header: {
-            Text("Picker wheel example")
-        }
+    private func makeGenericPickerRow<T>(type: T.Type, setting: SettingModel) -> some View where T: SettingEnum {
+        Text("blah")
     }
     
     @ViewBuilder
@@ -171,6 +173,22 @@ extension SettingsDetailView {
     }
 }
 
+struct EnumRow<T:Hashable>: View {
+    @Binding var selectedT: T
+    let tCases: [T]
+    var body: some View {
+        Picker("Select:", selection: $selectedT) {
+            ForEach(tCases, id: \.self) { enumCase in
+                Text(String(describing: enumCase))
+                    .tag(enumCase)
+            }
+        }
+        // this!
+        // Have to redo the list in the view model to use the picker like this and i do not have to use this whole generic shablam 
+        .pickerStyle(.navigationLink)
+    }
+}
+
 struct SettingsDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
@@ -179,7 +197,8 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .mealNames)
+                        SettingModel(setting: .units),
+                        SettingModel(setting: .theme)
                     ])
             )
         }
