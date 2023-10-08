@@ -13,7 +13,46 @@ enum SettingValue: Hashable {
     case stringArray
     case date
     case nilValue
+    case enumeration(any SettingEnum.Type)
+    
+    static func == (lhs: SettingValue, rhs: SettingValue) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+            switch self {
+            case .enumeration(let type):
+                // Hash the type's description to ensure uniqueness
+                hasher.combine(ObjectIdentifier(type).hashValue)
+            case .integer:
+                hasher.combine("integer".hashValue)
+            case .bool:
+                hasher.combine("bool".hashValue)
+            case .string:
+                hasher.combine("string".hashValue)
+            case .stringArray:
+                hasher.combine("stringArray".hashValue)
+            case .date:
+                hasher.combine("date".hashValue)
+            case .nilValue:
+                hasher.combine("nilValue".hashValue)
+            }
+        }
 }
+
+protocol SettingEnum: Hashable, CaseIterable {
+    associatedtype RawValue: Hashable = String
+    var rawValue: RawValue { get }
+}
+
+enum Units: String, SettingEnum {
+    case metric, imperial
+}
+
+enum Theme: String, CaseIterable, SettingEnum {
+    case light, dark, system
+}
+
 
 enum Setting: String, CaseIterable, Hashable {
     case calorieTarget
@@ -114,8 +153,10 @@ enum Setting: String, CaseIterable, Hashable {
             return .stringArray
         case .groceries, .nextPlan:
             return .date
-        case .units, .theme:
-            return .string
+        case .units:
+            return .enumeration(Units.self)
+        case .theme:
+            return .enumeration(Theme.self)
         case .apiReference, .rateApp, .contactUs, .terms, .privacy:
             return .nilValue
         }
