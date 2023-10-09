@@ -18,6 +18,12 @@ struct ContentView: View {
                     Text("Home")
                 }
             
+            Text("Logging placeholder")
+                .tabItem {
+                    Image(systemName: "pencil.line")
+                    Text("Log")
+                }
+            
             RecipeListTabView()
                     .tabItem {
                         Image(systemName: "square.fill.text.grid.1x2")
@@ -34,7 +40,7 @@ struct ContentView: View {
             
             Text("Settings placeholder")
                 .tabItem {
-                    Image(systemName: "gear")
+                    Image(systemName: "gearshape")
                     Text("Settings")
                 }
         } // END OF TABVIEW

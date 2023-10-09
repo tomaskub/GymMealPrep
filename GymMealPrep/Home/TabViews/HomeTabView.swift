@@ -11,16 +11,19 @@ struct HomeTabView: View {
     var body: some View {
         NavigationStack {
             List {
+                
                 Section {
-                    HStack {
-                        Text("Pick your plan for next week and make sure to pick up your groceries")
-                        Image(systemName: "chevron.right")
+                    NavigationLink(value: String("Meal")) {
+                        Label("Assign meal plan for next period",systemImage: "calendar")
+                    }
+                    NavigationLink(value: String("Groceries")) {
+                        Label("Generate shopping list", systemImage: "list.bullet")
+                    }
+                    NavigationLink(value: String("Cooking book")) {
+                        Label("Create cooking instructions", systemImage: "book.closed")
                     }
                 } header: {
-                    Text("Saturday")
-                        .font(.title3)
-                        .foregroundColor(.primary)
-                        .underline(color: .green)
+                    makeHeader(text: "Actions")
                 }
                 
                 Section {
@@ -28,25 +31,21 @@ struct HomeTabView: View {
                     createMealRow(mealName: "Lunch", meals: ["Sweet and sour chicken", "90 g of rice"])
                     createMealRow(mealName: "Dinner", meals: ["Tomato basil sausage spaghetti recipe"])
                 } header: {
-                    Text("Sunday")
-                        .font(.title3)
-                        .foregroundColor(.primary)
-                        .underline(color: .green)
+                    makeHeader(text: "Today")
                 }
-                Section {
-                    createMealRow(mealName: "Breakfast", meals: ["Skyr", "100 g of strawberries" ,"Becon and egg burrito"])
-                    createMealRow(mealName: "Lunch", meals: ["Sweet and sour chicken", "90 g of rice"])
-                    createMealRow(mealName: "Dinner", meals: ["Tomato basil sausage spaghetti recipe"])
-                } header: {
-                    Text("Monday")
-                        .font(.title3)
-                        .foregroundColor(.primary)
-                        .underline(color: .green)
-                }
+                
             }
             
                 .navigationTitle("Current week")
         }
+    }
+    
+    @ViewBuilder
+    private func makeHeader(text: String) -> some View {
+        Text(text)
+            .font(.title3)
+            .foregroundColor(.primary)
+            .underline(color: .green)
     }
     
     @ViewBuilder
