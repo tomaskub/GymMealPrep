@@ -10,14 +10,20 @@ import SwiftUI
 struct SettingsListView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @Binding var path: NavigationPath
+    @State var testing: Int = 1
     var body: some View {
         VStack {
             List {
                 ForEach(viewModel.settings) { sectionModel in
                     Section {
                         ForEach(sectionModel.items, id: \.self.id) { element in
-                            NavigationLink(value: element) {
-                                makeSettingsRow(element: element)
+                            if let elementForEnum = element as? SettingModel,
+                                case .enumeration(let enumType) = elementForEnum.setting.value {
+                                    makePickerRow(element: elementForEnum, enumType: enumType)
+                            } else {
+                                NavigationLink(value: element) {
+                                    makeSettingsRow(element: element)
+                                }
                             }
                         }
                     } header: {
@@ -29,7 +35,19 @@ struct SettingsListView: View {
         }
         .navigationTitle("Settings")
     }
-    
+    @ViewBuilder
+    private func makePickerRow(element: SettingModel, enumType: any SettingEnum.Type) -> some View {
+        if enumType is Units.Type || enumType is Theme.Type {
+            Picker(selection: $testing) {
+                Text("1").tag(1)
+                Text("2").tag(2)
+                Text("3").tag(3)
+            } label: {
+                Label(element.setting.label, systemImage: element.iconSystemName)
+            }
+            .pickerStyle(.navigationLink)
+        }
+    }
     @ViewBuilder
     private func makeSettingsRow(element: any SettingListable) -> some View {
         HStack {
