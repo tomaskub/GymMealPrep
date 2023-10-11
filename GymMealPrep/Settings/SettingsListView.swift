@@ -39,9 +39,15 @@ struct SettingsListView: View {
     private func makePickerRow(element: SettingModel, enumType: any SettingEnum.Type) -> some View {
         if enumType is Units.Type || enumType is Theme.Type {
             Picker(selection: $testing) {
-                Text("1").tag(1)
-                Text("2").tag(2)
-                Text("3").tag(3)
+                if enumType is Units.Type {
+                    ForEach(Array(Units.allCases.enumerated()), id: \.element) { (i, enumCase) in
+                        Text(enumCase.rawValue).tag(i)
+                    }
+                } else if enumType is Theme.Type {
+                    ForEach(Array(Theme.allCases.enumerated()), id: \.element) { (i, enumCase) in
+                        Text(enumCase.rawValue).tag(i)
+                    }
+                }
             } label: {
                 Label(element.setting.label, systemImage: element.iconSystemName)
             }
