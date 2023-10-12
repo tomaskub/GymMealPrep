@@ -40,9 +40,9 @@ struct SettingsDetailView: View {
                         makePlaceholderRow(setting: model)
                     case .enumeration(let type):
                         if type is Units.Type {
-                            EnumRow(selectedT: .constant(Units.imperial), tCases: Units.allCases)
+                            makeGenericPickerRow(binding: .constant(Units.imperial), setting: model)
                         } else if type is Theme.Type {
-                            EnumRow(selectedT: .constant(Theme.dark), tCases: Theme.allCases)
+                            makeGenericPickerRow(binding: .constant(Theme.light), setting: model)
                         }
                     }
                 }
@@ -129,12 +129,19 @@ extension SettingsDetailView {
         }
     }
 
-    //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
-    private func makeGenericPickerRow<T>(type: T.Type, setting: SettingModel) -> some View where T: SettingEnum {
-        Text("blah")
+    private func makeGenericPickerRow<T>(binding: Binding<T>, setting: SettingModel) -> some View where T: SettingEnum, T.RawValue: StringProtocol {
+        Picker(String(), selection: binding) {
+            ForEach(Array(T.allCases), id: \.self) { enumCase in
+                Text(String(describing: enumCase))
+                    .tag(enumCase)
+            }
+        }
+        .labelsHidden()
+        .pickerStyle(.inline)
     }
     
+    //TODO: COMPLETE VIEW BUILDERS
     @ViewBuilder
     private func makeBoolRow(setting: SettingModel, value: Binding<Bool>) -> some View {
         Section {
@@ -171,22 +178,6 @@ extension SettingsDetailView {
             .multilineTextAlignment(.center)
             .font(.caption2)
             .foregroundColor(.secondary)
-    }
-}
-
-struct EnumRow<T:Hashable>: View {
-    @Binding var selectedT: T
-    let tCases: [T]
-    var body: some View {
-        Picker("Select:", selection: $selectedT) {
-            ForEach(tCases, id: \.self) { enumCase in
-                Text(String(describing: enumCase))
-                    .tag(enumCase)
-            }
-        }
-        // this!
-        // Have to redo the list in the view model to use the picker like this and i do not have to use this whole generic shablam 
-        .pickerStyle(.navigationLink)
     }
 }
 
