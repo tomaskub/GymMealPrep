@@ -40,9 +40,11 @@ struct SettingsDetailView: View {
                         makePlaceholderRow(setting: model)
                     case .enumeration(let type):
                         if type is Units.Type {
-                            makeGenericPickerRow(binding: .constant(Units.imperial), setting: model)
+                            makeGenericPickerRow(binding: viewModel.binding(type: Units.self, for: model.setting),
+                                                 setting: model)
                         } else if type is Theme.Type {
-                            makeGenericPickerRow(binding: .constant(Theme.light), setting: model)
+                            makeGenericPickerRow(binding: viewModel.binding(type: Theme.self, for: model.setting),
+                                                 setting: model)
                         }
                     }
                 }
@@ -141,7 +143,7 @@ extension SettingsDetailView {
         .pickerStyle(.inline)
     }
     
-    //TODO: COMPLETE VIEW BUILDERS
+    //TODO: COMPLETE VIEW BUILDERS + ADD STEPPER VIEW
     @ViewBuilder
     private func makeBoolRow(setting: SettingModel, value: Binding<Bool>) -> some View {
         Section {

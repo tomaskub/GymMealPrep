@@ -46,16 +46,20 @@ protocol SettingEnum: Hashable, CaseIterable {
     static var defaultValue: Self { get }
 }
 
-enum Units: String, SettingEnum {
+enum Units: String, SettingEnum, Initializable {
     static var defaultValue: Units = .metric
     
     case metric, imperial
-    
+    init() {
+        self = Units.defaultValue
+    }
 }
 
-enum Theme: String, CaseIterable, SettingEnum {
+enum Theme: String, CaseIterable, SettingEnum, Initializable {
     static var defaultValue: Theme = .system
-    
+    init() {
+        self = Theme.defaultValue
+    }
     case light, dark, system
 }
 
