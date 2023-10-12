@@ -17,14 +17,9 @@ struct SettingsListView: View {
                 ForEach(viewModel.settings) { sectionModel in
                     Section {
                         ForEach(sectionModel.items, id: \.self.id) { element in
-                            if let elementForEnum = element as? SettingModel,
-                                case .enumeration(let enumType) = elementForEnum.setting.value {
-                                    makePickerRow(element: elementForEnum, enumType: enumType)
-                            } else {
                                 NavigationLink(value: element) {
                                     makeSettingsRow(element: element)
                                 }
-                            }
                         }
                     } header: {
                         makeSectionHeader(sectionModel)
@@ -35,25 +30,7 @@ struct SettingsListView: View {
         }
         .navigationTitle("Settings")
     }
-    @ViewBuilder
-    private func makePickerRow(element: SettingModel, enumType: any SettingEnum.Type) -> some View {
-        if enumType is Units.Type || enumType is Theme.Type {
-            Picker(selection: $testing) {
-                if enumType is Units.Type {
-                    ForEach(Array(Units.allCases.enumerated()), id: \.element) { (i, enumCase) in
-                        Text(enumCase.rawValue).tag(i)
-                    }
-                } else if enumType is Theme.Type {
-                    ForEach(Array(Theme.allCases.enumerated()), id: \.element) { (i, enumCase) in
-                        Text(enumCase.rawValue).tag(i)
-                    }
-                }
-            } label: {
-                Label(element.setting.label, systemImage: element.iconSystemName)
-            }
-            .pickerStyle(.navigationLink)
-        }
-    }
+
     @ViewBuilder
     private func makeSettingsRow(element: any SettingListable) -> some View {
         HStack {
@@ -65,6 +42,7 @@ struct SettingsListView: View {
             Spacer()
             if let value = element.valueText {
                 Text(value)
+                    .foregroundColor(.secondary)
             }
         }
     }
