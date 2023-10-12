@@ -43,13 +43,19 @@ enum SettingValue: Hashable {
 protocol SettingEnum: Hashable, CaseIterable {
     associatedtype RawValue: Hashable = String
     var rawValue: RawValue { get }
+    static var defaultValue: Self { get }
 }
 
 enum Units: String, SettingEnum {
+    static var defaultValue: Units = .metric
+    
     case metric, imperial
+    
 }
 
 enum Theme: String, CaseIterable, SettingEnum {
+    static var defaultValue: Theme = .system
+    
     case light, dark, system
 }
 

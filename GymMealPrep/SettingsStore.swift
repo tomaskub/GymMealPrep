@@ -51,16 +51,20 @@ class SettingStore: ObservableObject {
             case .enumeration(let enumType):
                 if let value = defaults.string(forKey: setting.key) {
                     switch enumType {
-                    case _ as Units.Type:
+                    case is Units.Type:
                         if let result = Units(rawValue: value) {
                             settings.updateValue(result, forKey: setting)
+                        } else {
+                            settings.updateValue(Units.defaultValue, forKey: setting)
                         }
-                    case _ as Theme.Type:
+                    case is Theme.Type:
                         if let result = Theme(rawValue: value) {
                             settings.updateValue(result, forKey: setting)
+                        } else {
+                            settings.updateValue(Theme.defaultValue, forKey: setting)
                         }
                     default:
-                        print("Failed at gretting enumeration initialized for setting store dictonary")
+                        fatalError("Failed at gretting enumeration initialized for setting store dictonary")
                     }
                 }
             case .nilValue:
