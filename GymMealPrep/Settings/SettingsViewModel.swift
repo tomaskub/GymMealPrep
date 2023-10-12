@@ -35,6 +35,7 @@ class SettingsViewModel: ObservableObject {
                 SettingGroup(
                     iconSystemName: "chart.pie",
                     labelText: "Macro targets",
+                    tipText: "This is a tip text for macro targets",
                     settings: [
                         makeSettingModel(setting: .macroTargetProtein),
                         makeSettingModel(setting: .macroTargetFat),
@@ -73,6 +74,6 @@ class SettingsViewModel: ObservableObject {
             stringValue = settingStore.settings[setting] as? String
         }
         
-        return SettingModel(setting: setting, valueText: stringValue)
+        return SettingModel(setting: setting, valueText: stringValue, tipText: "This is a generic setting model tool tip")
     }
 }

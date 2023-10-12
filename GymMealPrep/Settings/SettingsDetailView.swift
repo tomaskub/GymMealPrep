@@ -148,6 +148,7 @@ extension SettingsDetailView {
     
     @ViewBuilder
     private func makePlaceholderRow(setting: SettingModel) -> some View {
+        //this is for when there is no value associated with model - ie. information page
         HStack {
             Text(setting.labelText)
             Spacer()
@@ -197,8 +198,8 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .units),
-                        SettingModel(setting: .theme)
+                        SettingModel(setting: .units, tipText: "Tooltip for units"),
+                        SettingModel(setting: .theme, tipText: "Tooltip for theme")
                     ])
             )
         }
