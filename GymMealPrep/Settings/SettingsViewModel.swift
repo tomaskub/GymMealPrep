@@ -71,7 +71,9 @@ class SettingsViewModel: ObservableObject {
         case .stringArray, .nilValue:
             stringValue = nil
         case .enumeration(_):
-            stringValue = settingStore.settings[setting] as? String
+            if let value = settingStore.settings[setting] as? any SettingEnum, let valueInString = value.rawValue as? String {
+                stringValue = valueInString
+            }
         }
         
         return SettingModel(setting: setting, valueText: stringValue, tipText: "This is a generic setting model tool tip")
