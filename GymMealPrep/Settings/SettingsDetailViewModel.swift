@@ -6,20 +6,33 @@
 //
 
 import SwiftUI
+import Combine
 
 class SettingsDetailViewModel: ObservableObject {
     
+    private var cancellables: Set<AnyCancellable> = .init()
     var settingModels: [SettingModel]
+    
     @Published private var settingStore: SettingStore
     @Published var settingValues: [Setting : Any] = .init()
     
     init(settingStore: SettingStore, settingModels: [SettingModel]) {
         self.settingStore = settingStore
         self.settingModels = settingModels
-        self.settingValues = makeSettingValuesDict(settingModels: settingModels)
+        self.settingValues = setSettingValuesDict(settingModels: settingModels)
+        setSettingValuesSubscriber()
     }
     
-    private func makeSettingValuesDict(settingModels: [SettingModel]) -> [Setting : Any] {
+    private func setSettingValuesSubscriber() {
+        $settingValues
+            .sink { dictionary in
+                dictionary.forEach { (key, value) in
+                    self.settingStore.settings.updateValue(value, forKey: key)
+                }
+            }.store(in: &cancellables)
+    }
+    
+    private func setSettingValuesDict(settingModels: [SettingModel]) -> [Setting : Any] {
         var result = [Setting : Any]()
         for model in settingModels {
             result.updateValue(settingStore.settings[model.setting] as Any, forKey: model.setting)
