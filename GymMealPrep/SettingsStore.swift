@@ -16,12 +16,13 @@ class SettingStore: ObservableObject {
         return result
     }()
     private let defaults = UserDefaults.standard
-    private var subscriptions = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     @Published var settings: [Setting : Any?] = .init()
     
     init() {
         self.settings = createSettings()
+        self.setWriteSubscribers()
     }
     
     private func createSettings() -> [Setting: Any?] {
@@ -70,9 +71,22 @@ class SettingStore: ObservableObject {
         }
         return result
     }
-}
-extension SettingStore {
-    private func updateSetting(for setting: Setting, with value: Any?) {
-        defaults.set(value, forKey: setting.key)
+    
+    private func setWriteSubscribers() {
+        $settings
+            .flatMap { dictionary in
+                dictionary.publisher.map { (key: $0.key, value: $0.value) }
+            }
+            .sink { (setting, value) in
+                switch setting.value {
+                case .enumeration(_):
+                    if let unwrappedValue = value as? (any SettingEnum),
+                        let valueToSave = unwrappedValue.rawValue as? String {
+                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                    }
+                default:
+                    UserDefaults.standard.set(value, forKey: setting.key)
+                }
+            }.store(in: &cancellables)
     }
 }
