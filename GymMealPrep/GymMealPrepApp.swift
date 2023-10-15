@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct GymMealPrepApp: App {
+    @StateObject private var container: Container = .init()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(container)
         }
         
     }

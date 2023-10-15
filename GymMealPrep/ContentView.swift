@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var container: Container
     
     var body: some View {
         TabView {
@@ -32,7 +33,7 @@ struct ContentView: View {
                 Text("Meal plans")
             }
             
-            SettingsTabView()
+            SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
@@ -44,5 +45,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(Container())
     }
 }

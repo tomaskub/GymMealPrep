@@ -7,16 +7,28 @@
 
 import SwiftUI
 
+class Container: ObservableObject {
+    var settingStore: SettingStore = .init()
+}
+
 struct SettingsTabView: View {
+    
+    @EnvironmentObject private var container: Container
     @StateObject private var viewModel = SettingsViewModel()
     @State private var path = NavigationPath()
+    
+    init(viewModel: SettingsViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.path = NavigationPath()
+    }
+    
     var body: some View {
         NavigationStack {
                 SettingsListView(viewModel: viewModel, path: $path)
                 .navigationDestination(for: SettingModel.self) { model in
                     SettingsDetailView(title: model.labelText,
                                        viewModel: SettingsDetailViewModel(
-                                        settingStore: SettingStore(),
+                                        settingStore: container.settingStore,
                                         settingModels: [model]
                                        )
                     )
@@ -24,7 +36,7 @@ struct SettingsTabView: View {
                 .navigationDestination(for: SettingGroup.self) { group in
                     SettingsDetailView(title: group.labelText,
                                        viewModel: SettingsDetailViewModel(
-                                        settingStore: SettingStore(),
+                                        settingStore: container.settingStore,
                                         settingModels: group.settings
                                        )
                     )
@@ -34,7 +46,16 @@ struct SettingsTabView: View {
 } // END OF STRUCT
 
 struct SettingsTabView_Previews: PreviewProvider {
+    
+    struct PreviewContainer: View {
+        @StateObject private var container: Container = .init()
+        var body: some View {
+            SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
+                .environmentObject(container)
+        }
+    }
+    
     static var previews: some View {
-        SettingsTabView()
+        PreviewContainer()
     }
 }
