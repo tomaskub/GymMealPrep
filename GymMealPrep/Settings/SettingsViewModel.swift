@@ -6,15 +6,25 @@
 //
 
 import Foundation
+import Combine
 
 class SettingsViewModel: ObservableObject {
     
     @Published private var settingStore: SettingStore
     @Published var settings: [SettingSection] = []
+    private var cancellables: Set<AnyCancellable> = .init()
     
     init(settingStore: SettingStore = SettingStore()) {
         self.settingStore = settingStore
         self.settings = createSettingSections()
+        
+        settingStore.objectWillChange
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.settings = self.createSettingSections()
+                self.objectWillChange.send()
+            }.store(in: &cancellables)    
     }
     
     private func createSettingSections() -> [SettingSection] {
