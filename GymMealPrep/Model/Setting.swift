@@ -8,6 +8,7 @@
 import Foundation
 enum SettingValue: Hashable {
     case integer
+    case double
     case bool
     case string
     case stringArray
@@ -26,6 +27,8 @@ enum SettingValue: Hashable {
                 hasher.combine(ObjectIdentifier(type).hashValue)
             case .integer:
                 hasher.combine("integer".hashValue)
+            case .double:
+                hasher.combine("double".hashValue)
             case .bool:
                 hasher.combine("bool".hashValue)
             case .string:
@@ -157,7 +160,9 @@ enum Setting: String, CaseIterable, Hashable {
     
     var value: SettingValue {
         switch self {
-        case .calorieTarget, .macroTargetProtein, .macroTargetFat, .macroTargetCarb, .numberOfMeals:
+        case .calorieTarget, .macroTargetProtein, .macroTargetFat, .macroTargetCarb:
+            return .double
+        case .numberOfMeals:
             return .integer
         case .mealNames:
             return .stringArray

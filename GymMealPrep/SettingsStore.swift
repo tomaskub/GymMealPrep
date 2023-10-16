@@ -31,6 +31,8 @@ class SettingStore: ObservableObject {
             switch setting.value {
             case .integer:
                 result.updateValue(defaults.integer(forKey: setting.key), forKey: setting)
+            case .double:
+                result.updateValue(defaults.double(forKey: setting.key), forKey: setting)
             case .bool:
                 result.updateValue(defaults.bool(forKey: setting.key), forKey: setting)
             case .string:

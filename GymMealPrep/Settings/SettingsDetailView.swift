@@ -25,6 +25,9 @@ struct SettingsDetailView: View {
                     case .integer:
                         makeIntRow(setting: model,
                                    value: viewModel.binding(type: Int.self, for: model.setting))
+                    case .double:
+                        makeDoubleRow(setting: model,
+                                      value: viewModel.binding(type: Double.self, for: model.setting))
                     case .string:
                         makeTextRow(setting: model,
                                     value: viewModel.binding(type: String.self, for: model.setting))
@@ -80,7 +83,7 @@ extension SettingsDetailView {
                 .textFieldStyle(.roundedBorder)
         }
     }
-    
+    // this should be stepper row
     @ViewBuilder
     private func makeIntRow(setting: SettingModel, value: Binding<Int>) -> some View {
         
@@ -106,6 +109,40 @@ extension SettingsDetailView {
                       text: bindingString
             )
             .numericalInputOnly(bindingString)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+    @ViewBuilder
+    private func makeDoubleRow(setting: SettingModel, value: Binding<Double>) -> some View {
+        
+        let bindingString = Binding(
+            get: { () -> String in
+                let stringValue = String(value.wrappedValue)
+                if stringValue.hasSuffix(".0") {
+                    return String(format: "%.0f", value.wrappedValue)
+                } else {
+                    return stringValue
+                }
+            }, set: { newValue in
+                if let _value = Double(newValue) {
+                    if !newValue.hasSuffix(".") {
+                        value.wrappedValue = _value
+                    }
+                }
+            }
+          )
+        
+        HStack {
+            Label {
+                Text(setting.labelText)
+                    .fixedSize()
+            } icon: {
+                Image(systemName: setting.iconSystemName)
+            }
+            Spacer()
+            TextField("placeholder",
+                      text: bindingString
+            )
             .textFieldStyle(.roundedBorder)
         }
     }
@@ -191,8 +228,7 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .units, tipText: "Tooltip for units"),
-                        SettingModel(setting: .theme, tipText: "Tooltip for theme")
+                        SettingModel(setting: .calorieTarget, valueText: "3100", tipText: "Preview tooltip")
                     ])
             )
         }
