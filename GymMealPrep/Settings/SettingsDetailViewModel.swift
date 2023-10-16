@@ -27,14 +27,7 @@ class SettingsDetailViewModel: ObservableObject {
         $settingValues
             .sink { dictionary in
                 dictionary.forEach { (key, value) in
-                    // this causes runtime error when saving array if it not casted to [String] before saving
-                    if key.value != .stringArray {
-                        self.settingStore.settings.updateValue(value, forKey: key)
-                    } else {
-                        if let _value = value as? [String] {
-                            self.settingStore.settings.updateValue(_value, forKey: key)
-                        }
-                    }
+                    self.settingStore.settings.updateValue(value, forKey: key)
                 }
             }.store(in: &cancellables)
     }

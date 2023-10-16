@@ -80,10 +80,19 @@ class SettingStore: ObservableObject {
                 dictionary.publisher.map { (key: $0.key, value: $0.value) }
             }
             .sink { (setting, value) in
+                //cases added below to avoid runtime errors
                 switch setting.value {
                 case .enumeration(_):
                     if let unwrappedValue = value as? (any SettingEnum),
                         let valueToSave = unwrappedValue.rawValue as? String {
+                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                    }
+                case .stringArray:
+                    if let valueToSave = value as? [String] {
+                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                    }
+                case .date:
+                    if let valueToSave = value as? Date {
                         UserDefaults.standard.set(valueToSave, forKey: setting.key)
                     }
                 default:
