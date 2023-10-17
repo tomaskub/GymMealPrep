@@ -83,34 +83,12 @@ extension SettingsDetailView {
                 .textFieldStyle(.roundedBorder)
         }
     }
-    // this should be stepper row
+
     @ViewBuilder
     private func makeIntRow(setting: SettingModel, value: Binding<Int>) -> some View {
-        
-        let bindingString = Binding(
-            get: {
-                return String(value.wrappedValue)
-            }, set: { stringValue in
-                if let newIntValue = Int(stringValue){
-                    value.wrappedValue = newIntValue
-                }
-            }
-          )
-        
-        HStack {
-            Label {
-                Text(setting.labelText)
-                    .fixedSize()
-            } icon: {
-                Image(systemName: setting.iconSystemName)
-            }
-            Spacer()
-            TextField("placeholder",
-                      text: bindingString
-            )
-            .numericalInputOnly(bindingString)
-            .textFieldStyle(.roundedBorder)
-        }
+        Stepper("\(setting.labelText): \(value.wrappedValue)",
+                value: value,
+                in: 1...99)
     }
     @ViewBuilder
     private func makeDoubleRow(setting: SettingModel, value: Binding<Double>) -> some View {
@@ -128,6 +106,8 @@ extension SettingsDetailView {
                     if !newValue.hasSuffix(".") {
                         value.wrappedValue = _value
                     }
+                } else if newValue.isEmpty {
+                    value.wrappedValue = Double()
                 }
             }
           )
@@ -228,7 +208,7 @@ struct SettingsDetailView_Previews: PreviewProvider {
                 viewModel: SettingsDetailViewModel(
                     settingStore: SettingStore(),
                     settingModels: [
-                        SettingModel(setting: .calorieTarget, valueText: "3100", tipText: "Preview tooltip")
+                        SettingModel(setting: .mealNames, valueText: nil, tipText: "Preview tooltip")
                     ])
             )
         }
