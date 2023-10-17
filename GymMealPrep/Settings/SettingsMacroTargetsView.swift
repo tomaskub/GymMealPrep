@@ -26,6 +26,11 @@ struct SettingsMacroTargetsView: View {
         let max = 100 - firstSlider - secondSlider
         return 0...max
     }
+    @StateObject private var vm: SettingsDetailViewModel
+    
+    init(vm: SettingsDetailViewModel) {
+        self._vm = StateObject(wrappedValue: vm)
+    }
     
     @State private var firstSlider: Double = 45
     @State private var secondSlider: Double = 30
@@ -36,44 +41,9 @@ struct SettingsMacroTargetsView: View {
             // Pie chart
             HStack {
                 Spacer()
-                Circle()
-                    .frame(width: 175)
-                    .foregroundColor(.secondary)
-                    .overlay {
-                        PieSegment(start: .zero, end: Angle(degrees: 3.6*firstSlider))
-                            .foregroundColor(.blue)
-                        PieSegment(start: Angle(degrees: 3.6*firstSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider))
-                            .foregroundColor(.yellow)
-                        PieSegment(start: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider) + Angle(degrees: 3.6*thirdSlider))
-                            .foregroundColor(.green)
-                    }
+                makePieChart()
                 Spacer()
-                Grid(alignment: .leading) {
-                    Text("Legend:")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                    GridRow {
-                        Rectangle()
-                            .foregroundColor(.blue)
-                            .frame(width: 14, height: 14)
-                        Text(firstValueLabel)
-                            .font(.caption)
-                    }
-                    GridRow {
-                        Rectangle()
-                            .foregroundColor(.yellow)
-                            .frame(width: 14, height: 14)
-                        Text(secondValueLabel)
-                            .font(.caption)
-                    }
-                    GridRow {
-                    Rectangle()
-                            .foregroundColor(.green)
-                            .frame(width: 14, height: 14)
-                        Text(thirdValueLabel)
-                            .font(.caption)
-                    }
-                }
+                makeLegendView()
             }
             .listRowBackground(Color.clear)
             // Controls
@@ -111,6 +81,40 @@ struct SettingsMacroTargetsView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
+    @ViewBuilder
+    private func makePieChart() -> some View {
+        Circle()
+            .frame(width: 175)
+            .foregroundColor(.secondary)
+            .overlay {
+                PieSegment(start: .zero, end: Angle(degrees: 3.6*firstSlider))
+                    .foregroundColor(.blue)
+                PieSegment(start: Angle(degrees: 3.6*firstSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider))
+                    .foregroundColor(.yellow)
+                PieSegment(start: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider) + Angle(degrees: 3.6*thirdSlider))
+                    .foregroundColor(.green)
+            }
+    }
+    
+    @ViewBuilder
+    private func makeLegendView() -> some View {
+        let colors: [Color] = [.blue, .yellow, .green, .red, .brown]
+        Grid(alignment: .leading) {
+            Text("Legend:")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            ForEach(Array(vm.settingModels.enumerated()), id: \.element) { (i, model) in
+                GridRow {
+                    Rectangle()
+                        .foregroundColor(colors[i])
+                        .frame(width: 14, height: 14)
+                    Text(model.labelText)
+                        .font(.caption)
+                }
+            }
+        }
+    }
+    
     private struct PieSegment: Shape {
         var start: Angle
         var end: Angle
@@ -128,7 +132,15 @@ struct SettingsMacroTargetsView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack{
-            SettingsMacroTargetsView()
+            SettingsMacroTargetsView(vm: SettingsDetailViewModel(
+                settingStore: SettingStore(),
+                settingModels: [
+                    SettingModel(setting: .macroTargetProtein, tipText: nil),
+                    SettingModel(setting: .macroTargetFat, tipText: nil),
+                    SettingModel(setting: .macroTargetCarb, tipText: nil),
+                ]
+            )
+            )
         }
     }
 }
