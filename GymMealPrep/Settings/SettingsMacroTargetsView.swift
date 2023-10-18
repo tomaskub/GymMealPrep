@@ -9,32 +9,13 @@ import SwiftUI
 import Charts
 
 struct SettingsMacroTargetsView: View {
-    let title: String = "Macro targets"
-    let firstValueLabel: String = "Protein"
-    let secondValueLabel: String = "Fat"
-    let thirdValueLabel: String = "Carb"
-    
-    var firstStepperRange: ClosedRange<Double> {
-        let max = 100.0 - secondSlider - thirdSlider
-        return 0...max
-    }
-    var secondStepperRange: ClosedRange<Double> {
-        let max = 100 - firstSlider - thirdSlider
-        return 0...max
-    }
-    var thirdStepperRange: ClosedRange<Double> {
-        let max = 100 - firstSlider - secondSlider
-        return 0...max
-    }
+    let title: String
     @StateObject private var vm: SettingsDetailViewModel
     
-    init(vm: SettingsDetailViewModel) {
+    init(title: String, vm: SettingsDetailViewModel) {
+        self.title = title
         self._vm = StateObject(wrappedValue: vm)
     }
-    
-    @State private var firstSlider: Double = 45
-    @State private var secondSlider: Double = 30
-    @State private var thirdSlider: Double = 25
     
     var body: some View {
         List {
@@ -59,6 +40,7 @@ struct SettingsMacroTargetsView: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
     }
+    
     @ViewBuilder
     private func makeControlRow(title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
         HStack {
@@ -71,6 +53,7 @@ struct SettingsMacroTargetsView: View {
             .fixedSize()
         }
     }
+    
     private func makeRange(for targetModel: SettingModel, in modelGroup: [SettingModel]) -> ClosedRange<Double> {
         let values: [Double] = {
             var finalGroup = modelGroup
@@ -93,13 +76,39 @@ struct SettingsMacroTargetsView: View {
             .frame(width: 175)
             .foregroundColor(.secondary)
             .overlay {
-                PieSegment(start: .zero, end: Angle(degrees: 3.6*firstSlider))
-                    .foregroundColor(.blue)
-                PieSegment(start: Angle(degrees: 3.6*firstSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider))
-                    .foregroundColor(.yellow)
-                PieSegment(start: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider), end: Angle(degrees: 3.6*firstSlider) + Angle(degrees: 3.6*secondSlider) + Angle(degrees: 3.6*thirdSlider))
-                    .foregroundColor(.green)
+                makeChartSegments()
             }
+    }
+    
+    @ViewBuilder
+    private func makeChartSegments() -> some View {
+        let data = makePieSegmentData()
+        let colors: [Color] = [.blue, .yellow, .green, .red, .brown]
+        ForEach(Array(vm.settingModels.enumerated()), id: \.element) { (i, model) in
+            if let (startAngle, finishAngle) = data[model.setting] {
+                PieSegment(start:startAngle , end: finishAngle)
+                    .foregroundColor(colors[i])
+            }
+        }
+    }
+    
+    private func makePieSegmentData() -> [Setting : (Angle, Angle)] {
+        var result: [Setting : (Angle, Angle)] = .init()
+        for (i, model) in vm.settingModels.enumerated() {
+            var startAngle = Angle.zero
+            if i > 0 {
+                let key = vm.settingModels[i-1].setting
+                startAngle = result[key]?.1 ?? .zero
+            }
+            var finishAngle = startAngle
+            if let value = vm.settingValues[model.setting] as? Double {
+                let angleDiff = Angle(degrees: 3.6*value)
+                finishAngle += angleDiff
+            }
+            // update data
+            result.updateValue((startAngle, finishAngle), forKey: model.setting)
+        }
+        return result
     }
     
     @ViewBuilder
@@ -138,14 +147,15 @@ struct SettingsMacroTargetsView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack{
-            SettingsMacroTargetsView(vm: SettingsDetailViewModel(
-                settingStore: SettingStore(),
-                settingModels: [
-                    SettingModel(setting: .macroTargetProtein, tipText: nil),
-                    SettingModel(setting: .macroTargetFat, tipText: nil),
-                    SettingModel(setting: .macroTargetCarb, tipText: nil),
-                ]
-            )
+            SettingsMacroTargetsView(title: "Macro targets",
+                                     vm: SettingsDetailViewModel(
+                                        settingStore: SettingStore(),
+                                        settingModels: [
+                                            SettingModel(setting: .macroTargetProtein, tipText: nil),
+                                            SettingModel(setting: .macroTargetFat, tipText: nil),
+                                            SettingModel(setting: .macroTargetCarb, tipText: nil),
+                                        ]
+                                     )
             )
         }
     }
