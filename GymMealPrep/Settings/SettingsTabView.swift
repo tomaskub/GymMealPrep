@@ -34,12 +34,21 @@ struct SettingsTabView: View {
                     )
                 }
                 .navigationDestination(for: SettingGroup.self) { group in
-                    SettingsDetailView(title: group.labelText,
-                                       viewModel: SettingsDetailViewModel(
-                                        settingStore: container.settingStore,
-                                        settingModels: group.settings
-                                       )
-                    )
+                    if group.labelText == "Macro targets" {
+                        SettingsMacroTargetsView(title: group.labelText,
+                                                 vm: SettingsDetailViewModel(
+                                                    settingStore: container.settingStore,
+                                                    settingModels: group.settings
+                                                 )
+                        )
+                    } else {
+                        SettingsDetailView(title: group.labelText,
+                                           viewModel: SettingsDetailViewModel(
+                                            settingStore: container.settingStore,
+                                            settingModels: group.settings
+                                           )
+                        )
+                    }
                 }
         } // END OF NAV-STACK
     } // END OF BODY
