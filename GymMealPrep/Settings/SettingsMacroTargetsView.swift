@@ -48,37 +48,43 @@ struct SettingsMacroTargetsView: View {
             .listRowBackground(Color.clear)
             // Controls
             Section {
-                HStack {
-                    Text("\(firstValueLabel): ")
-                    Spacer()
-                    Stepper(String(format: "%.0f", firstSlider) + "%",
-                            value: $firstSlider,
-                            in: firstStepperRange,
-                            step: 1)
-                    .fixedSize()
-                }
-                HStack {
-                    Text("\(secondValueLabel): ")
-                    Spacer()
-                    Stepper(String(format: "%.0f", secondSlider) + "%",
-                            value: $secondSlider,
-                            in: secondStepperRange,
-                            step: 1)
-                    .fixedSize()
-                }
-                HStack {
-                    Text("\(thirdValueLabel): ")
-                    Spacer()
-                    Stepper(String(format: "%.0f", thirdSlider) + "%",
-                            value: $thirdSlider,
-                            in: thirdStepperRange,
-                            step: 1)
-                    .fixedSize()
+                ForEach(vm.settingModels) { model in
+                    makeControlRow(
+                        title: model.labelText,
+                        value: vm.binding(type: Double.self, for: model.setting),
+                        range: makeRange(for: model, in: vm.settingModels))
                 }
             }
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    @ViewBuilder
+    private func makeControlRow(title: String, value: Binding<Double>, range: ClosedRange<Double>) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Stepper(String(format: "%.0f", value.wrappedValue) + "%",
+                    value: value,
+                    in: range,
+                    step: 1)
+            .fixedSize()
+        }
+    }
+    private func makeRange(for targetModel: SettingModel, in modelGroup: [SettingModel]) -> ClosedRange<Double> {
+        let values: [Double] = {
+            var finalGroup = modelGroup
+            finalGroup.removeAll { model in
+                targetModel.id == model.id
+            }
+            return finalGroup.map { model in
+                if let result = vm.settingValues[model.setting] as? Double {
+                    return result
+                } else {
+                    return 0.0
+                } }
+        }()
+        return 0...(100-values.reduce(0.0, +))
     }
     
     @ViewBuilder
