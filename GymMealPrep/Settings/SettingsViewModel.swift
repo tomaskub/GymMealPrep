@@ -72,6 +72,10 @@ class SettingsViewModel: ObservableObject {
             if let value = settingStore.settings[setting] as? Int {
                 stringValue = String(value)
             }
+        case .double:
+            if let value = settingStore.settings[setting] as? Double {
+                stringValue = String(value)
+            }
         case .date:
             if let value = settingStore.settings[setting] as? Date {
                 stringValue = value.formatted(date: .abbreviated, time: .omitted)
