@@ -137,15 +137,17 @@ extension SettingsDetailView {
                         .textFieldStyle(.roundedBorder)
                 }
             }
-            .onDelete { indexSet in
-                viewModel.removeFromArray(for: settingModel.setting, atOffsets: indexSet)
-            }
         }
-        Button {
-            viewModel.appendToArray(for: settingModel.setting, newValue: String())
-        } label: {
-            Label("Add", systemImage: "plus.circle")
-        }
+        //REMOVED UNTIL VAR SYNC IMPLEMENTED IN SETTINGS VIEW MODEL
+//            .onDelete { indexSet in
+//                viewModel.removeFromArray(for: settingModel.setting, atOffsets: indexSet)
+//            }
+//        }
+//        Button {
+//            viewModel.appendToArray(for: settingModel.setting, newValue: String())
+//        } label: {
+//            Label("Add", systemImage: "plus.circle")
+//        }
     }
 
     @ViewBuilder
