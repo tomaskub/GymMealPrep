@@ -24,7 +24,8 @@ class SettingsViewModel: ObservableObject {
                 guard let self else { return }
                 self.settings = self.createSettingSections()
                 self.objectWillChange.send()
-            }.store(in: &cancellables)    
+            }.store(in: &cancellables)
+        self.setNumberOfMealsUpdater()
     }
     
     private func createSettingSections() -> [SettingSection] {
@@ -35,6 +36,39 @@ class SettingsViewModel: ObservableObject {
         let informationSection = makeSettingSection(name: "Information",
                                                     items: [.rateApp, .privacy, .terms, .apiReference, .contactUs])
         return [dietSection, mealPlanSection, calendarSection, variousSection, informationSection]
+    }
+    
+    private func setNumberOfMealsUpdater() {
+        settingStore.$settings
+            .receive(on: RunLoop.main)
+            .flatMap { dictionary in
+                dictionary.publisher.map { (key: $0.key, value: $0.value)}
+            }
+            .filter { (key, value) in
+                key == Setting.numberOfMeals
+            }
+            .compactMap { (key, value) in
+                value as? Int
+            }
+            .sink { [weak self] value in
+                guard let self else { return }
+                if var mealsArray = self.settingStore.settings[Setting.mealNames] as? [String] {
+                    let diff = mealsArray.count - value
+                    switch mealsArray.count - value {
+                    case let diff where diff < 0:
+                        mealsArray.append(contentsOf: Array(repeating: String(), count: abs(diff)))
+                    case let diff where diff > 0:
+                        mealsArray.removeLast(diff)
+                    default:
+                        break
+                    }
+                    self.settingStore.settings.updateValue(mealsArray, forKey: .mealNames)
+                } else {
+                    let mealsArray = Array(repeating: String(), count: value)
+                    self.settingStore.settings.updateValue(mealsArray, forKey: .mealNames)
+                }
+                
+            }.store(in: &cancellables)
     }
     
     private func makeDietSettingSection() -> SettingSection {
