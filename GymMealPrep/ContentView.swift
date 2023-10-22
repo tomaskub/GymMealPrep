@@ -16,33 +16,33 @@ struct ContentView: View {
             
             Text("Dashboard view placeholder")
                 .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+                    Label("Home", 
+                          systemImage: "house.fill")
+                    .accessibilityIdentifier(Identifier.homeTabButton.rawValue)
                 }
-                .accessibilityIdentifier(Identifier.homeTabButton.rawValue)
+                
             
             RecipeListTabView()
                 .tabItem {
-                    Image(systemName: "square.fill.text.grid.1x2")
-                        .font(.largeTitle)
-                    Text("Recipes")
+                    Label("Recipes",
+                          systemImage: "square.fill.text.grid.1x2")
+                    .accessibilityIdentifier(Identifier.recipeListTabButton.rawValue)
                 }
-                .accessibilityIdentifier(Identifier.recipeListTabButton.rawValue)
-            
+                
             MealPlanTabView()
                 .tabItem {
-                    Image(systemName: "rectangle.grid.1x2.fill")
-                        .font(.largeTitle)
-                    Text("Meal plans")
+                    Label("Meal plans",
+                          systemImage: "rectangle.grid.1x2.fill")
+                    .accessibilityIdentifier(Identifier.mealPlanTabButton.rawValue)
                 }
-                .accessibilityIdentifier(Identifier.mealPlanTabButton.rawValue)
+                
             
             SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
                 .tabItem {
-                    Image(systemName: "gear")
-                    Text("Settings")
+                    Label("Settings",
+                          systemImage: "gear")
+                    .accessibilityIdentifier(Identifier.settingsTabButton.rawValue)
                 }
-                .accessibilityIdentifier(Identifier.settingsTabButton.rawValue)
         } // END OF TABVIEW
     } // END OF BODY
 }
