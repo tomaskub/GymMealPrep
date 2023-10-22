@@ -7,12 +7,6 @@
 
 import Foundation
 
-protocol SettingEnum: Hashable, CaseIterable {
-    associatedtype RawValue: Hashable = String
-    var rawValue: RawValue { get }
-    static var defaultValue: Self { get }
-}
-
 enum Units: String, SettingEnum, Initializable {
     static var defaultValue: Units = .metric
     
