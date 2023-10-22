@@ -15,4 +15,10 @@ enum ScreenIdentifier {
         case mealPlanTabButton
         case settingsTabButton
     }
+    
+    enum SettingListView: String {
+        case settingRowLabel
+        case settingRowIcon
+        case settingRowValue
+    }
 }

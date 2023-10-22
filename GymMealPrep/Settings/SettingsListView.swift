@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct SettingsListView: View {
+    
+    private typealias Identifier = ScreenIdentifier.SettingListView
     @ObservedObject var viewModel: SettingsViewModel
     @Binding var path: NavigationPath
-    @State var testing: Int = 1
+    
     var body: some View {
         VStack {
             List {
@@ -36,13 +38,16 @@ struct SettingsListView: View {
         HStack {
             Label {
                 Text(element.labelText)
+                    .accessibilityIdentifier(Identifier.settingRowLabel.rawValue)
             } icon: {
                 Image(systemName: element.iconSystemName)
+                    .accessibilityIdentifier(Identifier.settingRowIcon.rawValue)
             }
             Spacer()
             if let value = element.valueText {
                 Text(value)
                     .foregroundColor(.secondary)
+                    .accessibilityIdentifier(Identifier.settingRowValue.rawValue)
             }
         }
     }
