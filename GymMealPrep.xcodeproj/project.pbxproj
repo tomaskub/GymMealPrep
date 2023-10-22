@@ -155,6 +155,9 @@
 		D6EF405B2AC97970004365D8 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6EF405A2AC97970004365D8 /* SettingModel.swift */; };
 		D6F764002ADC66C000BE5789 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F763FF2ADC66C000BE5789 /* Double+Extensions.swift */; };
 		D6FA1ACB2A8900E000DB9628 /* WebLinkLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FA1ACA2A8900E000DB9628 /* WebLinkLogicController.swift */; };
+		D6FB338D2AE5ADC100EBB4D7 /* SettingListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FB338C2AE5ADC100EBB4D7 /* SettingListable.swift */; };
+		D6FB338F2AE5ADDE00EBB4D7 /* SettingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FB338E2AE5ADDD00EBB4D7 /* SettingGroup.swift */; };
+		D6FB33912AE5ADFC00EBB4D7 /* SettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FB33902AE5ADFC00EBB4D7 /* SettingSection.swift */; };
 		D6FC3CC62ACDFA2D002FBE74 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC3CC52ACDFA2D002FBE74 /* Bool+Extensions.swift */; };
 		D6FC3CC82ACDFA56002FBE74 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC3CC72ACDFA56002FBE74 /* String+Extensions.swift */; };
 		D6FC3CCA2ACDFA86002FBE74 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC3CC92ACDFA86002FBE74 /* Date+Extensions.swift */; };
@@ -341,6 +344,9 @@
 		D6EF405A2AC97970004365D8 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		D6F763FF2ADC66C000BE5789 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		D6FA1ACA2A8900E000DB9628 /* WebLinkLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkLogicController.swift; sourceTree = "<group>"; };
+		D6FB338C2AE5ADC100EBB4D7 /* SettingListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingListable.swift; sourceTree = "<group>"; };
+		D6FB338E2AE5ADDD00EBB4D7 /* SettingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingGroup.swift; sourceTree = "<group>"; };
+		D6FB33902AE5ADFC00EBB4D7 /* SettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSection.swift; sourceTree = "<group>"; };
 		D6FC3CC52ACDFA2D002FBE74 /* Bool+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		D6FC3CC72ACDFA56002FBE74 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D6FC3CC92ACDFA86002FBE74 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -755,6 +761,8 @@
 				D69F8D822AE5A9C500842DD1 /* Theme.swift */,
 				D69F8D7C2AE5A84000842DD1 /* SettingValue.swift */,
 				D6EF405A2AC97970004365D8 /* SettingModel.swift */,
+				D6FB33902AE5ADFC00EBB4D7 /* SettingSection.swift */,
+				D6FB338E2AE5ADDD00EBB4D7 /* SettingGroup.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -807,6 +815,7 @@
 			isa = PBXGroup;
 			children = (
 				D6FC3CCD2ACDFAF5002FBE74 /* Initializable.swift */,
+				D6FB338C2AE5ADC100EBB4D7 /* SettingListable.swift */,
 				D69F8D7E2AE5A8DF00842DD1 /* SettingEnum.swift */,
 			);
 			path = Protocols;
@@ -1093,6 +1102,7 @@
 				D69E224A2A1FEA3E00F5EF93 /* TextFieldModifier.swift in Sources */,
 				D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */,
 				D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */,
+				D6FB338D2AE5ADC100EBB4D7 /* SettingListable.swift in Sources */,
 				D694E4072A05824A0077E72F /* IngredientMO+CoreDataClass.swift in Sources */,
 				D69F8D832AE5A9C500842DD1 /* Theme.swift in Sources */,
 				D65E4C9D2A40EB23008C7A2F /* MealMO+CoreDataClass.swift in Sources */,
@@ -1116,6 +1126,7 @@
 				D6C3404E29FD7FDE003F6E06 /* RecipeViewModel.swift in Sources */,
 				D64A07622A8B70CD00053EE1 /* WebsiteRecipeSoupEngine.swift in Sources */,
 				D64D95082A114DC50080CD70 /* NetworkProtocol.swift in Sources */,
+				D6FB338F2AE5ADDE00EBB4D7 /* SettingGroup.swift in Sources */,
 				D6EC92FA2A027EFD00863F2D /* SizePreferenceKey.swift in Sources */,
 				D6C3405829FFB88B003F6E06 /* RecipeListRowView.swift in Sources */,
 				D680C3392A140A2F002070DF /* EndpointProtocol.swift in Sources */,
@@ -1150,6 +1161,7 @@
 				D6DBF29A2A07F78800CB04AA /* DataManager+InstructionMO.swift in Sources */,
 				D6D77A6F2A226A02006D63B5 /* RecipeCreatorViewModel.swift in Sources */,
 				D6C3404129FD7735003F6E06 /* Nutrition.swift in Sources */,
+				D6FB33912AE5ADFC00EBB4D7 /* SettingSection.swift in Sources */,
 				D674FB202A5095890066F667 /* MealPlanHostView.swift in Sources */,
 				D6EC92FC2A02F23800863F2D /* IngredientEditorView.swift in Sources */,
 				D6E35C412A39D9DD00CB9E19 /* RecipeCreatorConfirmationView.swift in Sources */,
