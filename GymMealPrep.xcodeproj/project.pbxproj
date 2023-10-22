@@ -102,6 +102,8 @@
 		D69E224A2A1FEA3E00F5EF93 /* TextFieldModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */; };
 		D69F8D7D2AE5A84000842DD1 /* SettingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69F8D7C2AE5A84000842DD1 /* SettingValue.swift */; };
 		D69F8D7F2AE5A8DF00842DD1 /* SettingEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69F8D7E2AE5A8DF00842DD1 /* SettingEnum.swift */; };
+		D69F8D812AE5A98300842DD1 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69F8D802AE5A98300842DD1 /* Units.swift */; };
+		D69F8D832AE5A9C500842DD1 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69F8D822AE5A9C500842DD1 /* Theme.swift */; };
 		D6A313EB2A49F7BC00D5DCC2 /* DataManager+MealPlanMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A313EA2A49F7BC00D5DCC2 /* DataManager+MealPlanMO.swift */; };
 		D6A313EE2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A313ED2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift */; };
 		D6A92C122A729BCA00DB4DEF /* RecipePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A92C112A729BCA00DB4DEF /* RecipePickerViewModel.swift */; };
@@ -286,6 +288,8 @@
 		D69E22492A1FEA3E00F5EF93 /* TextFieldModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModifier.swift; sourceTree = "<group>"; };
 		D69F8D7C2AE5A84000842DD1 /* SettingValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingValue.swift; sourceTree = "<group>"; };
 		D69F8D7E2AE5A8DF00842DD1 /* SettingEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEnum.swift; sourceTree = "<group>"; };
+		D69F8D802AE5A98300842DD1 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		D69F8D822AE5A9C500842DD1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D6A313EA2A49F7BC00D5DCC2 /* DataManager+MealPlanMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+MealPlanMO.swift"; sourceTree = "<group>"; };
 		D6A313ED2A4A06D500D5DCC2 /* DataManager+MealMOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+MealMOTests.swift"; sourceTree = "<group>"; };
 		D6A92C112A729BCA00DB4DEF /* RecipePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePickerViewModel.swift; sourceTree = "<group>"; };
@@ -747,6 +751,8 @@
 				D65E4C992A40E3A4008C7A2F /* Meal.swift */,
 				D61E3A642A9A726B00AB2527 /* Parsers */,
 				D6EF40582AC8B967004365D8 /* Setting.swift */,
+				D69F8D802AE5A98300842DD1 /* Units.swift */,
+				D69F8D822AE5A9C500842DD1 /* Theme.swift */,
 				D69F8D7C2AE5A84000842DD1 /* SettingValue.swift */,
 				D6EF405A2AC97970004365D8 /* SettingModel.swift */,
 			);
@@ -1088,6 +1094,7 @@
 				D63AFA222A01238300574FE0 /* RecipeEditorView.swift in Sources */,
 				D6C3405A29FFCE03003F6E06 /* SampleData.swift in Sources */,
 				D694E4072A05824A0077E72F /* IngredientMO+CoreDataClass.swift in Sources */,
+				D69F8D832AE5A9C500842DD1 /* Theme.swift in Sources */,
 				D65E4C9D2A40EB23008C7A2F /* MealMO+CoreDataClass.swift in Sources */,
 				D6FC3CC82ACDFA56002FBE74 /* String+Extensions.swift in Sources */,
 				D6C3405429FE7458003F6E06 /* RecipeListViewModel.swift in Sources */,
@@ -1126,6 +1133,7 @@
 				D60598702A37B2D000186F7F /* RecipeListTabView.swift in Sources */,
 				D6FC3CC62ACDFA2D002FBE74 /* Bool+Extensions.swift in Sources */,
 				D6D77A6D2A2269DA006D63B5 /* RecipeCreatorView.swift in Sources */,
+				D69F8D812AE5A98300842DD1 /* Units.swift in Sources */,
 				D680C3372A13E75D002070DF /* EdamamLogicController.swift in Sources */,
 				D694E4032A05824A0077E72F /* RecipeMO+CoreDataClass.swift in Sources */,
 				D634FF8729FD42F50034B950 /* GymMealPrepApp.swift in Sources */,
