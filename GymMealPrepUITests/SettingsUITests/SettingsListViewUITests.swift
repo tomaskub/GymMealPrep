@@ -15,9 +15,12 @@ final class SettingsListViewUITests: XCTestCase {
         ContentViewScreen(app: app)
     }
     
+    private var helper: SettingsUITestsHelper!
+    
     override func setUp() {
         super.setUp()
         app = .init()
+        helper = SettingsUITestsHelper(app: app)
         app.launch()
     }
     
@@ -32,7 +35,7 @@ final class SettingsListViewUITests: XCTestCase {
         let navTitle = app.navigationBars.staticTexts["Settings"]
         let expectation = expectation(for: predicate, evaluatedWith: navTitle)
         // When
-        contentScreen.settingsTabButton.tap()
+        helper.navigateToSettingsTabView()
         // Then
         let result = XCTWaiter.wait(for: [expectation], timeout: 2.5)
         XCTAssertEqual(result, .completed, "Navigation title 'Settings' should exist")

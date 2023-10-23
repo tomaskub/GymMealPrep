@@ -62,6 +62,7 @@
 		D666049D2A13804B000AF1B7 /* IngredientPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */; };
 		D666049E2A138122000AF1B7 /* Edamam-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6169D942A12C95400CD9C60 /* Edamam-Info.plist */; };
 		D66836D92A18B66600CC28E5 /* IngredientPickerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */; };
+		D668934D2AE6F2A6007FD64B /* SettingsUITestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668934C2AE6F2A6007FD64B /* SettingsUITestsHelper.swift */; };
 		D66D86E92A86C6D700B7C245 /* RecipeCreatorViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66D86E82A86C6D700B7C245 /* RecipeCreatorViewModelProtocol.swift */; };
 		D6705A652AC4A3C100CF0BA9 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6705A642AC4A3C100CF0BA9 /* SettingsStore.swift */; };
 		D673FDAE2A840FF60045738E /* RecipeCreatorWebLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673FDAD2A840FF60045738E /* RecipeCreatorWebLinkView.swift */; };
@@ -255,6 +256,7 @@
 		D661A44F2A5F4A0F005C0C5B /* RecipeCreatorHostViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorHostViewUITests.swift; sourceTree = "<group>"; };
 		D666049C2A13804B000AF1B7 /* IngredientPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerViewModel.swift; sourceTree = "<group>"; };
 		D66836D82A18B66600CC28E5 /* IngredientPickerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientPickerRowView.swift; sourceTree = "<group>"; };
+		D668934C2AE6F2A6007FD64B /* SettingsUITestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUITestsHelper.swift; sourceTree = "<group>"; };
 		D66D86E82A86C6D700B7C245 /* RecipeCreatorViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorViewModelProtocol.swift; sourceTree = "<group>"; };
 		D6705A642AC4A3C100CF0BA9 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		D673FDAD2A840FF60045738E /* RecipeCreatorWebLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCreatorWebLinkView.swift; sourceTree = "<group>"; };
@@ -833,6 +835,7 @@
 			isa = PBXGroup;
 			children = (
 				D6FB339A2AE5BEA600EBB4D7 /* SettingsListViewUITests.swift */,
+				D668934C2AE6F2A6007FD64B /* SettingsUITestsHelper.swift */,
 			);
 			path = SettingsUITests;
 			sourceTree = "<group>";
@@ -1249,6 +1252,7 @@
 				D6A92C192A72C85000DB4DEF /* RecipeCreatorParserViewUITests.swift in Sources */,
 				D6C7A2BA2A63F0E400A82757 /* XCT+Focus.swift in Sources */,
 				D69684652A6420EA0064DD83 /* RecipeListUITests.swift in Sources */,
+				D668934D2AE6F2A6007FD64B /* SettingsUITestsHelper.swift in Sources */,
 				D661A4502A5F4A0F005C0C5B /* RecipeCreatorHostViewUITests.swift in Sources */,
 				D6A92C172A72C83A00DB4DEF /* RecipeCreatorViewUITests.swift in Sources */,
 				D634FFA529FD42F60034B950 /* GymMealPrepUITestsLaunchTests.swift in Sources */,
