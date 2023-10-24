@@ -40,4 +40,23 @@ final class SettingsListViewUITests: XCTestCase {
         let result = XCTWaiter.wait(for: [expectation], timeout: 2.5)
         XCTAssertEqual(result, .completed, "Navigation title 'Settings' should exist")
     }
+    
+    func test_navigatingToCalorieTargetDetailView() {
+        // Given
+        let existsPredicate = NSPredicate(format: "exists == true")
+        let caloriesCell = app.cells.staticTexts["Target calories"]
+        let detailNavTitleText = app.navigationBars.staticTexts["Target calories"]
+        let detailInputTextField = app.cells.textFields.firstMatch
+        let expectations = [
+            expectation(for: existsPredicate, evaluatedWith: detailNavTitleText),
+            expectation(for: NSPredicate(format: "count == 1"), evaluatedWith: app.cells),
+            expectation(for: existsPredicate, evaluatedWith: detailInputTextField)
+        ]
+        helper.navigateToSettingsTabView()
+        // When
+        caloriesCell.tap()
+        // Then
+        let result = XCTWaiter.wait(for: expectations, timeout: 5)
+        XCTAssertEqual(result, .completed, "The expectations should be met")
+    }
 }
