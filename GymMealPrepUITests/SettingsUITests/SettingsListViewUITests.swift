@@ -59,4 +59,36 @@ final class SettingsListViewUITests: XCTestCase {
         let result = XCTWaiter.wait(for: expectations, timeout: 5)
         XCTAssertEqual(result, .completed, "The expectations should be met")
     }
+    
+    func test_EnumDetailViewPicker() {
+        // Given
+        let enumCell = app.cells.containing(.staticText, identifier: "Units")
+        let enumCellLabel = enumCell.staticTexts["Units"]
+        let enumCellValue = enumCell.staticTexts.element(boundBy: 1)
+        // When
+        helper.navigateToSettingsTabView()
+        // Then
+        XCTAssert(enumCell.waitForExistence(timeout: 5), "Cell with units should exist")
+        // When
+        enumCell.tap()
+        // Then
+        
+        
+    }
+    
+    func test_typingDataInDetailViewTextField() {
+        // Given
+        helper.navigateToSettingsTabView()
+        app.cells.staticTexts["Target calories"].tap()
+        // When
+        app.textFields.firstMatch.tap()
+        app.textFields.firstMatch.typeText("3100")
+        // Then
+        let textFieldResult = app.cells.textFields["3100"].waitForExistence(timeout: 2.5)
+        XCTAssert(textFieldResult)
+        // When
+        app.navigationBars.buttons["Back"].tap()
+        let finalResult = app.cells.staticTexts["3100"].waitForExistence(timeout: 2.5)
+        XCTAssert(finalResult)
+    }
 }
