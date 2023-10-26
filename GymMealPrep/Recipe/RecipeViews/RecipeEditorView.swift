@@ -192,7 +192,9 @@ struct RecipeEditorView: View {
 struct RecipeEditorView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+            RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,
+                                                        dataManager: DataManager.preview)
+            )
         }
     }
 }

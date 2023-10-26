@@ -66,7 +66,7 @@ struct IngredientHostView_Previews: PreviewProvider {
             }
             .fullScreenCover(isPresented: .constant(true)) {
                 IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
-                    saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken),
+                                   saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview),
                     pickerViewModel: IngredientPickerViewModel())
             }
             

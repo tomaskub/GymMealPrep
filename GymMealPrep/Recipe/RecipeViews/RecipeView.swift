@@ -108,7 +108,7 @@ struct RecipeView: View {
 struct RecipieView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken))
+            RecipeView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview))
         }
     }
 }

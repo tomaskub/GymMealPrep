@@ -31,7 +31,6 @@ class RecipeViewModel: ObservableObject {
         return (recipe.timeCookingInMinutes ?? 0)  + (recipe.timePreparingInMinutes ?? 0) + (recipe.timeWaitingInMinutes ?? 0)
     }
     
-    
     @Published var timePreparingInMinutes: String
     @Published var timeCookingInMinutes: String
     @Published var timeWaitingInMinutes: String
@@ -51,7 +50,7 @@ class RecipeViewModel: ObservableObject {
     }
     
     
-    init(recipe: Recipe, dataManager: RecipeDataManagerProtocol = DataManager.shared) {
+    init(recipe: Recipe, dataManager: RecipeDataManagerProtocol) {
         self.recipe = recipe
         if let timePreparing = recipe.timePreparingInMinutes {
             self.timePreparingInMinutes = "\(timePreparing)"

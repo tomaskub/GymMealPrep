@@ -15,7 +15,7 @@ struct RecipeListTabView: View {
         case addingNewRecipeWeb
         case showingRecipeDetail(Recipe)
     }
-    
+    @EnvironmentObject private var container: Container
     @StateObject private var viewModel: RecipeListViewModel
     @State private var path = NavigationPath()
     
@@ -32,11 +32,16 @@ struct RecipeListTabView: View {
             .navigationDestination(for: NavigationState.self) { state in
                 switch state {
                 case .showingRecipeDetailEdit(let recipe):
-                    RecipeHostView(isEditing: true, recipe: recipe, path: $path)
+                    RecipeHostView(viewModel: RecipeViewModel(recipe: recipe,
+                                                              dataManager: container.dataManager),
+                                   isEditing: true,
+                                   path: $path)
                 case .addingNewRecipeText:
                     RecipeCreatorHostView(path: $path)
                 case .showingRecipeDetail(let recipe):
-                    RecipeHostView(isEditing: false, recipe: recipe, path: $path)
+                    RecipeHostView(viewModel: RecipeViewModel(recipe: recipe,
+                                                              dataManager: container.dataManager),
+                                   path: $path)
                 case .addingNewRecipeWeb:
                     RecipeCreatorHostView(includeWebLink: true, path: $path)
                 }
@@ -48,5 +53,6 @@ struct RecipeListTabView: View {
 struct RecipeListTabView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListTabView(viewModel: RecipeListViewModel(dataManager: .preview))
+            .environmentObject(Container())
     }
 }

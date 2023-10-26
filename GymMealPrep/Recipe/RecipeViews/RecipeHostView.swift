@@ -13,8 +13,10 @@ struct RecipeHostView: View {
     @StateObject var viewModel: RecipeViewModel
     @Binding var path: NavigationPath
     
-    init(isEditing: Bool, recipe: Recipe, dataManager: DataManager = DataManager.shared, path: Binding<NavigationPath>) {
-        self._viewModel = StateObject(wrappedValue: RecipeViewModel(recipe: recipe, dataManager: dataManager))
+    init(viewModel: RecipeViewModel,
+         isEditing: Bool = false,
+         path: Binding<NavigationPath>) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
         self._path = path
         self.isEditing = isEditing
     }
@@ -71,11 +73,9 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeHostView(
-                isEditing: false,
-                recipe: SampleData.recipieCilantroLimeChicken,
-                dataManager: .preview,
-                path:.constant(NavigationPath())
+            RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,
+                                                      dataManager: DataManager.preview),
+                           path: .constant(NavigationPath())
             )
         }
     }
