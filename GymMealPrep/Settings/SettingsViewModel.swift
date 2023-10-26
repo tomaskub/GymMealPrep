@@ -25,7 +25,7 @@ class SettingsViewModel: ObservableObject {
                 self.settings = self.createSettingSections()
                 self.objectWillChange.send()
             }.store(in: &cancellables)
-        self.setNumberOfMealsUpdater()
+//        self.setNumberOfMealsUpdater()
     }
     
     private func createSettingSections() -> [SettingSection] {
@@ -39,8 +39,9 @@ class SettingsViewModel: ObservableObject {
     }
     
     private func setNumberOfMealsUpdater() {
+        // still crashes the app during testing - need to figure this one out
         settingStore.$settings
-            .receive(on: RunLoop.main)
+            
             .flatMap { dictionary in
                 dictionary.publisher.map { (key: $0.key, value: $0.value)}
             }
@@ -50,6 +51,7 @@ class SettingsViewModel: ObservableObject {
             .compactMap { (key, value) in
                 value as? Int
             }
+            .receive(on: RunLoop.main)
             .sink { [weak self] value in
                 guard let self else { return }
                 if var mealsArray = self.settingStore.settings[Setting.mealNames] as? [String] {

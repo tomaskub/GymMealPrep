@@ -41,6 +41,53 @@ final class SettingsListViewUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "Navigation title 'Settings' should exist")
     }
     
+    func test_SettingListViewElementsPresent() {
+        // Given
+        let expectedLabels = [
+            "Target calories",
+            "Color theme",
+            "Units",
+            "Groceries",
+            "Next plan",
+            "Number of meals",
+            "Meal names",
+            "API information",
+            "Privacy information",
+            "Terms information",
+            "Contact Us",
+            "Rate Us!"
+        ]
+        var expectations: [XCTestExpectation] = expectedLabels.map { label in
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.cells.staticTexts[label])
+        }
+        // When
+        helper.navigateToSettingsTabView()
+        
+        // Then
+        let waiter = XCTWaiter()
+        var i = 0
+        let maxCycles = 2
+        while i < maxCycles {
+            let unFulfilledExpectation = expectations.filter { expectation in
+                !waiter.fulfilledExpectations.contains(where: { $0.expectationDescription == expectation.expectationDescription })
+            }
+            let result = waiter.wait(for: unFulfilledExpectation, timeout: 1)
+            if result == .completed {
+                break
+            } else {
+                app.swipeUp()
+                i += 1
+            }
+        }
+        
+        let unFulfilledExpectation = waiter.fulfilledExpectations.filter { expectation in
+            !expectations.contains(where: { $0.hashValue == expectation.hashValue })
+        }
+        
+        XCTAssertEqual(unFulfilledExpectation.count, 0, "There should be no unfulfilled expectations")
+        
+    }
+    
     func test_navigatingToCalorieTargetDetailView() {
         // Given
         let existsPredicate = NSPredicate(format: "exists == true")
@@ -62,7 +109,7 @@ final class SettingsListViewUITests: XCTestCase {
     
     func test_EnumDetailViewPicker() {
         // Given
-        let enumCell = app.cells.containing(.staticText, identifier: "Units")
+        let enumCell = app.cells.containing(.staticText, identifier: "Units").firstMatch
         let enumCellLabel = enumCell.staticTexts["Units"]
         let enumCellValue = enumCell.staticTexts.element(boundBy: 1)
         // When
