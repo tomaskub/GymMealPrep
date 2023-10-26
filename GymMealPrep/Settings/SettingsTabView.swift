@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-class Container: ObservableObject {
-    var settingStore: SettingStore = .init()
-}
-
 struct SettingsTabView: View {
     
     @EnvironmentObject private var container: Container
