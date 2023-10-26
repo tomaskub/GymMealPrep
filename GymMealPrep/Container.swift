@@ -9,4 +9,6 @@ import Foundation
 
 class Container: ObservableObject {
     var settingStore: SettingStore = .init()
+    var dataManager: DataManager = .shared
+    var networkController: NetworkController = .init()
 }
