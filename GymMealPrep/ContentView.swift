@@ -19,7 +19,7 @@ struct ContentView: View {
                     Text("Home")
                 }
             
-            RecipeListTabView()
+            RecipeListTabView(viewModel: RecipeListViewModel(dataManager: container.dataManager))
                     .tabItem {
                         Image(systemName: "square.fill.text.grid.1x2")
                             .font(.largeTitle)

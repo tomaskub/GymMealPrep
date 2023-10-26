@@ -19,7 +19,7 @@ struct RecipeListTabView: View {
     @StateObject private var viewModel: RecipeListViewModel
     @State private var path = NavigationPath()
     
-    public init(viewModel: RecipeListViewModel = RecipeListViewModel()) {
+    public init(viewModel: RecipeListViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
