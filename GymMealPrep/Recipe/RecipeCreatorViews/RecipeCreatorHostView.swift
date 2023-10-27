@@ -17,7 +17,7 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
         case confirmation
     }
     
-    @StateObject private var viewModel: RecipeCreatorViewModelProtocol = RecipeCreatorViewModel()
+    @StateObject private var viewModel: RecipeCreatorViewModelProtocol
     @State private var displayedStage: Stage
     @State private var processStage: Stage
     @State private var isShowingStageControls: Bool = true
@@ -30,7 +30,8 @@ struct RecipeCreatorHostView: View, KeyboardReadable {
             removal: .move(edge: .leading))
     }()
     
-    init(includeWebLink: Bool = false, path: Binding<NavigationPath>) {
+    init(viewModel: RecipeCreatorViewModelProtocol, path: Binding<NavigationPath>, includeWebLink: Bool = false) {
+        self._viewModel = StateObject.init(wrappedValue: viewModel)
         self.includeWebLink = includeWebLink
         self._path = path
         
@@ -239,9 +240,19 @@ extension RecipeCreatorHostView {
 }
 
 struct RecipeCreatorHostView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            RecipeCreatorHostView(includeWebLink: true ,path: .constant(NavigationPath()))
+    struct ContainerView: View {
+        @StateObject private var container: Container = .init()
+        var body: some View {
+            NavigationStack {
+                RecipeCreatorHostView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager,
+                                                                        networkController: container.networkController),
+                                      path: .constant(NavigationPath()),
+                                      includeWebLink: true)
+            }
+            .environmentObject(container)
         }
+    }
+    static var previews: some View {
+        ContainerView()
     }
 }

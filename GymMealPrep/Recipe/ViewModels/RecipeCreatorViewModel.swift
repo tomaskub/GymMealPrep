@@ -17,9 +17,9 @@ class RecipeCreatorViewModel: RecipeCreatorViewModelProtocol {
     let edamamLogicController: EdamamLogicControllerProtocol
     let webLinkLogicController: WebLinkLogicController
     
-    init(dataManager: DataManager = .shared) {
+    init(dataManager: DataManager, networkController: NetworkController) {
         self.dataManager = dataManager
-        self.networkController = NetworkController()
+        self.networkController = networkController
         self.edamamLogicController = EdamamLogicController(networkController: networkController)
         self.webLinkLogicController = WebLinkLogicController(networkController: networkController)
         super.init()

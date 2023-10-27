@@ -31,19 +31,25 @@ struct RecipeListTabView: View {
             //MARK: NAVIGATION DESTINATIONS
             .navigationDestination(for: NavigationState.self) { state in
                 switch state {
+                case .showingRecipeDetail(let recipe):
+                    RecipeHostView(viewModel: RecipeViewModel(recipe: recipe,
+                                                              dataManager: container.dataManager),
+                                   path: $path)
                 case .showingRecipeDetailEdit(let recipe):
                     RecipeHostView(viewModel: RecipeViewModel(recipe: recipe,
                                                               dataManager: container.dataManager),
                                    isEditing: true,
                                    path: $path)
                 case .addingNewRecipeText:
-                    RecipeCreatorHostView(path: $path)
-                case .showingRecipeDetail(let recipe):
-                    RecipeHostView(viewModel: RecipeViewModel(recipe: recipe,
-                                                              dataManager: container.dataManager),
-                                   path: $path)
+                    RecipeCreatorHostView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager,
+                                                                            networkController: container.networkController),
+                                          path: $path)
+                
                 case .addingNewRecipeWeb:
-                    RecipeCreatorHostView(includeWebLink: true, path: $path)
+                    RecipeCreatorHostView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager,
+                                                                            networkController: container.networkController),
+                                          path: $path,
+                                          includeWebLink: true)
                 }
             }
         }
