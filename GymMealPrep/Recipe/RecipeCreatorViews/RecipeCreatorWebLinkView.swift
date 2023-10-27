@@ -30,9 +30,16 @@ struct RecipeCreatorWebLinkView: View {
 }
 
 struct RecipeCreatorWebLinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            RecipeCreatorWebLinkView(viewModel: RecipeCreatorViewModel())
+    struct PreviewContainer: View {
+        @StateObject private var container: Container = .init()
+        var body: some View {
+            NavigationView {
+                RecipeCreatorWebLinkView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager, networkController: container.networkController))
+                    .environmentObject(container)
+            }
         }
+    }
+    static var previews: some View {
+        PreviewContainer()
     }
 }
