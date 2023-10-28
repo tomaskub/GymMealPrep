@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeCreatorParserView: View {
-    
+    @EnvironmentObject private var container: Container
     @ObservedObject var viewModel: RecipeCreatorViewModelProtocol
     var saveHandler: IngredientSaveHandler
     
@@ -26,6 +26,7 @@ struct RecipeCreatorParserView: View {
                                     saveHandler: saveHandler,
                                     pickerViewModel:
                                         IngredientPickerViewModel(
+                                            networkController: container.networkController,
                                             ingredients: parsedIngredients,
                                             searchTerm: input))
                                 
@@ -37,6 +38,7 @@ struct RecipeCreatorParserView: View {
                                     saveHandler: saveHandler,
                                     pickerViewModel:
                                         IngredientPickerViewModel(
+                                            networkController: container.networkController,
                                             ingredients: [[]],
                                             searchTerm: input))
                             }
@@ -76,8 +78,7 @@ struct RecipeCreatorParserView: View {
 
 struct RecipeCreatorParserView_Previews: PreviewProvider {
     
-    class PreviewViewModel: RecipeCreatorViewModelProtocol {
-        
+    private class PreviewViewModel: RecipeCreatorViewModelProtocol {
         override init() {
             super.init()
             self.ingredientsNLArray = ["1 cup of rice", "1 chicken breast", "2 cups of broccoli florets", "This ingredient failed to parse"]
@@ -98,18 +99,15 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         }
     } // END OF CLASS
     
-    class PreviewSaveHandler: IngredientSaveHandler {
-        
-        
+    private class PreviewSaveHandler: IngredientSaveHandler {
         func addIngredient(_: Ingredient, _: String?) {
             // do nothing
         }
-        
-        
     }
     static var previews: some View {
         NavigationStack {
             RecipeCreatorParserView(viewModel: PreviewViewModel(), saveHandler: PreviewSaveHandler())
         }
+        .environmentObject(Container())
     }
 }

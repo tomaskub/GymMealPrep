@@ -13,7 +13,7 @@ class RecipePickerViewModel: ObservableObject {
     
     private var dataManager: DataManager
     
-    init(searchTerm: String = String(), retrievedRecipes: [Recipe] = [Recipe](), dataManager: DataManager = .shared) {
+    init(searchTerm: String = String(), retrievedRecipes: [Recipe] = [Recipe](), dataManager: DataManager) {
         self.searchTerm = searchTerm
         self.retrievedRecipes = retrievedRecipes
         self.dataManager = dataManager

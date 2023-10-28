@@ -18,7 +18,7 @@ struct RecipePickerView: View {
     var saveHandler: RecipeSaveHandler
     @StateObject private var viewModel: RecipePickerViewModel
     
-    init(saveHandler: RecipeSaveHandler, viewModel: RecipePickerViewModel = RecipePickerViewModel()) {
+    init(saveHandler: RecipeSaveHandler, viewModel: RecipePickerViewModel) {
         self.saveHandler = saveHandler
         self._viewModel = StateObject.init(wrappedValue: viewModel)
     }
@@ -53,13 +53,22 @@ struct RecipePickerView: View {
 }
 
 struct RecipePickerView_Previews: PreviewProvider {
-    class PreviewSaveHandler: RecipeSaveHandler {
+    
+    private class PreviewSaveHandler: RecipeSaveHandler {
         func addRecipe(_ recipeToSave: Recipe) {
             print("Recipe saved: \(recipeToSave.name)")
         }
     }
+    
+    private struct ContainerView: View {
+        @StateObject private var container = Container()
+        var body: some View {
+            RecipePickerView(saveHandler: PreviewSaveHandler(),
+                             viewModel: RecipePickerViewModel(dataManager: container.dataManager))
+        }
+    }
+    
     static var previews: some View {
-        RecipePickerView(saveHandler: PreviewSaveHandler(),
-                         viewModel: RecipePickerViewModel(dataManager: .preview))
+        ContainerView()
     }
 }

@@ -9,9 +9,9 @@ import SwiftUI
 import PhotosUI
 
 struct RecipeEditorView: View {
-    
+    @EnvironmentObject private var container: Container
     @ObservedObject var viewModel: RecipeViewModel
-    @State var isAddingNewIngredient: Bool = false
+    @State private var isAddingNewIngredient: Bool = false
     
     var body: some View {
         List {
@@ -36,7 +36,10 @@ struct RecipeEditorView: View {
             }
         }
         .fullScreenCover(isPresented: $isAddingNewIngredient) {
-            IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually", saveHandler: viewModel, pickerViewModel: IngredientPickerViewModel())
+            IngredientHostView(title: "Add new ingredient", 
+                               buttonTitle: "Add manually",
+                               saveHandler: viewModel,
+                               pickerViewModel: IngredientPickerViewModel(networkController: container.networkController))
         }
     }//END OF BODY
     
@@ -190,11 +193,18 @@ struct RecipeEditorView: View {
 }
 
 struct RecipeEditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,
-                                                        dataManager: DataManager.preview)
-            )
+    private struct ContainerView: View {
+        @StateObject private var container = Container()
+        var body: some View {
+            NavigationView {
+                RecipeEditorView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,
+                                                            dataManager: container.dataManager)
+                )
+            }
+            .environmentObject(container)
         }
+    }
+    static var previews: some View {
+        ContainerView()
     }
 }

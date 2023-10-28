@@ -59,17 +59,24 @@ struct IngredientHostView: View {
 }
 
 struct IngredientHostView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ZStack {
+    private struct PreviewContainer: View {
+        @StateObject private var container: Container = .init()
+        var body: some View {
+            NavigationView {
+                ZStack {
+                  // Background
+                }
+                .fullScreenCover(isPresented: .constant(true)) {
+                    IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
+                                       saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,
+                                                                    dataManager: container.dataManager),
+                                       pickerViewModel: IngredientPickerViewModel(networkController: container.networkController))
+                }
                 
             }
-            .fullScreenCover(isPresented: .constant(true)) {
-                IngredientHostView(title: "Add new ingredient", buttonTitle: "Add manually",
-                                   saveHandler: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken, dataManager: DataManager.preview),
-                    pickerViewModel: IngredientPickerViewModel())
-            }
-            
         }
+    }
+    static var previews: some View {
+        PreviewContainer()
     }
 }
