@@ -141,15 +141,27 @@ extension MealPlanEditorView {
 }
 
 struct MealPlanEditorView_Previews: PreviewProvider {
-    struct Containter: View {
-        @State var navigationPath = NavigationPath()
+    struct PreviewContainter: View {
+        @StateObject private var container: Container
+        @StateObject private var viewModel: MealPlanViewModel
+        @State private var navigationPath: NavigationPath
+        
+        init() {
+            let container = Container()
+            self._container = StateObject(wrappedValue: container)
+            self._viewModel = StateObject(wrappedValue: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan,
+                                                                          dataManager: container.dataManager))
+            self._navigationPath = State(wrappedValue: NavigationPath())
+        }
         var body: some View {
             NavigationStack {
-                MealPlanEditorView(viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan, dataManager: DataManager.preview), navigationPath: $navigationPath, title: "Adding new meal plan")
+                MealPlanEditorView(viewModel: viewModel,
+                                   navigationPath: $navigationPath, 
+                                   title: "Adding new meal plan")
             }
         }
     }
     static var previews: some View {
-        Containter()
+        PreviewContainter()
     }
 }
