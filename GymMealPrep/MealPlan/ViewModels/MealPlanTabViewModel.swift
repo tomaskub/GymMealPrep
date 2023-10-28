@@ -24,7 +24,7 @@ class MealPlanTabViewModel: MealPlanTabViewModelProtocol {
         dataManager.mealPlanArray
     }
     
-    init(dataManager: DataManager = DataManager.shared) {
+    init(dataManager: DataManager) {
         self.dataManager = dataManager
         
         dataManager.objectWillChange.sink { [weak self] _ in

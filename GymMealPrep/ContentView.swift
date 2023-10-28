@@ -26,12 +26,12 @@ struct ContentView: View {
                         Text("Recipes")
                     }
             
-            MealPlanTabView()
-            .tabItem {
-                Image(systemName: "rectangle.grid.1x2.fill")
-                    .font(.largeTitle)
-                Text("Meal plans")
-            }
+            MealPlanTabView(viewModel: MealPlanTabViewModel(dataManager: container.dataManager))
+                .tabItem {
+                    Image(systemName: "rectangle.grid.1x2.fill")
+                        .font(.largeTitle)
+                    Text("Meal plans")
+                }
             
             SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
                 .tabItem {

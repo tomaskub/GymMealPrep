@@ -37,7 +37,7 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
     @State var displayType: ViewType = .list
     @State var showTitleInline: Bool = true
     
-    public init(viewModel: T = MealPlanTabViewModel()) {
+    public init(viewModel: T) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
