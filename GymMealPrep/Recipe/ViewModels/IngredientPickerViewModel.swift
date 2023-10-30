@@ -33,9 +33,10 @@ class IngredientPickerViewModel: IngredientPickerViewModelProtocol {
     let originalSearchTerm: String?
     
     var subscriptions = Set<AnyCancellable>()
-    let edamamLogicController: EdamamLogicController = EdamamLogicController(networkController: NetworkController())
+    let edamamLogicController: EdamamLogicController
     
-    init(ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
+    init(networkController: NetworkController, ingredients: [[Ingredient]] = [[]], searchTerm: String = String()){
+        self.edamamLogicController = EdamamLogicController(networkController: networkController)
         self.searchTerm = searchTerm
         if !searchTerm.isEmpty {
             self.originalSearchTerm = searchTerm

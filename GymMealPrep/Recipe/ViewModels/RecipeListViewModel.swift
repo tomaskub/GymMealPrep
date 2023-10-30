@@ -19,7 +19,7 @@ class RecipeListViewModel: ObservableObject {
     }
     
     
-    init(dataManager: DataManager = DataManager.shared) {
+    init(dataManager: DataManager) {
         
         self.dataManager = dataManager
         
@@ -29,11 +29,6 @@ class RecipeListViewModel: ObservableObject {
         }.store(in: &subscriptions)
     }
     
-//    func createRecipeViewModel(recipe: Recipe) -> RecipeViewModel {
-//        let recipeDataManager = dataManager as RecipeDataManagerProtocol
-//        return RecipeViewModel(recipe: recipe, dataManager: recipeDataManager)
-//    }
-    
     func deleteRecipe(atOffsets offsets: IndexSet) {
         var recipiesToDelete = [Recipe]()
         offsets.forEach { i in
@@ -42,9 +37,5 @@ class RecipeListViewModel: ObservableObject {
         for recipe in recipiesToDelete {
             dataManager.delete(recipe: recipe)
         }
-    }
-    
-    func provideDataManagerType() -> DataManager {
-        return dataManager
     }
 }

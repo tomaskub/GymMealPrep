@@ -43,25 +43,23 @@ struct MealPlanHostView: View {
             }
     }
     func provideEditingTitle() -> String {
-        if isAddingNewMealPlan {
-         return "Adding new meal plan"
-        }
-        return "Editing meal plan"
+        isAddingNewMealPlan ? "Adding new meal plan" : "Editing meal plan"
     }
 }
 
 struct MealPlanHostView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            MealPlanHostView(
-                viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan,
-                                             dataManager: DataManager.preview),
-                navigationPath: .init(get: {
-                    return NavigationPath()
-                }, set: { navPath in
-                    print(navPath)
-                })
-                                            )
+    private struct PreviewContainerView: View {
+        @StateObject private var container = Container()
+        @State private var navPath = NavigationPath()
+        var body: some View {
+            NavigationStack {
+                MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan,
+                                                              dataManager: container.dataManager),
+                                 navigationPath: $navPath)
+            }
         }
+    }
+    static var previews: some View {
+        PreviewContainerView()
     }
 }

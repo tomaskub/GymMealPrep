@@ -14,7 +14,7 @@ class SettingsViewModel: ObservableObject {
     @Published var settings: [SettingSection] = []
     private var cancellables: Set<AnyCancellable> = .init()
     
-    init(settingStore: SettingStore = SettingStore()) {
+    init(settingStore: SettingStore) {
         self.settingStore = settingStore
         self.settings = createSettingSections()
         

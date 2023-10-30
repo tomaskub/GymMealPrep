@@ -34,7 +34,7 @@ class IngredientEditorViewModelProtocol: ObservableObject {
             self.lockNutritionValues = true
             self.isEditingIngredient = true
         } else {
-            self.draftIngredient = Ingredient() // TODO: this is concrete so i have to check how to set it to the same type - should it be generic protocol?
+            self.draftIngredient = Ingredient()
             self.lockNutritionValues = false
             self.isEditingIngredient = false
         }

@@ -14,7 +14,8 @@ struct IngredientEditorView: View {
     @StateObject var viewModel: IngredientEditorViewModelProtocol
     let saveAction: (Ingredient) -> Void
     
-    init(viewModel: IngredientEditorViewModelProtocol = IngredientEditorViewModel(), saveAction: @escaping (Ingredient) -> Void) {
+    init(viewModel: IngredientEditorViewModelProtocol,
+         saveAction: @escaping (Ingredient) -> Void) {
         self._viewModel = StateObject.init(wrappedValue: viewModel)
         self.saveAction = saveAction
     }

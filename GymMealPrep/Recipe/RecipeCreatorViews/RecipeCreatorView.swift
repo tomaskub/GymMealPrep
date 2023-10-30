@@ -195,9 +195,16 @@ struct RecipeCreatorView: View {
 
 
 struct RecipeCreatorView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            RecipeCreatorView(viewModel: RecipeCreatorViewModel())
+    struct PreviewContainer: View {
+        @StateObject private var container: Container = .init()
+        var body: some View {
+            NavigationView {
+                RecipeCreatorView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager, networkController: container.networkController))
+                    .environmentObject(container)
+            }
         }
+    }
+    static var previews: some View {
+        PreviewContainer()
     }
 }

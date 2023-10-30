@@ -203,16 +203,23 @@ extension SettingsDetailView {
 }
 
 struct SettingsDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            SettingsDetailView(
-                title: "Preview",
-                viewModel: SettingsDetailViewModel(
-                    settingStore: SettingStore(),
-                    settingModels: [
-                        SettingModel(setting: .mealNames, valueText: nil, tipText: "Preview tooltip")
-                    ])
-            )
+    private struct PreviewContainerView: View {
+        @StateObject private var container = Container()
+        var body: some View {
+            NavigationStack {
+                SettingsDetailView(
+                    title: "Preview",
+                    viewModel: SettingsDetailViewModel(
+                        settingStore: container.settingStore,
+                        settingModels: [
+                            SettingModel(setting: .mealNames, valueText: nil, tipText: "Preview tooltip")
+                        ])
+                )
+            }
+            .environmentObject(container)
         }
+    }
+    static var previews: some View {
+        PreviewContainerView()
     }
 }

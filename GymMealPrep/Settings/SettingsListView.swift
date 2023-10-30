@@ -64,9 +64,18 @@ struct SettingsListView: View {
 } // END OF STRUCT
 
 struct SettingsListView_Previews: PreviewProvider {
-    struct Container: View {
-        @StateObject private var vm = SettingsViewModel()
-        @State private var path = NavigationPath()
+    
+    private struct PreviewContainerView: View {
+        @StateObject private var container: Container
+        @StateObject private var vm: SettingsViewModel
+        @State private var path: NavigationPath
+        
+        init() {
+            let tempContainer = Container()
+            self._container = StateObject(wrappedValue: tempContainer)
+            self._vm = StateObject(wrappedValue: SettingsViewModel(settingStore: tempContainer.settingStore))
+            self._path = State(wrappedValue: NavigationPath())
+        }
         var body: some View {
             NavigationStack(path: $path) {
                 SettingsListView(viewModel: vm, path: $path)
@@ -75,7 +84,7 @@ struct SettingsListView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        Container()
+        PreviewContainerView()
     }
 }
 

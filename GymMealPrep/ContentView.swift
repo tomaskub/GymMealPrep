@@ -19,19 +19,19 @@ struct ContentView: View {
                     Text("Home")
                 }
             
-            RecipeListTabView()
+            RecipeListTabView(viewModel: RecipeListViewModel(dataManager: container.dataManager))
                     .tabItem {
                         Image(systemName: "square.fill.text.grid.1x2")
                             .font(.largeTitle)
                         Text("Recipes")
                     }
             
-            MealPlanTabView()
-            .tabItem {
-                Image(systemName: "rectangle.grid.1x2.fill")
-                    .font(.largeTitle)
-                Text("Meal plans")
-            }
+            MealPlanTabView(viewModel: MealPlanTabViewModel(dataManager: container.dataManager))
+                .tabItem {
+                    Image(systemName: "rectangle.grid.1x2.fill")
+                        .font(.largeTitle)
+                    Text("Meal plans")
+                }
             
             SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
                 .tabItem {

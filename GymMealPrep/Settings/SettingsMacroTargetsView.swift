@@ -145,18 +145,26 @@ struct SettingsMacroTargetsView: View {
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack{
-            SettingsMacroTargetsView(title: "Macro targets",
-                                     vm: SettingsDetailViewModel(
-                                        settingStore: SettingStore(),
-                                        settingModels: [
-                                            SettingModel(setting: .macroTargetProtein, tipText: nil),
-                                            SettingModel(setting: .macroTargetFat, tipText: nil),
-                                            SettingModel(setting: .macroTargetCarb, tipText: nil),
-                                        ]
-                                     )
-            )
+    
+    private struct PreviewContainerView: View {
+        @StateObject private var container = Container()
+        
+        var body: some View {
+            NavigationStack{
+                SettingsMacroTargetsView(title: "Macro targets",
+                                         vm: SettingsDetailViewModel(
+                                            settingStore: container.settingStore,
+                                            settingModels: [
+                                                SettingModel(setting: .macroTargetProtein, tipText: nil),
+                                                SettingModel(setting: .macroTargetFat, tipText: nil),
+                                                SettingModel(setting: .macroTargetCarb, tipText: nil),
+                                            ]
+                                         )
+                )
+            }
         }
+    }
+    static var previews: some View {
+        PreviewContainerView()
     }
 }

@@ -16,6 +16,7 @@ struct MealPlanEditorSheetView: View {
         case ingredient = "Adding ingredient"
         case recipe = "Adding Recipe"
     }
+    @EnvironmentObject private var container: Container
     @State private var selected: ContentType = .ingredient
     @Binding var navigationPath: NavigationPath
     
@@ -36,9 +37,10 @@ struct MealPlanEditorSheetView: View {
                     IngredientHostView(title: "Add new ingredient",
                                        buttonTitle: "Add manually",
                                        saveHandler: saveHandler,
-                                       pickerViewModel: IngredientPickerViewModel())
+                                       pickerViewModel: IngredientPickerViewModel(networkController: container.networkController))
                 case .recipe:
-                    RecipePickerView(saveHandler: saveHandler)
+                    RecipePickerView(saveHandler: saveHandler,
+                                     viewModel: RecipePickerViewModel(dataManager: container.dataManager))
                 } // END OF SWITCH
             } // END OF VSTACK
     } // END OF BODY
@@ -61,6 +63,7 @@ struct MealPlanEditorSheetView_Previews: PreviewProvider {
                 .sheet(isPresented: .constant(true)) {
                     MealPlanEditorSheetView(saveHandler: PreviewSaveHandler(), navigationPath: .constant(NavigationPath()))
                 }
+                .environmentObject(Container())
         }
         
     }

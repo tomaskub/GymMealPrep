@@ -32,7 +32,7 @@ class MealPlanViewModel: MealPlanViewModelProtocol {
     @Published var mealPlan: MealPlan
     private var dataManager: MealPlanDataManagerProtocol
     
-    init(mealPlan: MealPlan, dataManager: MealPlanDataManagerProtocol = DataManager.shared as MealPlanDataManagerProtocol) {
+    init(mealPlan: MealPlan, dataManager: MealPlanDataManagerProtocol) {
         self.mealPlan = mealPlan
         self.dataManager = dataManager
         if let name = mealPlan.name {

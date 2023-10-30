@@ -31,13 +31,13 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
             }
         }
     }
+    @EnvironmentObject private var container: Container
+    @StateObject private var viewModel: T
+    @State private var navigationPath = NavigationPath()
+    @State private var displayType: ViewType = .list
+    @State private var showTitleInline: Bool = true
     
-    @StateObject var viewModel: T
-    @State var navigationPath = NavigationPath()
-    @State var displayType: ViewType = .list
-    @State var showTitleInline: Bool = true
-    
-    public init(viewModel: T = MealPlanTabViewModel()) {
+    public init(viewModel: T) {
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
@@ -79,11 +79,20 @@ struct MealPlanTabView<T: MealPlanTabViewModelProtocol>: View {
                 .navigationDestination(for: MealPlanTabNavigationState.self) { state in
                     switch state {
                     case .showingMealPlanDetailView(let plan):
-                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: false)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan,
+                                                                      dataManager: container.dataManager),
+                                         navigationPath: $navigationPath)
                     case .showingMealPlanEditingView(let plan):
-                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: true)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan,
+                                                                      dataManager: container.dataManager),
+                                         navigationPath: $navigationPath,
+                                         isEditing: true)
                     case .showingMealPlanAddingView(let plan):
-                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan), navigationPath: $navigationPath, isEditing: true, isAddingNewMealPlan: true)
+                        MealPlanHostView(viewModel: MealPlanViewModel(mealPlan: plan,
+                                                                      dataManager: container.dataManager),
+                                         navigationPath: $navigationPath,
+                                         isEditing: true,
+                                         isAddingNewMealPlan: true)
                     }
                 }
         } // END OF NAV STACK

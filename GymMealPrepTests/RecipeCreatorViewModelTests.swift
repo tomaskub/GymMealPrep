@@ -43,7 +43,7 @@ final class RecipeCreatorViewModelTests: XCTestCase {
     let instructionEntryStringWithNumbersOnly = "1 Instruction step 1\n2 Instruction step 2\n3 Instruction step 3\n"
     
     override func setUp() {
-        sut = RecipeCreatorViewModel()
+        sut = RecipeCreatorViewModel(dataManager: DataManager.testing, networkController: NetworkController())
     }
 
     override func tearDown() {
