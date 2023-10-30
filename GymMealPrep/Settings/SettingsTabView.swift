@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsTabView: View {
     
     @EnvironmentObject private var container: Container
-    @StateObject private var viewModel = SettingsViewModel()
+    @StateObject private var viewModel: SettingsViewModel
     @State private var path = NavigationPath()
     
     init(viewModel: SettingsViewModel) {
@@ -52,8 +52,9 @@ struct SettingsTabView: View {
 
 struct SettingsTabView_Previews: PreviewProvider {
     
-    struct PreviewContainer: View {
+    private struct PreviewContainerView: View {
         @StateObject private var container: Container = .init()
+        
         var body: some View {
             SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))
                 .environmentObject(container)
@@ -61,6 +62,6 @@ struct SettingsTabView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        PreviewContainer()
+        PreviewContainerView()
     }
 }
