@@ -53,7 +53,7 @@ struct SettingsTabView: View {
 struct SettingsTabView_Previews: PreviewProvider {
     
     private struct PreviewContainerView: View {
-        @StateObject private var container: Container = .init()
+        @StateObject private var container: Container = ContainerFactory.build()
         
         var body: some View {
             SettingsTabView(viewModel: SettingsViewModel(settingStore: container.settingStore))

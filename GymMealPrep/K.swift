@@ -15,4 +15,6 @@ struct K {
         static let macroTargetCarb = "macro-target-carb"
         static let theme = "theme"
     }
+    static let previewEnvironmentFlagKey = "XCODE_RUNNING_FOR_PREVIEWS"
+    static let testingFlag = "-test"
 }

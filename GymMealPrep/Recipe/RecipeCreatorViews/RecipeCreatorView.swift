@@ -196,7 +196,7 @@ struct RecipeCreatorView: View {
 
 struct RecipeCreatorView_Previews: PreviewProvider {
     struct PreviewContainer: View {
-        @StateObject private var container: Container = .init()
+        @StateObject private var container: Container = ContainerFactory.build()
         var body: some View {
             NavigationView {
                 RecipeCreatorView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager, networkController: container.networkController))

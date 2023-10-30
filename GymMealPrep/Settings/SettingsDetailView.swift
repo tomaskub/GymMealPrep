@@ -204,7 +204,7 @@ extension SettingsDetailView {
 
 struct SettingsDetailView_Previews: PreviewProvider {
     private struct PreviewContainerView: View {
-        @StateObject private var container = Container()
+        @StateObject private var container = ContainerFactory.build()
         var body: some View {
             NavigationStack {
                 SettingsDetailView(

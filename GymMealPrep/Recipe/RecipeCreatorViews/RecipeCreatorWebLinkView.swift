@@ -31,7 +31,7 @@ struct RecipeCreatorWebLinkView: View {
 
 struct RecipeCreatorWebLinkView_Previews: PreviewProvider {
     struct PreviewContainer: View {
-        @StateObject private var container: Container = .init()
+        @StateObject private var container: Container = ContainerFactory.build()
         var body: some View {
             NavigationView {
                 RecipeCreatorWebLinkView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager, networkController: container.networkController))

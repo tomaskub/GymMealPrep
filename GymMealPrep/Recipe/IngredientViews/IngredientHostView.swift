@@ -60,7 +60,7 @@ struct IngredientHostView: View {
 
 struct IngredientHostView_Previews: PreviewProvider {
     private struct PreviewContainer: View {
-        @StateObject private var container: Container = .init()
+        @StateObject private var container: Container = ContainerFactory.build()
         var body: some View {
             NavigationView {
                 ZStack {

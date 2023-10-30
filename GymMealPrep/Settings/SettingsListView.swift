@@ -71,7 +71,7 @@ struct SettingsListView_Previews: PreviewProvider {
         @State private var path: NavigationPath
         
         init() {
-            let tempContainer = Container()
+            let tempContainer = ContainerFactory.build()
             self._container = StateObject(wrappedValue: tempContainer)
             self._vm = StateObject(wrappedValue: SettingsViewModel(settingStore: tempContainer.settingStore))
             self._path = State(wrappedValue: NavigationPath())

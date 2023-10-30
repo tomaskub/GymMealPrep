@@ -242,7 +242,7 @@ extension RecipeCreatorHostView {
 
 struct RecipeCreatorHostView_Previews: PreviewProvider {
     struct ContainerView: View {
-        @StateObject private var container: Container = .init()
+        @StateObject private var container: Container = ContainerFactory.build()
         var body: some View {
             NavigationStack {
                 RecipeCreatorHostView(viewModel: RecipeCreatorViewModel(dataManager: container.dataManager,

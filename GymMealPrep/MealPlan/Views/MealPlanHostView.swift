@@ -49,7 +49,7 @@ struct MealPlanHostView: View {
 
 struct MealPlanHostView_Previews: PreviewProvider {
     private struct PreviewContainerView: View {
-        @StateObject private var container = Container()
+        @StateObject private var container = ContainerFactory.build()
         @State private var navPath = NavigationPath()
         var body: some View {
             NavigationStack {

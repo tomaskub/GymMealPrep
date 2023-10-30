@@ -147,7 +147,7 @@ struct MealPlanEditorView_Previews: PreviewProvider {
         @State private var navigationPath: NavigationPath
         
         init() {
-            let container = Container()
+            let container = ContainerFactory.build()
             self._container = StateObject(wrappedValue: container)
             self._viewModel = StateObject(wrappedValue: MealPlanViewModel(mealPlan: SampleData.sampleMealPlan,
                                                                           dataManager: container.dataManager))
