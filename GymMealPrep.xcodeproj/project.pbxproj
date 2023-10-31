@@ -427,6 +427,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		D634BD422AF1A62F001BEAEE /* SettingStore */ = {
+			isa = PBXGroup;
+			children = (
+				D6705A642AC4A3C100CF0BA9 /* SettingsStore.swift */,
+			);
+			path = SettingStore;
+			sourceTree = "<group>";
+		};
 		D634FF7A29FD42F50034B950 = {
 			isa = PBXGroup;
 			children = (
@@ -468,7 +476,7 @@
 				D634FFB229FD44330034B950 /* PresistanceContainer.swift */,
 				D61E3A672A9A73A400AB2527 /* Settings */,
 				D61E3A652A9A729400AB2527 /* K.swift */,
-				D6705A642AC4A3C100CF0BA9 /* SettingsStore.swift */,
+				D634BD422AF1A62F001BEAEE /* SettingStore */,
 				D6155FFF2AEB0BEE0043BDB6 /* Container.swift */,
 				D634FF8829FD42F50034B950 /* ContentView.swift */,
 				D634FFB629FD52100034B950 /* Model.xcdatamodeld */,

@@ -8,24 +8,24 @@
 import Foundation
 import Combine
 
-class SettingStore: ObservableObject {
-    
+class SettingStore: SettingStoreable {
+    private var cancellables = Set<AnyCancellable>()
     private let dateFormatter = {
        let result = DateFormatter()
         result.dateFormat = "dd/MM/yyy HH:mm"
         return result
     }()
-    private let defaults = UserDefaults.standard
-    private var cancellables = Set<AnyCancellable>()
 
-    @Published var settings: [Setting : Any?] = .init()
-    
-    init() {
-        self.settings = createSettings()
-        self.setWriteSubscribers()
+    init(userDefaults: UserDefaults?) {
+        super.init()
+        self.settings = createSettings(from: userDefaults)
+        self.setWriteSubscribers(to: userDefaults)
     }
     
-    private func createSettings() -> [Setting: Any?] {
+    private func createSettings(from defaults: UserDefaults?) -> [Setting: Any?] {
+        guard let defaults else {
+            return  Dictionary(uniqueKeysWithValues: Setting.allCases.map({( $0, nil )}))
+        }
         var result: [Setting : Any?] = .init()
         for setting in Setting.allCases {
             switch setting.value {
@@ -74,7 +74,8 @@ class SettingStore: ObservableObject {
         return result
     }
     
-    private func setWriteSubscribers() {
+    private func setWriteSubscribers(to defaults: UserDefaults?) {
+        guard let defaults else { return }
         $settings
             .flatMap { dictionary in
                 dictionary.publisher.map { (key: $0.key, value: $0.value) }
@@ -85,18 +86,18 @@ class SettingStore: ObservableObject {
                 case .enumeration(_):
                     if let unwrappedValue = value as? (any SettingEnum),
                         let valueToSave = unwrappedValue.rawValue as? String {
-                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                        defaults.set(valueToSave, forKey: setting.key)
                     }
                 case .stringArray:
                     if let valueToSave = value as? [String] {
-                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                        defaults.set(valueToSave, forKey: setting.key)
                     }
                 case .date:
                     if let valueToSave = value as? Date {
-                        UserDefaults.standard.set(valueToSave, forKey: setting.key)
+                        defaults.set(valueToSave, forKey: setting.key)
                     }
                 default:
-                    UserDefaults.standard.set(value, forKey: setting.key)
+                    defaults.set(value, forKey: setting.key)
                 }
             }.store(in: &cancellables)
     }
