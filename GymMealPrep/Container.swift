@@ -12,24 +12,24 @@ fileprivate enum ContainerType {
 }
 
 class Container: ObservableObject {
-    private(set) var settingStore: SettingStore = .init() // no protocol avaliable
+    private(set) var settingStore: SettingStoreable // protocol-class avaliable
     private(set) var dataManager: DataManager = .shared // no protocol avaliable
     private(set) var networkController: NetworkController // network protocol
     
     fileprivate init(type: ContainerType) {
         switch type {
         case .production:
-            self.settingStore = SettingStore()
+            self.settingStore = ProductionSettingStore()
             self.dataManager = DataManager.shared
             self.networkController = NetworkController()
         case .test:
             self.dataManager = DataManager.testing
             //TODO: IMPLEMET TESTING ENVIRONMENT SETTING STORE AND NETWORK CONTROLLER
-            self.settingStore = SettingStore()
+            self.settingStore = TestSettingStore()
             self.networkController = NetworkController()
         case .preview:
             self.dataManager = .preview
-            self.settingStore = SettingStore()
+            self.settingStore = PreviewSettingStore()
             self.networkController = NetworkController()
         }
     }
