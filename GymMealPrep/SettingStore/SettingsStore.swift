@@ -8,21 +8,29 @@
 import Foundation
 import Combine
 
+/// SettingStore is an interface allowing the app to safely access user settings defined in Setting enum from user defaults.
+/// It is not supposed to be used, instead ProductionSettingStore and TestSettingStore should be used depending on use scenario. For previews use PreviewSettingStore.
+///
+/// SettingStore does not have defined user defaults suit and should be initialized with a named suite. In case the suite is not avaliable it will be created.
+/// In case Store is initialized with nil value, standard UserDefault suite will not be used. Settings dictionary will be populated with nil values and no persistent storage will be written to.
 class SettingStore: SettingStoreable {
     private var cancellables = Set<AnyCancellable>()
-    private let dateFormatter = {
-       let result = DateFormatter()
-        result.dateFormat = "dd/MM/yyy HH:mm"
-        return result
-    }()
-
+    
     init(userDefaults: UserDefaults?) {
         super.init()
         self.settings = createSettings(from: userDefaults)
         self.setWriteSubscribers(to: userDefaults)
     }
     
-    private func createSettings(from defaults: UserDefaults?) -> [Setting: Any?] {
+    /// Create settings dictionary based on the contents of Setting enum.
+    ///
+    /// If the user defaults object is nil, the funtion will return a dictionary with nil values, but all of the keys present.
+    ///
+    /// - Parameters:
+    ///     - defaults: UserDefaults suite from which values for settings will be retrieved
+    /// - Returns: Dictionary of settings and values retrieved from container
+    ///
+    private func createSettings(from defaults: UserDefaults?) -> [Setting : Any?] {
         guard let defaults else {
             return  Dictionary(uniqueKeysWithValues: Setting.allCases.map({( $0, nil )}))
         }
@@ -74,6 +82,9 @@ class SettingStore: SettingStoreable {
         return result
     }
     
+    /// Set up subscribers to settings dictionary and update the values in given defaults.
+    /// Subscribers are stored in cancellables
+    ///  - Parameter defaults: UserDefaults to which the subscribers will write updated values
     private func setWriteSubscribers(to defaults: UserDefaults?) {
         guard let defaults else { return }
         $settings
@@ -100,5 +111,10 @@ class SettingStore: SettingStoreable {
                     defaults.set(value, forKey: setting.key)
                 }
             }.store(in: &cancellables)
+    }
+    
+    /// This function resets the store by replacing all of the setting values by default values.
+    override func resetStore() {
+        settings = Dictionary(uniqueKeysWithValues: Setting.allCases.map({( $0, SettingStoreable.provideDefaultValue(for: $0))}))
     }
 }
