@@ -20,11 +20,11 @@ extension SettingStoreable {
         case .calorieTarget:
             return Double(3100)
         case .macroTargetProtein:
-            return Double(180)
+            return Double(40)
         case .macroTargetFat:
-            return Double(60)
+            return Double(30)
         case .macroTargetCarb:
-            return Double(120)
+            return Double(30)
         case .numberOfMeals:
             return Int(4)
         case .mealNames:

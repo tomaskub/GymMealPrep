@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsListView: View {
     @ObservedObject var viewModel: SettingsViewModel
     @Binding var path: NavigationPath
-    @State var testing: Int = 1
+    
     var body: some View {
         VStack {
             List {

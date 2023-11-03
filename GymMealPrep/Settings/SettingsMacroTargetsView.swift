@@ -67,7 +67,8 @@ struct SettingsMacroTargetsView: View {
                     return 0.0
                 } }
         }()
-        return 0...(100-values.reduce(0.0, +))
+        let upperRange = (100-values.reduce(0.0, +))
+        return 0...upperRange
     }
     
     @ViewBuilder
