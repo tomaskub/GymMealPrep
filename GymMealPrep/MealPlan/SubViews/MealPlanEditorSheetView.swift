@@ -63,7 +63,7 @@ struct MealPlanEditorSheetView_Previews: PreviewProvider {
                 .sheet(isPresented: .constant(true)) {
                     MealPlanEditorSheetView(saveHandler: PreviewSaveHandler(), navigationPath: .constant(NavigationPath()))
                 }
-                .environmentObject(Container())
+                .environmentObject(ContainerFactory.build())
         }
         
     }

@@ -9,7 +9,8 @@ import SwiftUI
 
 @main
 struct GymMealPrepApp: App {
-    @StateObject private var container: Container = .init()
+    @StateObject private var container: Container = ContainerFactory.build()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

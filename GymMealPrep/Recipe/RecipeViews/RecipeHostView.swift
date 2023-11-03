@@ -73,7 +73,7 @@ struct RecipeHostView: View {
 struct RecipeHostView_Previews: PreviewProvider {
     
     private struct PreviewContainerView: View {
-        @StateObject private var container = Container()
+        @StateObject private var container = ContainerFactory.build()
         var body: some View {
             NavigationView {
                 RecipeHostView(viewModel: RecipeViewModel(recipe: SampleData.recipieCilantroLimeChicken,

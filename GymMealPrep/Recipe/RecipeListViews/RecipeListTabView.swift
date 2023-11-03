@@ -59,6 +59,6 @@ struct RecipeListTabView: View {
 struct RecipeListTabView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListTabView(viewModel: RecipeListViewModel(dataManager: .preview))
-            .environmentObject(Container())
+            .environmentObject(ContainerFactory.build())
     }
 }

@@ -108,6 +108,6 @@ struct RecipeCreatorParserView_Previews: PreviewProvider {
         NavigationStack {
             RecipeCreatorParserView(viewModel: PreviewViewModel(), saveHandler: PreviewSaveHandler())
         }
-        .environmentObject(Container())
+        .environmentObject(ContainerFactory.build())
     }
 }

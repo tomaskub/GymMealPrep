@@ -67,7 +67,8 @@ struct SettingsMacroTargetsView: View {
                     return 0.0
                 } }
         }()
-        return 0...(100-values.reduce(0.0, +))
+        let upperRange = (100-values.reduce(0.0, +))
+        return 0...upperRange
     }
     
     @ViewBuilder
@@ -147,7 +148,7 @@ struct SettingsMacroTargetsView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     
     private struct PreviewContainerView: View {
-        @StateObject private var container = Container()
+        @StateObject private var container = ContainerFactory.build()
         
         var body: some View {
             NavigationStack{

@@ -13,10 +13,10 @@ class SettingsDetailViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = .init()
     var settingModels: [SettingModel]
     
-    @Published private var settingStore: SettingStore
+    @Published private var settingStore: SettingStoreable
     @Published var settingValues: [Setting : Any] = .init()
     
-    init(settingStore: SettingStore, settingModels: [SettingModel]) {
+    init(settingStore: SettingStoreable, settingModels: [SettingModel]) {
         self.settingStore = settingStore
         self.settingModels = settingModels
         self.settingValues = setSettingValuesDict(settingModels: settingModels)

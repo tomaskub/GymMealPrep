@@ -10,11 +10,11 @@ import Combine
 
 class SettingsViewModel: ObservableObject {
     
-    @Published private var settingStore: SettingStore
+    @Published private var settingStore: SettingStoreable
     @Published var settings: [SettingSection] = []
     private var cancellables: Set<AnyCancellable> = .init()
     
-    init(settingStore: SettingStore) {
+    init(settingStore: SettingStoreable) {
         self.settingStore = settingStore
         self.settings = createSettingSections()
         
@@ -25,7 +25,7 @@ class SettingsViewModel: ObservableObject {
                 self.settings = self.createSettingSections()
                 self.objectWillChange.send()
             }.store(in: &cancellables)
-        self.setNumberOfMealsUpdater()
+//        self.setNumberOfMealsUpdater()
     }
     
     private func createSettingSections() -> [SettingSection] {
@@ -37,7 +37,7 @@ class SettingsViewModel: ObservableObject {
                                                     items: [.rateApp, .privacy, .terms, .apiReference, .contactUs])
         return [dietSection, mealPlanSection, calendarSection, variousSection, informationSection]
     }
-    
+    //TODO: REWORK SO IT DOES NOT MESS UP THE UI
     private func setNumberOfMealsUpdater() {
         settingStore.$settings
             .receive(on: RunLoop.main)
